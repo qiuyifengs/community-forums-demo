@@ -1,0 +1,43 @@
+@import '../index.css';
+.no_data {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: var(--col-c4);
+}
+.item-title-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.ghost-list-item-main {
+    cursor: pointer;
+}
+.ghost-list-item-main .ghost-list-item-action .list-item {
+    font-size: var(--fs-12);
+}
+.cur_title {
+    font-size: var(--fs-16);
+}
+.drafts-tip {
+    padding: 2px 6px 0;
+    font-size: var(--fs-12);
+    border-radius: 5px;
+    vertical-align: middle;
+    color: #73B2FD;
+    background: #EEF4FD;
+}
+.article_page {
+    padding-bottom: 10px;
+}
+.collect-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.ghost-list-item-extra {
+    display: flex;
+    align-items: center;
+}

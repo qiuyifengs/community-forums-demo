@@ -1,0 +1,188 @@
+<div class="ghost-card" style="margin-bottom: 16px">
+    <div id="forumTab">
+        <ul class="tab-nav">
+            <li class="tab-nav-item tab-active"><a href="javascript:;">ALL</a></li>
+            <li class="tab-nav-item"><a href="javascript:;">HOT</a></li>
+            <li class="tab-nav-item"><a href="javascript:;">NEW</a></li>
+            <li class="tab-nav-item"><a href="javascript:;">ETH</a></li>
+            <li class="tab-nav-item"><a href="javascript:;">BTC</a></li>
+            <li class="tab-nav-item"><a href="javascript:;">X</a></li>
+            <li class="tab-nav-item"><a href="javascript:;">ACTIVIY</a></li>
+            <li class="tab-nav-item"><a href="javascript:;">COMMUNICATION</a></li>
+        </ul>
+        <div class="tab-panel">
+            <div class="tab-panel-item tab-active">
+                <% include ../forum/tabPanel/all %>
+            </div>
+            <div class="tab-panel-item">
+                Donec ullamcorper nulla non metus auctor fringilla. Aenean eu leo quam. Pellentesque ornare sem 
+                lacinia quam venenatis vestibulum. 
+                Curabitur blandit tempus porttitor. Maecenas faucibus mollis interdum. Donec ullamcorper 
+                nulla non metus auctor 
+                Donec ullamcorper nulla non metus auctor fringilla. Aenean eu leo quam. Pellentesque ornare sem 
+                lacinia quam venenatis vestibulum. 
+                Curabitur blandit tempus porttitor. Maecenas faucibus mollis interdum. Donec ullamcorper 
+                nulla non metus auctor
+                Donec ullamcorper nulla non metus auctor fringilla. Aenean eu leo quam. Pellentesque ornare sem 
+                lacinia quam venenatis vestibulum. 
+                Curabitur blandit tempus porttitor. Maecenas faucibus mollis interdum. Donec ullamcorper 
+                nulla non metus auctor
+                Donec ullamcorper nulla non metus auctor fringilla. Aenean eu leo quam. Pellentesque ornare sem 
+                lacinia quam venenatis vestibulum. 
+                Curabitur blandit tempus porttitor. Maecenas faucibus mollis interdum. Donec ullamcorper 
+                nulla non metus auctor
+              <div class="ghost-loading-mask">
+                <div class="ghost-loading-spinner">
+                    <svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg>
+                </div>
+              </div>
+            </div>
+            <div class="tab-panel-item">
+              在需要等待加载内容的位置提供一个占位图形组合。
+              <h1>何时使用</h1>
+              <p style="margin-bottom: 8px">网络较慢，需要长时间等待加载处理的情况下。
+                  只适合用在第一次加载数据的场景, 提供更好的视觉效果和用户体验。</p>
+              <div class="ghost-skeleton ghost-skeleton-with-avatar ghost-skeleton-active">
+                <div class="ghost-skeleton-header">
+                    <span class="ghost-skeleton-avatar ghost-skeleton-avatar-lg ghost-skeleton-avatar-circle"></span>
+                </div>
+                <div class="ghost-skeleton-content">
+                    <h3 class="ghost-skeleton-title" style="width: 50%;"></h3>
+                    <ul class="ghost-skeleton-paragraph">
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
+              </div>
+            </div>
+            <div class="tab-panel-item">444444</div>
+            <div class="tab-panel-item">555555</div>
+            <div class="tab-panel-item">666666</div>
+            <div class="tab-panel-item">777777</div>
+            <div class="tab-panel-item">888888</div>
+        </div>
+    </div>    
+</div>
+
+<style>
+
+.tab-nav {
+    position: relative;
+    box-sizing: border-box;
+    padding-left: 0;
+    list-style: none;
+    min-height: 48px;
+    padding: 0 24px;
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: scroll;
+    width: 100%;
+  }
+  
+  .tab-nav:after {
+	content: '';
+	position: absolute;
+	z-index: 3;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 1px;
+	border-bottom: 1px solid #B2B2B2;
+	-webkit-transform: scaleY(0.5);
+	transform: scaleY(0.5);
+	-webkit-transform-origin: 0 100%;
+	transform-origin: 0 100%;
+  }
+  
+  .tab-nav-item {
+	position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    height: 100%;
+    margin-right: 24px;
+    padding: 12px 0;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color .3s cubic-bezier(.645,.045,.355,1);
+  }
+  
+  .tab-nav-item.tab-active {
+	background-color: #FFF;
+  }
+  
+  .tab-nav-item.tab-active:active {
+	background-color: #ffffff;
+  }
+  
+  .tab-nav-item:active {
+	background-color: transparent;
+  }
+  
+  .tab-nav-item a {
+	display: inherit;
+	color: inherit;
+  }
+
+  .tab-nav-item a:hover {
+      color: var(--col-bb8f);
+  }
+  
+  .tab-nav-item.tab-active {
+	color: var(--withPhone);
+  }
+  
+  .tab-nav-item.tab-active:before {
+	content: '';
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    margin-left: -50%;
+    z-index: 4;
+    background-color: var(--withPhone);
+  }
+  
+  .tab-panel {
+	position: relative;
+	overflow: hidden;
+	background-color: #FFF;
+  }
+  
+  .tab-panel .tab-panel-item {
+	width: 100%;
+	position: absolute;
+	top: 0;
+	padding: 12px;
+	-webkit-transform: translateX(-100%);
+	transform: translateX(-100%);
+  }
+  
+  .tab-panel .tab-panel-item.tab-active {
+	position: relative;
+	-webkit-transition: -webkit-transform .15s;
+	transition: -webkit-transform .15s;
+	transition: transform .15s;
+	transition: transform .15s, -webkit-transform .15s;
+	-webkit-transform: translateX(0);
+	transform: translateX(0);
+  }
+  
+  .tab-panel .tab-panel-item.tab-active ~ .tab-panel-item {
+	-webkit-transform: translateX(100%);
+	transform: translateX(100%);
+  }
+</style>
+
+<script>
+  let $tab = $('#forumTab');
+            $tab.tab({
+                nav: '.tab-nav-item',
+                panel: '.tab-panel-item',
+                activeClass: 'tab-active'
+            });
+            $('#forumTab').find('.tab-nav-item').on('open.ydui.tab', function (e) {
+                console.log(e)
+                console.log('索引：%s - [%s]正在打开', e.index, $(this).text());
+            });
+</script>

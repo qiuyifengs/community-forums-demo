@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel="icon" href="/images/collection.png" type="img/x-ico" />
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+        <!-- <link rel='stylesheet' href='/style/index.css' /> -->
+        <link rel="stylesheet" href="/style/forum/forum.css">
+        <% include ../common/script %>
+        <style>
+                .tab-nav {
+                    position: relative;
+                    box-sizing: border-box;
+                    padding-left: 0;
+                    list-style: none;
+                    min-height: 48px;
+                    padding: 0 24px;
+                    font-size: 16px;
+                    white-space: nowrap;
+                    overflow: scroll;
+                    width: 100%;
+                  }
+                  
+                  .tab-nav:after {
+                    content: '';
+                    position: absolute;
+                    z-index: 3;
+                    bottom: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 1px;
+                    border-bottom: 1px solid #B2B2B2;
+                    -webkit-transform: scaleY(0.5);
+                    transform: scaleY(0.5);
+                    -webkit-transform-origin: 0 100%;
+                    transform-origin: 0 100%;
+                  }
+                  
+                  .tab-nav-item {
+                    position: relative;
+                    display: inline-block;
+                    box-sizing: border-box;
+                    height: 100%;
+                    margin-right: 24px;
+                    padding: 12px 0;
+                    text-decoration: none;
+                    cursor: pointer;
+                    transition: color .3s cubic-bezier(.645,.045,.355,1);
+                  }
+                  
+                  .tab-nav-item.tab-active {
+                    background-color: #FFF;
+                  }
+                  
+                  .tab-nav-item.tab-active:active {
+                    background-color: #ffffff;
+                  }
+                  
+                  .tab-nav-item:active {
+                    background-color: transparent;
+                  }
+                  
+                  .tab-nav-item a {
+                    display: inherit;
+                    color: inherit;
+                  }
+                
+                  .tab-nav-item a:hover {
+                      color: var(--col-bb8f);
+                  }
+                  
+                  .tab-nav-item.tab-active {
+                    color: var(--withPhone);
+                  }
+                  
+                  .tab-nav-item.tab-active:before {
+                    content: '';
+                    width: 100%;
+                    height: 2px;
+                    position: absolute;
+                    left: 50%;
+                    bottom: 0;
+                    margin-left: -50%;
+                    z-index: 4;
+                    background-color: var(--withPhone);
+                  }
+                  
+                  .tab-panel {
+                    position: relative;
+                    overflow: hidden;
+                  }
+                  
+                  .tab-panel .tab-panel-item {
+                    width: 100%;
+                    position: absolute;
+                    top: 0;
+                    -webkit-transform: translateX(-100%);
+                    transform: translateX(-100%);
+                  }
+                  
+                  .tab-panel .tab-panel-item.tab-active {
+                    position: relative;
+                    -webkit-transition: -webkit-transform .15s;
+                    transition: -webkit-transform .15s;
+                    transition: transform .15s;
+                    transition: transform .15s, -webkit-transform .15s;
+                    -webkit-transform: translateX(0);
+                    transform: translateX(0);
+                  }
+                  
+                  .tab-panel .tab-panel-item.tab-active ~ .tab-panel-item {
+                    -webkit-transform: translateX(100%);
+                    transform: translateX(100%);
+                  }
+
+                .postsList .ghost-list-item {
+                    -webkit-box-shadow: 0 5px 10px 0 rgba(217, 224, 252, 0.3);
+                    box-shadow: 0 5px 10px 0 rgba(217, 224, 252, 0.3);
+                    cursor: pointer;
+                }
+        </style>
+    </head>
+    <body>
+        <div id="root">
+            <div class="ghost-layout">
+                <% include ../common/header %>
+                <div class="ghost-pro-layouts-basic-layout-content ghost-layout-content">
+                    <div class="ghost-pro-components-page-header-wrapper-grid-content-main ghost-pro-components-page-header-wrapper-grid-content-wide">
+                        <div class="ghost-row">
+                            <div class="ghost-col-xs-24 ghost-col-sm-24 ghost-col-md-24">
+                                <div class="ghost-card" style="margin-bottom: 16px">
+                                    <div id="forumTab">
+                                        <div class="tab-panel">
+                                            <div class="tab-panel-item tab-active">
+                                                <div class="ghost-list ghost-list-vertical ghost-list-split">
+                                                    <div class="ghost-spin-container postsList" id="artivleTemplate">
+                                                        <% articleList.data.forEach(function(articleItem) {%>
+                                                            <a class="ghost-list-item bg-white bd-radius-5 item-random-color" target="_blank" href="/post/articleDetail/<%=articleItem.articleId%>">
+                                                                <span class="currentArticleId" style="display: none"><%=articleItem.articleId%></span>
+                                                                <div class="ghost-list-item-main pd-rl20">
+                                                                    <div class="ghost-list-item-meta">
+                                                                        <div class="ghost-list-item-meta-content">
+                                                                            <div class="ghost-pro-components-article-list-content-index-listContent">
+                                                                                <div class="set-top bd-radius-3">置顶</div>
+                                                                                <h4 class="ghost-list-item-meta-title">
+                                                                                    <%=articleItem.articleTitle%>
+                                                                                </h4>
+                                                                            </div>
+                                                                            <div class="ghost-list-item-meta-article-content"><%= articleItem.articleContent %></div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <ul class="ghost-list-item-action">
+                                                                        <li class="author-info">
+                                                                            <span class="geren-bg bd-radius-round dom-random-color">
+                                                                                    <%= articleItem.author.substring(0, 1) %>
+                                                                            </span>
+                                                                            <span class="author-name"><%=articleItem.author%></span>
+                                                                        </li>
+                                                                        <!-- <li>
+                                                                            <span>
+                                                                                <svg class="iconSvg" aria-hidden="true">
+                                                                                    <use xlink:href="#icon-liulan"></use>
+                                                                                </svg>
+                                                                                <%= articleItem.viewCount %>
+                                                                            </span>
+                                                                        </li>
+                                                                        <li>
+                                                                            <span>
+                                                                                <svg class="iconSvg" aria-hidden="true">
+                                                                                    <use xlink:href="#icon-pinglun"></use>
+                                                                                </svg>
+                                                                                <%= articleItem.commentCount %>
+                                                                            </span> 
+                                                                        </li> -->
+    
+                                                                        <li class="app-publishTime">
+                                                                            <p style="text-align: right"><%= articleItem.publishTime.substr(0, 10) %></p>
+                                                                        </li>
+                                                                        <li class="source-type">
+                                                                            <span class="article-source bd-radius-3">数据库</span>
+                                                                            <span class="article-source bd-radius-3">html</span>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </a>
+                                                        <% }) %>
+                                                    </div>
+                                                </div>
+                                                <!-- <% if ((articleList.total * 1) > 0) { %>
+                                                    <ul class="ghost-pagination" style="margin: 24px 0; text-align: center"></ul>
+                                                <% } %> 
+                                                <input type="hidden" id="totalPages" value="<%= articleList.total %>" style="display: none" /> -->
+                                            </div>
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% if ((articleList.total * 1) < 1) { %>
+            <div class="no_data">
+                <dvi class="ghost-empty-image">
+                    <img src="/images/no_data.png" alt="">
+                </dvi>
+                <p class="ghost-empty-description">暂无相关文章</p>
+            </div>
+            <% } %> 
+        </div>
+    </body>
+    <script type="text/javascript">
+        function renderArticleHtml(item) {
+            return `<a class="ghost-list-item bg-white bd-radius-5 item-random-color" target="_blank" href="/post/articleDetail/${item.articleId}">
+                        <span class="currentArticleId" style="display: none">${ item.articleId }</span>
+                        <div class="ghost-list-item-main pd-rl20">
+                            <div class="ghost-list-item-meta">
+                                <div class="ghost-list-item-meta-content">
+                                    <div class="ghost-pro-components-article-list-content-index-listContent">
+                                        <div class="set-top bd-radius-3">置顶</div>
+                                        <h4 class="ghost-list-item-meta-title">
+                                            ${ item.articleTitle }
+                                        </h4>
+                                    </div>
+                                    <div class="ghost-list-item-meta-article-content">${ item.articleContent }</div>
+                                </div>
+                            </div>
+                            <ul class="ghost-list-item-action">
+                                <li class="author-info">
+                                    <span class="geren-bg bd-radius-round dom-random-color">
+                                            ${ item.author.substring(0, 1) }
+                                    </span>
+                                    <span class="author-name">${ item.author }</span>
+                                </li>
+                                <li class="app-publishTime">
+                                    <p style="text-align: right">${ item.publishTime.substr(0, 10) }</p>
+                                </li>
+                                <li class="source-type">
+                                    <span class="article-source bd-radius-3">数据库</span>
+                                    <span class="article-source bd-radius-3">html</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </a>`
+            }
+
+        $(function() {
+            const articleType = this.location.pathname.split('/')[2];
+            // init Google Design button click effect 
+            Waves.attach('.float-button-light', ['waves-button', 'waves-float', 'waves-light']);
+            // Init Waves
+            Waves.init();
+
+            // init pagination config
+            $('.ghost-pagination').pagination({
+                // total: document.getElementById('totalPages').value,
+                pageSize: 10,
+                coping: true,
+                callback: api => {
+                    const currentPage = api.getCurrent()
+                    const url = articleType ? `index/${articleType}/${currentPage}` : `index/ALL${currentPage}`
+                    myAjax('GET', url).then(res => {
+                         if (res.code === 1) {
+                            $("#artivleTemplate").empty()
+                            res.data.articleList.forEach(item => {
+                                $("#artivleTemplate").append(renderArticleHtml(item))
+                            })
+                        }
+                    })
+                }
+            })
+
+            // let total = Math.ceil(($('.total').text() * 1) / 8);
+            $('.tab-nav .tab-nav-item a').on('click', function (e) {
+                e.preventDefault()
+                if (articleType === $(this).text()) {
+                    $(this).parent().addClass('tab-active')
+                }
+            })
+            
+            // Click on the list item to enter the article details
+            $('#artivleTemplate').on('click', '.ghost-list-item', function(event) {
+                event.stopPropagation()
+                const articleId = $(this).find('.currentArticleId').text()
+                const url = `post/articleDetail/${articleId}`
+                myAjax("POST", "viewCount", { articleId: articleId })
+                goPage(url)
+            })
+        })
+
+    </script>
+</html>

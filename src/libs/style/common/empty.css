@@ -1,0 +1,25 @@
+.ghost-empty {
+    margin: 10em;
+    font-size: 14px;
+    line-height: 22px;
+    text-align: center;
+}
+
+.ghost-empty-image {
+    height: 100px;
+    margin-bottom: 8px;
+}
+
+.ghost-empty-image img {
+    width: 160px;
+    height: 100%;
+}
+
+.ghost-empty-description {
+    margin: 0;
+}
+
+.ghost-empty-footer {
+    margin-top: 16px;
+}
+

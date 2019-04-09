@@ -1,0 +1,56 @@
+<html>
+<div class="tip-box"></div>
+
+<head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/style/account/account.css">
+    <link rel="stylesheet" href="/style/common/avatar.css">
+    <% include ../common/script %>
+    <script src="/js/jquery.imgareaselect.min.js"></script>
+</head>
+<script type="text/javascript">
+    $(function () {
+        let userId = this.location.pathname.split('/')[3];
+        let token = this.location.pathname.split('/')[4];
+        console.log('userid:', userId, '\n token:', token);
+        const params = {
+            userId: userId,
+            token: token
+        }
+        myAjax('POST', 'user/Everifica', params).then((res) => {
+            $(".tip-box").css({
+                position: "absolute",
+                left: ($(window).width() - $(".mydiv").outerWidth()) / 2,
+                top: ($(window).height() - $(".mydiv").outerHeight()) / 2
+            });
+
+            console.log(res);
+            $(".tip-box").css("display", "block").text(res.message);
+            if (res.code === 10008) {
+                console.log('ok!!!!!!');
+                $(".tip-box").append('<div>邮箱验证成功</div')
+                setTimeout(function () {
+                    $(".tip-box").css("display", "none");
+                    goPage('');
+                }, 1500);
+
+            }
+            if (res.code === 10009) {
+                $(".tip-box").append('<div>邮箱验证失败,请前往设置重新验证</div')
+                setTimeout(function () {
+                    $(".tip-box").css("display", "none");
+                    goPage('');
+                }, 1500);
+            }
+            else {
+                setTimeout(function () {
+                    $(".tip-box").css("display", "none");
+                    goPage('');
+                }, 2000);
+                console.log('验证失败，请前往设置重新验证！')
+            }
+        });
+    })
+</script>
+
+</html>

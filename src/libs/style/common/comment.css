@@ -1,0 +1,138 @@
+.ghost-comment {
+    position: relative;
+}
+
+.ghost-comment-inner {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    padding-bottom: 16px;
+}
+
+.ghost-comment-nested {
+    margin-left: 44px;
+}
+
+.ghost-comment-avatar {
+    position: relative;
+    -webkit-flex-shrink: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+.ghost-comment-avatar img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.ghost-comment-content {
+    position: relative;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-width: 1px;
+    font-size: 14px;
+    word-wrap: break-word;
+}
+
+.ghost-comment-content-author {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    margin-bottom: 4px;
+    font-size: 14px;
+}
+
+.ghost-comment-content-author>a, .ghost-comment-content-author>span {
+    height: 18px;
+    padding-right: 8px;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.ghost-comment-content-author-time {
+    color: #ccc;
+    white-space: nowrap;
+    cursor: auto;
+}
+
+.ghost-comment-content-detail p {
+    white-space: pre-wrap;
+}
+
+.ghost-comment-actions {
+    margin-top: 12px;
+    padding-left: 0;
+}
+
+.ghost-comment-actions>li {
+    display: inline-block;
+    color: rgba(0,0,0,0.45);
+}
+
+.ghost-comment-actions>li>span {
+    padding-right: 10px;
+    color: rgba(0,0,0,0.45);
+    font-size: 12px;
+    cursor: pointer;
+    -webkit-transition: color .3s;
+    transition: color .3s;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.confirm_box {
+    display: none;
+    position: fixed;
+    top: 56px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .2);
+}
+.confirm_box .content_box {
+    padding: 16px 17px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 240px;
+    transform: translateX(-50%) translateY(-50%);
+    text-align: center;
+    background: var(--white);
+    border-radius: 10px;
+}
+.delete_tip {
+    margin: 10px 0 15px;
+    font-size: var(--fs-16);
+    color: var(--col-3c);
+}
+.confirm_box .confirm_btn_box {
+    display: flex;
+    justify-content: space-around
+}
+.btn_item {
+    width: 90px;
+    height: 36px;
+    text-align: center;
+    line-height: 36px;
+    font-size: var(--fs-14);
+	background-color: var(--btn-col);
+    border-radius: 5px;
+    color: var(--white);
+}
+.cancel {
+    color: var(--col-3b);
+    background: var(--col-e9);
+}

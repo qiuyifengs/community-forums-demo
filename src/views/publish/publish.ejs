@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel="stylesheet" href="/style/publish/publish.css">
+        <link rel="stylesheet" href="/style/common/tagsinput.css">
+        <% include ../common/script %>
+        <!-- <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
+        <script src="/richText/markdown-it/dist/markdown-it.js"></script>
+        <script src="/richText/toMark/dist/toMark.js"></script>
+        <script src="/richText/tui-code-snippet/dist/tui-code-snippet.js"></script>
+        <script src="/richText/tui-color-picker/dist/tui-color-picker.js"></script>
+        <script src="/richText/codemirror/lib/codemirror.js"></script>
+        <script src="/richText/highlightjs/highlight.pack.js"></script>
+        <script src="/richText/squire-rte/build/squire-raw.js"></script>
+        <link rel="stylesheet" href="/richText/codemirror/lib/codemirror.css">
+        <script src="/js/sensitiveWords.js"></script>
+    </head>
+    <body>
+        <% include ../common/header %>
+        <div class="publish_page">
+            <div class="publish_left box-shadow bd-radius-5">
+                <div class="publish">发布</div>
+                <div class="article_type">
+                    <% if (obj && obj.renderData) { %>
+                    <div class="cur_type_item" style="display: none"><%= obj.renderData.articleType %></div>
+                    <% } %>
+                    <div class="type_label">classification：</div>
+                    <ul class="type_list">
+                        <% obj.menuList.forEach(function(menuItem) { %>
+                            <li class="type_item bd-radius-5"><%= menuItem.menu %></li>
+                        <% }) %>
+                    </ul>
+                </div>
+                <div class="article_title">
+                    <% if (obj && obj.renderData) { %>
+                    <div class="cur_article_label" style="display:none"><%= obj.renderData.articleLabel %></div>
+                    <% } %>
+                    <div class="title_input publish_input" contenteditable="true" data-placeholder="Input topic..."></div>
+                    <div class="label-box mg-t20">
+                        <div class="typle_input publish_input" contenteditable="true" data-placeholder="请输入选择标签，如php（用逗号，分号；分割）按Enter键确认"></div>
+                    </div>
+                    <div id="tags-input"></div>
+                </div>
+                <!-- <div class="article_content" id="divText" contenteditable="true" data-placeholder="What do you want to say?"></div> -->
+                <div class="code-html">
+                    <script src="/richText/plantuml-encoder/dist/plantuml-encoder.js"></script>
+                    <script src="/richText/raphael/raphael.js"></script>
+                    <script src="/richText/tui-chart/dist/tui-chart.js"></script>
+                    <script src="/richText/tui-editor-Editor-all.js"></script>
+                    <link rel="stylesheet" href="/richText/tui-editor.css">
+                    <link rel="stylesheet" href="/richText/tui-editor-contents.css">
+                    <link rel="stylesheet" href="/richText/tui-color-picker/dist/tui-color-picker.css">
+                    <link rel="stylesheet" href="/richText/tui-chart/dist/tui-chart.css">
+                    <div id="editSection"></div>
+                </div>
+                <% if (obj.renderData && obj.renderData.articleContent) { %>
+                    <div class="edit_article_id" style="display: none"><%= obj.renderData.articleId %></div>
+                    <div class="edit_article_type" style="display:none"><%= obj.renderData.articleType %></div>
+                    <div class="edit_article_title"><%= obj.renderData.articleTitle %></div>
+                    <div class="edit_content"><%= obj.renderData.articleContent %></div>
+                <% } %>
+                <div class="button_box">
+                    <div class="comment_btn_box">
+                        <div class="comment_btn">publish</div>
+                    </div>
+                    <div class="save_btn_box">
+                        <div class="save_btn">save</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        $(function(){
+            let userId = $.cookie("userId");
+            let editType = $(".edit_article_type").text();
+            let isSubmitting = true;
+            let isEdit = false;
+            let articleId = '';
+            let content = [].join('\n');
+            let editContent = $(".edit_content").text();
+            let articleSource = $(".type_list").children(":first").text();
+            let labelArr = [];
+            let curLabelArr = $(".cur_article_label").text().split(',');
+            curLabelArr.forEach(item => {
+                let labelDiv = `<div class="show-label bd-radius-3">
+                                    <span>${item}</span> 
+                                    <svg class="iconSvg" aria-hidden="true">
+                                        <use xlink:href="#icon-guanbi"></use>
+                                    </svg>
+                                </div>`;
+                $(".typle_input").before(labelDiv);
+                labelArr.push(item);
+            })
+            console.log(labelArr)
+            if (!userId) {
+                goPage('user/login');
+            }
+
+            if (editType) {
+                $(".type_item").each(function() {
+                    if ($(this).text() == editType) {
+                        $(this).addClass("actived");
+                    }
+                })
+            } else {
+                $(".type_item").eq(0).addClass("actived");
+            }
+
+            if (editContent) {
+                content = JSON.parse($('.edit_content').text()).join('\n');
+                $(".title_input").text($(".edit_article_title").text());
+                articleId = $(".edit_article_id").text();
+                isEdit = true;
+            };
+            
+             let editor = new tui.Editor({
+                el: document.querySelector('#editSection'),
+                previewStyle: 'vertical',
+                height: '500px',
+                initialEditType: 'markdown',
+                useCommandShortcut: true,
+                initialValue: content,
+                exts: ['scrollSync', 'colorSyntax', 'uml', 'chart', 'mark', 'table', 'taskCounter']
+            });
+
+            $(".typle_input").focus(function() {
+                $("#tags-input").css("display", "block");
+            });
+
+            $("#tags-input").tagsinput({
+                labelTypeArr: [{typeContent:'开发语言', typeId: 'aa', labelArr: [{laebl:'数据库', labelId: 'label1'}, {laebl: 'Java', labelId: 'label2'}]}, {typeContent:'服务器', typeId:"bb", labelArr: [{laebl:'html', labelId: 'label3'}, {laebl: 'node', labelId: 'label4'}]}],
+                callback: label => {
+                     let labelDiv = `<div class="show-label bd-radius-3">
+                                        <span>${label.label}</span> 
+                                        <svg class="iconSvg" aria-hidden="true">
+                                            <use xlink:href="#icon-guanbi"></use>
+                                        </svg>
+                                    </div>`;
+                     let labelLen = $(".show-label").length;
+                    if (labelLen == 5) return layer.msg('最多选择5个标签！');
+                    for ( let i = 0; i <= $('.show-label').length - 1; i++) {
+                        if ($('.show-label').eq(i).find('span').text() == label.label) {
+                            return false;
+                        } 
+                    }
+                    $(".show-label").each(function() {
+                        if ($(this).text() == label.label) return false;
+                    })
+                    $(".typle_input").before(labelDiv);
+                    labelArr.push(label.label);
+                }
+            })
+
+            $(".label-box").on("click", ".show-label", function(event) {
+                event.stopPropagation();
+                $(this).remove();
+                labelArr.splice($(this).index(), 1);
+            });
+            $("#tags-input").on("click", function(event) {
+                event.stopPropagation();
+                $("#tags-input").css("display", "block");
+            });
+
+            $(".label-box ").on("click", function(event) {
+                event.stopPropagation();
+                $("#tags-input").css("display", "block");
+            })
+
+            $(".typle_input").keydown(function(event){
+                if (event.keyCode == 13) {
+                    $(this).blur();
+                    let labelLen = $(".show-label").length;
+                    if (labelLen == 5) return layer.msg('最多选择5个标签！');
+                    let keyword = $(this).text();
+                    if (!keyword || keyword == '') return false;
+                    var regEn = /[`~!@#$%^&*()_+<>?:"{}.\\\/'[\]]/im,
+                        regCn = /[·！#￥（——）：“”‘、|《。》？、【】[\]]/im;
+                    if (regEn.test(keyword) || regCn.test(keyword)) return layer.msg("标签不能含有其他特殊字符！");
+                    keyword = keyword.replace(/\,|\;|\，|\；/ig, ',')
+                    if (keyword.indexOf(',') > 0) {
+                        let arr = keyword.split(',');
+                        if (!arr[arr.length-1]) {
+                            arr.splice(arr.length-1, 1)
+                        }
+                         let len = arr.length + labelLen;
+                        if(len > 5) return layer.msg('最多选择5个标签！');
+                        arr.forEach(item => {
+                            for ( let i = 0; i <= $('.show-label').length - 1; i++) {
+                                if ($('.show-label').eq(i).find('span').text() == item) {
+                                    $('.show-label').eq(i).remove();
+                                    labelArr.splice(i, 1);
+                                } 
+                            }
+                             let labelDiv = `<div class="show-label bd-radius-3">
+                                                <span>${item}</span> 
+                                                <svg class="iconSvg" aria-hidden="true">
+                                                    <use xlink:href="#icon-guanbi"></use>
+                                                </svg>
+                                            </div>`;
+                            $(this).text('');
+                            $(this).before(labelDiv);
+                            labelArr.push(item);
+                        })
+                    } else {
+                        for ( let i = 0; i <= $('.show-label').length - 1; i++) {
+                            if ($('.show-label').eq(i).find('span').text() == keyword) {
+                                $('.show-label').eq(i).remove();
+                                labelArr.splice(i, 1);
+                            } 
+                        }
+                        let labelDiv = `<div class="show-label bd-radius-3">
+                                            <span>${keyword}</span> 
+                                            <svg class="iconSvg" aria-hidden="true">
+                                                <use xlink:href="#icon-guanbi"></use>
+                                            </svg>
+                                        </div>`;
+                        $(this).text('');
+                        $(this).before(labelDiv);
+                        labelArr.push(keyword);
+                    }
+                    console.log(labelArr)
+                    $("#tags-input").css("display", "none");
+                }
+            });
+            $(".publish_page").on("click", function(event) {
+                event.stopPropagation();
+                $("#tags-input").css("display", "none");
+            });
+            // change classification
+            $(".type_list").find(".type_item").each(function() {
+                $(this).click(function() {
+                    articleSource = $(this).text();
+                    $(this).addClass("actived");
+                    $(this).siblings().removeClass("actived");
+                })
+            });
+            // filter sensitive words and comment article
+            $(".comment_btn").on("click", function() {
+                if (!isSubmitting) return false; 
+                isSubmitting = false;
+                let keySpans = document.getElementsByClassName('highlight');
+                if (keySpans.length) return false; // if had sensitive words return
+                let reg = new RegExp(wordsList.join('|'), 'gi'); // check sensitive words
+                let articleTitle = $(".title_input").text(); // title
+                articleTitle = articleTitle.replace(reg, (word) => `<span class="highlight">${word}</span>`);
+                $('.title_input').empty().append(articleTitle);
+                let contentArr = [];
+                let classArr = document.getElementsByClassName("CodeMirror-line"); // content list Dom
+                $(".cm-invalidchar").remove();
+                for(let i = 0; i < classArr.length; i++) {
+                    contentArr.push(classArr[i].innerText);
+                }
+                let isTrue = false;
+                contentArr.forEach((item, ind) => {
+                    item = item.replace(/\u200B/g,'')
+                    contentArr[ind] = item.replace(reg, (word) => `<span class="highlight">${word}</span>`);
+                    if (contentArr[ind].indexOf("highlight") > 0) {
+                        isTrue = true;
+                    }
+                })
+                
+                $('.tui-editor-defaultUI').remove(); // remove old rich text
+                 let editor = new tui.Editor({ // new rich text
+                    el: document.querySelector('#editSection'),
+                    previewStyle: 'vertical',
+                    height: '500px',
+                    initialEditType: 'markdown',
+                    useCommandShortcut: true,
+                    initialValue: contentArr.join('\n'),
+                    exts: ['scrollSync', 'colorSyntax', 'uml', 'chart', 'mark', 'table', 'taskCounter']
+                });
+                if (articleTitle.indexOf('highlight') > 0 || isTrue) {
+                    alert("文章标题或文章内容中不能含有敏感词汇！");
+                    isSubmitting = true;
+                    return false;
+                }
+                if (!articleTitle ||  (contentArr[0].length < 1 && contentArr.length < 2)) {
+                    alert("文章标题或文章内容中不能为空！");
+                    isSubmitting = true;
+                    return false;
+                }
+                if (labelArr.length < 1) {
+                    layer.msg("文章标签不能为空！");
+                    isSubmitting = true;
+                    return false;
+                }
+                let param = {
+                    userId: $.cookie("userId"),
+                    isEdit: isEdit,
+                    isDrafts: false,
+                    articleId: articleId,
+                    articleTitle: articleTitle,
+                    articleContent: JSON.stringify(contentArr),
+                    articleType: articleSource,
+                    articleLabel: labelArr
+                };
+                myAjax("POST", 'post/publish', param).then((res) => {
+                    layer.msg(res.message);
+                    if (res.code == 1) {
+                        setTimeout(function() {
+                            goPage('');
+                        }, 2000);
+                    } else {
+                        console.log(res.message);
+                    }
+                    isSubmitting = true;
+                })
+            });
+            // save article
+            $(".save_btn").on("click", function() {
+                let articleTitle = $(".title_input").text(); // title
+                let contentArr = [];
+                let classArr = document.getElementsByClassName("CodeMirror-line"); // content list Dom
+                $(".cm-invalidchar").remove();
+                for(let i = 0; i < classArr.length; i++) {
+                    contentArr.push(classArr[i].innerText);
+                }
+                let param = {
+                    userId: $.cookie("userId"),
+                    isEdit: isEdit,
+                    isDrafts: true,
+                    articleId: articleId,
+                    articleTitle: articleTitle,
+                    articleContent: JSON.stringify(contentArr),
+                    articleType: articleSource,
+                    articleLabel: labelArr
+                };
+                myAjax("POST", 'post/publish', param).then((res) => {
+                    if (res.code == 1) {
+                        layer.msg('保存成功！');
+                        setTimeout(function() {
+                            goPage('');
+                        }, 2000);
+                    } else {
+                        layer.msg(res.message);
+                        console.log(res.message);
+                    }
+                    isSubmitting = true;
+                })
+            })
+            // title remove highlight style
+            $(".title_input").focus(() => {
+                $('.title_input .highlight').removeClass('highlight');
+            })
+            // content remove highlight style
+            $(".article_content").focus(() => {
+                $('.article_content .highlight').removeClass('highlight');
+            })
+        })
+    </script>
+</html>

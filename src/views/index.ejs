@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel="icon" href="/images/collection.png" type="img/x-ico" />
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+        <link rel='stylesheet' href='/style/index.css' />
+        <link rel="stylesheet" href="/style/forum/forum.css">
+        <link rel="stylesheet" href="/style/common/swiper.min.css">
+        <% include ./common/script %>
+        
+        <style>
+            .menu-title {
+                margin-bottom: 20px;
+                font-size: 12px;
+                color: #000000;
+            }
+            .tab-nav {
+                position: relative;
+                box-sizing: border-box;
+                padding-left: 0;
+                list-style: none;
+                min-height: 48px;
+                font-size: 16px;
+                white-space: nowrap;
+                width: 100%;
+            }
+                
+            .tab-nav-item {
+                position: relative;
+                box-sizing: border-box;
+                height: 100%;
+                padding: 11px 0 11px 12px;
+                text-decoration: none;
+                font-family:  "PingFangSC-Light","-apple-system","Helvetica Neue",Helvetica,Arial,"PingFang SC","Hiragino Sans GB","WenQuanYi Micro Hei","Microsoft Yahei",sans-serif;
+                cursor: pointer;
+                color: var(--col-61);
+                font-size: var(--fs-14);
+                transition: color .3s cubic-bezier(.645,.045,.355,1);
+            }
+            .tab-nav-item:nth-of-type(1).tab-active:active {
+                background-color: #FFF;
+                color: var(--col-014);
+            }
+            .tab-nav-item.tab-active {
+                -webkit-box-shadow: -5px 0 10px 0 rgba(217, 224, 252, .3);
+                box-shadow: -5px 0 10px 0 rgba(217, 224, 252, .3);
+                background-color: #FFF;
+                color: var(--col-014);
+            }
+            .tab-nav-item.tab-active:active {
+                background-color: #ffffff;
+                -webkit-box-shadow: -5px 0 10px 0 rgba(217, 224, 252, .3);
+                box-shadow: -5px 0 10px 0 rgba(217, 224, 252, .3);
+            }
+                
+            .tab-nav-item:active {
+                background-color: transparent;
+            }
+                
+            .tab-nav-item a {
+                display: flex;
+                align-items: center;
+                color: inherit;
+            }
+            
+            .tab-nav-item:hover {
+                background-color: rgba(72, 94, 192, .1);
+            }
+            .tab-nav-item.tab-active {
+                color: var(--col-014);
+            }
+            .tab-panel {
+                position: relative;
+            }
+                
+            .tab-panel .tab-panel-item {
+                width: 100%;
+                position: absolute;
+                top: 0;
+                -webkit-transform: translateX(-100%);
+                transform: translateX(-100%);
+            }
+            .menu-item-val {
+                margin-left: 10px;
+            }
+            .tab-panel .tab-panel-item.tab-active {
+                position: relative;
+                -webkit-transition: -webkit-transform .15s;
+                transition: -webkit-transform .15s;
+                transition: transform .15s;
+                transition: transform .15s, -webkit-transform .15s;
+                -webkit-transform: translateX(0);
+                transform: translateX(0);
+            }
+                
+            .tab-panel .tab-panel-item.tab-active ~ .tab-panel-item {
+                -webkit-transform: translateX(100%);
+                transform: translateX(100%);
+            }
+
+            .postsList .ghost-list-item {
+                -webkit-box-shadow: 0 5px 10px 0 rgba(217, 224, 252, 0.3);
+                box-shadow: 0 5px 10px 0 rgba(217, 224, 252, 0.3);
+                transition: all .3s ease;
+                cursor: pointer;
+            }
+            @media screen and (max-width: 420px) {
+                body {
+                    font-family: STHeitiSC-Light;
+                }
+                .tab-nav {
+                    position: fixed;
+                    top: 44px;
+                    left: 0;
+                    right: 0;
+                    z-index: 1;
+                    padding: 0 15px!important;
+                    background: var(--col-f5);
+                    border: none;
+                }
+                .tab-nav > .tab-active {
+                    background-color: var(--col-f5)!important;
+                }
+                
+                .ghost-layout-content {
+                    position: relative;
+                }
+                .ghost-list-item-extra {
+                    display: none;
+                }
+                .ghost-list-vertical .ghost-list-item-meta {
+                    margin-top: 16px;
+                    font-size: var(--fs-18);
+                    line-height: 24px;
+                    color: var(--col-24);
+                }
+                .pdl-24 {
+                    margin: 0 15px;
+                    padding-left: 0;
+                    border-bottom: .5px solid var(--col-e9);
+                }
+                .ghost-list-vertical .ghost-list-item-action {
+                    position: relative;
+                    margin-top: 0;
+                    margin-bottom: 4px;
+                }
+                .ghost-list-item-meta-title {
+                    margin-bottom: 0;
+                }
+                .ghost-list-item-action > .app-publishTime {
+                    display: block;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                }
+                .app-display-none {
+                    display: none;
+                }
+                .app-btn-box {
+                    position: fixed;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    margin-bottom: 0!important;
+                }
+                .app-btn-box .ghost-btn-round.ghost-btn-lg {
+                    border-radius: 0;
+                }
+                .tab-panel {
+                    overflow: auto;
+                }
+                .ghost-empty {
+                    margin: 0;
+                    padding: 50% 0;
+                    background-color: var(--bg);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="root">
+            <div class="ghost-layout">
+                <% include ./common/header %>
+                <div class="ghost-pro-layouts-basic-layout-content ghost-layout-content">
+                    <div class="ghost-pro-components-page-header-wrapper-grid-content-main ghost-pro-components-page-header-wrapper-grid-content-wide">
+                        <div class="ghost-row home-page">
+                            <div class="ghost-col-xs-24 ghost-col-sm-24 ghost-col-md-24 ghost-col-lg-18 ghost-col-xl-18 content-left" style="margin-right: 50px">
+                                <div class="swiper-container bd-radius-5">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide"><img src="/images/1.png" alt=""></div>
+                                        <div class="swiper-slide"><img src="/images/2.png" alt=""></div>
+                                        <div class="swiper-slide"><img src="/images/3.png" alt=""></div>
+                                        <div class="swiper-slide"><img src="/images/4.png" alt=""></div>
+                                    </div>
+                                    <!-- 如果需要分页器 -->
+                                    <div class="swiper-pagination"></div>
+                                    <!-- 如果需要导航按钮 -->
+                                    <!-- <div class="swiper-button-prev"></div>
+                                    <div class="swiper-button-next"></div> -->
+                                </div>
+                                <div class="" style="margin-bottom: 16px">
+                                    <div id="forumTab">
+                                        <div class="tab-panel">
+                                            <div class="tab-panel-item tab-active">
+                                                <div id="loading"></div>
+                                                <div class="ghost-loading-mask" style="display: none">
+                                                    <div class="ghost-loading-spinner">
+                                                        <svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg>
+                                                    </div>
+                                                </div>
+                                                <% if (postList.articleList && (postList.articleList.length > 0)) { %>
+                                                <div class="ghost-list ghost-list-vertical ghost-list-split">
+                                                    <div class="ghost-spin-container postsList" id="artivleTemplate">
+                                                        
+                                                        <% postList.articleList.forEach(function(articleItem) {%>
+                                                        <a class="ghost-list-item mg-t15 bg-white bd-radius-5 item-random-color" target="_blank" href="/post/articleDetail/<%=articleItem.articleId%>">
+                                                            <span class="currentArticleId" style="display: none"><%=articleItem.articleId%></span>
+                                                            <div class="ghost-list-item-main pd-rl20">
+                                                                <div class="ghost-list-item-meta">
+                                                                    <div class="ghost-list-item-meta-content">
+                                                                        <div class="ghost-pro-components-article-list-content-index-listContent">
+                                                                            <div class="set-top bd-radius-3">置顶</div>
+                                                                            <h4 class="ghost-list-item-meta-title">
+                                                                                <%=articleItem.articleTitle%>
+                                                                            </h4>
+                                                                        </div>
+                                                                        <div class="ghost-list-item-meta-article-content"><%- articleItem.articleContent %></div>
+                                                                    </div>
+                                                                </div>
+                                                                <ul class="ghost-list-item-action">
+                                                                    <li class="author-info">
+                                                                        <span class="geren-bg bd-radius-round dom-random-color">
+                                                                                <%= articleItem.author.substring(0, 1) %>
+                                                                        </span>
+                                                                        <span class="author-name"><%=articleItem.author%></span>
+                                                                    </li>
+                                                                    <!-- <li>
+                                                                        <span>
+                                                                            <svg class="iconSvg" aria-hidden="true">
+                                                                                <use xlink:href="#icon-liulan"></use>
+                                                                            </svg>
+                                                                            <%= articleItem.viewCount %>
+                                                                        </span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <span>
+                                                                            <svg class="iconSvg" aria-hidden="true">
+                                                                                <use xlink:href="#icon-pinglun"></use>
+                                                                            </svg>
+                                                                            <%= articleItem.commentCount %>
+                                                                        </span> 
+                                                                    </li> -->
+
+                                                                    <li class="app-publishTime">
+                                                                        <p class="time" style="text-align: right"><%= articleItem.publishTime %></p>
+                                                                    </li>
+                                                                    <% if (articleItem.articleLabel) { %>
+                                                                    <li class="source-type">
+                                                                        <% articleItem.articleLabel.forEach(function(labelItem) {%>
+                                                                        <span class="article-source bd-radius-3"><%= labelItem %></span>
+                                                                        <% }) %>
+                                                                    </li>
+                                                                    <% } %>
+                                                                </ul>
+                                                            </div>
+                                                        </a>
+                                                        <% }) %>
+                                                        
+                                                    </div>
+                                                </div>
+                                                <% } %>
+                                                <% if ((postList.total * 1) > 0) { %>
+                                                    <ul class="ghost-pagination" style="margin: 24px 0; text-align: center"></ul>
+                                                <% } else { %>
+                                                    <div class="ghost-empty">
+                                                        <dvi class="ghost-empty-image">
+                                                            <img src="/images/no_data.png" alt="">
+                                                        </dvi>
+                                                        <p class="ghost-empty-description">暂无相关文章</p>
+                                                    </div>
+                                                <% } %> 
+                                                <input type="hidden" id="totalPages" value="<%= postList.total %>" style="display: none" />
+                                            </div>
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>
+                            <div class="content-right">
+                                <div class="menu-list">
+                                    <div class="menu-title">TAGS</div>
+                                    <ul class="tab-nav">
+                                        <% postList.menuList.forEach(function(menuItem) { %>
+                                            <li class="tab-nav-item bd-radius-5">
+                                                <a href="javascript:;">
+                                                    <svg class="iconSvg" aria-hidden="true">
+                                                        <use xlink:href='#icon-<%= menuItem.menuId %>'></use>>
+                                                    </svg>
+                                                    <span class="menu-item-val"><%= menuItem.menu %></span>
+                                                </a>
+                                            </li>
+                                        <% }) %>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="/js/swiper.min.js"></script>
+    <script type="text/javascript">
+        
+        $(function() {
+            var swiper = new Swiper('.swiper-container', {
+                spaceBetween: 30,
+                centeredSlides: true,
+                autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            });
+            // random color
+            $(".item-random-color").each(function() {
+                const authorName = $(this).find('.author-name').text();
+                $(this).find(".dom-random-color").css("background",renderColor(authorName));
+
+            });
+            $(".time").each(function() {
+                let resTime = formatDateFilter($(this).text())
+                $(this).text(resTime)
+            });
+            const userId = $.cookie("userId");
+            const articleType = this.location.pathname.split('/')[2] ? decodeURI(this.location.pathname.split('/')[2]) : 'ALL';
+            $('.tab-nav .tab-nav-item a').each(function() {
+                if (articleType == $(this).find(".menu-item-val").text()) {
+                    $(this).parent().addClass('tab-active')
+                    $(this).parent().siblings().removeClass('tab-active')
+                    return;
+                }
+            })
+
+            // init Google Design button click effect 
+            Waves.attach('.float-button-light', ['waves-button', 'waves-float', 'waves-light'])
+            // Init Waves
+            Waves.init()
+
+            // init pagination config
+            $('.ghost-pagination').pagination({
+                total: document.getElementById('totalPages').value,
+                // total: 100,
+                pageSize: 10,
+                current: 1,
+                coping: true,
+                isHide: true,
+                callback: api => {
+                    $('.ghost-loading-mask').css('display', 'block')
+                    // dialog.loading.open()
+                    const currentPage = api.getCurrent()
+                    const url = articleType ? `topic/${articleType}/${currentPage}` : `topic/ALL${currentPage}`
+                    myAjax('GET', url).then(res => {
+                        if (res.code === 1) {
+                            $("#artivleTemplate").empty()
+                            res.articleList.forEach(item => {
+                                $("#artivleTemplate").append(renderArticleHtml(item))
+                            })
+                            $(".item-random-color").each(function() {
+                                const authorName = $(this).find('.author-name').text();
+                                $(this).find(".dom-random-color").css("background",renderColor(authorName));
+
+                            })
+                            setTimeout(function() {
+                                $('.ghost-loading-mask').css('display', 'none')
+                            }, 500) 
+                        }
+                    })
+                }
+            })
+
+            $('.tab-nav .tab-nav-item a').on('click', function (e) {
+                e.preventDefault()
+                $(this).parent().addClass('tab-active')
+                $(this).parent().siblings().removeClass('tab-active')
+                goPage(`topic/${$(this).find(".menu-item-val").text()}`)
+            })
+
+            // Click on the list item to enter the article details
+            $('#artivleTemplate').on('click', '.ghost-list-item', function(event) {
+                event.stopPropagation()
+                const articleId = $(this).find('.currentArticleId').text()
+                myAjax("POST", "post/addView", { articleId: articleId, userId: $.cookie("userId") })
+            })
+        }(window, jQuery));
+
+        let renderArticleHtml = item => {
+            return ` <a class="ghost-list-item mg-t15 bg-white bd-radius-5 item-random-color" target="_blank" href="/post/articleDetail/${item.articleId}">
+                        <span class="currentArticleId" style="display: none">${ item.articleId }</span>
+                        <div class="ghost-list-item-main pd-rl20">
+                            <div class="ghost-list-item-meta">
+                                <div class="ghost-list-item-meta-content">
+                                    <div class="ghost-pro-components-article-list-content-index-listContent">
+                                        <div class="set-top bd-radius-3">置顶</div>
+                                        <h4 class="ghost-list-item-meta-title">
+                                            ${ item.articleTitle }
+                                        </h4>
+                                    </div>
+                                    <div class="ghost-list-item-meta-article-content">${ item.articleContent }</div>
+                                </div>
+                            </div>
+                            <ul class="ghost-list-item-action">
+                                <li class="author-info">
+                                    <span class="geren-bg bd-radius-round dom-random-color">
+                                            ${ item.author.substring(0, 1) }
+                                    </span>
+                                    <span class="author-name">${ item.author }</span>
+                                </li>
+                                <li class="app-publishTime">
+                                    <p style="text-align: right">${ item.publishTime.substr(0, 10) }</p>
+                                </li>
+                                <li class="source-type">
+                                    <span class="article-source bd-radius-3">数据库</span>
+                                    <span class="article-source bd-radius-3">html</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </a>`
+            }
+            // select notice article go articleDetail page
+            // $('.notice_item').each(function() { // todo articleId need deal
+            //     $(this).click(function(event) {
+            //         event.stopPropagation();
+            //         let articleId = $(this).find(".fictitious_dom").text();
+            //         let url = 'post/articleDetail/' + articleId;
+            //         goPage(url);
+            //     })
+            // });
+            
+    </script>
+</html>

@@ -1,0 +1,61 @@
+@import '../index.css';
+.no_data {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: var(--col-c4);
+}
+.parents_item .comment-info {
+    font-size: var(--fs-13);
+}
+.comment_bottmo {
+    display: none;
+}
+.answer_box {
+    padding: 15px;
+    width: 100%;
+    min-height: 60px;
+    border-radius: 5px;
+    font-size: var(--fs-14);
+    outline: none;
+    border: solid 1px var(--input-col);
+}
+.answer_box:empty:before {
+    content: attr(data-placeholder);
+    color: var(--col-pla);
+}
+.answer_box:not(.answer_box:empty).answer_box:focus:before {
+    content:none;
+}
+.answer_btn_box {
+    display: flex;
+    margin-top: 20px;
+    justify-content: flex-end;
+}
+.answer_btn {
+    padding: 15px 0;
+    width: 100px;
+    font-size: 14px;
+    line-height: 14px;
+    letter-spacing: 0px;
+    text-align: center;
+    cursor: pointer;
+    color: var(--white);
+    background: var(--btn-col);
+    border-radius: 5px;;
+}
+.children_comment_list {
+    display: flex;
+    padding-top: 10px;
+    background: var(--col-f8);
+}
+.reply_man {
+    cursor: pointer;
+    color: var(--btn-col);
+}
+.parents_item .commentator_name {
+    color: var(--btn-col);
+}
+

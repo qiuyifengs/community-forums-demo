@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title><%= title %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+    <link rel="stylesheet" href="/style/login/login.css">
+    <% include ../common/script %>
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+    <style>
+        .ghost-form-item {
+            margin-bottom: 0;
+            height: 65px;
+            text-indent: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root">
+        <div class="ghost-pro-layouts-user-layout-container">
+            <section class="ghost-pro-layouts-user-layout-lang"></section>
+            <section class="ghost-pro-layouts-user-layout-content">
+                <div class="ghost-pro-layouts-user-layout-top">
+                    <div class="ghost-pro-layouts-user-layout-header">
+                        <a href="javascript:;">
+                            <img class="ghost-pro-layouts-user-layout-logo" />
+                            <span class="ghost-pro-layouts-user-layout-title">LOGO</span>
+                        </a>
+                    </div>
+                    <div class="ghost-pro-layouts-user-layout-desc"></div>
+                </div>
+                <main class="ghost-pro-pages-user-login-main">
+                    <section class="ghost-pro-components-login-index-login">
+                        <form class="ghost-form" id="loginForm">
+                            <div class="ghost-tabs-nav-wrap">
+                                <div class="ghost-tabs-nav nav_text_algin">
+                                    <div class="ghost-tabs-tab ghost-tabs-tab-active">SIGN IN</div>
+
+                                    <div class="ghost-tabs-tab" id="enterRegisterPage">REGISTER</div>
+
+                                </div>
+                            </div>
+                            <div class="ghost-row ghost-form-item">
+                                <div class="ghost-form-item-control-wrapper">
+                                    <div class="ghost-form-item-control">
+                                        <input type="email" placeholder="Your Emial" id="email" name="email" required
+                                            class="ghost-input ghost-input-round ghost-input-lg">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ghost-row ghost-form-item">
+                                <div class="ghost-form-item-control-wrapper">
+                                    <div class="ghost-form-item-control">
+                                        <input type="password" placeholder="Your Password" id="password" name="password"
+                                            required class="ghost-input ghost-input-round ghost-input-lg">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ghost-row ghost-form-item">
+                                <div class="ghost-form-item-control-wrapper">
+                                    <div class="ghost-form-item-control">
+                                        <button style="width:150px"
+                                            class="ghost-btn ghost-btn-primary ghost-btn-lg ghost-btn-round">
+                                            <span>SIGN IN</span>
+                                        </button>
+                                        <a href="javascript:;" class="ghost-pro-pages-user-login-password">
+                                            <span class="lose-password">Lost your password?</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- <div class="ghost-divider ghost-divider-horizontal ghost-divider-with-text">
+                            <span class="ghost-divider-inner-text">or</span>
+                        </div>
+                        <button style="width: 100%" class="ghost-btn ghost-btn-primary ghost-btn-lg ghost-btn-round">
+                            <span>Log in with Phone</span>
+                        </button> -->
+                    </section>
+                </main>
+            </section>
+            <footer class="ghost-pro-components-global-footer-index-globalFooter">
+                <div class="ghost-pro-components-global-footer-index-copyright"></div>
+            </footer>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    $.validator.setDefaults({
+        debug: true, // 调试模式设为true 只验证不提交form 
+        submitHandler: function (form) {
+            loginFormSubmitHandler()
+        }
+    })
+    async function loginFormSubmitHandler() {
+        // const token = $.cookie("token") ? $.cookie("token") : '';
+        const param = {
+            userId: $('#email').val(),
+            passWord: $('#password').val(),
+            
+        }
+        myAjax('POST', 'user/login', param).then(res => {
+            layer.msg(res.message);
+            beforeSend: (xhr) => {
+                     xhr.setRequestHeader("Authorization", "Basic " + token ); 
+                }
+            if (res.code === 10006) {
+                $.cookie('nickName', res.data.nickName, { expires:7, path: '/' });
+                $.cookie('userId', res.data.userId, { expires: 7, path: '/' })
+                setTimeout(function () {
+                    goPage('');
+                }, 500);
+            } else {
+                console.log('请求失败！')
+
+            }
+        })
+    }
+    $().ready(function () {
+        $("#loginForm").validate({
+            onfocusin: function (element) { $(element).valid() },
+            onfocusout: function (element) { $(element).valid() },
+            onkeyup: function (element) { $(element).valid() },
+            focusInvalid: function (element) {
+                $(element).valid()
+            },
+            errorElement: 'div',
+            errorClass: "ghost-form-explain",
+            highlight: function (element, errorClass, validClass) {
+                const elementId = $(`#${element.id}-error`)
+                // $(elementId).parents().addClass('ghost-form-item-with-help')
+                $(elementId).addClass("ghost-form-explain")
+                $(elementId).parent().addClass('has-error')
+            },
+            unhighlight: function (element, errorClass) {
+                const elementId = $(`#${element.id}-error`)
+                $(elementId).parent().removeClass('has-error').addClass('has-success')
+                $(elementId).parents().removeClass('ghost-form-item-with-help')
+            },
+            rules: {
+                password: {
+                    required: true,
+                    minlength: 6
+                },
+                email: {
+                    required: true,
+                    email: true
+                }
+            },
+            messages: {
+                password: {
+                    required: "请输入密码",
+                    minlength: "密码长度不能小于 6 位数"
+                },
+                email: "请输入一个正确的邮箱"
+            }
+        });
+        $('#enterRegisterPage').on('click', () => {
+            goPage('user/register')
+        })
+        $(".lose-password").on("click", function() {
+            goPage("account/losePassword");
+        })
+    });
+</script>
+
+</html>

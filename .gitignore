@@ -1,0 +1,8 @@
+/node_modules
+/log
+/downloads
+/dist
+engineconfig.json
+package-lock.json
+ormconfig.json
+/src/libs/js/common.js

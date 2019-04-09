@@ -1,0 +1,77 @@
+.ghost-pro-pages-account-settings-info-main .ghost-pro-pages-account-settings-info-leftmenu .ghost-menu-inline {
+    border: none;
+}
+
+.ghost-pro-pages-account-settings-info-main .ghost-pro-pages-account-settings-info-leftmenu .ghost-menu:not(.ghost-menu-horizontal) .ghost-menu-item-selected {
+    font-weight: 700;
+}
+
+.ghost-menu {
+    box-sizing: border-box;
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 1.5;
+    font-feature-settings: "tnum";
+    margin: 0;
+    padding: 0;
+    width: 270px;
+    color: var(--col-3c);
+    line-height: 0;
+    list-style: none;
+    background: #fff;
+    outline: none;
+    transition: background .3s,width .2s;
+    zoom: 1;
+}
+
+.ghsot-menu-inline .ghost-menu-item {
+    height: 60px;
+    padding: 0 16px;
+    overflow: hidden;
+    font-size: 14px;
+    line-height: 60px;
+    text-overflow: ellipsis;
+}
+
+.ghsot-menu-inline .ghost-menu-item {
+    border-bottom: 1px solid #cccccc17;
+}
+
+.ghsot-menu-inline .ghost-menu-item:last-child {
+    border-bottom: none;
+}
+
+.ghost-menu-item {
+    position: relative;
+    display: block;
+    text-align: center;
+    margin: 0;
+    padding: 0 20px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: color .3s cubic-bezier(.645,.045,.355,1),border-color .3s cubic-bezier(.645,.045,.355,1),background .3s cubic-bezier(.645,.045,.355,1),padding .15s cubic-bezier(.645,.045,.355,1);
+}
+
+.ghost-menu-item a {
+    color: var(--col-3c);
+}
+
+.ghost-menu-item a:hover {
+    color: var(--withPhone);
+}
+
+.ghost-menu-inline {
+    width: 100%;
+}
+
+.ghost-menu-root.ghost-menu-inline {
+    box-shadow: none;
+}
+
+.ghost-menu .ghost-menu-item-selected a {
+    color: var(--btn-col);
+}
+
+
+
+

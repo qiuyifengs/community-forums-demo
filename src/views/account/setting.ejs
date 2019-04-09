@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel="stylesheet" href="/style/account/setting.css">
+        <% include ../common/script %>
+        <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+        <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+        <script src="https://cdn.bootcss.com/rxjs/6.4.0/rxjs.umd.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.0.0-beta.12/Rx.min.js"></script>
+
+        <style>
+            .ghost-form-item {
+                margin-bottom: 0;
+                height: 65px;
+                text-indent: 12px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="ghost-layout">
+            <% include ../common/header %>
+            <div class="ghost-pro-layouts-basic-layout-content ghost-layout-content">
+                <div class="ghost-row ghost-row-flex">
+                    <% include ./list %>
+                    <section class="ghost-col-xs-24 ghost-col-sm-20 ghost-col-lg-20 ghost-col-xl-20 gutter-pd8 account-item">
+                        <div class="ghost-card">
+                            <div class="ghost-card-head bd-bottom">
+                                <div class="ghost-card-head-wrapper">
+                                    <div class="ghost-card-head-title ghost-pro-pages-account-settings-info-title">
+                                        <span>安全设置</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ghost-card-body" style="padding-top: 0">
+                            <div class="ghost-list ghost-list-split">
+                                <div class="ghost-spin-nested-loading">
+                                    <div class="ghost-spin-container">
+                                        <div class="ghost-list-item">
+                                            <div class="ghost-list-item-meta">
+                                                <div class="ghost-list-item-meta-content">
+                                                    <h4 class="ghost-list-item-meta-title">登录密码：••••••</h4>
+                                                    <div class="ghost-list-item-meta-description">
+                                                        当前密码强度：
+                                                        <font class="strong">
+                                                            <span>强</span>
+                                                        </font>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <ul class="ghost-list-item-action">
+                                                <li>
+                                                    <button data-toggle="ghostModel" data-target="openUpdatePasswordModel" class="ghost-btn ghost-btn-text reset-user-password">
+                                                        <span>修改</span>
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- <div class="ghost-list-item">
+                                            <div class="ghost-list-item-meta">
+                                                <div class="ghost-list-item-meta-content">
+                                                    <div class="ghost-list-item-meta-description">
+                                                        手机验证：<%= result.tel %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <ul class="ghost-list-item-action">
+                                                <li>
+                                                    <button class="ghost-btn ghost-btn-primary">
+                                                        <span>修改</span>
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div> -->
+                                        <div class="ghost-list-item">
+                                            <div class="ghost-list-item-meta">
+                                                <div class="ghost-list-item-meta-content">
+                                                    <h4 class="ghost-list-item-meta-title">备用邮箱</h4>
+                                                    <div class="ghost-list-item-meta-description">
+                                                        邮箱验证：<%= result.email %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <ul class="ghost-list-item-action">
+                                                <li>
+                                                    <% if(result.activity) { %>
+                                                        <button class="ghost-btn ghost-btn-text" data-toggle="ghostModel" data-target="openUpdateEmailModel">
+                                                            <span>修改</span>
+                                                        </button>
+                                                    <% } else { %>
+                                                        <button class="ghost-btn ghost-btn-text validate-user-email">
+                                                            <span>验证</span>
+                                                        </button>
+                                                    <% } %>   
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- start update password model -->
+                        <section class="ghost-model fade-in" id="openUpdatePasswordModel">
+                            <div class="ghost-model-content">
+                                <h3 class="pd-24">修改密码</h3>
+                                <form class="ghost-row ghost-form ghost-form-horizontal pd-24" id="resetPasswordForm">
+                                    <div class="ghost-row ghost-form-item">
+                                        <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-4">
+                                            <label for="oldPassword" class="new－ghost-form-item-required" title="E-mail">旧密码</label>
+                                        </div>
+                                        <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-sm-20">
+                                            <div class="ghost-form-item-control">
+                                                <div class="ghost-form-item-children">
+                                                    <input type="password" placeholder="Please enter the old password" required name="oldPassword" id="oldPassword" class="ghost-input ghost-input-lg">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ghost-row ghost-form-item">
+                                        <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-4">
+                                            <label for="newPassword" class="new－ghost-form-item-required" title="New Password">新密码</label>
+                                        </div>
+                                        <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-sm-20">
+                                            <div class="ghost-form-item-control">
+                                                <div class="ghost-form-item-children">
+                                                    <input type="password" placeholder="Please enter a new password" required name="newPassword" id="newPassword" class="ghost-input ghost-input-lg">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ghost-row ghost-form-item">
+                                        <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-4">
+                                            <label for="confirmPassword" class="new－ghost-form-item-required" title="Confirm Password">确认密码</label>
+                                        </div>
+                                        <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-sm-20">
+                                            <div class="ghost-form-item-control">
+                                                <div class="ghost-form-item-children">
+                                                    <input type="password" placeholder="Please confirm your password" required name="confirmPassword" id="confirmPassword" class="ghost-input ghost-input-lg">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ghost-row ghost-form-item error_tip_next">
+                                        <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-4">
+                                            <!-- <label for="confirmPassword" class="new－ghost-form-item-required" title="Confirm Password"></label> -->
+                                        </div>
+                                        <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-xs-offset-0 ghost-col-sm-16 ghost-col-sm-offset-4">
+                                            <div class="ghost-form-item-control">
+                                                <button class="ghost-btn ghost-btn-primary ghost-btn-lg waves-float float-button-light waves-effect waves-button waves-float waves-light" name="password-submit" id="submit" style="margin-right: 70px">
+                                                    <span>确认</span>
+                                                </button>
+                                                <button type="button" data-dismiss="ghostModel" name="password-cancel" class="ghost-btn ghost-btn-default ghost-btn-lg">
+                                                    <span>取消</span>    
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </section>
+                        <!-- end update password model -->
+                        <section class="ghost-model fade-in" id="openUpdateEmailModel">
+                            <div class="ghost-model-content">
+                                <h3 class="pd-24">修改邮箱</h3>
+                                <form class="ghost-row ghost-form ghost-form-horizontal pd-24" id="resetEmail">
+                                    <div class="ghost-row ghost-form-item">
+                                        <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-4">
+                                            <label for="oldEmail" class="new－ghost-form-item-required" title="Old email">旧邮箱</label>
+                                        </div>
+                                        <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-sm-20">
+                                            <div class="ghost-form-item-control">
+                                                <div class="ghost-form-item-children">
+                                                    <input type="email" placeholder="Please enter the old email" required name="oldEmail" id="oldEmail" class="ghost-input ghost-input-lg">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ghost-row ghost-form-item">
+                                        <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-4">
+                                            <label for="newEmail" class="new－ghost-form-item-required" title="New eamil">新邮箱</label>
+                                        </div>
+                                        <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-sm-20">
+                                            <div class="ghost-form-item-control">
+                                                <div class="ghost-form-item-children">
+                                                    <input type="email" placeholder="Please enter a new email" required name="newEmail" id="newEmail" class="ghost-input ghost-input-lg">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ghost-row ghost-form-item error_tip_next">
+                                        <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-4">
+                                            <!-- <label for="confirmPassword" class="new－ghost-form-item-required" title="Confirm Password"></label> -->
+                                        </div>
+                                        <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-xs-offset-0 ghost-col-sm-16 ghost-col-sm-offset-4">
+                                            <div class="ghost-form-item-control">
+                                                <button class="ghost-btn ghost-btn-primary ghost-btn-lg " name="emial-submit" id="email-submit" style="margin-right: 70px">
+                                                    <span>确认</span>
+                                                </button>
+                                                <button type="button" data-dismiss="ghostModel" name="email-cancel" class="ghost-btn ghost-btn-default ghost-btn-lg">
+                                                    <span>取消</span>    
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </section>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+
+        // $.validator.setDefaults({
+        //     debug: false, // 调试模式设为true 只验证不提交form 
+        //     submitHandler: function(form) {
+        //         // submitResetPasswordHandler()
+        //         closeDialog()
+        //     }
+        // })
+
+        // function submitResetPasswordHandler() {
+        //     const params = {
+        //         userId: $.cookie("userId"),
+        //         oldPassword: $('#oldPassword').val(),
+        //         passWordOne: $('#newPassword').val(),
+        //         passWordTwo: $('#confirmPassword').val()
+        //     }
+        //     myAjax("POST", "account/resetPassword", params).then((res) => {
+        //         if (res.code == 1) {
+        //             let token = res.token
+        //             $.cookie('token', token, { expires: 7, path: '/' })
+        //         }
+        //     })
+        // }
+
+        // init Google Design button click effect 
+        Waves.attach('.float-button-light', ['waves-button', 'waves-float', 'waves-light']);
+        // Init Waves
+        Waves.init();
+
+        function closeDialog() {
+            const $overlay = $('.ghost-model-overlay')
+            $overlay.get(0).remove()
+            $('#openUpdatePasswordModel').removeClass('show')
+        }
+
+        $(function() {
+            // open update password model
+            $('#openUpdatePasswordModel').ghostModel({
+                skinClassName: 'demo',
+	            animationType: 'fade-in'
+            })
+
+            // open update email model
+            $("#openUpdateEmailModel").ghostModel({
+                skinClassName: 'demo',
+	            animationType: 'fade-in'
+            })
+
+            $("#resetPasswordForm").validate({
+                debug: true,
+                submitHandler: function(form) {
+                    const params = {
+                        userId: $.cookie("userId"),
+                        oldPassword: $('#oldPassword').val(),
+                        passWordOne: $('#newPassword').val(),
+                        passWordTwo: $('#confirmPassword').val()
+                    }
+                    myAjax("POST", "account/resetPassword", params).then((res) => {
+                        if (res.code == 1) {
+                            $('#openUpdatePasswordModel').removeClass('show');
+                            $(".ghost-model-overlay").append(`<div class="psw-tip">${res.message}</div>`);
+                            setTimeout(function() {
+                                $(".psw-tip").remove();
+                                closeDialog();
+                            }, 2000)
+                        } else {
+                            $(".error_tip_next").before(`<div class="error_tip">${res.message}</div>`);
+                            setTimeout(function() {
+                                $(".error_tip").remove();
+                            }, 3000);
+                        }
+                    })
+                },
+                onfocusin: function(element) { $(element).valid() },
+                onfocusout: function(element) { $(element).valid() },
+                onkeyup: function(element) { $(element).valid() },
+                focusInvalid: function(element) { $(element).valid() },
+                errorElement: 'div',
+                errorClass:"ghost-form-explain",
+                highlight: function(element, errorClass, validClass) {
+                    const elementId = $(`#${element.id}-error`)
+                    $(elementId).addClass("ghost-form-explain")
+                    $(elementId).parent().addClass('has-error')
+                },
+                unhighlight:function(element, errorClass){
+                    const elementId = $(`#${element.id}-error`)
+                    $(elementId).parent().removeClass('has-error').addClass('has-success')
+                    $(elementId).parents().removeClass('ghost-form-item-with-help')
+                },
+                rules: {
+                    oldPassword: {
+                        required: true,
+                        minlength: 6
+                    },
+                    newPassword: {
+                        required: true,
+                        minlength: 6
+                    },
+                    confirmPassword: {
+                        required: true,
+                        minlength: 6,
+                        equalTo: "#newPassword"
+                    },
+                },
+                messages: {
+                    oldPassword: {
+                        required: "请输入旧密码",
+                        minlength: "旧密码长度不能小于 6 位数"
+                    },
+                    newPassword: {
+                        required: "请输入新密码",
+                        minlength: "新密码长度不能小于 6 位数"
+                    },
+                    confirmPassword: {
+                        required: "请再次输入密码",
+                        minlength: "密码长度不能小于 6 位数",
+                        equalTo: "两次密码输入不一致"
+                    }
+                }
+            }) 
+            // send email
+            $(".validate-user-email").on("click", function() {
+                myAjax("POST", 'account/validateEmail', {userId: $.cookie("userId"), type: 1,}).then((res) => {
+                    if (res.code == 1) {
+                        $("#openUpdateEmailModel").removeClass("show");
+                        alert(res.message);
+                    } else {
+                        console.log(message);
+                    }
+                })
+            });
+            $("#resetEmail").validate({
+                onfocusin: function(element) { $(element).valid() },
+                onfocusout: function(element) { $(element).valid() },
+                onkeyup: function(element) { $(element).valid() },
+                focusInvalid: function(element) { $(element).valid() 
+                    console.log('focusInvalid' + element.id)
+                },
+                debug: true,
+                submitHandler: function(form) {
+                    const params = {
+                        userId: $.cookie("userId"),
+                        oldEmail: $('#oldEmail').val(),
+                        newEmail: $('#newEmail').val(),
+                    }
+                    myAjax("POST", "account/resetEmail", params).then((res) => {
+                        if (res.code == 1) {
+                            $('#openUpdateEmailModel').removeClass('show');
+                            $(".ghost-model-overlay").append(`<div class="psw-tip">${res.message}</div>`);
+                            setTimeout(function() {
+                                $(".psw-tip").remove();
+                                closeDialog();
+                            }, 2000)
+                        } else {
+                            $(".error_tip_next").before(`<div class="error_tip">${res.message}</div>`);
+                            setTimeout(function() {
+                                $(".error_tip").remove();
+                            }, 3000);
+                        }
+                    })
+                },
+                errorElement: 'div',
+                errorClass:"ghost-form-explain",
+                highlight: function(element, errorClass, validClass) {
+                    console.log(element.id)
+                    const elementId = $(`#${element.id}-error`)
+                    // $(elementId).parents().addClass('ghost-form-item-with-help')
+                    $(elementId).addClass("ghost-form-explain")
+                    $(elementId).parent().addClass('has-error')
+                },
+                unhighlight:function(element, errorClass){
+                    const elementId = $(`#${element.id}-error`)
+                    $(elementId).parent().removeClass('has-error').addClass('has-success')
+                    $(elementId).parents().removeClass('ghost-form-item-with-help')
+                },
+                rules: {
+                    oldEmail: {
+                        required: true,
+                        email: true
+                    },
+                    newEmail: {
+                        required: true,
+                        email: true
+                    }
+                },
+                messages: {
+                    oldEmail:  "请输入旧邮箱",
+                    newEmail:  "请输入新邮箱",
+                }
+            });
+        });
+    </script>
+</html>
+
+
+

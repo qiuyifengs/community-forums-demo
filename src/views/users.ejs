@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/style/style.css' />
+    <% include ./common/script %>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+    <h1><%= name%></h1>
+    <% include ./common/pageTurning %>
+  </body>
+  <script>
+    $(function(){
+      $('.page').createPage({
+          pageCount:150,
+          current:6,
+          backFn:function (p) {
+            console.log(p)
+          }
+        })
+    })
+  </script>
+</html>

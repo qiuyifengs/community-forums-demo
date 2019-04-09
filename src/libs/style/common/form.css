@@ -1,0 +1,117 @@
+.ghost-form {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: rgba(0,0,0,0.65);
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 1.5;
+    list-style: none;
+    -webkit-font-feature-settings: 'tnum';
+    font-feature-settings: 'tnum';
+}
+
+.ghost-form-item {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: rgba(0,0,0,0.65);
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 1.5;
+    list-style: none;
+    -webkit-font-feature-settings: 'tnum';
+    font-feature-settings: 'tnum';
+    margin-bottom: 20px;
+    vertical-align: top;
+    transition: all .3s
+}
+
+.ghost-form-item-control {
+    position: relative;
+    line-height: 40px;
+    zoom: 1;
+}
+
+.ghost-form-item-control::before, .ghost-form-item-control::after {
+    content: '';
+    display: table;
+}
+
+.ghost-form-item-children {
+    position: relative;
+}
+
+.ghost-form-item-label {
+    display: inline-block;
+    overflow: hidden;
+    line-height: 39.9999px;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.ghost-form label {
+    font-size: 14px;
+}
+
+.ghost-form-item label {
+    position: relative;
+}
+
+.ghost-form-item-label>label {
+    color: var(--col-a1);
+}
+
+.ghost-form-item-with-help {
+    margin-bottom: 5px;
+}
+
+.has-error .ghost-input, .has-error .ghost-input:hover {
+    border-color: #f5222d;
+}
+
+.has-error .ghost-input:focus {
+    border-color: #ff4d4f;
+    border-right-width: 1px!important;
+    outline: 0;
+    box-shadow: 0 0 0 2px rgba(245,34,45,.2);
+}
+
+.has-error .ghost-form-explain, .has-error .ghost-form-split {
+    color: #f5222d;
+}
+
+.ghost-form-explain, .ghost-form-extra {
+    clear: both;
+    min-height: 22px;
+    color: rgba(0,0,0,.45);
+    line-height: 1.5;
+    transition: color .3s cubic-bezier(.215,.61,.355,1);
+    text-indent: 12px;
+}
+
+.ghost-form-item-required::before {
+    display: inline-block;
+    margin-right: 4px;
+    color: #f5222d;
+    font-size: 14px;
+    font-family: SimSun,sans-serif;
+    line-height: 1;
+    content: '*';
+}
+
+.ghost-form-item-label>label::after {
+    /* content: ':'; */
+    position: relative;
+    top: -0.5px;
+    margin: 0 8px 0 2px;
+}
+
+@media (max-width: 575px) {
+    .ghost-form-item-control-wrapper, .ghost-form-item-label {
+        display: block;
+        width: 100%;
+    }
+}

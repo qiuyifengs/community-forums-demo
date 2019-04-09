@@ -1,0 +1,27 @@
+.page {
+    padding: 20px 0 10px;
+    text-align: center;
+    background: #fff;
+}
+.page span {
+	display: inline-block;
+    margin: 0 10px;
+    height: 29px;
+    width: 29px;
+    font-size: var(--fs-16);
+    letter-spacing: 0px;
+    line-height: 29px;
+    border-radius: 2px;
+	border: 1px solid var(--input-col);
+    color: var(--col-2c);
+}
+
+.page .current {
+    color: var(--col-f8);
+	background: var(--btn-col);
+} 
+.page .page_img {
+    overflow: hidden;
+    vertical-align: middle;
+    transform: translateY(-2px);
+}

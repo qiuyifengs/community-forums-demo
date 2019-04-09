@@ -1,0 +1,155 @@
+/* Basic style for input */
+.ghost-input {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-variant: tabular-nums;
+    list-style: none;
+    -webkit-font-feature-settings: 'tnum';
+    font-feature-settings: 'tnum';
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 32px;
+    padding: 4px 11px;
+    color: rgba(0,0,0,0.65);
+    font-size: 14px;
+    line-height: 1.5;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #d9d9d9;
+    border-radius: 5px;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+}
+
+.ghost-input:hover {
+    border-color: var(--withPhone);
+    border-right-width: 1px !important;
+}
+
+.ghost-input:focus {
+    border-color: var(--btn-col);
+    border-right-width: 1px !important;
+    outline: 0;
+    box-shadow: 0px 0px 10px 0px 
+		rgba(72, 94, 192, 0.5);
+}
+
+/* size mixins for input */
+/* The input box defines three sizes (large, default, small) with heights of 40px, 32px, and 24px */
+.ghost-input-sm {
+    height: 24px;
+    padding: 1px 7px;
+}
+
+.ghost-input-lg {
+    height: 40px;
+    padding: 6px 11px;
+    font-size: 16px;
+}
+
+
+/* Input box with search button */
+.ghost-input-affix-wrapper {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: rgba(0,0,0,0.65);
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 1.5;
+    list-style: none;
+    -webkit-font-feature-settings: 'tnum';
+    font-feature-settings: 'tnum';
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    text-align: start;
+}
+
+.ghost-input-affix-wrapper .ghost-input:not(:last-child) {
+    padding-right: 30px;
+}
+
+.ghost-input-affix-wrapper .ghost-input {
+    min-height: 100%;
+    position: relative;
+    text-align: inherit;
+}
+
+.ghost-input-affix-wrapper .ghost-input-prefix, .ghost-input-affix-wrapper .ghost-input-suffix {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    color: rgba(0,0,0,0.65);
+    line-height: 0;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.ghost-input-affix-wrapper .ghost-input-suffix {
+    right: 12px;
+}
+
+.ghost-input-affix-wrapper .ghost-input-prefix {
+    left: 12px;
+}
+
+.ghost-input-affix-wrapper .ghost-input-prefix :not(.ghosticon), .ghost-input-affix-wrapper .ghost-input-suffix :not(.ghosticon) {
+    line-height: 1.5;
+}
+
+a, area, button, [role='button'], input:not([type='range']), label, select, summary, textarea {
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+}
+input[type='text'], input[type='password'], input[type='number'], textarea {
+    -webkit-appearance: none;
+}
+button, input {
+    overflow: visible;
+}
+input, button, select, optgroup, textarea {
+    margin: 0;
+    color: inherit;
+    font-size: inherit;
+    /* font-family: inherit; */
+    line-height: inherit;
+}
+
+.ghost-input-round {
+	height: 36px;
+	padding: 0 16px;
+	font-size: 16px;
+	border-radius: 5px
+}
+
+.ghost-input-round.ghost-input-lg {
+	height: 40px;
+	padding: 0 20px;
+	font-size: 18px;
+	border-radius: 5px
+}
+
+.ghost-input-round.ghost-input-sm {
+	height: 24px;
+	padding: 0 12px;
+	font-size: 14px;
+	border-radius: 24px
+}
+
+/* textarea base style */
+textarea.ghost-input {
+    max-width: 100%;
+    height: auto;
+    min-height: 32px;
+    vertical-align: bottom;
+    -webkit-transition: all .3s,height 0s;
+    transition: all .3s,height 0s;
+    overflow: auto;
+    resize: vertical;
+}

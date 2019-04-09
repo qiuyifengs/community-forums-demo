@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/forum/forum.css">
+    <% include ../common/script %>
+
+  </head>
+  <body>
+    <div id="root">
+        <div class="ghost-layout">
+            <% include ../common/header %>
+            <div class="ghost-pro-layouts-basic-layout-content ghost-layout-content">
+                <div class="ghost-pro-components-page-header-wrapper-grid-content-main ghost-pro-components-page-header-wrapper-grid-content-wide">
+                    <div class="ghost-row ghost-row-flex">
+                        <div class="ghost-col-xs-24 ghost-col-sm-24 ghost-col-md-24 ghost-col-lg-24 ghost-col-xl-18 gutter-pd8">
+                            
+                            <!--<div class="ghost-loading-mask">
+                                <div class="ghost-loading-spinner">
+                                    <svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg>
+                                </div>
+                            </div>-->
+
+                            <% include ../forum/tab2 %>
+                        </div>
+                        <div class="ghost-col-xs-24 ghost-col-sm-24 ghost-col-md-24 ghost-col-lg-24 ghost-col-xl-6 gutter-pd8">
+                            <div style="margin-bottom: 16px">
+                                <button style="width: 100%" class="ghost-btn ghost-btn-primary ghost-btn-round ghost-btn-lg">
+                                    <span>PUBLISH</span>
+                                </button>
+                            </div>
+                            <% include ../forum/notice %>
+                            <% include ../forum/league %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        
+    </script>
+</body>
+</html>

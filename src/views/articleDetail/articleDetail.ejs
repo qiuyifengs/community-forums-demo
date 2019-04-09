@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel="stylesheet" href="/style/articleDetail/articleDetail.css">
+        <!-- <link rel="stylesheet" href="/style/index.css"> -->
+        <% include ../common/script %>
+        <!-- <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
+        <script src="/richText/markdown-it/dist/markdown-it.js"></script>
+        <script src="/richText/toMark/dist/toMark.js"></script>
+        <script src="/richText/tui-code-snippet/dist/tui-code-snippet.js"></script>
+        <script src="/richText/tui-color-picker/dist/tui-color-picker.js"></script>
+        <script src="/richText/codemirror/lib/codemirror.js"></script>
+        <script src="/richText/highlightjs/highlight.pack.js"></script>
+        <script src="/richText/squire-rte/build/squire-raw.js"></script>
+        <link rel="stylesheet" href="/richText/codemirror/lib/codemirror.css">
+        <script type="text/javascript" src="/js/sensitiveWords.js"></script>
+        <script type="text/javascript" src="/js/jquery.qrcode.min.js"></script>
+    </head>
+    <body>
+        <% include ../common/header %>
+        <!-- <header class="app-page-header bd-bottom">
+            <div class="app-page-header-left">
+                <svg class="iconSvg" aria-hidden="true">
+                    <use xlink:href="#icon-fanhui"></use>
+                </svg>
+            </div>
+            <div class="app-page-header-mid"></div>
+            <div class="app-page-header-right"></div>
+        </header> -->
+        <section class="article_detail_page">
+            <div class="app-author-info">
+                <div class="app-author-headerIcon">
+                    <img class="head_portrait" src="/images/header_icon.png" alt="个人头像">
+                </div>
+                <div class="app-author-userIfo">
+                    <div class="author_name"><%= article.author %></div>
+                    <div class="author_autograph"><%= article.personalProfile %></div>
+                </div>
+            </div>
+            <div class="article_left box-shadow bd-radius-5">
+                <div class="title_box pd-rl30">
+                    <div class="title"><%= article.articleTitle %></div>
+                    <ul class="icon_data">
+                        <li class="data_item">
+                            source：<a target="_blank" href="/topic/<%= article.articleType %>"><span class="eth"><%= article.articleType %></span></a>
+                        </li>
+                        <li class="data_item">
+                            <%= article.viewCount %> 次阅读
+                        </li>
+                        <li class="data_item"><%= article.publishTime.substring(0, 10) %></li>
+                        <li class="data_item source-type">
+                            <span class="article-source bd-radius-3">数据库</span>
+                            <span class="article-source bd-radius-3">html</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="content">
+                        <%= article.articleContent %>
+                </div>
+                <div class="code-html pd-rl30">
+                    <script src="/richText/plantuml-encoder/dist/plantuml-encoder.js"></script>
+                    <script src="/richText/raphael/raphael.js"></script>
+                    <script src="/richText/tui-chart/dist/tui-chart.js"></script>
+                    <script src="/richText/tui-editor-Editor-all.js"></script>
+                    <link rel="stylesheet" href="/richText/tui-editor.css">
+                    <link rel="stylesheet" href="/richText/tui-editor-contents.css">
+                    <link rel="stylesheet" href="/richText/tui-color-picker/dist/tui-color-picker.css">
+                    <link rel="stylesheet" href="/richText/tui-chart/dist/tui-chart.css">
+                    <div id="editSection"></div>
+                </div>
+                <div class="btn_box web-display">
+                    <div class="shared_icon_box">
+                        <ul class="share_icon">
+                            <li class="shared_item shared_wechart">
+                                <svg class="iconSvg" aria-hidden="true">
+                                    <use xlink:href="#icon-weixin"></use>
+                                </svg>
+                            </li>
+                            <li class="shared_item shared_weibo">
+                                <svg class="iconSvg" aria-hidden="true">
+                                    <use xlink:href="#icon-weibo"></use>
+                                </svg>
+                            </li>
+                            <li class="shared_item shared_douban">
+                                <svg class="iconSvg" aria-hidden="true">
+                                    <use xlink:href="#icon-douban1"></use>
+                                </svg>
+                            </li>
+                            <li class="shared_item shared_tieba">
+                                <svg class="iconSvg" aria-hidden="true">
+                                    <use xlink:href="#icon-tieba"></use>
+                                </svg>
+                            </li>
+                            <li class="shared_item shared_facebook">
+                                <svg class="iconSvg" aria-hidden="true">
+                                    <use xlink:href="#icon-facebook1"></use>
+                                </svg>
+                            </li>
+                            <li class="shared_item shared_twitter">
+                                <svg class="iconSvg" aria-hidden="true">
+                                    <use xlink:href="#icon-twitter"></use>
+                                </svg>
+                            </li>
+                        </ul>
+                        <!-- <div class="triangle_right"></div> -->
+                    </div>
+                    <div class="like_btn_box">
+                        <div class="like_btn">
+                            <span class="btn_left_triangle"></span>
+                            <div class="center_btn">
+                                <% if (article.isLike) { %>
+                                    <img class="like" src="/images/like.png" alt="">
+                                <% } else { %>   
+                                    <img class="no_like" src="/images/no_like.png" alt="">
+                                <% } %>
+                                <span>喜欢</span>
+                                <span class="is_like" style="display: none"><%= article.isLike %></span>
+                            </div>
+                            <span class="btn_right_triangle"></span>
+                        </div>
+                        <div class="like_count"><%= article.likeCount %> 人喜欢</div>
+                        <span class="like_num" style="display:none"><%= article.likeCount %></span>
+                    </div>
+                    <div class="collection_btn_box">
+                        <div class="collection_btn not_collect bd-radius-5">
+                            <% if (article.isCollect) { %>
+                                <img class="collection" src="/images/collection.png" alt="">
+                            <% } else { %>   
+                                <img class="collection_black" src="/images/collection_black.png" alt="" >
+                            <% } %>  
+                            <span>收藏</span>
+                            <span class="is_collect" style="display: none"><%= article.isCollect %></span>
+                        </div>
+                        <div class="collection_num"><%= article.collectCount %> 人已收藏</div>
+                    </div>
+                    
+                </div>
+                <div class="write_comment_box web-display">
+                    <p class="comment_num">评论(<%= article.commentTotal %>)</p>
+                    <div class="textarea_box">
+                        <textarea class="write_comment" name="writeComent" id="" cols="30" rows="10" placeholder="What do you want to say?"></textarea>
+                    </div>
+                    <div class="comment_btn_box">
+                        <div class="comment_btn">comment</div>
+                    </div>
+                </div>
+                <div class="comment_list" id="commentTemplate">
+                    <div class="comment_total" style="display:none"><%= article.commentTotal %></div>
+                    <% article.comments.forEach(function(commentItem) {%>
+                        <div class="comment_item parent_comment bd-bottom">
+                            <div class="comment_top">
+                                <img class="commentator_img" src="/images/man1.png" alt="">
+                                <!-- <span class="geren-bg bd-radius-round dom-random-color"><%= commentItem.commentUserName.substring(0, 1) %></span> -->
+                                <div class="commentator_name one_level"><%= commentItem.commentUserName %></div>
+                                <div class="comment_time time"><%= commentItem.commentTime %></div>
+                            </div>
+                            <div class="coment_mid">
+                                <%= commentItem.commentContent %>
+                            </div>
+                            <div class="comment_id del_comment_id" style="display:none"><%= commentItem.commentId %></div>
+                            <div class="comment_userId" style="display:none"><%= commentItem.userId %></div>
+                            <div class="eidt_answer">
+                                <div class="answer">回复</div>
+                                <div class="comment_type" style="display: none">parent</div>
+                            </div>
+                            <% if (commentItem.childrenComentList && commentItem.childrenComentList.length > 0) { %>
+                                <% commentItem.childrenComentList.forEach(function(childrenItem) {%>
+                                    <div class="children_commentator_box">
+                                        <div class="comment_item childer_item">
+                                            <div class="comment_top">
+                                                <!-- <img class="commentator_img" src="/images/man1.png" alt=""> -->
+                                                <!-- <span class="geren-bg bd-radius-round dom-random-color"><%= childrenItem.commentUserName.substring(0, 1) %></span> -->
+                                                <div class="commentator_name children_commentator_name"><%= childrenItem.commentUserName %></div>
+                                                <div class="comment_time time"><%= childrenItem.commentTime %></div>
+                                            </div>
+                                            <div class="coment_mid">
+                                                <span class="reply_man">@<%= childrenItem.commentator %></span>
+                                                <%= childrenItem.commentContent %>
+                                            </div>
+                                            <div class="child_comment_id del_comment_id" style="display:none"><%= childrenItem.childCommentId %></div>
+                                            <div class="comment_userId" style="display:none"><%= childrenItem.userId %></div>
+                                            <div class="eidt_answer">
+                                                <div class="answer">回复</div>
+                                                <div class="comment_type" style="display: none">child</div>
+                                                <!-- <div class="delete">删除</div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% }) %>  
+                            <% } %>  
+                            <div class="comment_bottmo">
+                                <div class="answer_box" contenteditable="true" data-placeholder="What do you want to say?"></div>
+                                <div class="answer_btn_box">
+                                    <div class="answer_btn">comment</div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>  
+                </div>
+                <% if (article.comments.length > 0) { %>
+                    <ul class="ghost-pagination article_page" style="margin: 24px 0; text-align: center"></ul>
+                <% } %>
+                <input type="hidden" id="totalPages" value="<%= article.total %>" style="display: none" />
+            </div>
+            <div class="article_right web-display">
+                <div class="personal_box">
+                    <div class="info_top">
+                        <img class="head_portrait" src="/images/header_icon.png" alt="个人头像">
+                        <div class="my_name"><%= article.author %></div>
+                        <div class="my_autograph"><%= article.personalProfile %></div>
+                    </div>
+                    <div class="info_down bd-top">
+                        <img class="crown_icon" src="/images/crown.png" alt="">
+                        <div class="follow down_item bd-right">
+                            <div class="text">喜欢</div>
+                            <div class="count"><%= article.likeCount %></div>
+                        </div>
+                        <div class="fans down_item">
+                            <div class="text">收藏</div>
+                            <div class="count"><%= article.collectCount %></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="float_window web-display">
+                <div class="to_top float_box">
+                    <div class="triangle_top"></div>
+                    <div class="icon_box">
+                        <svg class="iconSvg" aria-hidden="true">
+                            <use xlink:href="#icon-fanhuidingbu"></use>
+                        </svg>
+                        <span class="float_text">回到<br />顶部</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="qrcode_body">
+            <div class="modal_box">
+                <div class="modal_header">
+                    <svg class="iconSvg" aria-hidden="true">
+                        <use xlink:href="#icon-shanchu1"></use>
+                    </svg>
+                </div>
+                <div class="modal_body"><h5>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</h5>
+                </div> 
+            </div>
+        </div>
+        <div class="ghost-loading-mask" style="display: none">
+            <div class="ghost-loading-spinner">
+                <svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg>
+            </div>
+        </div>
+        <div class="confirm_box">
+            <div class="content_box">
+                <div class="delete_tip">确定删除评论？</div>
+                <div class="confirm_btn_box">
+                    <div class="btn_item sure">确定</div>
+                    <div class="btn_item cancel">取消</div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        let articleId, articleTitle;
+        $(function(){
+            // init pagination config
+            $('.ghost-pagination').pagination({
+                total: document.getElementById('totalPages').value,
+                pageSize: 10,
+                current: 1,
+                coping: true,
+                isHide: true,
+                callback: api => {
+                    $('.ghost-loading-mask').css('display', 'block')
+                    const currentPage = api.getCurrent()
+                    const url = `post/articleDetail/${articleId}/${currentPage}`;
+                    myAjax('GET', url).then(res => {
+                        if (res.code === 1) {
+                            $("#commentTemplate").empty()
+                            res.comments.forEach(item => {
+                                $("#commentTemplate").append(renderCommentsHtml(item))
+                            })
+                            setTimeout(function() {
+                                $('.ghost-loading-mask').css('display', 'none')
+                            }, 500) 
+                        }
+                    })
+                }
+            })
+            let userId =  $.cookie("userId");
+            // share article
+            var _title,_source,_sourceUrl,_pic,_showcount,_desc,_summary,_site,
+                _width = 600,
+                _height = 600,
+                _top = (screen.height-_height)/2,
+                _left = (screen.width-_width)/2,
+                _url = 'http://traveliceland.lofter.com/post/352b58_579d8e7',
+                _pic = 'http://m3.img.srcdd.com/farm4/d/2015/0113/11/6AE3FEBE500857BF82CA97E8F03DD6A8_B500_900_500_411.jpeg';
+            // show share box
+            $(".shared_div").on("click", function(event) {
+                event.stopPropagation();
+                $(".shared_icon_box").css("display", "block");
+            })
+            // shareToWeChart
+            $(".shared_wechart").on("click", function(event) {
+                event.stopPropagation();
+                $("canvas").remove();
+                let qrcode = $(".shared_wechart").qrcode(location.href)
+                $(".modal_body").append(qrcode.find("canvas"));
+                $(".qrcode_body").css("display", "block");
+            });
+            $(".modal_header").find(".iconSvg").on("click", function(event) {
+                event.stopPropagation();
+                $(".qrcode_body").css("display", "none");
+            })
+            // shareToWB
+            $(".shared_weibo").on("click", function(event) {
+                event.stopPropagation();
+                var _shareUrl = 'http://v.t.sina.com.cn/share/share.php?&appkey=895033136';     //真实的appkey，必选参数 
+                _shareUrl += '&url='+ encodeURIComponent(_url||location.href);     //参数url设置分享的内容链接|默认当前页location，可选参数
+                _shareUrl += '&title=' + encodeURIComponent(_title||document.title);    //参数title设置分享的标题|默认当前页标题，可选参数
+                _shareUrl += '&source=' + encodeURIComponent(_source||'');
+                _shareUrl += '&sourceUrl=' + encodeURIComponent(_sourceUrl||'');
+                _shareUrl += '&content=' + 'utf-8';   //参数content设置页面编码gb2312|utf-8，可选参数
+                _shareUrl += '&pic=' + encodeURIComponent(_pic||'');  //参数pic设置图片链接|默认为空，可选参数
+                window.open(_shareUrl,'_blank','width='+_width+',height='+_height+',top='+_top+',left='+_left+',toolbar=no,menubar=no,scrollbars=no, resizable=1,location=no,status=0');
+            })
+            // shareToDouBan
+            $(".shared_douban").on("click", function(event) {
+                event.stopPropagation();
+                var _shareUrl = 'http://shuo.douban.com/!service/share?';
+                _shareUrl += 'href=' + encodeURIComponent(_url||location.href);    //分享的链接
+                _shareUrl += '&name=' + encodeURIComponent(_title||document.title);    //分享的标题
+                _shareUrl += '&image=' + encodeURIComponent(_pic||'');    //分享的图片
+                window.open(_shareUrl,'_blank','width='+_width+',height='+_height+',left='+_left+',top='+_top+',toolbar=no,menubar=no,scrollbars=no,resizable=1,location=no,status=0');
+            });
+            // shareToTieBa
+            $(".shared_tieba").on("click", function(event) {
+                event.stopPropagation();
+                var _shareUrl = 'http://tieba.baidu.com/f/commit/share/openShareApi?';
+                _shareUrl += 'title=' + encodeURIComponent(_title||document.title);
+                _shareUrl += '&url=' + encodeURIComponent(_url||location.href);
+                _shareUrl += '&pic=' + encodeURIComponent(_pic||'');
+                window.open(_shareUrl,'_blank','width='+_width+',height='+_height+',left='+_left+',top='+_top+',toolbar=no,menubar=no,scrollbars=no,resizable=1,location=no,status=0');
+            })
+            // shareToFacebook
+            $(".shared_facebook").on("click", function(event) {
+                event.stopPropagation();
+                var _shareUrl = 'http://www.facebook.com/sharer/sharer.php?';
+                _shareUrl += 'u=' + encodeURIComponent(_url||location.href);
+                _shareUrl += '&t=' + encodeURIComponent(_title||document.title);
+                window.open(_shareUrl,'_blank','width='+_width+',height='+_height+',left='+_left+',top='+_top+',toolbar=no,menubar=no,scrollbars=no,resizable=1,location=no,status=0');
+            });
+            // shareToTwitter
+            $(".shared_twitter").on("click", function(event) {
+                event.stopPropagation();
+                var _shareUrl = 'http://twitter.com/intent/tweet?';
+                _shareUrl += 'url=' + encodeURIComponent(_url||location.href);
+                _shareUrl += '&text=' + encodeURIComponent(_title||document.title);
+                window.open(_shareUrl,'_blank','width='+_width+',height='+_height+',left='+_left+',top='+_top+',toolbar=no,menubar=no,scrollbars=no,resizable=1,location=no,status=0');
+            });
+
+            
+            // Get article from the URL
+            (function () {
+                articleId = this.location.pathname.split('/')[3];
+                articleTitle = $(".title").text();
+                // random color
+                // $(".one_level").each(function() {
+                //     const oneName = $(this).text();
+                //     $(this).prev(".dom-random-color").css("background",renderColor(oneName));
+                // })
+                // $(".children_commentator_name").each(function() {
+                //     const childName = $(this).text();
+                //     $(this).prev(".dom-random-color").css("background",renderColor(childName));
+                // })
+                $(".time").each(function() {
+                    let resTime = formatDateFilter($(this).text())
+                    $(this).text(resTime)
+                });
+            })();
+            // render content
+            let content = JSON.parse($('.content').text()).join('\n');
+            let editor = new tui.Editor({
+                el: document.querySelector('#editSection'),
+                previewStyle: 'vertical',
+                height: 'auto',
+                initialEditType: 'markdown',
+                useCommandShortcut: true,
+                initialValue: content,
+                exts: ['scrollSync', 'colorSyntax', 'uml', 'chart', 'mark', 'table', 'taskCounter']
+            });
+            // create answer box
+            let commentator;
+            $(".comment_list").on("click", ".answer", function(event) {    
+                event.stopPropagation();
+                if (!userId) {
+                    goPage('user/login');
+                    return false;
+                }
+                commentator = ''
+                commentator = $(this).parent().siblings(".comment_top").find(".commentator_name").text();
+                $(this).parents(".parent_comment").find(".comment_bottmo").css({display: "block"});
+            })
+            // submit comment
+            $(".comment_btn_box").on("click", function() {
+                if (!userId) {
+                    goPage('user/login');
+                    return false;
+                }
+                let commentText = $(".write_comment").val();
+                let author = $(".my_name").text();
+                if (!commentText) return;
+                let param = {
+                    author: author,
+                    userId: userId,
+                    nickName: $.cookie("nickName"),
+                    articleTitle: articleTitle,
+                    articleId: articleId,
+                    commentText: commentText
+                }
+                myAjax("POST", "post/addComment", param).then((res) =>{
+                    if (res.code == 10013) {
+                        let commentDetail = {
+                            commentUserName: $.cookie("nickName"),
+                            commentContent: commentText,
+                            commentId: res.commentId,
+                            commentTime: format("yyyy-MM-dd hh:mm:ss", new Date())
+                        }
+                        $(".comment_list").append(addCommentHtml(commentDetail));
+                        $(".write_comment").val('');
+                        let addCom = ($(".comment_total").text() * 1) + 1;
+                        $(".comment_num").text(`评论(${addCom})`);
+                        $(".comment_total").text(addCom);
+                    } else {
+                        console.log(res.message)
+                    }
+                })
+            })
+            // submit children comment
+            $(".comment_list").on("click", ".answer_btn", function(event) {
+                let commentText = $(".answer_box").text();
+                let commentId = $(this).parents(".parent_comment").find(".comment_id").text();
+                if (!commentText) return;
+                event.stopPropagation();
+                let param = {
+                    userId: userId,
+                    commentator: commentator,
+                    nickName: $.cookie("nickName"),
+                    articleId: articleId,
+                    commentText: commentText,
+                    commentId: commentId
+                }
+                myAjax("POST", "post/addChildrenComment", param).then((res) => {
+                    if (res.code == 10013) {
+                        let commentDetail = {
+                            commentator: commentator,
+                            commentUserName: $.cookie('nickName'),
+                            commentContent: commentText,
+                            commentId: res.commentId,
+                            commentTime: format("yyyy-MM-dd hh:mm:ss", new Date())
+                        }
+                        $(".answer_box").text('');
+                        $(this).parents(".comment_bottmo").before(childrenRenderComment(commentDetail));
+                        $(this).parents(".comment_bottmo").css({display: "none"});
+                    }
+                })
+            });
+            // add collect
+            $(".collection_btn").on("click", function() {
+                if (!userId) {
+                    goPage('user/login');
+                    return false;
+                }
+                let collectionNum = parseInt($(".collection_num").text());
+                if(window.event){ // IE
+                    event.cancelBubble  = true;
+                }else{
+                    event.stopPropagation();
+                }
+                let param = {
+                    userId: userId,
+                    articleId: articleId
+                }
+                myAjax("POST", "post/addCollect", param).then((res) => {
+                    if (res.code == 1) {
+                        if ($(".is_collect").text() == 'true') {
+                            $(".collection").addClass("dp-none");
+                            $(".collection").after('<img class="collection_black" src="/images/collection_black.png" alt="" >');
+                            $(".collection_num").text((collectionNum - 1) + ' 人已收藏')
+                            collectionNum = collectionNum - 1;
+                            $(".is_collect").text('false')
+                        } else {
+                            if ($(".collection").hasClass("dp-none")) {
+                                $(".collection").removeClass("dp-none");
+                            } else {
+                                $(".collection_black").before('<img class="collection" src="/images/collection.png" alt="" >');
+                            }
+                            $(".collection_black").remove();
+                            $(".collection_num").text((collectionNum + 1) + ' 人已收藏')
+                            collectionNum = collectionNum + 1;
+                            $(".is_collect").text('true')
+                        }
+                        $(".fans").find(".count").text(collectionNum);
+                    } else {
+                        console.log('请求失败！')
+                    }
+                })
+            })
+            // like
+            $(".like_btn").on("click", function() {
+                if (!userId) {
+                    goPage('user/login');
+                    return false;
+                }
+                let likeCount = parseInt($(".like_num").text());
+                console.log(likeCount)
+                if(window.event){ // IE
+                    event.cancelBubble  = true;
+                }else{
+                    event.stopPropagation();
+                }
+                let param = {
+                    userId: userId,
+                    articleId: articleId
+                }
+                myAjax("POST", "post/addLike", param).then((res) => {
+                    if (res.code == 1) {
+                        if ($(".is_like").text() == 'true') {
+                            $(".like").addClass("dp-none");
+                            $(".like").after('<img class="no_like" src="/images/no_like.png" alt="" >');
+                            $(".like_num").text(likeCount - 1 + '人喜欢');
+                            likeCount = likeCount - 1;
+                            $(".like_count").text(likeCount + '人喜欢');
+                            $(".is_like").text('false')
+                        } else {
+                            if ($(".like").hasClass("dp-none")) {
+                                $(".like").removeClass("dp-none");
+                            } else {
+                                $(".no_like").before('<img class="like" src="/images/like.png" alt="" >');
+                            }
+                            $(".like_num").text(likeCount + 1 + ' 人喜欢');
+                            likeCount = likeCount + 1
+                            $(".like_count").text(likeCount + ' 人喜欢');
+                            $(".no_like").remove();
+                            $(".is_like").text('true')
+                        }
+                        $(".follow").find(".count").text(likeCount);
+                    } else {
+                        console.log('请求失败！')
+                    }
+                })
+            })
+            // add delete dom
+            $(".comment_item").each(function() {
+                if ($(this).children(".comment_userId").text() == $.cookie("userId")) {
+                    $(this).children(".eidt_answer").append(`<div class="delete">删除</div>`)
+                }
+            })
+            // delete myself comment
+            let delCommentId = '';
+            let commentType = '';
+            let delDom;
+            $(".comment_list").on("click", ".delete", function(event) {
+                event.stopPropagation();
+                delDom = $(this);
+                delCommentId = $(this).parent().siblings(".del_comment_id").text();
+                commentType = $(this).prev().text();
+                $(".confirm_box").css("display", "block");
+            })
+            // sure delete
+            $(".sure").on("click", function() {
+                let param = {
+                    userId: userId,
+                    articleId: articleId,
+                    commentId: delCommentId,
+                    commentType: commentType
+                }
+                myAjax("POST", "post/deleteComment", param).then(res => {
+                    layer.msg(res.message);
+                    $(".confirm_box").css("display", "none");
+                    if (res.code == 10014) {
+                        if (commentType == 'parent') {
+                            delDom.parents(".comment_item").remove();
+                        } else {
+                            delDom.parents(".childer_item").remove();
+                        }
+                        let addCom = ($(".comment_total").text() * 1) - 1;
+                        $(".comment_num").text(`评论(${addCom})`);
+                        $(".comment_total").text(addCom);
+                    } else {
+                        console.log(res)
+                    }
+                })
+            })
+            // cancel delete
+            $(".cancel").on("click", function() {
+                $(".confirm_box").css("display", "none");
+            })
+            // go to top
+            $('.to_top').hide();
+            $(window).scroll(function(){
+                if($(this).scrollTop() > 100){
+                    $('.to_top').fadeIn();
+                }else{
+                    $('.to_top').fadeOut();
+                }
+            });
+            $('.to_top').click(function(){
+                $('html ,body').animate({scrollTop: 0}, 300);
+                return false;
+            });
+        })
+        function renderCommentsHtml(item) {
+            console.log(11,item)
+            return `
+                <div class="comment_item parent_comment bd-bottom">
+                    <div class="comment_top">
+                        <img class="commentator_img" src="/images/man1.png" alt="">
+                        <div class="commentator_name">${ item.commentUserName }</div>
+                        <div class="comment_time">${ item.commentTime }</div>
+                    </div>
+                    <div class="coment_mid">
+                        ${ item.commentContent }
+                    </div>
+                    <div class="comment_id del_comment_id" style="display:none">${ item.commentId }</div>
+                    <div class="comment_userId" style="display:none">${ commentItem.userId }</div>
+                    <div class="eidt_answer">
+                        <div class="answer">回复</div>
+                        <div class="comment_type" style="display: none">parent</div>
+                    </div>
+                    ${ forChileComment(item.childrenComentList) }
+                    <div class="comment_bottmo">
+                        <div class="answer_box" contenteditable="true" data-placeholder="What do you want to say?"></div>
+                        <div class="answer_btn_box">
+                            <div class="answer_btn">comment</div>
+                        </div>
+                    </div>
+                </div>
+            `
+        }
+        function addCommentHtml(item) {
+            return `<div class="comment_item parent_comment bd-bottom">
+                        <div class="comment_top">
+                            <img class="commentator_img" src="/images/man1.png" alt="">
+                            <div class="commentator_name">${ item.commentUserName }</div>
+                            <div class="comment_time">${ item.commentTime }</div>
+                        </div>
+                        <div class="coment_mid">
+                            ${ item.commentContent }
+                        </div>
+                        <div class="comment_id del_comment_id" style="display:none">${ item.commentId }</div>
+                        <div class="comment_userId" style="display:none">${ $.cookie("userId") }</div>
+                        <div class="eidt_answer">
+                            <div class="answer">回复</div>
+                            <div class="comment_type" style="display: none">parent</div>
+                            <div class="delete">删除</div>
+                        </div>
+                        <div class="comment_bottmo">
+                            <div class="answer_box" contenteditable="true" data-placeholder="What do you want to say?"></div>
+                            <div class="answer_btn_box">
+                                <div class="answer_btn">comment</div>
+                            </div>
+                        </div>
+                    </div>
+                    `
+        }
+        function forChileComment(item) {
+            if (item.length < 1) return ' ';
+            let childComment = '';
+            item.forEach(childItem => {
+                childComment += childrenRenderComment(childItem)
+            })
+            return childComment;
+        }
+        function isNewComment(item) {
+            return `
+                <div class="child_comment_id del_comment_id" style="display:none">${ item.childCommentId }</div>
+                <div class="comment_userId" style="display:none">${ $.cookie("userId") }</div>
+            `
+        }
+        function childrenRenderComment(item) {
+            return `
+                <div class="children_commentator_box">
+                    <div class="comment_item childer_item">
+                        <div class="comment_top">
+                            <img class="commentator_img" src="/images/man1.png" alt="">
+                            <div class="commentator_name children_commentator_name">${ item.commentUserName }</div>
+                            <div class="comment_time"">${ item.commentTime }</div>
+                        </div>
+                        ${ isNewComment(item) }
+                        <div class="coment_mid">
+                            <span class="reply_man">@${ item.commentator }</span>
+                            ${ item.commentContent }
+                        </div>
+                        <div class="eidt_answer">
+                            <div class="answer">回复</div>
+                            <div class="comment_type" style="display: none">child</div>
+                            <div class="delete">删除</div>
+                        </div>
+                    </div>
+                </div>
+            `
+        }
+    </script>
+</html>

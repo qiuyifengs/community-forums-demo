@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel="stylesheet" href="/style/account/reply.css">
+        <% include ../common/script %>
+    </head>
+    <body>
+        <div class="ghost-layout">
+            <% include ../common/header %>
+            <div class="ghost-pro-layouts-basic-layout-content ghost-layout-content">
+                <div class="ghost-row ghost-row-flex">
+                    <% include ./list %>
+                    <section class="ghost-col-xs-24 ghost-col-sm-20 ghost-col-lg-20 ghost-col-xl-20 account-item">
+                        <div class="ghost-card">
+                            <div class="ghost-card-head bd-bottom">
+                                <div class="ghost-card-head-wrapper">
+                                    <div class="ghost-card-head-title">
+                                        <span>我的回复</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ghost-card-body" style="padding-left: 24px">
+                                <div class="ghost-list ghost-list-vertical ghost-list-split">
+                                    <div class="ghost-spin-nested-loading">
+                                        <div class="ghost-spin-container" id="replyTemplate">
+                                            <% answerList.commentRes.forEach(function(item) {%>
+                                                <div class="ghost-list-item">
+                                                    <div class="ghost-list-item-meta">
+                                                        <div class="ghost-list-item-meta-avatar mg-r0">
+                                                            <span class="ghost-avatar ghost-avatar-circle ghost-avatar-image">
+                                                                <img src="/images/header_icon.png">
+                                                            </span>
+                                                        </div>
+                                                        <div class="ghost-list-item-meta-content">
+                                                            <div class="parents_item">
+                                                                <h4 class="ghost-list-item-meta-title comment-info pd-l15">
+                                                                    <a class="commentator_name" href="javascript:;"><%= item.commentUserName %></a>
+                                                                    <span class="ghost-list-item-meta-time time"><%= item.commentTime %></span>
+                                                                </h4>
+                                                                <div class="pd-l15 ghost-list-item-meta-description ghost-pro-components-article-list-content-index-description">
+                                                                    <%= item.commentContent %>
+                                                                </div>
+                                                                <div class="article_id" style="display:none"><%= item.articleId %></div>
+                                                                <div class="comment_id" style="display:none"><%= item.commentId %></div>
+                                                                <button class="ghost-btn ghost-btn-text reply-btn">
+                                                                    <span class="pd-l15">回复</span>
+                                                                </button>
+                                                                <% if (item.childrenComentList && item.childrenComentList.length > 0) { %>
+                                                                    <% item.childrenComentList.forEach(function(childrenItem) {%>
+                                                                        <div class="children_comment_list pd-l15">   
+                                                                            <!-- <div class="ghost-list-item-meta-avatar children_item">
+                                                                                <span class="ghost-avatar ghost-avatar-circle ghost-avatar-image">
+                                                                                    <img src="/images/header_icon.png">
+                                                                                </span>
+                                                                            </div> -->
+                                                                            <div class="ghost-list-item-meta-content">
+                                                                                <div>
+                                                                                    <h4 class="ghost-list-item-meta-title comment-info">
+                                                                                        <a class="commentator_name" href="javascript:;"><%= childrenItem.commentUserName %></a>
+                                                                                        <span class="ghost-list-item-meta-time time"><%= childrenItem.commentTime %></span>
+                                                                                    </h4>
+                                                                                    <div class="ghost-list-item-meta-description ghost-pro-components-article-list-content-index-description">
+                                                                                        <span class="reply_man">@<%= childrenItem.commentator %></span>
+                                                                                        <%= childrenItem.commentContent %>
+                                                                                    </div>
+                                                                                    <button class="ghost-btn ghost-btn-text reply-btn">
+                                                                                        <span>回复</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div> 
+                                                                    <% }) %>  
+                                                                <% } %> 
+                                                                <div class="comment_bottmo">
+                                                                    <div class="answer_box" contenteditable="true" data-placeholder="What do you want to say?"></div>
+                                                                    <div class="answer_btn_box">
+                                                                        <div class="answer_btn">comment</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="ghost-pro-components-article-list-content-index-extra fs12">
+                                                                    Respond to my theme: <%= item.articleTitle %>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <% }) %>  
+                                        </div>
+                                    </div>
+                                    <% if (answerList.commentRes.length > 0) { %>
+                                        <ul class="ghost-pagination article_page" style="margin: 24px 0; text-align: center"></ul>
+                                    <% } %>
+                                    <input type="hidden" id="totalPages" value="<%= answerList.total %>" style="display: none" />
+                                </div>
+                            </div>
+                        </div>
+                        <% if (answerList.commentRes.length < 1) { %>
+                            <div class="no_data">
+                                <img src="/images/no_answer.png" alt=""><br />
+                                暂无回复
+                            </div>
+                        <% } %>
+                        <div class="ghost-loading-mask" style="display: none">
+                            <div class="ghost-loading-spinner">
+                                <svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        $(function() {
+            let userId = $.cookie("userId");
+            // init pagination config
+            $('.ghost-pagination').pagination({
+                total: document.getElementById('totalPages').value,
+                pageSize: 10,
+                current: 1,
+                coping: true,
+                isHide: true,
+                callback: api => {
+                    $('.ghost-loading-mask').css('display', 'block')
+                    const currentPage = api.getCurrent()
+                    const url = `account/reply/${$.cookie("userId")}/${currentPage}`;
+                    myAjax('GET', url).then(res => {
+                        if (res.code === 1) {
+                            $("#replyTemplate").empty()
+                            res.commentRes.forEach(item => {
+                                $("#replyTemplate").append(renderCommentsHtml(item))
+                            })
+                            setTimeout(function() {
+                                $('.ghost-loading-mask').css('display', 'none')
+                            }, 500) 
+                        }
+                    })
+                }
+            })
+            // create answer box
+            let commentator;
+            $(".ghost-spin-container").on("click", ".reply-btn", function(event) {    
+                event.stopPropagation();
+                commentator = $(this).siblings(".comment-info").find(".commentator_name").text();
+                console.log(commentator)
+                $(this).parents(".parents_item").find(".comment_bottmo").css({display: "block"});
+            });
+            $(".time").each(function() {
+                let resTime = formatDateFilter($(this).text())
+                $(this).text(resTime)
+            });
+            // reply comment
+            $(".ghost-spin-container").on("click", ".answer_btn", function(event) {
+                let commentText = $(".answer_box").text();
+                let commentId = $(this).parents(".parents_item").find(".comment_id").text();
+                let articleId = $(this).parents(".parents_item").find(".article_id").text();
+                if (!commentText) return;
+                event.stopPropagation();
+                let param = {
+                    userId: userId,
+                    commentator: commentator,
+                    articleId: articleId,
+                    commentText: commentText,
+                    commentId: commentId
+                }
+                myAjax("POST", "post/addChildrenComment", param).then((res) => {
+                    if (res.code == 1) {
+                        let commentDetail = {
+                            commentator: commentator,
+                            commentUserName: $.cookie('userId'),
+                            commentContent: commentText,
+                            commentTime: format("yyyy-MM-dd hh:mm:ss", new Date())
+                        }
+                        $(".answer_box").text('');
+                        $(this).parents(".comment_bottmo").before(replyComment(commentDetail));
+                        $(this).parents(".comment_bottmo").css({display: "none"});
+                    }
+                })
+            });
+        })
+        function replyComment(item) {
+            return `
+                <div class="children_comment_list">   
+                    <div class="ghost-list-item-meta-avatar children_item">
+                        <span class="ghost-avatar ghost-avatar-circle ghost-avatar-image">
+                            <img src="/images/header_icon.png">
+                        </span>
+                    </div>
+                    <div class="ghost-list-item-meta-content">
+                        <div class="ghost-pro-components-article-list-content-index-listContent">
+                            <h4 class="ghost-list-item-meta-title comment-info">
+                                <a class="commentator_name" href="javascript:;">${ item.commentUserName }</a>
+                                <span class="ghost-list-item-meta-time">${ item.commentTime }</span>
+                            </h4>
+                            <div class="ghost-list-item-meta-description ghost-pro-components-article-list-content-index-description">
+                                <span class="reply_man">@${ item.commentator }</span>
+                                ${ item.commentContent }
+                            </div>
+                            <button class="ghost-btn ghost-btn-text reply-btn">
+                                <span>回复</span>
+                            </button>
+                        </div>
+                    </div>
+                </div> 
+            `
+        }
+        function forrEplyComment(item) {
+            if (item.length < 1) return false;
+            let childComment;
+            item.forEach(childItem => {
+                childComment += replyComment(childItem)
+            })
+            return childComment;
+        }
+        function renderCommentsHtml(item) {
+            return `<div class="ghost-list-item">
+                        <div class="ghost-list-item-meta">
+                            <div class="ghost-list-item-meta-avatar">
+                                <span class="ghost-avatar ghost-avatar-circle ghost-avatar-image">
+                                    <img src="/images/header_icon.png">
+                                </span>
+                            </div>
+                            <div class="ghost-list-item-meta-content">
+                                <div class="ghost-pro-components-article-list-content-index-listContent parents_item">
+                                    <h4 class="ghost-list-item-meta-title comment-info">
+                                        <a class="commentator_name" href="javascript:;">${ item.commentUserName }</a>
+                                        <span class="ghost-list-item-meta-time">${ item.commentTime }</span>
+                                    </h4>
+                                    <div class="ghost-list-item-meta-description ghost-pro-components-article-list-content-index-description">
+                                        ${ item.commentContent }
+                                    </div>
+                                    <div class="article_id" style="display:none">${ item.articleId }</div>
+                                    <div class="comment_id" style="display:none">${ item.commentId }</div>
+                                    <button class="ghost-btn ghost-btn-text reply-btn">
+                                        <span>回复</span>
+                                    </button>
+                                    ${ forrEplyComment(item.childrenComentList) }
+                                    <div class="comment_bottmo">
+                                        <div class="answer_box" contenteditable="true" data-placeholder="What do you want to say?"></div>
+                                        <div class="answer_btn_box">
+                                            <div class="answer_btn">comment</div>
+                                        </div>
+                                    </div>
+                                    <div class="ghost-pro-components-article-list-content-index-extra fs12">
+                                        Respond to my theme: ${ item.articleTitle }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+        }
+    </script>
+</html>
+
+
+
