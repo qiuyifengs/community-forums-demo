@@ -1,0 +1,147 @@
+
+// baseUrl
+var baseUrl = 'http://192.168.4.188:3002/';
+// var baseUrl = 'http://127.0.0.1:3002/';
+/**
+ * checkEmail
+ * @param {*} email 
+ */
+function checkEmail(email) {
+    var myReg = /^[a-zA-Z0-9_-]+@([a-zA-Z0-9]+\.)+(com|cn|net|org)$/;
+    if (myReg.test(email)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+/**
+ * goPage
+ * @param {*} pathName 
+ */
+function goPage(pathName) {
+    $(window).attr('location', baseUrl + pathName);
+}
+/**
+ * _ajax
+ * @param {*} method 
+ * @param {*} url 
+ * @param {*} params 
+ */
+function myAjax(method, url, params) {
+    return new Promise((resolve, rejects) => {
+        try {
+            $.ajax({
+                type: method,
+
+                url: baseUrl + url,
+                data: params,
+                // headers: {
+                //     'Authorization': 'Bearer ',// <jwt token>
+                // },
+                success: (data) => {
+                    resolve(data);
+                },
+                error: (err) => {
+                    rejects(err);
+                }
+            })
+        }
+        catch (err) {
+            return err
+        }
+    })
+
+}
+
+/**
+* 格式化时间
+*
+* @param {String} str
+* @returns 格式化后的时间
+*/
+function formatDateFilter(value) {
+    if (!value) return ''
+    // safari中不支持2018-02-13这种格式转为时间戳会显示NaN, - 替换 /
+    var date = new Date(value.replace(/-/g, '/'))
+    var time = new Date().getTime() - date.getTime() // 现在的时间-传入的时间 = 相差的时间（单位 = 毫秒）
+    if (time < 0) {
+        return ''
+    } else if ((time / 1000 < 30)) {
+        return '刚刚'
+    } else if (time / 1000 < 60) {
+        return parseInt((time / 1000), 10) + '秒前'
+    } else if ((time / 60000) < 60) {
+        return parseInt((time / 60000), 10) + '分钟前'
+    } else if ((time / 3600000) < 24) {
+        return parseInt((time / 3600000), 10) + '小时前'
+    } else if ((time / 86400000) < 31) {
+        return parseInt((time / 86400000), 10) + '天前'
+    } else if ((time / 2592000000) < 12) {
+        return parseInt((time / 2592000000), 10) + '月前'
+    } else {
+        return parseInt((time / 31536000000), 10) + '年前'
+    }
+}
+
+function formatDateFilter2(value) {
+    var mistiming = Math.round(new Date() / 1000) - value;
+    var postfix = mistiming > 0 ? '前' : '后'
+    mistiming = Math.abs(mistiming)
+    var arrr = ['年', '个月', '星期', '天', '小时', '分钟', '秒']
+    var arrn = [31536000, 2592000, 604800, 86400, 3600, 60, 1]
+
+    for (var i = 0; i < 7; i++) {
+        var inm = Math.floor(mistiming / arrn[i])
+        if (inm != 0) {
+            return inm + arrr[i] + postfix
+        }
+    }
+}
+// return "yyyy-MM-dd hh:mm:ss"
+function format(fmt, date)   
+{ //author: meizz   
+    var o = {   
+        "M+" : date.getMonth()+1,                 //月份   
+        "d+" : date.getDate(),                    //日   
+        "h+" : date.getHours(),                   //小时   
+        "m+" : date.getMinutes(),                 //分   
+        "s+" : date.getSeconds(),                 //秒   
+        "q+" : Math.floor((date.getMonth()+3)/3), //季度   
+        "S"  : date.getMilliseconds()             //毫秒   
+    };   
+    if(/(y+)/.test(fmt))   
+        fmt=fmt.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length));   
+    for(var k in o)   
+        if(new RegExp("("+ k +")").test(fmt))   
+    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+    return fmt;
+}
+
+function renderColor(id,name) {
+    var info = JSON.parse(localStorage.getItem('staffInfo-'+id));
+    var color =null;
+    if(info){
+      if((!info.name)&&name){
+        localStorage.setItem('staffInfo-'+id,JSON.stringify({id:id,name:name,color:info.color}));
+        return info.color;
+      }else{
+        return info.color;
+      }
+    }else{
+      if(name){
+        color ='#';
+        for(var i = 0;i<6;i++){
+          color+=Math.round(Math.random() * 9);
+        }
+        localStorage.setItem('staffInfo-'+id,JSON.stringify({id:id,name:name,color:color}));
+        return color;
+      }else{
+        color ='#';
+        for(var i = 0;i<6;i++){
+          color+=Math.round(Math.random() * 9);
+        }
+        localStorage.setItem('staffInfo-'+id,JSON.stringify({id:id,color:color}));
+        return color;
+      }
+    }
+}
