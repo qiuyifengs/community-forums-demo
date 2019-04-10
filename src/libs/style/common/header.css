@@ -76,6 +76,10 @@
     display: none;
     font-family: var(--font-f);
 }
+#register {
+    line-height: 36px;
+    color: var(--btn-col);
+}
 .new_icon {
     overflow: hidden;
     width: 24px;

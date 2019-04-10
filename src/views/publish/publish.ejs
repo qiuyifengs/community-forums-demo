@@ -82,18 +82,21 @@
             let editContent = $(".edit_content").text();
             let articleSource = $(".type_list").children(":first").text();
             let labelArr = [];
-            let curLabelArr = $(".cur_article_label").text().split(',');
-            curLabelArr.forEach(item => {
-                let labelDiv = `<div class="show-label bd-radius-3">
-                                    <span>${item}</span> 
-                                    <svg class="iconSvg" aria-hidden="true">
-                                        <use xlink:href="#icon-guanbi"></use>
-                                    </svg>
-                                </div>`;
-                $(".typle_input").before(labelDiv);
-                labelArr.push(item);
-            })
-            console.log(labelArr)
+            let curLabelArr = $(".cur_article_label").text();
+            if (curLabelArr !== "") {
+                curLabelArr.split(",").forEach(item => {
+                    let labelDiv = `<div class="show-label bd-radius-3">
+                                        <span>${item}</span> 
+                                        <svg class="iconSvg" aria-hidden="true">
+                                            <use xlink:href="#icon-guanbi"></use>
+                                        </svg>
+                                    </div>`;
+                    $(".typle_input").before(labelDiv);
+                    labelArr.push(item);
+                    console.log(111)
+                })
+            }
+            
             if (!userId) {
                 goPage('user/login');
             }
@@ -300,7 +303,7 @@
                     layer.msg(res.message);
                     if (res.code == 1) {
                         setTimeout(function() {
-                            goPage('');
+                            goPage('account/posts/' + $.cookie("userId"));
                         }, 2000);
                     } else {
                         console.log(res.message);
@@ -322,7 +325,7 @@
                     isEdit: isEdit,
                     isDrafts: true,
                     articleId: articleId,
-                    articleTitle: articleTitle,
+                    articleTitle: articleTitle ? articleTitle : '未指定文章标题',
                     articleContent: JSON.stringify(contentArr),
                     articleType: articleSource,
                     articleLabel: labelArr
@@ -331,7 +334,7 @@
                     if (res.code == 1) {
                         layer.msg('保存成功！');
                         setTimeout(function() {
-                            goPage('');
+                            goPage('account/posts/' + $.cookie("userId"));
                         }, 2000);
                     } else {
                         layer.msg(res.message);
@@ -349,5 +352,8 @@
                 $('.article_content .highlight').removeClass('highlight');
             })
         })
+        function saveArticle() {
+
+        }
     </script>
 </html>

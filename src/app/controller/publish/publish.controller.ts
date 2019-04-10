@@ -29,7 +29,7 @@ export class PublishController {
             params.articleId = util.ramdom.random(6) +  util.dateType.getTime();
             params.publishTime = await util.dateType.toSecond();
         }
-        params.articleLabel = params.articleLabel.join(',');
+        params.articleLabel = params.articleLabel ?  params.articleLabel.join(',') : '';
         return this.postsRepository.publish(params);
     }
 }

@@ -33,12 +33,12 @@
                             <a href="/user/login" class="ghost-pro-components-global-header-index-action mg-r30">
                                 <span style="color: #3c3c3c">LOGIN</span>
                             </a>
-                            <button class="ghost-btn ghost-btn-round bd-ghost">
+                            <a href="/user/register" class="ghost-btn-round bd-ghost" id="register">
                                 <span>JOIN US</span>
-                            </button>
+                            </a>
                         </div>
                         <div class="user-login">
-                            <span class="ghost-pro-components-global-header-index-action ghost-pro-components-notice-icon-index-noticeButton ghost-dropdown-trigger mg-r30">
+                            <span class="ghost-pro-components-global-header-index-action ghost-pro-components-notice-icon-index-noticeButton ghost-dropdown-trigger mg-r20">
                                 <span class="ghost-pro-components-notice-icon-index-badge ghost-badge">
                                     <svg class="iconSvg news_icon" aria-hidden="true">
                                         <use xlink:href="#icon-tongzhi"></use>
@@ -56,7 +56,7 @@
                         <!-- <span class="ghost-pro-components-select-lang-index-dropDown ghost-pro-components-global-header-index-action ghost-dropdown-trigger">
                             <i class="anticon"></i>
                         </span> -->
-                        <button class="ghost-btn ghost-btn-primary ghost-btn-round write-article" id="enterPublish">
+                        <button class="ghost-btn ghost-btn-primary write-article" id="enterPublish">
                             <span>写文章</span>
                         </button>
                     </section>
@@ -141,9 +141,9 @@
     $(".header-random-color").text(nickName.substring(0, 1)).css("background",renderColor(nickName));
     if (!userId) {
         // $(".ghost-btn-round").remove();
-        let jionUs = `<button class="ghost-btn ghost-btn-primary ghost-btn-round" style="margin-right: 12px">
+        let jionUs = `<a class="ghost-btn ghost-btn-primary ghost-btn-round" id="register" style="margin-right: 12px">
                             <span>JOIN US</span>
-                    </button>`
+                    </a>`
         $(".ghost-pro-components-notice-icon-index-noticeButton").before(jionUs)
     } else {
         $(".user-lose-login").css("display", "none");
@@ -166,11 +166,6 @@
         $(".langue-show").find("img").attr("src", showImg);
         $(".langue-box").hide();
         // do something
-    })
-    // go to register page
-    $(".ghost-btn-round").on("click", function(event) {
-        event.stopPropagation();
-        goPage('user/register');
     })
 
     // LOGIN or account infomation page
@@ -202,10 +197,12 @@
     })
     $('#enterPublish').on('click', function(event) {
         event.stopPropagation()
-        if (!userId) {
+        console.log(111, userId)
+        if (!$.cookie("userId")) {
             goPage('user/login')
         } else {
             myAjax('POST', 'account/getUserInfo', { userId: userId }).then((res) => {
+                console.log(res)
                 if (res.activity) {
                     goPage('post/publish/')
                 } else {

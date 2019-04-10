@@ -35,6 +35,7 @@ export class PublishService {
     async publish(data): Promise<any> {
         const userInfo = await this.userRepository.findOne({ userId: data.userId });
         data.author = userInfo.nickName;
+        console.log(data)
         await this.addArticleDetail(data);
         if (data.isEdit !== 'false') {
             let editRes = await this.postsRepository.findOne({ articleId: data.articleId });
