@@ -67,6 +67,7 @@
                     <div class="save_btn_box">
                         <div class="save_btn">save</div>
                     </div>
+                    <div class="saving">保存中...</div>
                 </div>
             </div>
         </div>
@@ -93,14 +94,11 @@
                                     </div>`;
                     $(".typle_input").before(labelDiv);
                     labelArr.push(item);
-                    console.log(111)
                 })
             }
-            
             if (!userId) {
                 goPage('user/login');
             }
-
             if (editType) {
                 $(".type_item").each(function() {
                     if ($(this).text() == editType) {

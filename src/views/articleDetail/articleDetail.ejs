@@ -402,6 +402,7 @@
                 commentator = ''
                 commentator = $(this).parent().siblings(".comment_top").find(".commentator_name").text();
                 $(this).parents(".parent_comment").find(".comment_bottmo").css({display: "block"});
+                $(this).parents(".parent_comment").siblings().find(".comment_bottmo").css({display: "none"});
             })
             // submit comment
             $(".comment_btn_box").on("click", function() {

@@ -225,7 +225,7 @@
     color: var(--col-a1);
 }
 .write_comment_box {
-    padding: 20px 30px 10px;
+    padding: 20px 30px;
     width: 100%;
     background: var(--col-fa);
 }
@@ -251,7 +251,7 @@
 }
 .comment_btn_box {
     display: flex;
-    margin: 20px 0 0;
+    margin: 10px 0 0;
     justify-content: flex-end;
 }
 .comment_btn {
@@ -266,12 +266,16 @@
     background: var(--btn-col);
     border-radius: 5px;;
 }
+.children_commentator_box {
+    margin-left: 39px;
+    border-radius: 5px;;
+    background: var(--col-f8);
+}
 .comment_item {
-    padding: 25px 26px 30px 29px;
+    padding: 25px 26px 20px 29px;
 }
 .childer_item {
-    padding: 10px 26px 5px 29px;
-    background: var(--col-f8);
+    padding: 10px 10px 0 0;
 }
 .childer_item .children_commentator_name {
     color: var(--btn-col);
@@ -320,6 +324,12 @@
     line-height: 24px;
     letter-spacing: 0px;
 }
+.children_commentator_box .coment_mid {
+    padding: 0 66px 5px 10px;
+}
+.children_commentator_box .eidt_answer {
+    padding-left: 10px;
+}
 .eidt_answer .answer {
     cursor: pointer;
     color: var(--btn-col);
@@ -331,15 +341,21 @@
 }
 .comment_bottmo {
     display: none;
-    padding-left: 39px;
+    padding: 10px;
+    margin-left: 39px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background: var(--col-f8);
 }
 .answer_box {
     padding: 15px;
     width: 100%;
-    min-height: 60px;
+    min-height: 36px;
+    font-size: var(--fs-14);
     border-radius: 5px;
     outline: none;
     border: solid 1px var(--input-col);
+    background: var(--white);
 }
 .answer_box:empty:before {
     content: attr(data-placeholder);
@@ -368,9 +384,6 @@
 .reply_man {
     color: var(--btn-col);
 }
-/* .comment_item:hover {
-    background: var(--col-f8);
-} */
 
 .personal_box {
     padding: 43px 0 0;

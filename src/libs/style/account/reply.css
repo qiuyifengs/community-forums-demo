@@ -12,11 +12,15 @@
 }
 .comment_bottmo {
     display: none;
+    padding: 10px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background: var(--col-f8);
 }
 .answer_box {
     padding: 15px;
     width: 100%;
-    min-height: 60px;
+    min-height: 36px;
     border-radius: 5px;
     font-size: var(--fs-14);
     outline: none;
