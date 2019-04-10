@@ -13,12 +13,15 @@ export class PublishController {
     public async index(@Request() req, @Response() res, @Param() param): Promise<any> {
         const obj = {
             menuList: [],
+            getLabel: null,
             renderData: null,
         };
+        obj.getLabel = JSON.stringify(await this.postsRepository.getLabel());
         obj.menuList = await this.postsRepository.getMenu();
         if (param['0'] !== '') {
             obj.renderData = await this.postsRepository.editArticle(param['0']);
         }
+        console.log(obj)
         res.render('publish/publish', { title: 'publish',  obj});
     }
 

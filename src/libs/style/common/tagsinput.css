@@ -34,6 +34,7 @@
 #tags-input .label-list {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 }
 #tags-input .type-acitved {
     color: #fff;

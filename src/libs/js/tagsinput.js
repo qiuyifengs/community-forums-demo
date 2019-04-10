@@ -17,7 +17,7 @@
         this.renderType = function(opts) {
             var typeHtml = '';
             for (let element in opts.labelTypeArr) {   
-                typeHtml += `<div class="${opts.typeCls}" id="${opts.labelTypeArr[element].typeId}">${opts.labelTypeArr[element].typeContent}</div>` ;
+                typeHtml += `<div class="${opts.typeCls}" id="${opts.labelTypeArr[element].typeId}">${opts.labelTypeArr[element].typeName}</div>` ;
             };
             var typeParent = `<div class="type-list">${typeHtml}</div>`
             $obj.empty().html(typeParent);
@@ -31,7 +31,7 @@
             for (let el in opts.labelTypeArr) { 
                 if(opts.labelTypeArr[el].typeId == curId) {
                     opts.labelTypeArr[el].labelArr.forEach(labelItem => {
-                        labelHtml += `<li class="${opts.labelCls}" id="${labelItem.labelId}">${labelItem.laebl}</li>`
+                        labelHtml += `<li class="${opts.labelCls}" id="${labelItem.labelId}">${labelItem.labelName}</li>`
                     });
                 }
             }

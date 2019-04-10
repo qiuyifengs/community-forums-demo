@@ -75,8 +75,8 @@
 }
 .label-box .typle_input {
     padding: 13px 0 12px;
-    width: 70%;
     height: 100%;
+    flex-grow: 1;
     border-radius: 5px;
     outline: none;
     color: var(--col-3b);

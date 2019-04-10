@@ -7,6 +7,8 @@ import { PostList } from '../../entitys/postList.entity';
 import { ArticleDetail } from '../../entitys/articleDetail.entity';
 import { Menu } from '../../entitys/menuList.entity';
 import { User } from '../../entitys/user.entity';
+import { LabelType } from '../../entitys/labelType.entity';
+import { LabelList } from '../../entitys/labelList.entity';
 
 @Injectable()
 export class PublishService {
@@ -19,10 +21,22 @@ export class PublishService {
         private readonly menuRepository: Repository<Menu>,
         @InjectRepository(User)
         private readonly userRepository: Repository<User>,
+        @InjectRepository(LabelType)
+        private readonly labelTypeRepository: Repository<LabelType>,
+        @InjectRepository(LabelList)
+        private readonly labelListRepository: Repository<LabelList>,
     ) {}
     // render html
     async getMenu(): Promise<any> {
         return await this.menuRepository.find({isType: true});
+    }
+    async getLabel(): Promise<any> {
+        const labelType = await this.labelTypeRepository.find();
+        for (const type of labelType) {
+            const labelList = await this.labelListRepository.find({typeId: type.typeId});
+            type.labelArr = labelList;
+        }
+        return labelType;
     }
     // edit article
     async editArticle(data): Promise<any> {
@@ -35,7 +49,6 @@ export class PublishService {
     async publish(data): Promise<any> {
         const userInfo = await this.userRepository.findOne({ userId: data.userId });
         data.author = userInfo.nickName;
-        console.log(data)
         await this.addArticleDetail(data);
         if (data.isEdit !== 'false') {
             let editRes = await this.postsRepository.findOne({ articleId: data.articleId });
