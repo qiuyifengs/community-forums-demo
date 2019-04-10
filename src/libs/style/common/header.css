@@ -72,10 +72,6 @@
     width: 24px;
     height: 24px;
 }
-.user-login {
-    display: none;
-    font-family: var(--font-f);
-}
 #register {
     line-height: 36px;
     color: var(--btn-col);

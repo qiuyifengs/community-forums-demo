@@ -29,33 +29,6 @@
                                 <img src="/images/langue_zh.png">
                             </span>
                         </span>
-                        <div class="user-lose-login">
-                            <a href="/user/login" class="ghost-pro-components-global-header-index-action mg-r30">
-                                <span style="color: #3c3c3c">LOGIN</span>
-                            </a>
-                            <a href="/user/register" class="ghost-btn-round bd-ghost" id="register">
-                                <span>JOIN US</span>
-                            </a>
-                        </div>
-                        <div class="user-login">
-                            <span class="ghost-pro-components-global-header-index-action ghost-pro-components-notice-icon-index-noticeButton ghost-dropdown-trigger mg-r20">
-                                <span class="ghost-pro-components-notice-icon-index-badge ghost-badge">
-                                    <svg class="iconSvg news_icon" aria-hidden="true">
-                                        <use xlink:href="#icon-tongzhi"></use>
-                                    </svg>
-                                    <!-- <sup class="ghost-scroll-number ghost-badge-count ghost-badge-multiple-words">99</sup> -->
-                                </span>
-                            </span>
-                            <span class="ghost-pro-components-global-header-index-action ghost-pro-components-global-header-index-account ghost-dropdown-trigger">
-                                <span class="ghost-avatar ghost-pro-components-global-header-index-avatar ghost-avatar-sm ghost-avatar-circle ghost-avatar-image show-userinfo-dom">
-                                    <!-- <img src="/images/header_icon.png"> -->
-                                    <span class="geren-bg bd-radius-round header-random-color"></span>
-                                </span>
-                            </span>
-                        </div>
-                        <!-- <span class="ghost-pro-components-select-lang-index-dropDown ghost-pro-components-global-header-index-action ghost-dropdown-trigger">
-                            <i class="anticon"></i>
-                        </span> -->
                         <button type="button" class="ghost-btn ghost-btn-primary write-article" id="enterPublish">
                             <span>写文章</span>
                         </button>
@@ -137,21 +110,44 @@
 
 <script type="text/javascript">
     const userId = $.cookie("userId");
+    
+    if (!userId) {
+        $(".user-login").remove();
+        let jionUs =   `
+            <div class="user-lose-login">
+                <a href="/user/login" class="ghost-pro-components-global-header-index-action mg-r30">
+                    <span style="color: #3c3c3c">LOGIN</span>
+                </a>
+                <a href="/user/register" class="ghost-btn-round bd-ghost" id="register">
+                    <span>JOIN US</span>
+                </a>
+            </div>
+        `;
+        $("#enterPublish").before(jionUs)
+    } else {
+        $(".user-lose-login").remove();
+        let showDom = `
+            <div class="user-login">
+                <span class="ghost-pro-components-global-header-index-action ghost-pro-components-notice-icon-index-noticeButton ghost-dropdown-trigger mg-r20">
+                    <span class="ghost-pro-components-notice-icon-index-badge ghost-badge">
+                        <svg class="iconSvg news_icon" aria-hidden="true">
+                            <use xlink:href="#icon-tongzhi"></use>
+                        </svg>
+                    </span>
+                </span>
+                <span class="ghost-pro-components-global-header-index-action ghost-pro-components-global-header-index-account ghost-dropdown-trigger">
+                    <span class="ghost-avatar ghost-pro-components-global-header-index-avatar ghost-avatar-sm ghost-avatar-circle ghost-avatar-image show-userinfo-dom">
+                        <span class="geren-bg bd-radius-round header-random-color"></span>
+                    </span>
+                </span>
+            </div>
+        `;
+        $("#enterPublish").before(showDom)
+    }
     const nickName = $.cookie("nickName");
     if (nickName) {
         $(".header-random-color").text(nickName.substring(0, 1)).css("background",renderColor(nickName));
     }
-    if (!userId) {
-        // $(".ghost-btn-round").remove();
-        let jionUs = `<a class="ghost-btn ghost-btn-primary ghost-btn-round" id="register" style="margin-right: 12px">
-                            <span>JOIN US</span>
-                    </a>`
-        $(".ghost-pro-components-notice-icon-index-noticeButton").before(jionUs)
-    } else {
-        $(".user-lose-login").css("display", "none");
-        $(".user-login").css("display", "block");
-    }
-    
     $("body").on("click", function() {
         $(".ghost-drop-down").hide();
         $(".langue-box").hide();
@@ -199,7 +195,6 @@
     })
     $('#enterPublish').on('click', function(event) {
         event.stopPropagation()
-        console.log(111, userId)
         if (!$.cookie("userId")) {
             goPage('user/login')
         } else {
@@ -268,8 +263,6 @@
             if (!keyword || keyword == '') return false;
             let url = 'post/search/' + keyword;
             goPage(url)
-            console.log(keyword)
-            
         }
     })
 </script>

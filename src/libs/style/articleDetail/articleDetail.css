@@ -268,11 +268,14 @@
 }
 .children_commentator_box {
     margin-left: 39px;
-    border-radius: 5px;;
+    padding-bottom: 8px;
     background: var(--col-f8);
 }
 .comment_item {
     padding: 25px 26px 20px 29px;
+}
+.comment_item:last-of-type {
+    border: none;
 }
 .childer_item {
     padding: 10px 10px 0 0;
@@ -343,8 +346,6 @@
     display: none;
     padding: 10px;
     margin-left: 39px;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
     background: var(--col-f8);
 }
 .answer_box {
