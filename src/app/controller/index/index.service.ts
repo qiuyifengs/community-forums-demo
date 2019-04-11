@@ -31,7 +31,10 @@ export class IndexService {
               .createQueryBuilder('postList')
               .where('postList.articleType = :articleType', { articleType: data.articleType })
               .andWhere('postList.isDrafts = :isDrafts', { isDrafts: false })
-              .orderBy('postList.serialNum', 'DESC')
+              .orderBy({
+                'postList.top': 'DESC',
+                'postList.serialNum': 'DESC',
+              })
               .skip(page)
               .take(pageCount)
               .getMany();
@@ -41,7 +44,10 @@ export class IndexService {
               res = await this.indexRepository
                 .createQueryBuilder('postList')
                 .where('postList.isDrafts = :isDrafts', { isDrafts: false })
-                .orderBy('postList.serialNum', 'DESC')
+                .orderBy({
+                  'postList.top': 'DESC',
+                  'postList.serialNum': 'DESC',
+                })
                 .skip(page)
                 .take(pageCount)
                 .getMany();
@@ -49,7 +55,10 @@ export class IndexService {
               res = await this.indexRepository
                 .createQueryBuilder('postList')
                 .where('postList.isDrafts = :isDrafts', { isDrafts: false })
-                .orderBy('postList.viewCount', 'DESC')
+                .orderBy({
+                  'postList.top': 'DESC',
+                  'postList.serialNum': 'DESC',
+                })
                 .skip(page)
                 .take(pageCount)
                 .getMany();
