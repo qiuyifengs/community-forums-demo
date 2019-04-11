@@ -398,6 +398,7 @@
                 
             }
             $(".CodeMirror-code").bind("DOMNodeInserted", function(e) {
+                console.log(123)
                 if ($(".CodeMirror-code").text().replace(/\u200B/g, '') != "") {
                     clearInterval(time);
                     $(".saving").show();

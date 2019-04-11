@@ -25,7 +25,7 @@
                                     <div class="ghost-spin-nested-loading">
                                         <% collectList.articleList.forEach(function(item) {%>
                                         <div class="ghost-list-item collect-item bd-bottom">
-                                            <div class="ghost-list-item-main">
+                                            <div class="ghost-list-item-main list-box">
                                                 <div class="ghost-list-item-main">
                                                     <div class="ghost-list-item-meta-content">
                                                         <div class="ghost-list-item-meta-content">
@@ -128,7 +128,7 @@
                 }
             });
             // go to article detail
-            $(".ghost-list-item-main").each(function() {
+            $(".list-box").each(function() {
                 $(this).on("click", function(event) {
                     event.stopPropagation();
                     articleId = $(this).next(".ghost-list-item-extra").find(".ghost-list-item-id").text();
@@ -162,7 +162,7 @@
         function renderCollectHtml(item) {
             return `
                 <div class="ghost-list-item collect-item bd-bottom">
-                    <div class="ghost-list-item-main">
+                    <div class="ghost-list-item-main list-box">
                         <div class="ghost-list-item-main">
                             <div class="ghost-list-item-meta-content">
                                 <div class="ghost-list-item-meta-content">

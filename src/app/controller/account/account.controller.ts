@@ -1,6 +1,7 @@
-import { Controller, Get, Param, Post, Body, Request, Response, Res, FileInterceptor, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Request, Response, FileInterceptor, Res, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { ApiOperation, ApiUseTags } from '@nestjs/swagger';
 import { AccountService } from './account.service';
+// import { FileInterceptor } from '@nestjs/platform-express';
 import { User } from '../../entitys/user.entity';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
