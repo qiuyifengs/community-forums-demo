@@ -12,7 +12,7 @@
                     </div>
                     <section class="ghost-pro-components-global-header-index-left">
                         <span class="ghost-input-search ghost-input-affix-wrapper" style="width: 500px">
-                            <input type="text" id="search" placeholder="Search..." style="background-color: #ccc3" class="ghost-input ghost-input-round" onK>
+                            <input type="text" id="search" placeholder="Search..." style="background-color: #ccc3;" class="ghost-input ghost-input-round" onK>
                             <span class="ghost-input-suffix">
                                 <svg class="iconSvg" aria-hidden="true" style="color: #485ec0">
                                     <use xlink:href="#icon-sousuo"></use>
@@ -137,8 +137,9 @@
 
 <script type="text/javascript">
     const userId = $.cookie("userId");
-    const nickName = $.cookie("nickName");
-    $(".header-random-color").text(nickName.substring(0, 1)).css("background",renderColor(nickName));
+    const nickName = $.cookie("nickName") || '';
+    console.log(nickName)
+    // $(".header-random-color").text(nickName.substring(0, 1)).css("background",renderColor(nickName));
     if (!userId) {
         // $(".ghost-btn-round").remove();
         let jionUs = `<button class="ghost-btn ghost-btn-primary ghost-btn-round" style="margin-right: 12px">

@@ -23,6 +23,7 @@
 @import './common/pagination.css';
 @import './common/pageTurning.css';
 @import './common/layer.css';
+@import './common/tag.css';
 
 .home-page {
     display: flex;
@@ -37,7 +38,7 @@
 }
 .swiper-container {
     margin: 0!important;
-    width: 900px;
+    width: 100%;
     height: 240px;
     background: #fff;
 }
@@ -95,6 +96,7 @@
 }
 .author-info .author-name {
     font-size: var(--fs-13);
+    color: #485ec0;
 }
 .source-type {
     display: flex;
@@ -136,4 +138,70 @@
         height: 0;
         width: 0;
     }
+}
+
+.ghost-components-article-list-content-index-description {
+    line-height: 22px;
+}
+.ghost-components-article-list-content-index-listContent .ghost-components-article-list-content-index-extra {
+    margin-top: 16px;
+    color: rgba(0,0,0,.45);
+    line-height: 22px;
+}
+
+.ghost-components-menu-vertical-index {
+    display: inline-block;
+    text-align: left;
+    width: 250px;
+}
+.ghost-components-menu-vertical-index::before, .ghost-components-menu-vertical-index:after {
+    display: table;
+    content: ''
+}
+.ghost-components-menu-item {
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    color: #303133;
+    padding: 0 20px;
+    list-style: none;
+    cursor: pointer;
+    position: relative;
+    transition: border-color .3s,background-color .3s,color .3s;
+    box-sizing: border-box;
+    white-space: nowrap;
+    margin-bottom: 4px;
+}
+.ghost-components-menu-item.is-active {
+    background-color: #ffffff;
+	box-shadow: -5px 0px 10px 0px rgba(217, 224, 252, 0.3);
+	border-radius: 5px;
+}
+
+.ghost-components-menu-item svg {
+    margin-right: 6px;
+    width: 16px;
+    height: 16px;
+}
+
+.ghost-components-menu-item.is-active svg {
+    color: inherit;
+}
+
+.ghost-components-menu-item:hover, .ghost-components-menu-item:focus {
+    background-color: #485ec02e;
+    border-radius: 5px;
+    color: #0000008a;
+}
+
+.ghost-components-menu-vertical-account {
+    display: inline-block;
+    text-align: center;
+    width: 250px;
+}
+
+.ghost-components-menu-vertical-account .ghost-components-menu-item.is-active {
+    background-color: #ffffff;
+	box-shadow: -5px 0px 10px 0px rgba(217, 224, 252, 0.3);
+	border-radius: 5px;
 }
