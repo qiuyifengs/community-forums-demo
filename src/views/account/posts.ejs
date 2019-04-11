@@ -166,7 +166,8 @@
             $("#myArticleTemplate").on("click", ".ghost-list-item-main", function(event) {
                 event.stopPropagation();
                 articleId = $(this).next(".ghost-list-item-extra").find(".ghost-list-item-id").text();
-                if ($(this).find(".isDrafts").text()) {
+                let isDrafts = $(this).siblings(".ghost-list-item-extra").find(".isDrafts").text()
+                if (isDrafts) {
                     let url = 'post/publish/' + articleId;
                     goPage(url);
                 } else {

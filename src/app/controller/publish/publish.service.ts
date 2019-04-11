@@ -54,12 +54,13 @@ export class PublishService {
             message: '',
             articleId: '',
         };
+        let isRes = await this.postsRepository.findOne({ articleId: data.articleId });
         if (data.isEdit !== 'false') {
-            let editRes = await this.postsRepository.findOne({ articleId: data.articleId });
-            editRes = Object.assign(editRes, data);
-            editRes.isDrafts = data.isDrafts === 'false' ? false : true;
-            await this.postsRepository.save(editRes);
-            await this.addArticleDetail(editRes);
+            
+            isRes = Object.assign(isRes, data);
+            isRes.isDrafts = data.isDrafts === 'false' ? false : true;
+            await this.postsRepository.save(isRes);
+            await this.addArticleDetail(isRes);
             msg.code = ApiErrorCode.PUBLISH_SUCCESS;
             if (data.isDrafts !== 'false') {
                 msg.articleId = data.articleId;
@@ -71,11 +72,10 @@ export class PublishService {
         } else {
             data.editTime = data.publishTime;
             data.editPerson = data.userId;
+            if (isRes) {
+                data = Object.assign(isRes, data);
+            }
             if (data.isDrafts !== 'false') {
-                const draftsRes = await this.postsRepository.findOne({ articleId: data.articleId });
-                if (draftsRes) {
-                    data = Object.assign(draftsRes, data);
-                }
                 data.isDrafts = true;
                 msg.code = ApiErrorCode.PUBLISH_SUCCESS;
                 msg.articleId = data.articleId;
