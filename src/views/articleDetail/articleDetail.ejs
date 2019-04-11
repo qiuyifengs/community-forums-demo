@@ -289,8 +289,26 @@
                 }
             })
             let userId =  $.cookie("userId");
+            // Get article from the URL
+            (function () {
+                articleId = this.location.pathname.split('/')[3];
+                articleTitle = $(".title").text();
+                // random color
+                // $(".one_level").each(function() {
+                //     const oneName = $(this).text();
+                //     $(this).prev(".dom-random-color").css("background",renderColor(oneName));
+                // })
+                // $(".children_commentator_name").each(function() {
+                //     const childName = $(this).text();
+                //     $(this).prev(".dom-random-color").css("background",renderColor(childName));
+                // })
+                $(".time").each(function() {
+                    let resTime = formatDateFilter($(this).text())
+                    $(this).text(resTime)
+                });
+            })();
             // share article
-            var _title,_source,_sourceUrl,_pic,_showcount,_desc,_summary,_site,
+            var _title = articleTitle,_source,_sourceUrl,_pic,_showcount,_desc,_summary,_site,
                 _width = 600,
                 _height = 600,
                 _top = (screen.height-_height)/2,
@@ -318,8 +336,8 @@
             $(".shared_weibo").on("click", function(event) {
                 event.stopPropagation();
                 var _shareUrl = 'http://v.t.sina.com.cn/share/share.php?&appkey=895033136';     //真实的appkey，必选参数 
-                _shareUrl += '&url='+ encodeURIComponent(_url||location.href);     //参数url设置分享的内容链接|默认当前页location，可选参数
-                _shareUrl += '&title=' + encodeURIComponent(_title||document.title);    //参数title设置分享的标题|默认当前页标题，可选参数
+                _shareUrl += '&url='+ encodeURIComponent(location.href);     //参数url设置分享的内容链接|默认当前页location，可选参数
+                _shareUrl += '&title=' + encodeURIComponent(_title);    //参数title设置分享的标题|默认当前页标题，可选参数
                 _shareUrl += '&source=' + encodeURIComponent(_source||'');
                 _shareUrl += '&sourceUrl=' + encodeURIComponent(_sourceUrl||'');
                 _shareUrl += '&content=' + 'utf-8';   //参数content设置页面编码gb2312|utf-8，可选参数
@@ -330,8 +348,8 @@
             $(".shared_douban").on("click", function(event) {
                 event.stopPropagation();
                 var _shareUrl = 'http://shuo.douban.com/!service/share?';
-                _shareUrl += 'href=' + encodeURIComponent(_url||location.href);    //分享的链接
-                _shareUrl += '&name=' + encodeURIComponent(_title||document.title);    //分享的标题
+                _shareUrl += 'href=' + encodeURIComponent(location.href);    //分享的链接
+                _shareUrl += '&name=' + encodeURIComponent(_title);    //分享的标题
                 _shareUrl += '&image=' + encodeURIComponent(_pic||'');    //分享的图片
                 window.open(_shareUrl,'_blank','width='+_width+',height='+_height+',left='+_left+',top='+_top+',toolbar=no,menubar=no,scrollbars=no,resizable=1,location=no,status=0');
             });
@@ -339,47 +357,29 @@
             $(".shared_tieba").on("click", function(event) {
                 event.stopPropagation();
                 var _shareUrl = 'http://tieba.baidu.com/f/commit/share/openShareApi?';
-                _shareUrl += 'title=' + encodeURIComponent(_title||document.title);
-                _shareUrl += '&url=' + encodeURIComponent(_url||location.href);
+                _shareUrl += 'title=' + encodeURIComponent(_title);
+                _shareUrl += '&url=' + encodeURIComponent(location.href);
                 _shareUrl += '&pic=' + encodeURIComponent(_pic||'');
                 window.open(_shareUrl,'_blank','width='+_width+',height='+_height+',left='+_left+',top='+_top+',toolbar=no,menubar=no,scrollbars=no,resizable=1,location=no,status=0');
             })
             // shareToFacebook
             $(".shared_facebook").on("click", function(event) {
                 event.stopPropagation();
+                console.log(_title)
                 var _shareUrl = 'http://www.facebook.com/sharer/sharer.php?';
-                _shareUrl += 'u=' + encodeURIComponent(_url||location.href);
-                _shareUrl += '&t=' + encodeURIComponent(_title||document.title);
+                _shareUrl += 'u=' + encodeURIComponent(location.href);
+                _shareUrl += '&t=' + encodeURIComponent(_title);
                 window.open(_shareUrl,'_blank','width='+_width+',height='+_height+',left='+_left+',top='+_top+',toolbar=no,menubar=no,scrollbars=no,resizable=1,location=no,status=0');
             });
             // shareToTwitter
             $(".shared_twitter").on("click", function(event) {
                 event.stopPropagation();
                 var _shareUrl = 'http://twitter.com/intent/tweet?';
-                _shareUrl += 'url=' + encodeURIComponent(_url||location.href);
-                _shareUrl += '&text=' + encodeURIComponent(_title||document.title);
+                _shareUrl += 'url=' + encodeURIComponent(location.href);
+                _shareUrl += '&text=' + encodeURIComponent(_title);
                 window.open(_shareUrl,'_blank','width='+_width+',height='+_height+',left='+_left+',top='+_top+',toolbar=no,menubar=no,scrollbars=no,resizable=1,location=no,status=0');
             });
 
-            
-            // Get article from the URL
-            (function () {
-                articleId = this.location.pathname.split('/')[3];
-                articleTitle = $(".title").text();
-                // random color
-                // $(".one_level").each(function() {
-                //     const oneName = $(this).text();
-                //     $(this).prev(".dom-random-color").css("background",renderColor(oneName));
-                // })
-                // $(".children_commentator_name").each(function() {
-                //     const childName = $(this).text();
-                //     $(this).prev(".dom-random-color").css("background",renderColor(childName));
-                // })
-                $(".time").each(function() {
-                    let resTime = formatDateFilter($(this).text())
-                    $(this).text(resTime)
-                });
-            })();
             // render content
             let content = JSON.parse($('.content').text()).join('\n');
             let editor = new tui.Editor({

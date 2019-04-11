@@ -32,6 +32,8 @@ export class ArticleDetail {
      @Column({ default: false }) isLike: boolean;
      // isCollect
      @Column({ default: false }) isCollect: boolean;
+     // isDrafts
+    @Column({ default: false }) isDrafts: boolean;
     // publishTime
     @Column() publishTime: string;
 

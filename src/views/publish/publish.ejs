@@ -34,6 +34,7 @@
                 </div>
                 <div class="article_title">
                     <% if (obj && obj.renderData) { %>
+                    <div class="is_drafts" style="display:none"><%= obj.renderData.isDrafts %></div> 
                     <div class="cur_article_label" style="display:none"><%= obj.renderData.articleLabel %></div>
                     <% } %>
                     <div class="title_input publish_input" contenteditable="true" data-placeholder="Input topic..."></div>
@@ -65,10 +66,10 @@
                     <div class="comment_btn_box">
                         <div class="comment_btn">publish</div>
                     </div>
-                    <div class="save_btn_box">
+                    <!-- <div class="save_btn_box">
                         <div class="save_btn">save</div>
-                    </div>
-                    <div class="saving">保存中...</div>
+                    </div> -->
+                    <div class="saving mg-l10">保存中...</div>
                 </div>
             </div>
         </div>
@@ -79,6 +80,7 @@
             let editType = $(".edit_article_type").text();
             let isSubmitting = true;
             let isEdit = false;
+            let isDrafts = $(".is_drafts").text();
             let articleId = '';
             let content = [].join('\n');
             let editContent = $(".edit_content").text();
@@ -86,7 +88,7 @@
             let labelArr = [];
             let curLabelArr = $(".cur_article_label").text();
             let labelData = JSON.parse($(".label-data").text());
-            
+            console.log(111, isDrafts)
             if (curLabelArr !== "") {
                 curLabelArr.split(",").forEach(item => {
                     let labelDiv = `<div class="show-label bd-radius-3">
@@ -242,6 +244,7 @@
             });
             // filter sensitive words and comment article
             $(".comment_btn").on("click", function() {
+                saveArticle(false);
                 if (!isSubmitting) return false; 
                 isSubmitting = false;
                 let keySpans = document.getElementsByClassName('highlight');
@@ -302,7 +305,7 @@
                 };
                 myAjax("POST", 'post/publish', param).then((res) => {
                     layer.msg(res.message);
-                    if (res.code == 1) {
+                    if (res.code == 10015) {
                         setTimeout(function() {
                             goPage('account/posts/' + $.cookie("userId"));
                         }, 2000);
@@ -313,37 +316,39 @@
                 })
             });
             // save article
-            $(".save_btn").on("click", function() {
-                let articleTitle = $(".title_input").text(); // title
-                let contentArr = [];
-                let classArr = document.getElementsByClassName("CodeMirror-line"); // content list Dom
-                $(".cm-invalidchar").remove();
-                for(let i = 0; i < classArr.length; i++) {
-                    contentArr.push(classArr[i].innerText);
-                }
-                let param = {
-                    userId: $.cookie("userId"),
-                    isEdit: isEdit,
-                    isDrafts: true,
-                    articleId: articleId,
-                    articleTitle: articleTitle ? articleTitle : '未指定文章标题',
-                    articleContent: JSON.stringify(contentArr),
-                    articleType: articleSource,
-                    articleLabel: labelArr
-                };
-                myAjax("POST", 'post/publish', param).then((res) => {
-                    if (res.code == 1) {
-                        layer.msg('保存成功！');
-                        setTimeout(function() {
-                            goPage('account/posts/' + $.cookie("userId"));
-                        }, 2000);
-                    } else {
-                        layer.msg(res.message);
-                        console.log(res.message);
-                    }
-                    isSubmitting = true;
-                })
-            })
+            // $(".save_btn").on("click", function() {
+            //     if (!isSubmitting) return false;
+            //     isSubmitting = false;
+            //     let articleTitle = $(".title_input").text(); // title
+            //     let contentArr = [];
+            //     let classArr = document.getElementsByClassName("CodeMirror-line"); // content list Dom
+            //     $(".cm-invalidchar").remove();
+            //     for(let i = 0; i < classArr.length; i++) {
+            //         contentArr.push(classArr[i].innerText);
+            //     }
+            //     let param = {
+            //         userId: $.cookie("userId"),
+            //         isEdit: isEdit,
+            //         isDrafts: true,
+            //         articleId: articleId,
+            //         articleTitle: articleTitle ? articleTitle : '未指定文章标题',
+            //         articleContent: JSON.stringify(contentArr),
+            //         articleType: articleSource,
+            //         articleLabel: labelArr
+            //     };
+            //     myAjax("POST", 'post/publish', param).then((res) => {
+            //         if (res.code == 1) {
+            //             layer.msg('保存成功！');
+            //             setTimeout(function() {
+            //                 goPage('account/posts/' + $.cookie("userId"));
+            //             }, 2000);
+            //         } else {
+            //             layer.msg(res.message);
+            //             console.log(res.message);
+            //         }
+            //         isSubmitting = true;
+            //     })
+            // });
             // title remove highlight style
             $(".title_input").focus(() => {
                 $('.title_input .highlight').removeClass('highlight');
@@ -351,10 +356,59 @@
             // content remove highlight style
             $(".article_content").focus(() => {
                 $('.article_content .highlight').removeClass('highlight');
+            });
+            // save draft box
+            let time
+            function saveArticle(start) {
+                if (start) {
+                    time = setInterval(function() {
+                        clearInterval(time);
+                        let articleTitle = $(".title_input").text(); // title
+                        let contentArr = [];
+                        let classArr = document.getElementsByClassName("CodeMirror-line"); // content list Dom
+                        $(".cm-invalidchar").remove();
+                        for(let i = 0; i < classArr.length; i++) {
+                            contentArr.push(classArr[i].innerText);
+                        }
+                        let param = {
+                            userId: $.cookie("userId"),
+                            isEdit: isEdit,
+                            isDrafts: isDrafts != '' ? isDrafts : true,
+                            articleId: articleId,
+                            articleTitle: articleTitle ? articleTitle : '未指定文章标题',
+                            articleContent: JSON.stringify(contentArr),
+                            articleType: articleSource,
+                            articleLabel: labelArr
+                        };
+                        myAjax("POST", 'post/publish', param).then((res) => {
+                            if (res.code == 10015) {
+                                if (isEdit) {
+                                    $(".saving").text("已更新");
+                                } else {
+                                    $(".saving").text("已保存");
+                                }
+                                articleId = res.articleId;
+                            } else {
+                                console.log(res.message);
+                            }
+                        })
+                    }, 5000);
+                } else {
+                    clearInterval(time);
+                }
+                
+            }
+            $(".CodeMirror-code").bind("DOMNodeInserted", function(e) {
+                if ($(".CodeMirror-code").text().replace(/\u200B/g, '') != "") {
+                    clearInterval(time);
+                    $(".saving").show();
+                    $(".saving").text("保存中...");
+                    saveArticle(true);
+                } else {
+                    saveArticle(false);
+                    $(".saving").text("保存中...");
+                }
             })
         })
-        function saveArticle() {
-
-        }
     </script>
 </html>
