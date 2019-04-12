@@ -30,7 +30,7 @@
                                 <div class="ghost-pro-pages-account-settings-base-view-left">
                                     <div class="ghost-row">
                                         <section class="account-box">
-                                            <form class="ghost-row ghost-form ghost-form-horizontal" enctype = "multipart/form-data">
+                                            <form class="ghost-row ghost-form ghost-form-horizontal" enctype = "multipart/form-data" id="upMorm">
                                                 <!-- <div class="ghost-pro-pages-account-settings-base-view-header-icon">
                                                     <div class="ghost-pro-pages-account-settings-base-view-avatar">
                                                         <img class="ghost-header-icon header-icon" src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png" alt="avatar">
@@ -277,7 +277,7 @@
                 // if (!nickName && !personalProfile) {
                 //     return false;
                 // }
-                var myForm = new FormData();
+                var myForm = new FormData(document.getElementById("myForm"));
                 myForm.append("userId", $.cookie("userId"));
                 myForm.append("nickName", document.querySelector('.nick-name').value);       // append()方法添加字段
                 myForm.append("personalProfile", document.querySelector('.personal-profile').value);   // 数字123456立即被转换成字符串“123456”

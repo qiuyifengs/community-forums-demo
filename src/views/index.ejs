@@ -388,10 +388,10 @@
                 }
             })
 
-            $('.tab-nav .tab-nav-item a').on('click', function (e) {
+            $('.tab-nav .tab-nav-item').on('click', function (e) {
                 e.preventDefault()
-                $(this).parent().addClass('tab-active')
-                $(this).parent().siblings().removeClass('tab-active')
+                $(this).addClass('tab-active')
+                $(this).siblings().removeClass('tab-active')
                 goPage(`topic/${$(this).find(".menu-item-val").text()}`)
             })
 
