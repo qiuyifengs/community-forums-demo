@@ -66,11 +66,16 @@
                                                     <% } %>
                                                 </ul>
                                             </div>
+                                            <div class="ghost-list-item-extra">
+                                                    <ul class="ghost-list-item-action">
+                                                        <li>
+                                                            <div class="ghost-list-item-id" style="display: none"><%= item.articleId %></div>
+                                                            <button style="font-size: 12px" class="ghost-btn ghost-btn-primary">取消收藏</button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                         </div>
-                                        <div class="ghost-list-item-extra">
-                                            <div class="ghost-list-item-id" style="display: none"><%= item.articleId %></div>
-                                            <button style="width: 80px; font-size: 12px" class="ghost-btn ghost-btn-primary">取消收藏</button>
-                                        </div>
+                                        
                                     </div>
                                     <% }) %>   
                                 </div>
