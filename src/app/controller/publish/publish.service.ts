@@ -54,10 +54,14 @@ export class PublishService {
             message: '',
             articleId: '',
         };
+        console.log(data)
+        console.log(data.articleId)
         let isRes = await this.postsRepository.findOne({ articleId: data.articleId });
+        console.log(111, isRes)
         if (data.isEdit !== 'false') {
-            
+            console.log(222)
             isRes = Object.assign(isRes, data);
+            console.log(333)
             isRes.isDrafts = data.isDrafts === 'false' ? false : true;
             await this.postsRepository.save(isRes);
             await this.addArticleDetail(isRes);
@@ -67,7 +71,7 @@ export class PublishService {
                 msg.message = '保存成功！';
             } else {
                 msg.message = '发表成功！';
-                delete msg.articleId;
+                msg.articleId = data.articleId;
             }
         } else {
             data.editTime = data.publishTime;
