@@ -418,6 +418,20 @@
                     })
                 }
             })
+
+            $('.tab-nav .tab-nav-item').on('click', function (e) {
+                e.preventDefault()
+                $(this).addClass('tab-active')
+                $(this).siblings().removeClass('tab-active')
+                goPage(`topic/${$(this).find(".menu-item-val").text()}`)
+            })
+
+            // Click on the list item to enter the article details
+            $('#artivleTemplate').on('click', '.ghost-list-item', function(event) {
+                event.stopPropagation()
+                const articleId = $(this).find('.currentArticleId').text()
+                myAjax("POST", "post/addView", { articleId: articleId, userId: $.cookie("userId") })
+            })
         }(window, jQuery));
 
         let renderArticleHtml = item => {

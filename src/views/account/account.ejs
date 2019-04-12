@@ -276,7 +276,7 @@
                 // if (!nickName && !personalProfile) {
                 //     return false;
                 // }
-                var myForm = new FormData();
+                var myForm = new FormData(document.getElementById("myForm"));
                 myForm.append("userId", $.cookie("userId"));
                 myForm.append("nickName", document.querySelector('.nick-name').value);       // append()方法添加字段
                 myForm.append("personalProfile", document.querySelector('.personal-profile').value);   // 数字123456立即被转换成字符串“123456”
