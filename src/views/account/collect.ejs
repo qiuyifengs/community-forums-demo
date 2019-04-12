@@ -19,13 +19,13 @@
                             <div class="ghost-pro-pages-account-settings-info-title">
                                 <span>我的收藏</span>
                             </div>
-                            <div class="ghost-list ghost-list-vertical ghost-list-split">
-                                <div class="ghost-spin-nested-loading">
-                                    <% collectList.articleList.forEach(function(item) {%>
-                                    <div class="ghost-list-item collect-item bd-bottom">
-                                        <div class="ghost-list-item-main">
-                                            <div class="ghost-list-item-main">
-                                                <div class="ghost-list-item-meta-content">
+                            <div class="ghost-card-body">
+                                <div class="ghost-list ghost-list-vertical ghost-list-split">
+                                    <div class="ghost-spin-nested-loading">
+                                        <% collectList.articleList.forEach(function(item) {%>
+                                        <div class="ghost-list-item collect-item bd-bottom">
+                                            <div class="ghost-list-item-main list-box">
+                                                <div class="ghost-list-item-main">
                                                     <div class="ghost-list-item-meta-content">
                                                         <h4 class="ghost-list-item-meta-title"><%= item.articleTitle %></h4>
                                                     </div>
@@ -125,7 +125,7 @@
                 }
             });
             // go to article detail
-            $(".ghost-list-item-main").each(function() {
+            $(".list-box").each(function() {
                 $(this).on("click", function(event) {
                     event.stopPropagation();
                     articleId = $(this).next(".ghost-list-item-extra").find(".ghost-list-item-id").text();
@@ -159,7 +159,7 @@
         function renderCollectHtml(item) {
             return `
                 <div class="ghost-list-item collect-item bd-bottom">
-                    <div class="ghost-list-item-main">
+                    <div class="ghost-list-item-main list-box">
                         <div class="ghost-list-item-main">
                             <div class="ghost-list-item-meta-content">
                                 <div class="ghost-list-item-meta-content">

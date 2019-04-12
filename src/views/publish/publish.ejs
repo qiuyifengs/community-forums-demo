@@ -34,11 +34,12 @@
                 </div>
                 <div class="article_title">
                     <% if (obj && obj.renderData) { %>
+                    <div class="is_drafts" style="display:none"><%= obj.renderData.isDrafts %></div> 
                     <div class="cur_article_label" style="display:none"><%= obj.renderData.articleLabel %></div>
                     <% } %>
-                    <div class="title_input publish_input" contenteditable="true" data-placeholder="Input topic..."></div>
+                    <input class="title_input publish_input" maxlength="30" placeholder="Input topic..."/>
                     <div class="label-box mg-t20">
-                        <div class="typle_input publish_input" contenteditable="true" data-placeholder="请输入选择标签，如php（用逗号，分号；分割）按Enter键确认"></div>
+                        <input class="typle_input publish_input" placeholder="请输入选择标签，如php（用逗号，分号；分割）按Enter键确认" />
                     </div>
                     <div class="label-data" style="display:none"><%= obj.getLabel %></div>
                     <div id="tags-input"></div>
@@ -65,10 +66,10 @@
                     <div class="comment_btn_box">
                         <div class="comment_btn">publish</div>
                     </div>
-                    <div class="save_btn_box">
+                    <!-- <div class="save_btn_box">
                         <div class="save_btn">save</div>
-                    </div>
-                    <div class="saving">保存中...</div>
+                    </div> -->
+                    <div class="saving mg-l10">保存中...</div>
                 </div>
             </div>
         </div>
@@ -79,6 +80,7 @@
             let editType = $(".edit_article_type").text();
             let isSubmitting = true;
             let isEdit = false;
+            let isDrafts = $(".is_drafts").text();
             let articleId = '';
             let content = [].join('\n');
             let editContent = $(".edit_content").text();
@@ -86,7 +88,6 @@
             let labelArr = [];
             let curLabelArr = $(".cur_article_label").text();
             let labelData = JSON.parse($(".label-data").text());
-            
             if (curLabelArr !== "") {
                 curLabelArr.split(",").forEach(item => {
                     let labelDiv = `<div class="show-label bd-radius-3">
@@ -114,12 +115,12 @@
 
             if (editContent) {
                 content = JSON.parse($('.edit_content').text()).join('\n');
-                $(".title_input").text($(".edit_article_title").text());
+                $(".title_input").val($(".edit_article_title").text());
                 articleId = $(".edit_article_id").text();
                 isEdit = true;
             };
             
-             let editor = new tui.Editor({
+            let editor = new tui.Editor({
                 el: document.querySelector('#editSection'),
                 previewStyle: 'vertical',
                 height: '500px',
@@ -132,8 +133,8 @@
             $(".typle_input").focus(function() {
                 $("#tags-input").css("display", "block");
             });
+            // label plugin config
             $("#tags-input").tagsinput({
-                // labelTypeArr: [{typeContent:'开发语言', typeId: 'aa', labelArr: [{laebl:'数据库', labelId: 'label1'}, {laebl: 'Java', labelId: 'label2'}]}, {typeContent:'服务器', typeId:"bb", labelArr: [{laebl:'html', labelId: 'label3'}, {laebl: 'node', labelId: 'label4'}]}],
                 labelTypeArr: labelData,
                 callback: label => {
                      let labelDiv = `<div class="show-label bd-radius-3">
@@ -171,7 +172,7 @@
                 event.stopPropagation();
                 $("#tags-input").css("display", "block");
             })
-
+            // select label
             $(".typle_input").keydown(function(event){
                 if (event.keyCode == 13) {
                     $(this).blur();
@@ -242,12 +243,13 @@
             });
             // filter sensitive words and comment article
             $(".comment_btn").on("click", function() {
+                saveArticle(false);
                 if (!isSubmitting) return false; 
                 isSubmitting = false;
                 let keySpans = document.getElementsByClassName('highlight');
                 if (keySpans.length) return false; // if had sensitive words return
                 let reg = new RegExp(wordsList.join('|'), 'gi'); // check sensitive words
-                let articleTitle = $(".title_input").text(); // title
+                let articleTitle = $(".title_input").val(); // title
                 articleTitle = articleTitle.replace(reg, (word) => `<span class="highlight">${word}</span>`);
                 $('.title_input').empty().append(articleTitle);
                 let contentArr = [];
@@ -264,7 +266,7 @@
                         isTrue = true;
                     }
                 })
-                
+                console.log(1111, contentArr)
                 $('.tui-editor-defaultUI').remove(); // remove old rich text
                  let editor = new tui.Editor({ // new rich text
                     el: document.querySelector('#editSection'),
@@ -275,11 +277,13 @@
                     initialValue: contentArr.join('\n'),
                     exts: ['scrollSync', 'colorSyntax', 'uml', 'chart', 'mark', 'table', 'taskCounter']
                 });
+                console.log(33, editor)
                 if (articleTitle.indexOf('highlight') > 0 || isTrue) {
                     alert("文章标题或文章内容中不能含有敏感词汇！");
                     isSubmitting = true;
                     return false;
                 }
+                console.log(4444)
                 if (!articleTitle ||  (contentArr[0].length < 1 && contentArr.length < 2)) {
                     alert("文章标题或文章内容中不能为空！");
                     isSubmitting = true;
@@ -300,50 +304,52 @@
                     articleType: articleSource,
                     articleLabel: labelArr
                 };
-                myAjax("POST", 'post/publish', param).then((res) => {
-                    layer.msg(res.message);
-                    if (res.code == 1) {
-                        setTimeout(function() {
-                            goPage('account/posts/' + $.cookie("userId"));
-                        }, 2000);
-                    } else {
-                        console.log(res.message);
-                    }
-                    isSubmitting = true;
-                })
+                // myAjax("POST", 'post/publish', param).then((res) => {
+                //     layer.msg(res.message);
+                //     if (res.code == 10015) {
+                //         setTimeout(function() {
+                //             goPage('account/posts/' + $.cookie("userId"));
+                //         }, 2000);
+                //     } else {
+                //         console.log(res.message);
+                //     }
+                //     isSubmitting = true;
+                // })
             });
             // save article
-            $(".save_btn").on("click", function() {
-                let articleTitle = $(".title_input").text(); // title
-                let contentArr = [];
-                let classArr = document.getElementsByClassName("CodeMirror-line"); // content list Dom
-                $(".cm-invalidchar").remove();
-                for(let i = 0; i < classArr.length; i++) {
-                    contentArr.push(classArr[i].innerText);
-                }
-                let param = {
-                    userId: $.cookie("userId"),
-                    isEdit: isEdit,
-                    isDrafts: true,
-                    articleId: articleId,
-                    articleTitle: articleTitle ? articleTitle : '未指定文章标题',
-                    articleContent: JSON.stringify(contentArr),
-                    articleType: articleSource,
-                    articleLabel: labelArr
-                };
-                myAjax("POST", 'post/publish', param).then((res) => {
-                    if (res.code == 1) {
-                        layer.msg('保存成功！');
-                        setTimeout(function() {
-                            goPage('account/posts/' + $.cookie("userId"));
-                        }, 2000);
-                    } else {
-                        layer.msg(res.message);
-                        console.log(res.message);
-                    }
-                    isSubmitting = true;
-                })
-            })
+            // $(".save_btn").on("click", function() {
+            //     if (!isSubmitting) return false;
+            //     isSubmitting = false;
+            //     let articleTitle = $(".title_input").text(); // title
+            //     let contentArr = [];
+            //     let classArr = document.getElementsByClassName("CodeMirror-line"); // content list Dom
+            //     $(".cm-invalidchar").remove();
+            //     for(let i = 0; i < classArr.length; i++) {
+            //         contentArr.push(classArr[i].innerText);
+            //     }
+            //     let param = {
+            //         userId: $.cookie("userId"),
+            //         isEdit: isEdit,
+            //         isDrafts: true,
+            //         articleId: articleId,
+            //         articleTitle: articleTitle ? articleTitle : '未指定文章标题',
+            //         articleContent: JSON.stringify(contentArr),
+            //         articleType: articleSource,
+            //         articleLabel: labelArr
+            //     };
+            //     myAjax("POST", 'post/publish', param).then((res) => {
+            //         if (res.code == 1) {
+            //             layer.msg('保存成功！');
+            //             setTimeout(function() {
+            //                 goPage('account/posts/' + $.cookie("userId"));
+            //             }, 2000);
+            //         } else {
+            //             layer.msg(res.message);
+            //             console.log(res.message);
+            //         }
+            //         isSubmitting = true;
+            //     })
+            // });
             // title remove highlight style
             $(".title_input").focus(() => {
                 $('.title_input .highlight').removeClass('highlight');
@@ -351,10 +357,60 @@
             // content remove highlight style
             $(".article_content").focus(() => {
                 $('.article_content .highlight').removeClass('highlight');
+            });
+            // save draft box
+            let time
+            function saveArticle(start) {
+                if (start) {
+                    time = setInterval(function() {
+                        clearInterval(time);
+                        let articleTitle = $(".title_input").val(); // title
+                        let contentArr = [];
+                        let classArr = document.getElementsByClassName("CodeMirror-line"); // content list Dom
+                        $(".cm-invalidchar").remove();
+                        for(let i = 0; i < classArr.length; i++) {
+                            contentArr.push(classArr[i].innerText);
+                        }
+                        let param = {
+                            userId: $.cookie("userId"),
+                            isEdit: isEdit,
+                            isDrafts: isDrafts != '' ? isDrafts : true,
+                            articleId: articleId,
+                            articleTitle: articleTitle ? articleTitle : '未指定文章标题',
+                            articleContent: JSON.stringify(contentArr),
+                            articleType: articleSource,
+                            articleLabel: labelArr
+                        };
+                        myAjax("POST", 'post/publish', param).then((res) => {
+                            if (res.code == 10015) {
+                                if (isEdit) {
+                                    $(".saving").text("已更新");
+                                } else {
+                                    $(".saving").text("已保存");
+                                }
+                                articleId = res.articleId;
+                            } else {
+                                console.log(res.message);
+                            }
+                        })
+                    }, 5000);
+                } else {
+                    clearInterval(time);
+                }
+                
+            }
+            $(".CodeMirror-code").bind("DOMNodeInserted", function(e) {
+                console.log(123)
+                if ($(".CodeMirror-code").text().replace(/\u200B/g, '') != "") {
+                    clearInterval(time);
+                    $(".saving").show();
+                    $(".saving").text("保存中...");
+                    saveArticle(true);
+                } else {
+                    saveArticle(false);
+                    $(".saving").text("保存中...");
+                }
             })
         })
-        function saveArticle() {
-
-        }
     </script>
 </html>

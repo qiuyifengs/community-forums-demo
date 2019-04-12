@@ -153,6 +153,9 @@ body {
 .gutter-pd16  {
 	padding: 0 16px !important
 }
+.mg-l10 {
+    margin-left: 10px;
+}
 .mg-rl10 {
     margin: 0 10px;
 }

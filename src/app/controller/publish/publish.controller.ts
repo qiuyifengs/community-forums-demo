@@ -21,7 +21,6 @@ export class PublishController {
         if (param['0'] !== '') {
             obj.renderData = await this.postsRepository.editArticle(param['0']);
         }
-        console.log(obj)
         res.render('publish/publish', { title: 'publish',  obj});
     }
 
@@ -29,8 +28,10 @@ export class PublishController {
     @ApiOperation({ title: 'get balance from postList'})
     public async publish(@Body() params): Promise<PostList[]> {
         if (params.isEdit === 'false' || !params.isEdit) {
-            params.articleId = util.ramdom.random(6) +  util.dateType.getTime();
             params.publishTime = await util.dateType.toSecond();
+        }
+        if (!params.articleId) {
+            params.articleId = util.ramdom.random(6) +  util.dateType.getTime();
         }
         params.articleLabel = params.articleLabel ?  params.articleLabel.join(',') : '';
         return this.postsRepository.publish(params);

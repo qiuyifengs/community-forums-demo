@@ -1,7 +1,7 @@
 import { Injectable, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 // import { ApiException } from '../../bing/common/enums/api.exception';
-// import { ApiErrorCode } from '../../bing/common/enums/api-error-code.enum';
+import { ApiErrorCode } from '../../../bing/common/enums/api-error-code.enum';
 import { Repository } from 'typeorm';
 import { PostList } from '../../entitys/postList.entity';
 import { ArticleDetail } from '../../entitys/articleDetail.entity';
@@ -49,22 +49,51 @@ export class PublishService {
     async publish(data): Promise<any> {
         const userInfo = await this.userRepository.findOne({ userId: data.userId });
         data.author = userInfo.nickName;
-        await this.addArticleDetail(data);
+        const msg = {
+            code: 1,
+            message: '',
+            articleId: '',
+        };
+        console.log(data)
+        console.log(data.articleId)
+        let isRes = await this.postsRepository.findOne({ articleId: data.articleId });
+        console.log(111, isRes)
         if (data.isEdit !== 'false') {
-            let editRes = await this.postsRepository.findOne({ articleId: data.articleId });
-            editRes = Object.assign(editRes, data);
-            await this.postsRepository.save(editRes);
-        } else {
+            console.log(222)
+            isRes = Object.assign(isRes, data);
+            console.log(333)
+            isRes.isDrafts = data.isDrafts === 'false' ? false : true;
+            await this.postsRepository.save(isRes);
+            await this.addArticleDetail(isRes);
+            msg.code = ApiErrorCode.PUBLISH_SUCCESS;
             if (data.isDrafts !== 'false') {
-                data.isDrafts = true;
+                msg.articleId = data.articleId;
+                msg.message = '保存成功！';
             } else {
-                data.isDrafts = false;
+                msg.message = '发表成功！';
+                msg.articleId = data.articleId;
             }
+        } else {
             data.editTime = data.publishTime;
             data.editPerson = data.userId;
+            if (isRes) {
+                data = Object.assign(isRes, data);
+            }
+            if (data.isDrafts !== 'false') {
+                data.isDrafts = true;
+                msg.code = ApiErrorCode.PUBLISH_SUCCESS;
+                msg.articleId = data.articleId;
+                msg.message = '保存成功！';
+            } else {
+                data.isDrafts = false;
+                msg.code = ApiErrorCode.PUBLISH_SUCCESS;
+                msg.message = '发表成功！';
+                delete msg.articleId;
+            }
+            await this.addArticleDetail(data);
             const res = await this.postsRepository.save(data);
         }
-        return {message: '发表成功！'};
+        return msg;
     }
     // Store articles in articleDetail
     async addArticleDetail(data): Promise<any> {

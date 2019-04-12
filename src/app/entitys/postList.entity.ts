@@ -28,6 +28,8 @@ export class PostList {
     @Column({ default: 0 }) commentCount: number;
     // isDrafts
     @Column({ default: false }) isDrafts: boolean;
+    // top
+    @Column({default: false }) top: boolean;
     // publishTime
     @Column() publishTime: string;
     // editTime

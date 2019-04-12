@@ -16,4 +16,6 @@ export enum ApiErrorCode {
     USER_EMAIL_ERROR = 10012, // 邮箱不正确
     REPLY_SUCCESS = 10013, // 评论成功
     DELETE_SUCCESS = 10014, // 删除成功
+    PUBLISH_SUCCESS = 10015, // 发表或者保存成功
+    PUBLISH_FAILURE = 10016, // 发表或者保存失败
 }
