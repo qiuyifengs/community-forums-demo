@@ -28,11 +28,15 @@
                                                 <div class="ghost-list-item-main">
                                                     <div class="ghost-list-item-meta-content">
                                                         <div class="ghost-list-item-meta-content item-title-box">
-                                                            <h4 class="ghost-list-item-meta-title article_title"><%= item.articleTitle %></h4>
-                                                            <% if(item.isDrafts) { %>
-                                                                <span class="drafts-tip">草稿</span>
-                                                                <span class="isDrafts" style="display:none"><%= item.isDrafts %></span>
-                                                            <% } %>
+                                                                
+                                                            <h4 class="ghost-list-item-meta-title article_title">
+                                                                    <% if(item.isDrafts) { %>
+
+                                                                        <span style="margin-right: 4px" class="ghost-tag ghost-tag-has-color ghost-tag-color-warning">草稿</span>
+                                                                        <span class="isDrafts" style="display:none"><%= item.isDrafts %></span>
+                                                                    <% } %>
+                                                                <%= item.articleTitle %></h4>
+                                                            
                                                         </div>
                                                         <div class="ghost-list-item-meta-article-content"><%- item.articleContent %></div>
                                                     </div>

@@ -42,5 +42,20 @@
     background-color: var(--col-type)
 }
 
+.ghost-tag-color-success {
+    background-color: #67c23a
+}
+
+.ghost-tag-color-info {
+    background-color: #909399
+}
+
+.ghost-tag-color-warning {
+    background-color: #e6a23c
+}
+
+.ghost-tag-color-danger {
+    background-color: #f56c6c
+}
 
 
