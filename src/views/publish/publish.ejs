@@ -40,6 +40,7 @@
                     <div class="label-box mg-t20">
                         <div class="typle_input publish_input" contenteditable="true" data-placeholder="请输入选择标签，如php（用逗号，分号；分割）按Enter键确认"></div>
                     </div>
+                    <div class="label-data" style="display:none"><%= obj.getLabel %></div>
                     <div id="tags-input"></div>
                 </div>
                 <!-- <div class="article_content" id="divText" contenteditable="true" data-placeholder="What do you want to say?"></div> -->
@@ -67,6 +68,7 @@
                     <div class="save_btn_box">
                         <div class="save_btn">save</div>
                     </div>
+                    <div class="saving">保存中...</div>
                 </div>
             </div>
         </div>
@@ -82,22 +84,24 @@
             let editContent = $(".edit_content").text();
             let articleSource = $(".type_list").children(":first").text();
             let labelArr = [];
-            let curLabelArr = $(".cur_article_label").text().split(',');
-            curLabelArr.forEach(item => {
-                let labelDiv = `<div class="show-label bd-radius-3">
-                                    <span>${item}</span> 
-                                    <svg class="iconSvg" aria-hidden="true">
-                                        <use xlink:href="#icon-guanbi"></use>
-                                    </svg>
-                                </div>`;
-                $(".typle_input").before(labelDiv);
-                labelArr.push(item);
-            })
-            console.log(labelArr)
+            let curLabelArr = $(".cur_article_label").text();
+            let labelData = JSON.parse($(".label-data").text());
+            
+            if (curLabelArr !== "") {
+                curLabelArr.split(",").forEach(item => {
+                    let labelDiv = `<div class="show-label bd-radius-3">
+                                        <span>${item}</span> 
+                                        <svg class="iconSvg" aria-hidden="true">
+                                            <use xlink:href="#icon-guanbi"></use>
+                                        </svg>
+                                    </div>`;
+                    $(".typle_input").before(labelDiv);
+                    labelArr.push(item);
+                })
+            }
             if (!userId) {
                 goPage('user/login');
             }
-
             if (editType) {
                 $(".type_item").each(function() {
                     if ($(this).text() == editType) {
@@ -128,9 +132,9 @@
             $(".typle_input").focus(function() {
                 $("#tags-input").css("display", "block");
             });
-
             $("#tags-input").tagsinput({
-                labelTypeArr: [{typeContent:'开发语言', typeId: 'aa', labelArr: [{laebl:'数据库', labelId: 'label1'}, {laebl: 'Java', labelId: 'label2'}]}, {typeContent:'服务器', typeId:"bb", labelArr: [{laebl:'html', labelId: 'label3'}, {laebl: 'node', labelId: 'label4'}]}],
+                // labelTypeArr: [{typeContent:'开发语言', typeId: 'aa', labelArr: [{laebl:'数据库', labelId: 'label1'}, {laebl: 'Java', labelId: 'label2'}]}, {typeContent:'服务器', typeId:"bb", labelArr: [{laebl:'html', labelId: 'label3'}, {laebl: 'node', labelId: 'label4'}]}],
+                labelTypeArr: labelData,
                 callback: label => {
                      let labelDiv = `<div class="show-label bd-radius-3">
                                         <span>${label.label}</span> 
@@ -300,7 +304,7 @@
                     layer.msg(res.message);
                     if (res.code == 1) {
                         setTimeout(function() {
-                            goPage('');
+                            goPage('account/posts/' + $.cookie("userId"));
                         }, 2000);
                     } else {
                         console.log(res.message);
@@ -322,7 +326,7 @@
                     isEdit: isEdit,
                     isDrafts: true,
                     articleId: articleId,
-                    articleTitle: articleTitle,
+                    articleTitle: articleTitle ? articleTitle : '未指定文章标题',
                     articleContent: JSON.stringify(contentArr),
                     articleType: articleSource,
                     articleLabel: labelArr
@@ -331,7 +335,7 @@
                     if (res.code == 1) {
                         layer.msg('保存成功！');
                         setTimeout(function() {
-                            goPage('');
+                            goPage('account/posts/' + $.cookie("userId"));
                         }, 2000);
                     } else {
                         layer.msg(res.message);
@@ -349,5 +353,8 @@
                 $('.article_content .highlight').removeClass('highlight');
             })
         })
+        function saveArticle() {
+
+        }
     </script>
 </html>

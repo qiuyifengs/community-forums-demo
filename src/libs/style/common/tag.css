@@ -38,5 +38,9 @@
     color: #fff;
 }
 
+.ghost-tag-color-primary {
+    background-color: var(--col-type)
+}
+
 
 

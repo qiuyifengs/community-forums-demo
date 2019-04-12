@@ -1,58 +1,91 @@
 
-<ul class="ghost-menu ghost-menu-light ghost-menu-root ghost-menu-inline">
-    <li class="ghost-menu-item" data-id="1">
-        <span>我的主页</span>
-    </li>
-    <li class="ghost-menu-item" data-id="2">
-        <span>我的帖子</span>
-    </li>
-    <li class="ghost-menu-item" data-id="3">
-        <span>我的回复</span>
-    </li>
-    <li class="ghost-menu-item" data-id="4">
-        <span>我的收藏</span>
-    </li>
-</ul>
-
-<script type="text/javascript">
-    $(function(){
-        const CURRENT_ROUTER = this.location.pathname.split('/')[2]
-        const USERID = $.cookie("userId")
-
-        let routerIdFilter = value => {
-            const router = {
-                'account': 1,
-                'posts': 2,
-                'reply': 3,
-                'collect': 4,
-                'focus': 5
-            }
-            return router[value]
-        }
-
-        let routerAddressFilter = value => {
-            const address = {
-                1: 'account',
-                2: 'posts',
-                3: 'reply',
-                4: 'collect',
-                5: 'focus'
-            }
-            return `account/${ address[value] }/${ USERID }`
-        }
-
-        $('.ghost-menu .ghost-menu-item').each(function() {
-            if (routerIdFilter(CURRENT_ROUTER) == $(this).attr('data-id')) {
-                $(this).addClass('ghost-menu-item-selected')
-                $(this).siblings().removeClass('ghost-menu-item-selected')
-            }
-        })
-
-        $('.ghost-menu').on('click', '.ghost-menu-item', function(e) {
-            e.preventDefault()
-            const url = routerAddressFilter($(this).attr('data-id'))
-            goPage(url)
-        })
-    })
-</script>
+<aside class="ghost-col-xs-24 ghost-col-sm-4 ghost-col-lg-4 ghost-col-xl-4 gutter-pd8 tab_list">
+        <ul class="ghost-menu ghost-menu-light ghost-menu-root ghsot-menu-inline bd-radius-5 box-shadow">
+            <li class="ghost-menu-item account">
+                <a href="#">
+                    <span>个人资料</span>
+                </a>
+            </li>
+            <!-- <li class="ghost-menu-item setting">
+                <a href="#">
+                    <span>安全设置</span>
+                </a>
+            </li> -->
+            <li class="ghost-menu-item posts">
+                <a href="#">
+                    <span>我的帖子</span>
+                </a>
+            </li>
+            <li class="ghost-menu-item reply">
+                <a href="#">
+                    <span>我的回复</span>
+                </a>
+            </li>
+            <!-- <li class="ghost-menu-item focus">
+                <a href="#">
+                    <span>我的关注</span>
+                </a>
+            </li> -->
+            <li class="ghost-menu-item collect">
+                <a href="#">
+                    <span>我的收藏</span>
+                </a>
+            </li>
+            <!-- <li class="ghost-menu-item">
+                <a href="#">
+                    <span>我的积分</span>
+                </a>
+            </li> -->
+        </ul>
+    </aside>
     
+    <script type="text/javascript">
+        $(function(){
+            let curRouter = this.location.pathname.split('/')[2];
+            (function() {
+                $(".ghost-menu-item").each(function() {
+                    if ($(this).hasClass(curRouter)) {
+                        $(this).addClass("ghost-menu-item-selected");
+                        $(this).siblings().removeClass("ghost-menu-item-selected");
+                        return false;
+                    }
+                })
+            })(curRouter)
+            let userId = $.cookie("userId");
+            $(".tab_list").on("click", ".ghost-menu-item", function(event) {
+                event.preventDefault();
+                let curTab = $(this).find("span").text();
+                let url;
+                switch(curTab) {
+                    case "个人中心":
+                        url = 'account/account/' + userId;
+                        break;
+                    // case "安全设置":
+                    //     url = 'account/setting/' + userId;
+                        // break;
+                    case "我的帖子":
+                        url = 'account/posts/' + userId;
+                        break;
+                    case "我的回复":
+                        url = 'account/reply/' + userId;
+                        break;
+                    // case "我的关注":
+                    //     url = 'account/focus/' + userId;
+                    //     break;
+                    case "我的收藏":
+                        url = 'account/collect/' + userId;
+                        break;
+                    // case "我的积分":
+                    //     url = 'account/account/' + userId;
+                    //     break;    
+                    default:
+                        url = 'account/account/' + userId;
+                        break;
+                }
+                $(this).addClass("ghost-menu-item-selected");
+                $(this).siblings().removeClass("ghost-menu-item-selected");
+                goPage(url);
+            })
+        })
+    </script>
+        

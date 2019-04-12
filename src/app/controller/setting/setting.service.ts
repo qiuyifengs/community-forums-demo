@@ -18,6 +18,7 @@ export class SettingService {
   ) { }
 
   async getUserInfo(param): Promise<any> {
+    console.log(await this.settingRepository.findOne({ userId: param.userId }))
     return await this.settingRepository.findOne({ userId: param.userId });
 
   }

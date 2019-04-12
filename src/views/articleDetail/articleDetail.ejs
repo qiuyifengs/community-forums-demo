@@ -402,6 +402,7 @@
                 commentator = ''
                 commentator = $(this).parent().siblings(".comment_top").find(".commentator_name").text();
                 $(this).parents(".parent_comment").find(".comment_bottmo").css({display: "block"});
+                $(this).parents(".parent_comment").siblings().find(".comment_bottmo").css({display: "none"});
             })
             // submit comment
             $(".comment_btn_box").on("click", function() {
@@ -641,7 +642,7 @@
             `
         }
         function addCommentHtml(item) {
-            return `<div class="comment_item parent_comment bd-bottom">
+            return `<div class="comment_item parent_comment">
                         <div class="comment_top">
                             <img class="commentator_img" src="/images/man1.png" alt="">
                             <div class="commentator_name">${ item.commentUserName }</div>
@@ -685,7 +686,6 @@
                 <div class="children_commentator_box">
                     <div class="comment_item childer_item">
                         <div class="comment_top">
-                            <img class="commentator_img" src="/images/man1.png" alt="">
                             <div class="commentator_name children_commentator_name">${ item.commentUserName }</div>
                             <div class="comment_time"">${ item.commentTime }</div>
                         </div>

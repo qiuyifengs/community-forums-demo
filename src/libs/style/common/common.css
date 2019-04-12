@@ -88,7 +88,10 @@ body {
 .ghost-tac {
 	text-align: center;
 }
- 
+
+.primary {
+    color: #485ec0
+}
 /* margin */
 .mg-0 {
     margin: 0!important;
@@ -149,6 +152,9 @@ body {
 
 .gutter-pd16  {
 	padding: 0 16px !important
+}
+.mg-rl10 {
+    margin: 0 10px;
 }
 .mg-15 {
     margin: 15px;

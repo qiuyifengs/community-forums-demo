@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel="icon" href="/images/collection.png" type="img/x-ico" />
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+        <link rel='stylesheet' href='/style/index.css' />
+        <link rel="stylesheet" href="/style/forum/forum.css">
+        <link rel="stylesheet" href="/style/common/swiper.min.css">
+        <% include ./common/script %>
+        
+        <style>
+            .menu-title {
+                margin-bottom: 20px;
+                text-indent: 12px;
+                font-size: 12px;
+                color: #000000;
+            }
+            .tab-nav {
+                position: relative;
+                box-sizing: border-box;
+                padding-left: 0;
+                list-style: none;
+                min-height: 48px;
+                font-size: 16px;
+                white-space: nowrap;
+                width: 100%;
+            }
+                
+            .tab-nav-item {
+                position: relative;
+                box-sizing: border-box;
+                height: 100%;
+                padding: 11px 0;
+                text-indent: 12px;
+                text-decoration: none;
+                font-family:  "PingFangSC-Light","-apple-system","Helvetica Neue",Helvetica,Arial,"PingFang SC","Hiragino Sans GB","WenQuanYi Micro Hei","Microsoft Yahei",sans-serif;
+                cursor: pointer;
+                color: var(--col-61);
+                font-size: var(--fs-14);
+                transition: color .3s cubic-bezier(.645,.045,.355,1);
+            }
+            .tab-nav-item:nth-of-type(1).tab-active:active {
+                background-color: #FFF;
+                color: var(--col-014);
+            }
+            .tab-nav-item.tab-active {
+                -webkit-box-shadow: -5px 0 10px 0 rgba(217, 224, 252, .3);
+                box-shadow: -5px 0 10px 0 rgba(217, 224, 252, .3);
+                background-color: #FFF;
+                color: var(--col-014);
+            }
+                
+            .tab-nav-item.tab-active:active {
+                background-color: #ffffff;
+                -webkit-box-shadow: -5px 0 10px 0 rgba(217, 224, 252, .3);
+                box-shadow: -5px 0 10px 0 rgba(217, 224, 252, .3);
+            }
+                
+            .tab-nav-item:active {
+                background-color: transparent;
+            }
+                
+            .tab-nav-item a {
+                display: inherit;
+                color: inherit;
+            }
+            
+            .tab-nav-item:hover {
+                background-color: rgba(72, 94, 192, .1);
+            }
+            .tab-nav-item.tab-active {
+                color: var(--col-014);
+            }
+            .tab-panel {
+                position: relative;
+            }
+                
+            .tab-panel .tab-panel-item {
+                width: 100%;
+                position: absolute;
+                top: 0;
+                -webkit-transform: translateX(-100%);
+                transform: translateX(-100%);
+            }
+            .menu-item-val {
+                margin-left: 5px;
+            }
+            .tab-panel .tab-panel-item.tab-active {
+                position: relative;
+                -webkit-transition: -webkit-transform .15s;
+                transition: -webkit-transform .15s;
+                transition: transform .15s;
+                transition: transform .15s, -webkit-transform .15s;
+                -webkit-transform: translateX(0);
+                transform: translateX(0);
+            }
+                
+            .tab-panel .tab-panel-item.tab-active ~ .tab-panel-item {
+                -webkit-transform: translateX(100%);
+                transform: translateX(100%);
+            }
+
+            /* .postsList .ghost-list-item {
+                -webkit-box-shadow: 0 5px 10px 0 rgba(217, 224, 252, 0.3);
+                box-shadow: 0 5px 10px 0 rgba(217, 224, 252, 0.3);
+                transition: all .3s ease;
+            } */
+            @media screen and (max-width: 420px) {
+                body {
+                    font-family: STHeitiSC-Light;
+                }
+                .tab-nav {
+                    position: fixed;
+                    top: 44px;
+                    left: 0;
+                    right: 0;
+                    z-index: 1;
+                    padding: 0 15px!important;
+                    background: var(--col-f5);
+                    border: none;
+                }
+                .tab-nav > .tab-active {
+                    background-color: var(--col-f5)!important;
+                }
+                
+                .ghost-layout-content {
+                    position: relative;
+                }
+                .ghost-list-item-extra {
+                    display: none;
+                }
+                .ghost-list-vertical .ghost-list-item-meta {
+                    margin-top: 16px;
+                    font-size: var(--fs-18);
+                    line-height: 24px;
+                    color: var(--col-24);
+                }
+                .pdl-24 {
+                    margin: 0 15px;
+                    padding-left: 0;
+                    border-bottom: .5px solid var(--col-e9);
+                }
+                .ghost-list-vertical .ghost-list-item-action {
+                    position: relative;
+                    margin-top: 0;
+                    margin-bottom: 4px;
+                }
+                .ghost-list-item-meta-title {
+                    margin-bottom: 0;
+                }
+                .ghost-list-item-action > .app-publishTime {
+                    display: block;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                }
+                .app-display-none {
+                    display: none;
+                }
+                .app-btn-box {
+                    position: fixed;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    margin-bottom: 0!important;
+                }
+                .app-btn-box .ghost-btn-round.ghost-btn-lg {
+                    border-radius: 0;
+                }
+                .tab-panel {
+                    overflow: auto;
+                }
+                .ghost-empty {
+                    margin: 0;
+                    padding: 50% 0;
+                    background-color: var(--bg);
+                }
+            }
+
+            .articleTitle h4:hover, .articleTitle h4:focus {
+                color: var(--btn-col);
+                text-decoration: underline
+            }
+
+            .articleAuthor:hover, .articleAuthor:focus {
+                color: var(--btn-col);
+                text-decoration: underline
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div id="root">
+            <div class="ghost-layout">
+                <% include ./common/header %>
+                <div class="ghost-pro-layouts-basic-layout-content ghost-layout-content">
+                    <main  class="ghost-pro-components-page-header-wrapper-grid-content-main ghost-pro-components-page-header-wrapper-grid-content-wide">
+                        <div class="ghost-row">
+                            <article class="ghost-col-xs-24 ghost-col-sm-24 ghost-col-md-24 ghost-col-lg-18 ghost-col-xl-18 gutter-pd8">
+                                <div class="swiper-container bd-radius-5">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide"><img src="/images/1.png" alt=""></div>
+                                        <div class="swiper-slide"><img src="/images/2.png" alt=""></div>
+                                        <div class="swiper-slide"><img src="/images/3.png" alt=""></div>
+                                        <div class="swiper-slide"><img src="/images/4.png" alt=""></div>
+                                    </div>
+                                    <!-- 如果需要分页器 -->
+                                    <div class="swiper-pagination"></div>
+                                    <!-- 如果需要导航按钮 -->
+                                    <!-- <div class="swiper-button-prev"></div>
+                                    <div class="swiper-button-next"></div> -->
+                                </div>
+
+                                <div class="ghost-card" style="background-color: transparent; box-shadow: none">
+                                    <div class="ghost-card-body" style="padding: 0">
+                                        <div class="ghost-loading-mask" style="display: none">
+                                            <div class="ghost-loading-spinner">
+                                                <svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg>
+                                            </div>
+                                        </div>
+
+                                        <% if (postList.articleList && (postList.articleList.length > 0)) { %>
+                                        <div class="ghost-list ghost-list-vertical">
+                                            <div class="ghost-spin-container postsList" id="artivleTemplate">
+                                                
+                                                <% postList.articleList.forEach(function(articleItem) {%>
+
+                                                    <div class="ghost-card">
+                                                        <div class="ghost-card-body" style="padding: 10px 20px">
+                                                            <div class="ghost-list-item">
+                                                                <div class="ghost-list-item-main">
+                                                                    <div class="ghost-list-item-meta">
+                                                                        <div class="ghost-list-item-meta-content">
+                                                                            <div class="ghost-pro-components-article-list-content-index-listContent">
+                                                                                <span class="ghost-tag ghost-tag-has-color" style="background-color: var(--col-top)">置顶</span>
+                                                                                <a class="articleTitle" target="_blank" href="/post/articleDetail/<%=articleItem.articleId%>">
+                                                                                    <h4 class="ghost-list-item-meta-title fs18">
+                                                                                        <!-- <%=articleItem.articleTitle%> -->
+                                                                                        Node.js 应用故障排查手册 —— Node.js 性能平台使用指南
+                                                                                    </h4>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="ghost-components-article-list-content-index-listContent">
+                                                                        <div class="ghost-components-article-list-content-index-description">
+                                                                            前一节中我们借助于 Chrome devtools 实现了对线上 Node.js 应用的 CPU/Memory 问题的排查定位，但是在实际生产实践中，大家会发现Chrome 
+                                                                            devtools 更加偏向本地开发模式，因为显然 Chrome devtools 不会负责去
+                                                                            前一节中我们借助于 Chrome devtools 实现了对线上 Node.js 应用的 CPU/Memory 问题的排查定位，但是在实际生产实践中，大家会发现Chrome 
+                                                                            devtools 更加偏向本地开发模式，因为显然 Chrome devtools 不会负责去
+                                                                        </div>
+                                                                        <div class="ghost-components-article-list-content-index-extra">
+                                                                            <span class="ghost-avatar ghost-pro-components-global-header-index-avatar ghost-avatar-mini ghost-avatar-circle ghost-avatar-image langue-show">
+                                                                                <img src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png">
+                                                                                
+                                                                                <!-- <%= articleItem.author.substring(0, 1) %> -->
+                                                                            </span>
+                                                                            <a href="javascript:;" class="articleAuthor" style="color: var(--btn-col)">
+                                                                                <span class="author-name"><%=articleItem.author%></span>
+                                                                            </a>
+                                                                            <em><%= articleItem.publishTime.substr(0, 10) %></em>
+
+                                                                            <% if (articleItem.articleLabel) { %>
+                                                                                <% articleItem.articleLabel.forEach(function(labelItem) {%>
+                                                                                <span class="ghost-tag ghost-tag-has-color ghost-tag-color-primary"><%= labelItem %></span>
+                                                                                <% }) %>
+                                                                            <% } %>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <% }) %>
+                                            </div>
+                                        </div>
+                                        <% } %>
+                                        <% if ((postList.total * 1) > 0) { %>
+                                            <ul class="ghost-pagination" style="margin: 24px 0; text-align: center"></ul>
+                                        <% } else { %>
+                                            <div class="ghost-empty">
+                                                <dvi class="ghost-empty-image">
+                                                    <img src="/images/no_data.png" alt="">
+                                                </dvi>
+                                                <p class="ghost-empty-description">暂无相关文章</p>
+                                            </div>
+                                        <% } %>
+                                        <input type="hidden" id="totalPages" value="<%= postList.total %>" style="display: none" />
+                                    </div>
+                                </div>
+                            </article>
+                            <aside class="ghost-col-xs-24 ghost-col-sm-24 ghost-col-md-24 ghost-col-lg-24 ghost-col-xl-6" style="padding-left: 24px !important">
+                                    
+                                <!-- <div class="menu-list">
+                                        <div class="menu-title">TAGS</div>
+                                        <ul class="tab-nav">
+                                            <% postList.menuList.forEach(function(menuItem) { %>
+                                                <li class="tab-nav-item bd-radius-5">
+                                                    <a href="javascript:;">
+                                                        <svg class="iconSvg" aria-hidden="true">
+                                                            <use xlink:href='#icon-<%= menuItem.menuId %>'></use>>
+                                                        </svg>
+                                                        <span class="menu-item-val"><%= menuItem.menu %></span>
+                                                    </a>
+                                                </li>
+                                            <% }) %>
+                                        </ul>
+                                </div> -->
+                                <h5 style="margin-bottom: 24px">TAGS</h5>
+                                <ul class="ghost-components-menu-vertical-index">
+                                    <% postList.menuList.forEach(function(menuItem) { %>
+                                    <li class="ghost-components-menu-item">
+                                        <svg class="iconSvg" aria-hidden="true">
+                                            <use xlink:href="#icon-<%= menuItem.menuId %>"></use>
+                                        </svg>
+                                        <span class="ghost-ment-item-title"><%= menuItem.menu %></span>
+                                    </li>
+                                    <% }) %>
+                                </ul>
+
+                                <!-- <ul class="ghost-components-menu-vertical-index">
+                                    <li class="ghost-components-menu-item">
+                                        <svg class="iconSvg" aria-hidden="true">
+                                            <use xlink:href="#icon-ALL"></use>
+                                        </svg>
+                                        <span class="ghost-ment-item-title">ALL</span>
+                                    </li>
+                                    <li class="ghost-components-menu-item">
+                                        <svg class="iconSvg" aria-hidden="true">
+                                            <use xlink:href="#icon-HOT"></use>
+                                        </svg>
+                                        <span class="ghost-ment-item-title">HOT</span>
+                                    </li>
+                                </ul> -->
+                        </aside>
+                    </main>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="/js/swiper.min.js"></script>
+    <script type="text/javascript">
+        
+        $(function() {
+            var swiper = new Swiper('.swiper-container', {
+                spaceBetween: 30,
+                centeredSlides: true,
+                autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            });
+            // random color
+            $(".item-random-color").each(function() {
+                const authorName = $(this).find('.author-name').text();
+                $(this).find(".dom-random-color").css("background",renderColor(authorName));
+
+            })
+            
+            const userId = $.cookie("userId");
+            const articleType = this.location.pathname.split('/')[2] ? decodeURI(this.location.pathname.split('/')[2]) : 'ALL'
+
+
+            $('.ghost-components-menu-vertical-index .ghost-components-menu-item').on('click', function (e) {
+                e.preventDefault()
+                $(this).addClass('is-active')
+                $(this).siblings().removeClass('is-active')
+                goPage(`topic/${$(this).find('.ghost-ment-item-title').text()}`)
+            })
+
+            $('.ghost-components-menu-vertical-index .ghost-components-menu-item').each(function() {
+                if (articleType === $(this).find('.ghost-ment-item-title').text()) {
+                    $(this).addClass('is-active')
+                    $(this).siblings().removeClass('is-active')
+                    return false
+                }
+            })
+
+            // init Google Design button click effect 
+            Waves.attach('.float-button-light', ['waves-button', 'waves-float', 'waves-light'])
+            // Init Waves
+            Waves.init()
+
+            // init pagination config
+            $('.ghost-pagination').pagination({
+                total: document.getElementById('totalPages').value,
+                // total: 100,
+                pageSize: 10,
+                current: 1,
+                coping: true,
+                isHide: true,
+                callback: api => {
+                    $('.ghost-loading-mask').css('display', 'block')
+                    // dialog.loading.open()
+                    const currentPage = api.getCurrent()
+                    const url = articleType ? `topic/${articleType}/${currentPage}` : `topic/ALL${currentPage}`
+                    myAjax('GET', url).then(res => {
+                        console.log(res)
+                        if (res.code === 1) {
+                            $("#artivleTemplate").empty()
+                            res.articleList.forEach(item => {
+                                $("#artivleTemplate").append(renderArticleHtml(item))
+                            })
+                            $(".item-random-color").each(function() {
+                                const authorName = $(this).find('.author-name').text();
+                                $(this).find(".dom-random-color").css("background",renderColor(authorName));
+
+                            })
+                            setTimeout(function() {
+                                $('.ghost-loading-mask').css('display', 'none')
+                            }, 500) 
+                        }
+                    })
+                }
+            })
+        }(window, jQuery));
+
+        let renderArticleHtml = item => {
+            return `<div class="ghost-card">
+                        <div class="ghost-card-body" style="padding: 10px 20px">
+                            <div class="ghost-list-item">
+                                <div class="ghost-list-item-main">
+                                    <div class="ghost-list-item-meta">
+                                        <div class="ghost-list-item-meta-content">
+                                            <div class="ghost-pro-components-article-list-content-index-listContent">
+                                                <span class="ghost-tag ghost-tag-has-color" style="background-color: var(--col-top)">置顶</span>
+                                                <a class="articleTitle" target="_blank" href="/post/articleDetail/${item.articleId}">
+                                                    <h4 class="ghost-list-item-meta-title fs18">
+                                                        ${ item.articleTitle }
+                                                    </h4>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ghost-components-article-list-content-index-listContent">
+                                        <div class="ghost-components-article-list-content-index-description">
+                                            ${ item.articleContent }
+                                        </div>
+                                        <div class="ghost-components-article-list-content-index-extra">
+                                            <span class="ghost-avatar ghost-pro-components-global-header-index-avatar ghost-avatar-mini ghost-avatar-circle ghost-avatar-image langue-show">
+                                                <img src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png">
+                                            </span>
+                                            <a href="javascript:;" class="articleAuthor" style="color: var(--btn-col)">
+                                                <span class="author-name">${ item.author }</span>
+                                            </a>
+                                            <em>${ item.publishTime.substr(0, 10) }</em>
+                                            <span class="ghost-tag ghost-tag-has-color ghost-tag-color-primary">${ item.articleType }</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`
+            }
+            
+    </script>
+</html>

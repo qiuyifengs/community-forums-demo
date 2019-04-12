@@ -75,8 +75,8 @@
 }
 .label-box .typle_input {
     padding: 13px 0 12px;
-    width: 70%;
     height: 100%;
+    flex-grow: 1;
     border-radius: 5px;
     outline: none;
     color: var(--col-3b);
@@ -141,16 +141,21 @@
     border-radius: 5px;;
 }
 .save_btn {
-    margin-left: 20px;
+    margin: 0 20px;
     padding: 14px 0;
     width: 100px;
-    font-size: 14px;
+    font-size: var(--fs-14);
     line-height: 14px;
     letter-spacing: 0px;
     text-align: center;
     color: var(--col-3b);
     background: var(--col-e9);
     border-radius: 5px;;
+}
+.saving {
+    display: none;
+    font-size: var(--fs-14);
+    color: var(--col-3b);
 }
 .publish_right {
     margin-right: 50px;

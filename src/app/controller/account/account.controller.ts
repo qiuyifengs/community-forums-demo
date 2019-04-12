@@ -42,7 +42,6 @@ export class AccountController {
             storage: diskStorage({
                 destination: './file',
                 filename: (req, file, cb) => {
-                    console.log(333)
                     const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
                     return cb(null, `${randomName}${extname(file.originalname)}`);
                 },
@@ -50,7 +49,6 @@ export class AccountController {
         },
     )) // file对应HTML表单的name属性
     async uploadFile(@UploadedFile() file, @Body() body) {
-        console.log(123123123, file)
         return file;
     }
 }

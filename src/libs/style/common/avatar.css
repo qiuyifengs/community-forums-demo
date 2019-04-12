@@ -44,6 +44,17 @@
     border-radius: 50%;
 }
 
+.ghost-avatar-mini {
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    border-radius: 50%
+}
+
+.ghost-acatar-mini.ghost-avator-icon {
+    font-size: 12px;
+}
+
 .ghost-avatar-sm.ghost-avatar-icon {
     font-size: 14px;
 }

@@ -72,9 +72,9 @@
     width: 24px;
     height: 24px;
 }
-.user-login {
-    display: none;
-    font-family: var(--font-f);
+#register {
+    line-height: 36px;
+    color: var(--btn-col);
 }
 .new_icon {
     overflow: hidden;
@@ -174,7 +174,7 @@
 .ghost-pro-components-global-header-index-right .ghost-pro-components-global-header-index-action {
     display: inline-block;
     height: 100%;
-    /* padding: 0 8px 0 0; */
+    padding: 0 12px;
     cursor: pointer;
     transition: all .3s;
 }

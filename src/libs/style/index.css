@@ -24,6 +24,7 @@
 @import './common/pageTurning.css';
 @import './common/layer.css';
 @import './common/tag.css';
+@import './common/dropdown.css';
 
 .home-page {
     display: flex;
@@ -142,6 +143,7 @@
 
 .ghost-components-article-list-content-index-description {
     line-height: 22px;
+    padding-top: 12px;
 }
 .ghost-components-article-list-content-index-listContent .ghost-components-article-list-content-index-extra {
     margin-top: 16px;
@@ -204,4 +206,20 @@
     background-color: #ffffff;
 	box-shadow: -5px 0px 10px 0px rgba(217, 224, 252, 0.3);
 	border-radius: 5px;
+}
+
+.ghost-pro-components-select-lang-index-dropDown .ghost-pro-components-global-header-index-action .ghost-dropdown-trigger {
+    display: inline-block;
+    height: 100%;
+    padding: 0 12px;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+.ghost-pro-components-global-header-index-right .ghost-pro-components-notice-icon-index-noticeButton:hover {
+    background-color: #f0f2f5
+}
+
+#loginBtn:hover {
+    background-color: #485ec00f
 }
