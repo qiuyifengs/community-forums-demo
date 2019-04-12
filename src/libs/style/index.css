@@ -142,6 +142,12 @@
 }
 
 .ghost-components-article-list-content-index-description {
+    overflow: hidden;
+    display: -webkit-box; 
+    text-overflow: ellipsis;
+    word-break: break-all;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp: 2;
     line-height: 22px;
     padding-top: 12px;
 }
