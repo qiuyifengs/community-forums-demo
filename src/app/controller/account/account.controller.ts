@@ -16,9 +16,11 @@ export class AccountController {
         const data = await this.accountService.getUserInfo(param);
         const tel = data.tel ? data.tel.substr(0, 2) + '****' + data.tel.substr(8, data.tel.split('').length) : '';
         const email = data.email.substr(0, 2) + '****' + data.email.substr(-7);
+        const headerIcon = data.headerIcon;
         const result = {
             email,
             tel,
+            headerIcon,
             activity: data.activity,
         };
         res.render('account/account', { title: '个人中心', result });
@@ -30,18 +32,11 @@ export class AccountController {
     //     console.log(param, req.files)
     //     return this.accountService.changeUserInfo(param);
     // }
-
-    // @Post('upload')
-    // @UseInterceptors(FileInterceptor('file'))
-    // uploadFile(@UploadedFile() file, @Body() data) {
-    //     console.log(data.name)
-    //     return ""
-    // }
     @Post('upload')
     @UseInterceptors(FileInterceptor('file',
         {
             storage: diskStorage({
-                destination: './file',
+                destination: './headerIconFile',
                 filename: (req, file, cb) => {
                     const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
                     return cb(null, `${randomName}${extname(file.originalname)}`);
@@ -49,7 +44,14 @@ export class AccountController {
             }),
         },
     )) // file对应HTML表单的name属性
-    async uploadFile(@UploadedFile() file, @Body() body) {
-        return file;
+    async uploadFile(@UploadedFile() file, @Body() data) {
+        console.log(data, file)
+        const params = {
+            userId: data.userId,
+            nickName: data.nickName,
+            personalProfile: data.personalProfile,
+            headerIcon: file.path,
+        }
+        return await this.accountService.changeUserInfo(params);;
     }
 }

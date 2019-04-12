@@ -21,7 +21,7 @@
                                 <span><%= title %></span>
                             </div>
                             <!-- 这个你的那块代码 我先放着 右侧是我的 作对比 之后更改交互逻辑 -->
-                            <div class="ghost-list ghost-list-vertical ghost-list-split">
+                            <!-- <div class="ghost-list ghost-list-vertical ghost-list-split">
                                     <div class="ghost-spin-nested-loading">
                                         <div class="ghost-spin-container" id="replyTemplate">
                                             <% answerList.commentRes.forEach(function(item) {%>
@@ -49,11 +49,6 @@
                                                                 <% if (item.childrenComentList && item.childrenComentList.length > 0) { %>
                                                                     <% item.childrenComentList.forEach(function(childrenItem) {%>
                                                                         <div class="children_comment_list pd-l15 bd-radius-5">   
-                                                                            <!-- <div class="ghost-list-item-meta-avatar children_item">
-                                                                                <span class="ghost-avatar ghost-avatar-circle ghost-avatar-image">
-                                                                                    <img src="/images/header_icon.png">
-                                                                                </span>
-                                                                            </div> -->
                                                                             <div class="ghost-list-item-meta-content">
                                                                                 <div>
                                                                                     <h4 class="ghost-list-item-meta-title comment-info">
@@ -93,111 +88,114 @@
                                     <% } %>
                                     <input type="hidden" id="totalPages" value="<%= answerList.total %>" style="display: none" />
                                 </div>
-                            </div>
+                            </div> -->
 
                             <!-- comment components start Cooperate List loading-->
                             <article class="comment-demo">
-                                    <div class="ghost-list comment-list">
-                                        <div class="ghost-spin-nested-loading">
-                                            <div class="ghost-spin-container" id="replyTemplate"> 
-                                                <!-- start rendering -->
-                                                <% answerList.commentRes.forEach(function(item) {%>
-                                                <article class="ghost-comment ghost-comment-has-color">
-                                                    <div class="ghost-comment-inner">
-                                                        <div class="ghost-comment-avatar">
-                                                            <span class="ghost-avatar ghost-avatar-circle ghost-avatar-image">
-                                                                <img src="/images/header_icon.png">
+                                <div class="ghost-list comment-list">
+                                    <div class="ghost-spin-nested-loading">
+                                        <div class="ghost-spin-container" id="replyTemplate"> 
+                                            <!-- start rendering -->
+                                            <% answerList.commentRes.forEach(function(item) {%>
+                                            <article class="ghost-comment ghost-comment-has-color">
+                                                <div class="ghost-comment-inner">
+                                                    <div class="ghost-comment-avatar">
+                                                        <span class="ghost-avatar ghost-avatar-circle ghost-avatar-image">
+                                                            <img src="/images/header_icon.png">
+                                                        </span>
+                                                    </div>
+                                                    <div class="ghost-comment-content ghost-comment-parent" data-article-id="<%= item.articleId %>" data-comment-id="<%= item.commentId %>">
+                                                        <div class="ghost-comment-content-author">
+                                                            <span class="ghost-comment-content-author-name">
+                                                                <a style="color: #475ec0; font-weight: bold"><%= item.commentUserName %></a>
+                                                            </span>
+                                                            <span class="ghost-comment-content-author-time time">
+                                                                <span><%= item.commentTime %></span>
                                                             </span>
                                                         </div>
-                                                        
-                                                        <div class="ghost-comment-content" data-article-id="<%= item.articleId %>" data-comment-id="<%= item.commentId %>">
-                                                            <div class="ghost-comment-content-author">
-                                                                <span class="ghost-comment-content-author-name">
-                                                                    <a style="color: #475ec0; font-weight: bold"><%= item.commentUserName %></a>
-                                                                </span>
-                                                                <span class="ghost-comment-content-author-time time">
-                                                                    <span><%= item.commentTime %></span>
-                                                                </span>
-                                                            </div>
 
-                                                            <div class="ghost-comment-content-detail">
-                                                                <p><%= item.commentContent %></p>
-                                                            </div>
-                                                           
-                                                            <ul class="ghost-comment-actions">
-                                                                <li>
-                                                                    <button class="ghost-btn ghost-btn-text ghost-btn-text-default reply-btn">
-                                                                        <span>回复</span>
-                                                                    </button>
-                                                                </li>
-                                                            </ul>
+                                                        <div class="ghost-comment-content-detail">
+                                                            <p><%= item.commentContent %></p>
                                                         </div>
+                                                        
+                                                        <ul class="ghost-comment-actions">
+                                                            <li>
+                                                                <button class="ghost-btn ghost-btn-text ghost-btn-text-default reply-btn">
+                                                                    <span>回复</span>
+                                                                </button>
+                                                            </li>
+                                                        </ul>
+                                                        <div class="replyFormTemplate"></div>
                                                     </div>
-                                                    <% if (item.childrenComentList && item.childrenComentList.length > 0) { %>
-                                                    <div class="ghost-comment-nested">
-                                                        <% item.childrenComentList.forEach(function(nested) { %>
-                                                        <div class="ghost-comment">
-                                                            <div class="ghost-comment-inner">
-                                                                <!-- <div class="ghost-comment-avatar">
-                                                                    <span class="ghost-avatar ghost-avatar-circle ghost-avatar-image">
-                                                                        <img src="/images/header_icon.png">
+                                                </div>
+                                                <% if (item.childrenComentList && item.childrenComentList.length > 0) { %>
+                                                <div class="ghost-comment-nested">
+                                                    <% item.childrenComentList.forEach(function(nested) { %>
+                                                    <div class="ghost-comment">
+                                                        <div class="ghost-comment-inner">
+                                                            <!-- <div class="ghost-comment-avatar">
+                                                                <span class="ghost-avatar ghost-avatar-circle ghost-avatar-image">
+                                                                    <img src="/images/header_icon.png">
+                                                                </span>
+                                                            </div> -->
+                                                            <div class="ghost-comment-content" data-comment-id="<%= nested.childCommentId %>">
+                                                                <div class="ghost-comment-content-author">
+                                                                    <span class="ghost-comment-content-author-name">
+                                                                        <a style="color: #475ec0; font-weight: bold"><%= nested.commentUserName %></a>
                                                                     </span>
-                                                                </div> -->
-                                                                <div class="ghost-comment-content" data-comment-nested-id="<%= nested.commentId %>">
-                                                                    <div class="ghost-comment-content-author">
-                                                                        <span class="ghost-comment-content-author-name">
-                                                                            <a style="color: #475ec0; font-weight: bold"><%= nested.commentUserName %></a>
-                                                                        </span>
-                                                                        <span class="ghost-comment-content-author-time time">
-                                                                            <span><%= nested.commentTime %></span>
-                                                                        </span>
-                                                                    </div>
-                                                                    <div class="ghost-comment-content-detail">
-                                                                        <p><%= nested.commentContent %></p>
-                                                                    </div>
-                                                                    <ul class="ghost-comment-actions">
-                                                                        <li>
-                                                                            <button class="ghost-btn ghost-btn-text ghost-btn-text-default reply-btn">
-                                                                                <span>回复</span>
-                                                                            </button>
-                                                                        </li>
-                                                                    </ul>
-                                                                    <div class="replyFormTemplate"></div>
-                                                                    <!-- <form class="ghost-form ghost-form-horizontal reply-form">
-                                                                        <div class="ghost-row ghost-form-item">
-                                                                            <div class="ghsot-col ghost-col-21" style="padding-right: 8px">
-                                                                                <textarea id="textareaComment" rows="1" style="max-height: 132px; min-height: 32px;" placeholder="文明社会，理性评论" class="ghost-input"></textarea>
-                                                                            </div>
-                                                                            <div class="ghsot-col ghost-col-2">
-                                                                                <button type="button" id="submitTextareaComment" class="gutter-pd8 ghost-btn ghost-btn-primary waves-float float-button-light waves-effect waves-button waves-float waves-light">
-                                                                                    <span>添加回复</span>
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </form>   -->
+                                                                    <span class="ghost-comment-content-author-time time">
+                                                                        <span><%= nested.commentTime %></span>
+                                                                    </span>
                                                                 </div>
+                                                                <div class="ghost-comment-content-detail">
+                                                                    <p><%= nested.commentContent %></p>
+                                                                </div>
+                                                                <ul class="ghost-comment-actions">
+                                                                    <li>
+                                                                        <button type="button" class="ghost-btn ghost-btn-text ghost-btn-text-default reply-btn">
+                                                                            <span>回复</span>
+                                                                        </button>
+                                                                    </li>
+                                                                </ul>
+                                                                <div class="replyFormTemplate"></div>
+                                                                <!-- <form class="ghost-form ghost-form-horizontal reply-form">
+                                                                    <div class="ghost-row ghost-form-item">
+                                                                        <div class="ghsot-col ghost-col-21" style="padding-right: 8px">
+                                                                            <textarea id="textareaComment" rows="1" style="max-height: 132px; min-height: 32px;" placeholder="文明社会，理性评论" class="ghost-input"></textarea>
+                                                                        </div>
+                                                                        <div class="ghsot-col ghost-col-2">
+                                                                            <button type="button" id="submitTextareaComment" class="gutter-pd8 ghost-btn ghost-btn-primary waves-float float-button-light waves-effect waves-button waves-float waves-light">
+                                                                                <span>添加回复</span>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>   -->
                                                             </div>
                                                         </div>
-                                                        <!-- end childrenComentList rendering -->
-                                                        <% }) %>
                                                     </div>
-                                                    <!-- end if childrenCommentList -->
-                                                    <% } %>
-                                                </article>
-                                                <!-- end rendering -->
-                                                <% }) %>
-                                            </div>
+                                                    <!-- end childrenComentList rendering -->
+                                                    <% }) %>
+                                                </div>
+                                                <!-- end if childrenCommentList -->
+                                                <% } %>
+                                            </article>
+                                            <!-- end rendering -->
+                                            <% }) %>
                                         </div>
                                     </div>
-                                </article>
+                                </div>
+                            </article>
                                 <!-- comment components end -->
-
+                            <% if (answerList.commentRes.length > 0) { %>
+                                <ul class="ghost-pagination article_page" style="margin: 24px 0; text-align: center"></ul>
+                            <% } %>
+                            <input type="hidden" id="totalPages" value="<%= answerList.total %>" style="display: none" />
                             <% if (answerList.commentRes.length < 1) { %>
                                 <div class="ghost-empty">
                                     <dvi class="ghost-empty-image">
                                         <img src="/images/no_data.png" alt="">
                                     </dvi>
-                                    <p class="ghost-empty-description">暂无相关文章</p>
+                                    <p class="ghost-empty-description">暂无回复</p>
                                 </div>
                             <% } %>
                             <div class="ghost-loading-mask" style="display: none">
@@ -220,8 +218,8 @@
                                                 <div class="ghsot-col ghost-col-21" style="padding-right: 8px">
                                                     <textarea id="textareaComment" rows="1" style="max-height: 132px; min-height: 32px;" required placeholder="文明社会，理性评论" class="ghost-input"></textarea>
                                                 </div>
-                                                <div class="ghsot-col ghost-col-2">
-                                                    <button class="gutter-pd8 ghost-btn ghost-btn-primary waves-float float-button-light waves-effect waves-button waves-float waves-light">
+                                                <div class="ghsot-col ghost-col-2 submit-reply-parent">
+                                                    <button type="button" class="gutter-pd8 ghost-btn ghost-btn-primary waves-float float-button-light waves-effect waves-button waves-float waves-light submit-reply">
                                                         <span>添加回复</span>
                                                     </button>
                                                 </div>
@@ -237,6 +235,7 @@
             Waves.init()
 
             $('.reply-btn').on('click', function() {
+                console.log(111)
                 $('.reply-form').each(function() {
                     $(this).get(0).remove()
                 })
@@ -270,24 +269,26 @@
                 }
             })
             // create answer box
-            let commentator;
-            $(".ghost-spin-container").on("click", ".reply-btn", function(event) {    
-                event.stopPropagation();
-                commentator = $(this).siblings(".comment-info").find(".commentator_name").text();
-                console.log(commentator)
-                $(this).parents(".parents_item").find(".comment_bottmo").css({display: "block"});
-            });
+            // let commentator;
+            // $(".ghost-spin-container").on("click", ".reply-btn", function(event) {    
+            //     event.stopPropagation();
+            //     commentator = $(this).siblings(".comment-info").find(".commentator_name").text();
+            //     console.log(commentator)
+            //     $(this).parents(".parents_item").find(".comment_bottmo").css({display: "block"});
+            // });
             $(".time").each(function() {
                 let resTime = formatDateFilter($(this).text())
                 $(this).text(resTime)
             });
             // reply comment
-            $(".ghost-spin-container").on("click", ".answer_btn", function(event) {
-                let commentText = $(".answer_box").text();
-                let commentId = $(this).parents(".parents_item").find(".comment_id").text();
-                let articleId = $(this).parents(".parents_item").find(".article_id").text();
-                if (!commentText) return;
+            $("#replyTemplate").on("click", ".submit-reply", function(event) {
+                
                 event.stopPropagation();
+                let commentText = $(this).parent(".submit-reply-parent").prev(".ghsot-col").find(".ghost-input").val();
+                
+                let commentId = $(this).parents(".replyFormTemplate").parent(".ghost-comment-content").attr("data-comment-id");
+                let articleId = $(this).parents(".ghost-comment").find(".ghost-comment-parent").attr("data-article-id");
+                if (!commentText) return;
                 let param = {
                     userId: userId,
                     commentator: commentator,
@@ -303,9 +304,9 @@
                             commentContent: commentText,
                             commentTime: format("yyyy-MM-dd hh:mm:ss", new Date())
                         }
+                        $(".reply-form").remove();
                         $(".answer_box").text('');
                         $(this).parents(".comment_bottmo").before(replyComment(commentDetail));
-                        $(this).parents(".comment_bottmo").css({display: "none"});
                     }
                 })
             });
@@ -336,51 +337,51 @@
                 </div> 
             `
         }
-        function forrEplyComment(item) {
-            if (item.length < 1) return false;
-            let childComment;
-            item.forEach(childItem => {
-                childComment += replyComment(childItem)
-            })
-            return childComment;
-        }
-        function renderCommentsHtml(item) {
-            return `<div class="ghost-list-item">
-                        <div class="ghost-list-item-meta">
-                            <div class="ghost-list-item-meta-avatar">
-                                <span class="ghost-avatar ghost-avatar-circle ghost-avatar-image">
-                                    <img src="/images/header_icon.png">
-                                </span>
-                            </div>
-                            <div class="ghost-list-item-meta-content">
-                                <div class="ghost-pro-components-article-list-content-index-listContent parents_item">
-                                    <h4 class="ghost-list-item-meta-title comment-info">
-                                        <a class="commentator_name" href="javascript:;">${ item.commentUserName }</a>
-                                        <span class="ghost-list-item-meta-time">${ item.commentTime }</span>
-                                    </h4>
-                                    <div class="ghost-list-item-meta-description ghost-pro-components-article-list-content-index-description">
-                                        ${ item.commentContent }
-                                    </div>
-                                    <div class="article_id" style="display:none">${ item.articleId }</div>
-                                    <div class="comment_id" style="display:none">${ item.commentId }</div>
-                                    <button class="ghost-btn ghost-btn-text reply-btn">
-                                        <span>回复</span>
-                                    </button>
-                                    ${ forrEplyComment(item.childrenComentList) }
-                                    <div class="comment_bottmo">
-                                        <div class="answer_box" contenteditable="true" data-placeholder="What do you want to say?"></div>
-                                        <div class="answer_btn_box">
-                                            <div class="answer_btn">comment</div>
-                                        </div>
-                                    </div>
-                                    <div class="ghost-pro-components-article-list-content-index-extra fs12">
-                                        Respond to my theme: ${ item.articleTitle }
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>`;
-        }
+        // function forrEplyComment(item) {
+        //     if (item.length < 1) return false;
+        //     let childComment;
+        //     item.forEach(childItem => {
+        //         childComment += replyComment(childItem)
+        //     })
+        //     return childComment;
+        // }
+        // function renderCommentsHtml(item) {
+        //     return `<div class="ghost-list-item">
+        //                 <div class="ghost-list-item-meta">
+        //                     <div class="ghost-list-item-meta-avatar">
+        //                         <span class="ghost-avatar ghost-avatar-circle ghost-avatar-image">
+        //                             <img src="/images/header_icon.png">
+        //                         </span>
+        //                     </div>
+        //                     <div class="ghost-list-item-meta-content">
+        //                         <div class="ghost-pro-components-article-list-content-index-listContent parents_item">
+        //                             <h4 class="ghost-list-item-meta-title comment-info">
+        //                                 <a class="commentator_name" href="javascript:;">${ item.commentUserName }</a>
+        //                                 <span class="ghost-list-item-meta-time">${ item.commentTime }</span>
+        //                             </h4>
+        //                             <div class="ghost-list-item-meta-description ghost-pro-components-article-list-content-index-description">
+        //                                 ${ item.commentContent }
+        //                             </div>
+        //                             <div class="article_id" style="display:none">${ item.articleId }</div>
+        //                             <div class="comment_id" style="display:none">${ item.commentId }</div>
+        //                             <button class="ghost-btn ghost-btn-text reply-btn">
+        //                                 <span>回复</span>
+        //                             </button>
+        //                             ${ forrEplyComment(item.childrenComentList) }
+        //                             <div class="comment_bottmo">
+        //                                 <div class="answer_box" contenteditable="true" data-placeholder="What do you want to say?"></div>
+        //                                 <div class="answer_btn_box">
+        //                                     <div class="answer_btn">comment</div>
+        //                                 </div>
+        //                             </div>
+        //                             <div class="ghost-pro-components-article-list-content-index-extra fs12">
+        //                                 Respond to my theme: ${ item.articleTitle }
+        //                             </div>
+        //                         </div>
+        //                     </div>
+        //                 </div>
+        //             </div>`;
+        // }
     </script>
 </html>
 

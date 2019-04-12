@@ -29,16 +29,6 @@
                                 <div class="ghost-row">
                                     <section class="account-box">
                                         <form class="ghost-row ghost-form ghost-form-horizontal" enctype = "multipart/form-data">
-                                            <!-- <div class="ghost-pro-pages-account-settings-base-view-header-icon">
-                                                <div class="ghost-pro-pages-account-settings-base-view-avatar">
-                                                    <img class="ghost-header-icon header-icon" src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png" alt="avatar">
-                                                    <input id="upload" type="file" name="file" onchange="uploadImg(this)"/> 
-                                                </div>
-                                                <div class="ghost-btn ghost-btn-primary ghost-btn-lg ghost-btn-round upload-img">
-                                                    上传头像
-                                                    <input id="upload" type="file" name="file" onchange="uploadImg(this)"/> 
-                                                </div>
-                                            </div> -->
                                             <div class="ghost-row ghost-form-item">
                                                 <div class="ghost-form-item-label">
                                                     <label for="account_name" class="new－ghost-form-item-required" title="header-icon">头像</label>
@@ -47,7 +37,11 @@
                                                     <div class="ghost-form-item-control">
                                                         <div class="ghost-form-item-children">
                                                             <div class="header-box">
-                                                                <img class="ghost-header-icon header-icon" src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png" alt="avatar">
+                                                                <% if (result.headerIcon) { %>
+                                                                    <img class="ghost-header-icon header-icon" src="/<%= result.headerIcon %>" alt="头像">
+                                                                <% } else { %>
+                                                                    <img class="ghost-header-icon header-icon" src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png" alt="avatar">
+                                                                <% } %>
                                                                 <input id="upload" type="file" name="file" onchange="uploadImg(this)"/> 
                                                                 <div class="hover-show">点击上传</div>
                                                             </div>
@@ -55,18 +49,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- <div class="ghost-row ghost-form-item">
-                                                <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-8">
-                                                    <label for="account_name" class="ghost-form-item-required" title="E-mail">昵称</label>
-                                                </div>
-                                                <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-sm-16">
-                                                    <div class="ghost-form-item-control">
-                                                        <div class="ghost-form-item-children">
-                                                            <input type="text" placeholder="Your Name" class="ghost-input ghost-input-lg" id="nickname">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div> -->
                             
                                             <div class="ghost-row ghost-form-item">
                                                 <div class="ghost-form-item-label">
@@ -282,9 +264,8 @@
                 myForm.append("personalProfile", document.querySelector('.personal-profile').value);   // 数字123456立即被转换成字符串“123456”
                 let files = document.querySelector('[type=file]').files;
                 for(var i = 0; i < files.length; i++){
-                    myForm.append("headerIcon", files[i]);                
+                    myForm.append("file", files[i]);                
                 }
-                console.log(123)
                 $.ajax({
                     url: baseUrl + 'account/upload',
                     type: 'post',

@@ -14,12 +14,16 @@ export class AccountService {
 
   }
   // change user INFO
-  async changeUserInfo(data): Promise<any> {
-    const res = await this.accountRepository.findOne({userId: data.userId});
-    res.nickName = data.nickName ? data.nickName : res.userId;
-    res.personalProfile = data.personalProfile ? data.personalProfile : res.personalProfile;
-    // res.headerIcon = data.headerIcon;
+  async changeUserInfo(param): Promise<any> {
+    const res = await this.accountRepository.findOne({userId: param.userId});
+    res.nickName = param.nickName ? param.nickName : res.nickName;
+    res.personalProfile = param.personalProfile ? param.personalProfile : res.personalProfile;
+    res.headerIcon = param.headerIcon;
     await this.accountRepository.save(res);
-    return '修改成功！';
+    const msg = {
+      code: 200,
+      message: '修改成功！',
+    }
+    return msg;
 }
 }

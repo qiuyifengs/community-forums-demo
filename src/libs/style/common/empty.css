@@ -1,4 +1,6 @@
 .ghost-empty {
+    /* position: relative;
+    left: -20em; */
     margin: 10em;
     font-size: 14px;
     line-height: 22px;

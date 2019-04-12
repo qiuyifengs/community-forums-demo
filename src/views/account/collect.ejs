@@ -67,15 +67,14 @@
                                                 </ul>
                                             </div>
                                             <div class="ghost-list-item-extra">
-                                                    <ul class="ghost-list-item-action">
-                                                        <li>
-                                                            <div class="ghost-list-item-id" style="display: none"><%= item.articleId %></div>
-                                                            <button style="font-size: 12px" class="ghost-btn ghost-btn-primary">取消收藏</button>
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                                <ul class="ghost-list-item-action">
+                                                    <li>
+                                                        <div class="ghost-list-item-id" style="display: none"><%= item.articleId %></div>
+                                                        <button style="font-size: 12px" class="ghost-btn ghost-btn-primary">取消收藏</button>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
-                                        
                                     </div>
                                     <% }) %>   
                                 </div>
@@ -84,11 +83,13 @@
                                 <ul class="ghost-pagination article_page" style="margin: 24px 0; text-align: center"></ul>
                             <% } %>
                             <input type="hidden" id="totalPages" value="<%= collectList.total %>" style="display: none" />
-                            <% if (collectList.length < 1) { %>
-                                <div class="no_data">
-                                    <img src="/images/no_collect.png" alt=""><br />
-                                    暂无收藏
-                                </div>
+                            <% if (collectList.articleList.length < 1) { %>
+                                <div class="ghost-empty">
+                                        <dvi class="ghost-empty-image">
+                                            <img src="/images/no_collect.png" alt="">
+                                        </dvi>
+                                        <p class="ghost-empty-description">暂无收藏</p>
+                                    </div>
                             <% } %>
                             <div class="ghost-loading-mask" style="display: none">
                                 <div class="ghost-loading-spinner">
@@ -161,6 +162,9 @@
                 })
             })
         })
+        function filterTime(item) {
+            return  resTime = formatDateFilter(item)
+        }
         function renderCollectHtml(item) {
             return `
                 <div class="ghost-list-item collect-item bd-bottom">
@@ -195,7 +199,7 @@
                                 </li>
                                 <li class="list-item">
                                     <span class="time">
-                                        ${ item.publishTime }
+                                        ${ filterTime(item.publishTime) }
                                     </span>
                                 </li>
                                 ${ renderArticleLabel(item.articleLabel) }
