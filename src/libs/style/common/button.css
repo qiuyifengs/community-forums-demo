@@ -40,6 +40,11 @@
     padding-right: 0;
 }
 
+.ghost-btn-text-default {
+	color: #999;
+	font-size: 13px
+}
+
 .ghost-btn-default:hover, .ghost-btn-default:focus {
 	color: var(--btn-col);
 	background-color: transparent;

@@ -24,6 +24,11 @@
     zoom: 1;
 }
 
+.ghost-menu:after, .ghost-menu:before {
+    content: "";
+    display: table;
+}
+
 .ghsot-menu-inline .ghost-menu-item {
     height: 60px;
     padding: 0 16px;
@@ -52,6 +57,43 @@
     transition: color .3s cubic-bezier(.645,.045,.355,1),border-color .3s cubic-bezier(.645,.045,.355,1),background .3s cubic-bezier(.645,.045,.355,1),padding .15s cubic-bezier(.645,.045,.355,1);
 }
 
+.ghost-menu:not(.ghost-menu-horizontal) .ghost-menu-item-selected {
+    background-color: #475ec024;
+}
+
+.ghost-menu-inline .ghost-menu-item:after, .ghost-menu-vertical-left .ghost-menu-item:after, .ghost-menu-vertical-right .ghost-menu-item:after, .ghost-menu-vertical .ghost-menu-item:after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    border-right: 3px solid #475ec0;
+    transform: scaleY(.0001);
+    opacity: 0;
+    transition: transform .15s cubic-bezier(.215,.61,.355,1),opacity .15s cubic-bezier(.215,.61,.355,1);
+    content: "";
+}
+
+.ghost-menu-inline .ghost-menu-item-selected:after, .ghost-menu-inline .ghost-menu-selected:after {
+    transform: scaleY(1);
+    opacity: 1;
+    transition: transform .15s cubic-bezier(.645,.045,.355,1),opacity .15s cubic-bezier(.645,.045,.355,1);
+}
+
+.ghost-menu-inline .ghost-menu-item, .ghost-menu-inline .ghost-menu-submenu-title, .ghost-menu-vertical-left .ghost-menu-item, .ghost-menu-vertical-left .ghost-menu-submenu-title, .ghost-menu-vertical-right .ghost-menu-item, .ghost-menu-vertical-right .ghost-menu-submenu-title, .ghost-menu-vertical .ghost-menu-item, .ghost-menu-vertical .ghost-menu-submenu-title {
+    height: 40px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding: 0 16px;
+    overflow: hidden;
+    font-size: 14px;
+    line-height: 40px;
+    text-overflow: ellipsis;
+}
+
+.ghost-menu-inline .ghost-menu-item:not(:last-child), .ghost-menu-vertical-left .ghost-menu-item:not(:last-child), .ghost-menu-vertical-right .ghost-menu-item:not(:last-child), .ghost-menu-vertical .ghost-menu-item:not(:last-child) {
+    margin-bottom: 8px;
+}
+
 .ghost-menu-item a {
     color: var(--col-3c);
 }
@@ -72,6 +114,12 @@
     color: var(--btn-col);
 }
 
+.ghost-menu-item-selected {
+    color: #485ec0;
+}
+.ghost-menu-item-active, .ghost-menu-item:hover {
+    color: #475ec0;
+}
 
 
 

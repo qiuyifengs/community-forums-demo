@@ -164,6 +164,7 @@
     font-weight: 400;
     font-size: 16px;
     vertical-align: top;
+    font-family: STHeitiSC-Light
 }
 
 .ghost-pro-components-top-nav-header-index-light h1 {
@@ -173,7 +174,7 @@
 .ghost-pro-components-global-header-index-right .ghost-pro-components-global-header-index-action {
     display: inline-block;
     height: 100%;
-    /* padding: 0 8px 0 0; */
+    padding: 0 12px;
     cursor: pointer;
     transition: all .3s;
 }

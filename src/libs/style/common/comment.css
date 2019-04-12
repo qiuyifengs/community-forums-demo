@@ -1,13 +1,19 @@
 .ghost-comment {
     position: relative;
+    background-color: #485ec00d;
+    padding: 10px;
+    margin-bottom: 12px;
+}
+
+.ghost-comment-has-color {
+    background-color: transparent
 }
 
 .ghost-comment-inner {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
-    display: flex;
-    padding-bottom: 16px;
+    display: flex
 }
 
 .ghost-comment-nested {
@@ -56,22 +62,24 @@
 .ghost-comment-content-author>a, .ghost-comment-content-author>span {
     height: 18px;
     padding-right: 8px;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 18px;
 }
 
 .ghost-comment-content-author-time {
-    color: #ccc;
+    color: #999;
     white-space: nowrap;
     cursor: auto;
 }
 
 .ghost-comment-content-detail p {
     white-space: pre-wrap;
+    font-size: 15px;
+    color: #333;
 }
 
 .ghost-comment-actions {
-    margin-top: 12px;
+    margin-top: 4px;
     padding-left: 0;
 }
 
