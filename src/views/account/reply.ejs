@@ -20,6 +20,80 @@
                             <div class="ghost-pro-pages-account-settings-info-title">
                                 <span><%= title %></span>
                             </div>
+                            <!-- 这个你的那块代码 我先放着 右侧是我的 作对比 之后更改交互逻辑 -->
+                            <div class="ghost-list ghost-list-vertical ghost-list-split">
+                                    <div class="ghost-spin-nested-loading">
+                                        <div class="ghost-spin-container" id="replyTemplate">
+                                            <% answerList.commentRes.forEach(function(item) {%>
+                                                <div class="ghost-list-item">
+                                                    <div class="ghost-list-item-meta">
+                                                        <div class="ghost-list-item-meta-avatar mg-r0">
+                                                            <span class="ghost-avatar ghost-avatar-circle ghost-avatar-image">
+                                                                <img src="/images/header_icon.png">
+                                                            </span>
+                                                        </div>
+                                                        <div class="ghost-list-item-meta-content">
+                                                            <div class="parents_item">
+                                                                <h4 class="ghost-list-item-meta-title comment-info pd-l15">
+                                                                    <a class="commentator_name" href="javascript:;"><%= item.commentUserName %></a>
+                                                                    <span class="ghost-list-item-meta-time time"><%= item.commentTime %></span>
+                                                                </h4>
+                                                                <div class="pd-l15 ghost-list-item-meta-description ghost-pro-components-article-list-content-index-description">
+                                                                    <%= item.commentContent %>
+                                                                </div>
+                                                                <div class="article_id" style="display:none"><%= item.articleId %></div>
+                                                                <div class="comment_id" style="display:none"><%= item.commentId %></div>
+                                                                <button class="ghost-btn ghost-btn-text reply-btn">
+                                                                    <span class="pd-l15">回复</span>
+                                                                </button>
+                                                                <% if (item.childrenComentList && item.childrenComentList.length > 0) { %>
+                                                                    <% item.childrenComentList.forEach(function(childrenItem) {%>
+                                                                        <div class="children_comment_list pd-l15 bd-radius-5">   
+                                                                            <!-- <div class="ghost-list-item-meta-avatar children_item">
+                                                                                <span class="ghost-avatar ghost-avatar-circle ghost-avatar-image">
+                                                                                    <img src="/images/header_icon.png">
+                                                                                </span>
+                                                                            </div> -->
+                                                                            <div class="ghost-list-item-meta-content">
+                                                                                <div>
+                                                                                    <h4 class="ghost-list-item-meta-title comment-info">
+                                                                                        <a class="commentator_name" href="javascript:;"><%= childrenItem.commentUserName %></a>
+                                                                                        <span class="ghost-list-item-meta-time time"><%= childrenItem.commentTime %></span>
+                                                                                    </h4>
+                                                                                    <div class="ghost-list-item-meta-description ghost-pro-components-article-list-content-index-description">
+                                                                                        <span class="reply_man">@<%= childrenItem.commentator %></span>
+                                                                                        <%= childrenItem.commentContent %>
+                                                                                    </div>
+                                                                                    <button class="ghost-btn ghost-btn-text reply-btn">
+                                                                                        <span>回复</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div> 
+                                                                    <% }) %>  
+                                                                <% } %> 
+                                                                <div class="comment_bottmo">
+                                                                    <div class="answer_box" contenteditable="true" data-placeholder="What do you want to say?"></div>
+                                                                    <div class="answer_btn_box">
+                                                                        <div class="answer_btn">comment</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="ghost-pro-components-article-list-content-index-extra fs12">
+                                                                    Respond to my theme: <%= item.articleTitle %>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <% }) %>  
+                                        </div>
+                                    </div>
+                                    <% if (answerList.commentRes.length > 0) { %>
+                                        <ul class="ghost-pagination article_page" style="margin: 24px 0; text-align: center"></ul>
+                                    <% } %>
+                                    <input type="hidden" id="totalPages" value="<%= answerList.total %>" style="display: none" />
+                                </div>
+                            </div>
 
                             <!-- comment components start Cooperate List loading-->
                             <article class="comment-demo">
