@@ -255,9 +255,7 @@
             $('#btn_submit').click(function(){
                 let nickName = document.querySelector('.nick-name').value;
                 let personalProfile = document.querySelector('.personal-profile').value;
-                // if (!nickName && !personalProfile) {
-                //     return false;
-                // }
+                
                 var myForm = new FormData(document.getElementById("myForm"));
                 myForm.append("userId", $.cookie("userId"));
                 myForm.append("nickName", document.querySelector('.nick-name').value);       // append()方法添加字段
@@ -265,6 +263,9 @@
                 let files = document.querySelector('[type=file]').files;
                 for(var i = 0; i < files.length; i++){
                     myForm.append("file", files[i]);                
+                }
+                if (!nickName && !personalProfile && !files[0]) {
+                    return false;
                 }
                 $.ajax({
                     url: baseUrl + 'account/upload',
