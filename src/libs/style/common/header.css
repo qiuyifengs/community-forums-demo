@@ -225,6 +225,15 @@
     color: var(--col-3c);
     background: var(--white);
 }
+.user-headerIcon .header-random-color {
+    width: 20px;
+    height: 20px;
+    color: #fff;
+    line-height: 20px;
+    font-size: var(--fs-12);
+    text-align: center;
+    border-radius: 50px;
+}
 .langue-box .langue-list .langue-item:hover {
     color: var(--btn-col);
 }

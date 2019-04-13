@@ -5,13 +5,14 @@ import { AccountService } from './account.service';
 import { User } from '../../entitys/user.entity';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import { async } from 'rxjs/internal/scheduler/async';
 
 @Controller('account')
 export class AccountController {
     constructor(private readonly accountService: AccountService) { }
 
     @Get('/account/:nickName')
-    @ApiOperation({ title: 'get balance from address' })
+    @ApiOperation({ title: 'get balance from user' })
     public async index(@Request() req, @Response() res, @Param() param): Promise<any> {
         const data = await this.accountService.getUserInfo(param);
         const tel = data.tel ? data.tel.substr(0, 2) + '****' + data.tel.substr(8, data.tel.split('').length) : '';
@@ -52,5 +53,26 @@ export class AccountController {
             params.headerIcon = file.path;
         }
         return await this.accountService.changeUserInfo(params);
+    }
+    @Post('getUserInfo')
+    @ApiOperation({ title: 'get balance from user' })
+    async getUserInfo(@Body() param): Promise<any> {
+        const data = await this.accountService.getUserInfo(param);
+        let msg = {
+            code: 1,
+            headerIcon: '',
+        };
+        if (data) {
+            msg = {
+                code: 10000,
+                headerIcon: data.headerIcon,
+            };
+        } else {
+            msg = {
+                code: -1,
+                headerIcon: '',
+            };
+        }
+        return msg;
     }
 }

@@ -366,7 +366,6 @@
             $(".item-random-color").each(function() {
                 const authorName = $(this).attr("article-author");
                 $(this).css("background",renderColor(authorName));
-
             })
             $(".showTime").each(function() {
                 let resTime = formatDateFilter($(this).text())

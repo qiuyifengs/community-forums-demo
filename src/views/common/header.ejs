@@ -71,9 +71,8 @@
         </div>
     </section>
 </header>
-
+<script type="text/javascript" src="/js/common.js"></script>
 <script type="text/javascript">
-
 const userId = $.cookie("userId")
 const nickName = $.cookie("nickName")
 
@@ -82,13 +81,31 @@ let clearDropDownActive = () => {
         $(this).removeClass('active')
     })
 }
-
 $(document).ready(function(){
   
     let renderHtml
     // init mudule
     if (userId) {
         renderHtml = `${accountModule}${noticeModule}${publishModule}`
+        // get user headerIcon
+        myAjax("POST", 'account/getUserInfo', {nickName: nickName}, ).then((res) => {
+            let headerDom
+            if (res.code == 10000 && res.headerIcon) {
+                headerDom = `<img src=/${res.headerIcon}>`
+                $(".user-headerIcon").append(headerDom)
+                
+            } else {
+                headerDom = `
+                    <span class="header-random-color" article-author="${$.cookie("nickName")}">${$.cookie("nickName").substring(0, 1)}</span>
+                `
+                $(".user-headerIcon").append(headerDom)
+                $(".header-random-color").each(function() {
+                    const authorName = $(this).attr("article-author");
+                    $(this).css("background",renderColor(authorName));
+                })
+            }
+            
+        })
     } else {
         renderHtml = registerAndLoginModule
     }
@@ -102,6 +119,7 @@ $(document).ready(function(){
         $('.lang-dropdown, #langMenu').removeClass('active') 
     })
 
+    
     // open account menu dropDown
     $('.account-dropdown .ghost-current-value').on('click', function(e) {
         clearDropDownActive()
@@ -271,9 +289,7 @@ $(document).ready(function(){
     let accountModule = `<li style="margin: 0 32px" class="ghost-pro-components-global-header-index-action ghost-pro-components-global-header-index-account ghost-dropdown-trigger">
                         <div class="ghost-dropDown account-dropdown" style="padding: 0 12px">
                             <div class="ghost-current-value">
-                                <div class="ghost-dropDown-item">
-                                    <img src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png">
-                                </div>
+                                <div class="ghost-dropDown-item user-headerIcon"></div>
                             </div>
                             
                             <ul class="ghost-dropdown-menu" id="accountMenu">
@@ -319,4 +335,5 @@ $(document).ready(function(){
                                     <sup class="ghost-scroll-number ghost-badge-dot"></sup>
                                 </span>
                             </li>`
+    
 </script>
