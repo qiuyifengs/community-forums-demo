@@ -57,7 +57,7 @@
                                                 <div class="ghost-form-item-control-wrapper">
                                                     <div class="ghost-form-item-control">
                                                         <div class="ghost-form-item-children">
-                                                            <input type="text" name="nickName" placeholder="Your Name" class="ghost-input ghost-input-lg nick-name" value="<%=result.nickName%>">
+                                                            <input type="text" name="nickName" placeholder="<%=result.nickName%>" class="ghost-input ghost-input-lg nick-name">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -70,7 +70,7 @@
                                                 <div class="ghost-form-item-control-wrapper">
                                                     <div class="ghost-form-item-control">
                                                         <div class="ghost-form-item-children">
-                                                            <input type="text" name="personalProfile" placeholder="Your PersonalProfile" class="ghost-input ghost-input-lg personal-profile" value="<%=result.personalProfile%>">
+                                                            <input type="text" name="personalProfile" placeholder="<%=result.personalProfile%>" class="ghost-input ghost-input-lg personal-profile">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -274,9 +274,9 @@
                     contentType: false,
                     processData: false,
                     success: function(res){
+                        layer.msg(res.message);
                         if (res.code == 10000) {
                             $.cookie('nickName', nickName, { expires:7, path: '/' });
-                            layer.msg(res.message);
                         }
                     },
                     error: function(err) {
