@@ -1,7 +1,6 @@
 export enum ApiErrorCode {
     TIMEOUT = -1, // 系统繁忙
-    SUCCESS = 1, // 成功
-
+    SUCCESS = 10000, // 成功
     USER_ID_INVALID = 10001, // 用户id无效
     USER_NAME_HAD = 10002, // 用户名已存在
     USER_PASSWORD_ERROR = 10003, // 密码不正确
@@ -18,4 +17,5 @@ export enum ApiErrorCode {
     DELETE_SUCCESS = 10014, // 删除成功
     PUBLISH_SUCCESS = 10015, // 发表或者保存成功
     PUBLISH_FAILURE = 10016, // 发表或者保存失败
+    CHANGE_USERINFO_FERROR = 10017, // 修改资料失败
 }

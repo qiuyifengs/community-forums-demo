@@ -275,6 +275,12 @@
                     processData: false,
                     success: function(res){
                         console.log(res)
+                        if (res.code == 10000) {
+                            layer.msg(res.message);
+                        }
+                    },
+                    error: function(err) {
+                        layer.msg(res.message);
                     }
                 })
             });

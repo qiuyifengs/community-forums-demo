@@ -25,18 +25,11 @@ export class AccountController {
         };
         res.render('account/account', { title: '个人中心', result });
     }
-
-    // @Post('changeUserInfo')
-    // @ApiOperation({ title: 'get balance from User'})
-    // addView(@Body() param, @Request() req, @Response() res): Promise<User[]> {
-    //     console.log(param, req.files)
-    //     return this.accountService.changeUserInfo(param);
-    // }
     @Post('upload')
     @UseInterceptors(FileInterceptor('file',
         {
             storage: diskStorage({
-                destination: './headerIconFile',
+                destination: './src/libs/images/headerIconFile',
                 filename: (req, file, cb) => {
                     const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
                     return cb(null, `${randomName}${extname(file.originalname)}`);
@@ -45,7 +38,6 @@ export class AccountController {
         },
     )) // file对应HTML表单的name属性
     async uploadFile(@UploadedFile() file, @Body() data) {
-        console.log(data, file)
         const params = {
             userId: data.userId,
             nickName: data.nickName,
