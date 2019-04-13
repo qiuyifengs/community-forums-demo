@@ -52,12 +52,12 @@
                             
                                             <div class="ghost-row ghost-form-item">
                                                 <div class="ghost-form-item-label">
-                                                    <label for="account_name" class="new－ghost-form-item-required" title="E-mail">新昵称</label>
+                                                    <label for="account_name" class="new－ghost-form-item-required" title="E-mail">昵称</label>
                                                 </div>
                                                 <div class="ghost-form-item-control-wrapper">
                                                     <div class="ghost-form-item-control">
                                                         <div class="ghost-form-item-children">
-                                                            <input type="text" name="nickName" placeholder="Your Name" class="ghost-input ghost-input-lg nick-name">
+                                                            <input type="text" name="nickName" placeholder="Your Name" class="ghost-input ghost-input-lg nick-name" value="<%=result.nickName%>">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -70,7 +70,7 @@
                                                 <div class="ghost-form-item-control-wrapper">
                                                     <div class="ghost-form-item-control">
                                                         <div class="ghost-form-item-children">
-                                                            <input type="text" name="personalProfile" placeholder="Your Name" class="ghost-input ghost-input-lg personal-profile">
+                                                            <input type="text" name="personalProfile" placeholder="Your PersonalProfile" class="ghost-input ghost-input-lg personal-profile" value="<%=result.personalProfile%>">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -255,13 +255,13 @@
             $('#btn_submit').click(function(){
                 let nickName = document.querySelector('.nick-name').value;
                 let personalProfile = document.querySelector('.personal-profile').value;
-                
-                var myForm = new FormData(document.getElementById("myForm"));
+                if ($.cookie("nickName") == nickName) return layer.msg("新昵称不能与旧昵称相同！");
+                let myForm = new FormData(document.getElementById("myForm"));
                 myForm.append("userId", $.cookie("userId"));
                 myForm.append("nickName", document.querySelector('.nick-name').value);       // append()方法添加字段
                 myForm.append("personalProfile", document.querySelector('.personal-profile').value);   // 数字123456立即被转换成字符串“123456”
                 let files = document.querySelector('[type=file]').files;
-                for(var i = 0; i < files.length; i++){
+                for(let i = 0; i < files.length; i++){
                     myForm.append("file", files[i]);                
                 }
                 if (!nickName && !personalProfile && !files[0]) {
@@ -274,8 +274,8 @@
                     contentType: false,
                     processData: false,
                     success: function(res){
-                        console.log(res)
                         if (res.code == 10000) {
+                            $.cookie('nickName', nickName, { expires:7, path: '/' });
                             layer.msg(res.message);
                         }
                     },
@@ -304,7 +304,7 @@
                         passWordTwo: $('#confirmPassword').val()
                     }
                     myAjax("POST", "account/resetPassword", params).then((res) => {
-                        if (res.code == 1) {
+                        if (res.code == 10000) {
                             $('#openUpdatePasswordModel').removeClass('show');
                             $(".ghost-model-overlay").append(`<div class="psw-tip">${res.message}</div>`);
                             setTimeout(function() {
@@ -369,7 +369,7 @@
             // send email
             $(".validate-user-email").on("click", function() {
                 myAjax("POST", 'account/validateEmail', {userId: $.cookie("userId"), type: 1,}).then((res) => {
-                    if (res.code == 1) {
+                    if (res.code == 10000) {
                         $("#openUpdateEmailModel").removeClass("show");
                         alert(res.message);
                     } else {
@@ -392,7 +392,7 @@
                         newEmail: $('#newEmail').val(),
                     }
                     myAjax("POST", "account/resetEmail", params).then((res) => {
-                        if (res.code == 1) {
+                        if (res.code == 10000) {
                             $('#openUpdateEmailModel').removeClass('show');
                             $(".ghost-model-overlay").append(`<div class="psw-tip">${res.message}</div>`);
                             setTimeout(function() {

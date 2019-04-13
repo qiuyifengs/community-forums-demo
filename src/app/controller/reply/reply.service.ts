@@ -1,10 +1,11 @@
 import { Injectable, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 // import { ApiException } from '../../bing/common/enums/api.exception';
-// import { ApiErrorCode } from '../../bing/common/enums/api-error-code.enum';
+import { ApiErrorCode } from '../../../bing/common/enums/api-error-code.enum';
 import { Repository } from 'typeorm';
 import { CommentsList } from '../../entitys/commentList.entity';
 import { ChildrenComments } from '../../entitys/childrenComment.entity';
+import { User } from '../../entitys/user.entity';
 
 @Injectable()
 export class ReplyService {
@@ -13,33 +14,42 @@ export class ReplyService {
     private readonly commentRepository: Repository<CommentsList>,
     @InjectRepository(ChildrenComments)
     private readonly childrenCommentRepository: Repository<ChildrenComments>,
+    @InjectRepository(User)
+    private readonly userCommentRepository: Repository<User>,
   ) {}
-
-  async account(data): Promise<any> {
-    return '';
-  }
   // get comment li(st
-  async getComments(data): Promise<any> {
+  async getComments(param): Promise<any> {
     let commentRes;
-    const pageCount = data.pageCount ? data.pageCount * 1 : 10;
-    const page = data.page ? (data.page - 1) * 1 * pageCount : 0;
-    const totalRes = await this.commentRepository.find({author: data.author});
+    const pageCount = param.pageCount ? param.pageCount * 1 : 5;
+    const page = param.page ? (param.page - 1) * 1 * pageCount : 0;
+    const user = await this.userCommentRepository.findOne({nickName: param.nickName});
+    const totalRes = await this.commentRepository.find({commentatorId: user.userId});
     commentRes = await this.commentRepository
                 .createQueryBuilder('commentleList')
-                .where('commentleList.author = :author', { author: data.author })
+                .where('commentleList.commentatorId = :commentatorId', { commentatorId: user.userId })
+                .orWhere('commentleList.commentatorName= :commentatorName', {commentatorName: param.nickName})
                 .orderBy('commentleList.serialNum', 'DESC')
                 .skip(page)
                 .take(pageCount)
                 .getMany();
-    for (let item of commentRes) {
-      const childrenComRes =  await this.childrenCommentRepository.find({ articleId: item.articleId, commentId: item.commentId });
+    for (const item of commentRes) {
+      const filterMyAnswer = [];
+      const commentUserInfo = await this.userCommentRepository.findOne({userId: item.userId});
+      item.hearderIcon = commentUserInfo.headerIcon;
+      const childrenComRes =  await this.childrenCommentRepository
+                              .createQueryBuilder('childCommentList')
+                              .where('childCommentList.articleId = :articleId', { articleId: item.articleId })
+                              .andWhere('childCommentList.commentId = :commentId', {commentId: item.commentId})
+                              .getMany();
       childrenComRes.forEach((chilItem, chilInd) => {
-          childrenComRes[chilInd] = JSON.parse(JSON.stringify(chilItem).replace(' ChildrenComments ', ''));
+        if (chilItem.userId !== user.userId) {
+          filterMyAnswer.push(chilItem);
+        }
       });
-      item.childrenComentList = childrenComRes;
-      item = JSON.parse(JSON.stringify(item).replace(' CommentsList ', ''));
+      item.childrenComentList = filterMyAnswer;
     }
     const resData = {
+      code: ApiErrorCode.SUCCESS,
       commentRes,
       total: totalRes.length,
     };

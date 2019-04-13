@@ -12,16 +12,22 @@ export class AccountService {
     private readonly accountRepository: Repository<User>,
   ) {}
   async getUserInfo(param): Promise<any> {
-    return await this.accountRepository.findOne({ userId: param.userId });
+    return await this.accountRepository.findOne({ nickName: param.nickName });
 
   }
   // change user INFO
   async changeUserInfo(param): Promise<any> {
-    const res = await this.accountRepository.findOne({userId: param.userId});
     const msg = {
       code: 200,
       message: '',
     };
+    const hadNickName = await this.accountRepository.findOne({nickName: param.nickName});
+    if (hadNickName) {
+      msg.code = ApiErrorCode.CHANGE_USERINFO_FERROR;
+      msg.message = '昵称已被占用，请换另一个！';
+      return msg;
+    }
+    const res = await this.accountRepository.findOne({userId: param.userId});
     if (res) {
       res.nickName = param.nickName ? param.nickName : res.nickName;
       res.personalProfile = param.personalProfile ? param.personalProfile : res.personalProfile;

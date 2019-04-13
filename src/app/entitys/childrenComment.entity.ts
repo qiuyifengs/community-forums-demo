@@ -6,19 +6,25 @@ export class ChildrenComments {
     // usreId
     @Column() userId: string;
 
-    // commentator
-    @Column() commentator: string;
-
-    // articleId
-    @Column() articleId: string;
-
     // commentUserName
     @Column() commentUserName: string;
+
+    @Column() author: string;
+
+    // commentatorId
+    @Column() commentatorId: string;
+
+    // commentatorName
+    @Column() commentatorName: string;
+
     // commentId
     @Column() commentId: string;
 
     // childCommentId
     @Column() childCommentId: string;
+
+    // articleId
+    @Column() articleId: string;
 
     // commentContent
     @Column() commentContent: string;

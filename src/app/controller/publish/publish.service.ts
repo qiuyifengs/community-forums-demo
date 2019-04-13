@@ -54,18 +54,13 @@ export class PublishService {
             message: '',
             articleId: '',
         };
-        console.log(data)
-        console.log(data.articleId)
         let isRes = await this.postsRepository.findOne({ articleId: data.articleId });
-        console.log(111, isRes)
         if (data.isEdit !== 'false') {
-            console.log(222)
             isRes = Object.assign(isRes, data);
-            console.log(333)
             isRes.isDrafts = data.isDrafts === 'false' ? false : true;
             await this.postsRepository.save(isRes);
             await this.addArticleDetail(isRes);
-            msg.code = ApiErrorCode.PUBLISH_SUCCESS;
+            msg.code = ApiErrorCode.SUCCESS;
             if (data.isDrafts !== 'false') {
                 msg.articleId = data.articleId;
                 msg.message = '保存成功！';
@@ -81,12 +76,12 @@ export class PublishService {
             }
             if (data.isDrafts !== 'false') {
                 data.isDrafts = true;
-                msg.code = ApiErrorCode.PUBLISH_SUCCESS;
+                msg.code = ApiErrorCode.SUCCESS;
                 msg.articleId = data.articleId;
                 msg.message = '保存成功！';
             } else {
                 data.isDrafts = false;
-                msg.code = ApiErrorCode.PUBLISH_SUCCESS;
+                msg.code = ApiErrorCode.SUCCESS;
                 msg.message = '发表成功！';
                 delete msg.articleId;
             }

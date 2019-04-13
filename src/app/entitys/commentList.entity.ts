@@ -8,8 +8,11 @@ export class CommentsList {
     // usreId
     @Column() userId: string;
 
-    // author
-    @Column() author: string; // commentator
+    // commentatorId
+    @Column() commentatorId: string;
+
+    // commentatorName
+    @Column() commentatorName: string;
 
     // articleTitle
     @Column() articleTitle: string;

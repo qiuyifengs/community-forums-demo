@@ -266,7 +266,6 @@
                         isTrue = true;
                     }
                 })
-                console.log(1111, contentArr)
                 $('.tui-editor-defaultUI').remove(); // remove old rich text
                  let editor = new tui.Editor({ // new rich text
                     el: document.querySelector('#editSection'),
@@ -277,13 +276,11 @@
                     initialValue: contentArr.join('\n'),
                     exts: ['scrollSync', 'colorSyntax', 'uml', 'chart', 'mark', 'table', 'taskCounter']
                 });
-                console.log(33, editor)
                 if (articleTitle.indexOf('highlight') > 0 || isTrue) {
                     alert("文章标题或文章内容中不能含有敏感词汇！");
                     isSubmitting = true;
                     return false;
                 }
-                console.log(4444)
                 if (!articleTitle ||  (contentArr[0].length < 1 && contentArr.length < 2)) {
                     alert("文章标题或文章内容中不能为空！");
                     isSubmitting = true;
@@ -304,17 +301,17 @@
                     articleType: articleSource,
                     articleLabel: labelArr
                 };
-                // myAjax("POST", 'post/publish', param).then((res) => {
-                //     layer.msg(res.message);
-                //     if (res.code == 10015) {
-                //         setTimeout(function() {
-                //             goPage('account/posts/' + $.cookie("userId"));
-                //         }, 2000);
-                //     } else {
-                //         console.log(res.message);
-                //     }
-                //     isSubmitting = true;
-                // })
+                myAjax("POST", 'post/publish', param).then((res) => {
+                    layer.msg(res.message);
+                    if (res.code == 10000) {
+                        setTimeout(function() {
+                            goPage('account/posts/' + $.cookie("userId"));
+                        }, 2000);
+                    } else {
+                        console.log(res.message);
+                    }
+                    isSubmitting = true;
+                })
             });
             // save article
             // $(".save_btn").on("click", function() {
@@ -382,7 +379,7 @@
                             articleLabel: labelArr
                         };
                         myAjax("POST", 'post/publish', param).then((res) => {
-                            if (res.code == 10015) {
+                            if (res.code == 10000) {
                                 if (isEdit) {
                                     $(".saving").text("已更新");
                                 } else {

@@ -10,17 +10,21 @@ import { extname } from 'path';
 export class AccountController {
     constructor(private readonly accountService: AccountService) { }
 
-    @Get('/account/:userId')
+    @Get('/account/:nickName')
     @ApiOperation({ title: 'get balance from address' })
     public async index(@Request() req, @Response() res, @Param() param): Promise<any> {
         const data = await this.accountService.getUserInfo(param);
         const tel = data.tel ? data.tel.substr(0, 2) + '****' + data.tel.substr(8, data.tel.split('').length) : '';
         const email = data.email.substr(0, 2) + '****' + data.email.substr(-7);
         const headerIcon = data.headerIcon;
+        const nickName = data.nickName;
+        const personalProfile = data.personalProfile;
         const result = {
             email,
             tel,
             headerIcon,
+            nickName,
+            personalProfile,
             activity: data.activity,
         };
         res.render('account/account', { title: '个人中心', result });
@@ -42,8 +46,11 @@ export class AccountController {
             userId: data.userId,
             nickName: data.nickName,
             personalProfile: data.personalProfile,
-            headerIcon: file.path,
+            headerIcon: '',
+        };
+        if (file) {
+            params.headerIcon = file.path;
         }
-        return await this.accountService.changeUserInfo(params);;
+        return await this.accountService.changeUserInfo(params);
     }
 }

@@ -5,6 +5,7 @@ import { ApiErrorCode } from '../../../bing/common/enums/api-error-code.enum';
 import { Repository } from 'typeorm';
 import { PostList } from '../../entitys/postList.entity';
 import { ArticleDetail } from '../../entitys/articleDetail.entity';
+import { User } from '../../entitys/user.entity';
 
 @Injectable()
 export class PostsService {
@@ -13,6 +14,8 @@ export class PostsService {
     private readonly postsRepository: Repository<PostList>,
     @InjectRepository(ArticleDetail)
     private readonly articleRepository: Repository<ArticleDetail>,
+    @InjectRepository(User)
+    private readonly usereRepository: Repository<User>,
   ) {}
 
   // myArticleList
@@ -21,10 +24,11 @@ export class PostsService {
     let totalRes;
     const pageCount = data.pageCount ? data.pageCount * 1 : 10;
     const page = data.page ? (data.page - 1) * 1 * pageCount : 0;
-    totalRes = await this.postsRepository.find({userId: data.userId});
+    const user = await this.usereRepository.findOne({ nickName: data.nickName });
+    totalRes = await this.postsRepository.find({userId: user.userId});
     res = await this.postsRepository
           .createQueryBuilder('articleList')
-          .where('articleList.userId = :userId', { userId: data.userId })
+          .where('articleList.userId = :userId', { userId: user.userId })
           .orderBy('articleList.serialNum', 'DESC')
           .skip(page)
           .take(pageCount)

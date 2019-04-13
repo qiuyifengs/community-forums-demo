@@ -28,6 +28,11 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+a {
+    text-decoration:none;
+    outline: none;
+    color: none;
+}
 .account-item {
     width: 900px!important;
     border-radius: 5px;

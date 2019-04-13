@@ -7,16 +7,17 @@ import { CollectService } from './collect.service';
 export class ReplyController {
     constructor(private readonly collectService: CollectService) {}
 
-    @Get('/collect/:userId')
+    @Get('/collect/:nickName')
     @ApiOperation({ title: 'get balance from address'})
     public async index(@Request() req, @Response() res, @Param() data): Promise<any> {
         const collectList = await this.collectService.getCollectList(data);
         collectList.articleList.forEach((postItem, ind) => {
             collectList.articleList[ind].articleLabel = postItem.articleLabel.split(',');
         });
+        console.log(66, collectList)
         res.render('account/collect', { title: '我的收藏', collectList });
     }
-    @Get('/collect/:userId/:page')
+    @Get('/collect/:nickName/:page')
     @ApiOperation({ title: 'get balance from postList'})
     public async getArticle(@Param() param): Promise<any> {
         return this.collectService.getCollectList(param);

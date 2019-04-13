@@ -229,3 +229,8 @@
 #loginBtn:hover {
     background-color: #485ec00f
 }
+.item-random-color {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}

@@ -59,6 +59,7 @@ export class ArticleDetailService {
         const resObj = Object.assign(articleRes);
         resObj.personalProfile = userInfoRes.personalProfile;
         resObj.total = totalRes.length;
+        resObj.headerIcon = userInfoRes.headerIcon;
         resObj.commentTotal = commentNum + commentRes.length;
         delete resObj.userId;
         return resObj;
@@ -66,9 +67,11 @@ export class ArticleDetailService {
     // add comment
     async addComment(param): Promise<any> {
         const dateNum = new Date().getTime().toString().substring(-10);
+        const user = await this.userRepository.findOne({nickName: param.commentatorName});
         const comment = new CommentsList();
         comment.userId = param.userId;
-        comment.author = param.author;
+        comment.commentatorId = user.userId;
+        comment.commentatorName = param.commentatorName;
         comment.articleTitle = param.articleTitle;
         comment.articleId = param.articleId;
         comment.commentContent = param.commentText;
@@ -81,7 +84,7 @@ export class ArticleDetailService {
         await this.articleRepository.save(updateArticle);
         await this.articleRepository.manager.save(comment);
         const msg = {
-            code: ApiErrorCode.REPLY_SUCCESS,
+            code: ApiErrorCode.SUCCESS,
             commentId: comment.commentId,
             message: '评论成功！',
         };
@@ -89,22 +92,25 @@ export class ArticleDetailService {
     }
     // add childrenComment
     async addChildrenComment(param): Promise<any> {
+        const user = await this.userRepository.findOne({nickName: param.author});
         const dateNum = new Date().getTime().toString().substring(-11);
         const childrenCom = new ChildrenComments();
         childrenCom.userId = param.userId;
-        childrenCom.commentator = param.commentator;
+        childrenCom.commentUserName = param.nickName;
+        childrenCom.author = param.author;
+        childrenCom.commentatorId = user.userId;
+        childrenCom.commentatorName = param.commentatorName;
         childrenCom.articleId = param.articleId;
         childrenCom.commentContent = param.commentText;
         childrenCom.commentTime = await util.dateType.toSecond();
         childrenCom.childCommentId = dateNum + util.ramdom.random(6);
         childrenCom.commentId = param.commentId;
-        childrenCom.commentUserName = param.nickName;
         const updateArticle = await this.articleRepository.findOne({ articleId: param.articleId });
         updateArticle.commentCount += 1;
         await this.articleRepository.save(updateArticle);
         await this.articleRepository.manager.save(childrenCom);
         const msg = {
-            code: ApiErrorCode.REPLY_SUCCESS,
+            code: ApiErrorCode.SUCCESS,
             commentId: childrenCom.childCommentId,
             message: '回复成功！',
         };
@@ -113,7 +119,6 @@ export class ArticleDetailService {
 
     //  delete comment
     async deleteComment(param): Promise<any> {
-        console.log(param)
         const msg = {
             code: 0,
             HttpStatus: 200,

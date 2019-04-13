@@ -4,27 +4,31 @@ import { ApiException } from '../../../bing/common/enums/api.exception';
 import { ApiErrorCode } from '../../../bing/common/enums/api-error-code.enum';
 import { Repository } from 'typeorm';
 import { MyCollectionList } from '../../entitys/myCollectionList.entity';
+import { User } from '../../entitys/user.entity';
 
 @Injectable()
 export class CollectService {
   constructor(
     @InjectRepository(MyCollectionList)
     private readonly collectRepository: Repository<MyCollectionList>,
+    @InjectRepository(User)
+    private readonly userCommentRepository: Repository<User>,
   ) { }
 
   async account(data): Promise<any> {
     return '';
   }
   // get collect list
-  async getCollectList(data): Promise<any> {
+  async getCollectList(param): Promise<any> {
     let res;
     let totalRes;
-    const pageCount = data.pageCount ? data.pageCount * 1 : 10;
-    const page = data.page ? (data.page - 1) * 1 * pageCount : 0;
-    totalRes = await this.collectRepository.find({userId: data.userId});
+    const pageCount = param.pageCount ? param.pageCount * 1 : 10;
+    const page = param.page ? (param.page - 1) * 1 * pageCount : 0;
+    const user = await this.userCommentRepository.findOne({nickName: param.nickName});
+    totalRes = await this.collectRepository.find({userId: user.userId});
     res = await this.collectRepository
           .createQueryBuilder('collectList')
-          .where('collectList.userId = :userId', { userId: data.userId })
+          .where('collectList.userId = :userId', { userId: user.userId })
           .orderBy('collectList.serialNum', 'DESC')
           .skip(page)
           .take(pageCount)

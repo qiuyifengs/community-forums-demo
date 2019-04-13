@@ -62,4 +62,7 @@
 .parents_item .commentator_name {
     color: var(--btn-col);
 }
-
+.replyFormTemplate {
+    /* overflow: hidden; */
+    /* margin-bottom: 10px; */
+}

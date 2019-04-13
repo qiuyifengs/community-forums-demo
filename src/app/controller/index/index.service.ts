@@ -6,6 +6,8 @@ import { Repository } from 'typeorm';
 import { PostList } from '../../entitys/postList.entity';
 import { ArticleDetail } from '../../entitys/articleDetail.entity';
 import { Menu } from '../../entitys/menuList.entity';
+import { User } from '../../entitys/user.entity';
+import { async } from 'rxjs/internal/scheduler/async';
 
 @Injectable()
 export class IndexService {
@@ -16,6 +18,8 @@ export class IndexService {
         private readonly articleRepository: Repository<ArticleDetail>,
         @InjectRepository(Menu)
         private readonly menuRepository: Repository<Menu>,
+        @InjectRepository(User)
+        private readonly userRepository: Repository<User>,
     ) {}
 
     // getPostList
@@ -64,9 +68,12 @@ export class IndexService {
                 .getMany();
             }
         }
-        res.forEach((item, ind) => {
-          res[ind].articleContent = item.articleContent.substr(2).substring(0, item.articleContent.length - 4).replace('","', '\n');
-        });
+        for (const item of res) {
+          const user = await this.userRepository.findOne({ userId: item.userId });
+          item.articleContent = item.articleContent.substr(2).substring(0, item.articleContent.length - 4).replace('","', '\n');
+          item.hearderIcon = user.headerIcon;
+          item.author = user.nickName;
+        }
         const articleData = {
           articleList: res,
           total: totalRes.length,

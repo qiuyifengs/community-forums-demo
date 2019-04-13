@@ -175,7 +175,7 @@
                                                 <div class="comment_time time"><%= childrenItem.commentTime %></div>
                                             </div>
                                             <div class="coment_mid">
-                                                <span class="reply_man">@<%= childrenItem.commentator %></span>
+                                                <span class="reply_man">@<%= childrenItem.commentatorName %></span>
                                                 <%= childrenItem.commentContent %>
                                             </div>
                                             <div class="child_comment_id del_comment_id" style="display:none"><%= childrenItem.childCommentId %></div>
@@ -206,7 +206,13 @@
             <div class="article_right web-display">
                 <div class="personal_box">
                     <div class="info_top">
-                        <img class="head_portrait" src="/images/header_icon.png" alt="个人头像">
+                        <% if(article.headerIcon) { %>
+                            <img class="head_portrait" src="/<%= article.headerIcon %>">
+                        <% } else { %> 
+                            <span class="item-random-color" article-author="<%=article.author%>">
+                                <%= article.author.substring(0, 1) %>
+                            </span>  
+                        <% } %>
                         <div class="my_name"><%= article.author %></div>
                         <div class="my_autograph"><%= article.personalProfile %></div>
                     </div>
@@ -264,6 +270,7 @@
     <script type="text/javascript">
         let articleId, articleTitle;
         $(function(){
+            let author = $(".my_name").text();
             // init pagination config
             $('.ghost-pagination').pagination({
                 total: document.getElementById('totalPages').value,
@@ -289,6 +296,7 @@
                 }
             })
             let userId =  $.cookie("userId");
+            
             // Get article from the URL
             (function () {
                 articleId = this.location.pathname.split('/')[3];
@@ -306,6 +314,11 @@
                     let resTime = formatDateFilter($(this).text())
                     $(this).text(resTime)
                 });
+                $(".item-random-color").each(function() {
+                    const authorName = $(this).attr("article-author");
+                    $(this).css("background",renderColor(authorName));
+
+                })
             })();
             // share article
             var _title = articleTitle,_source,_sourceUrl,_pic,_showcount,_desc,_summary,_site,
@@ -392,15 +405,15 @@
                 exts: ['scrollSync', 'colorSyntax', 'uml', 'chart', 'mark', 'table', 'taskCounter']
             });
             // create answer box
-            let commentator;
+            let commentatorName;
             $(".comment_list").on("click", ".answer", function(event) {    
                 event.stopPropagation();
                 if (!userId) {
                     goPage('user/login');
                     return false;
                 }
-                commentator = ''
-                commentator = $(this).parent().siblings(".comment_top").find(".commentator_name").text();
+                commentatorName = ''
+                commentatorName = $(this).parent().siblings(".comment_top").find(".commentator_name").text();
                 $(this).parents(".parent_comment").find(".comment_bottmo").css({display: "block"});
                 $(this).parents(".parent_comment").siblings().find(".comment_bottmo").css({display: "none"});
             })
@@ -411,19 +424,19 @@
                     return false;
                 }
                 let commentText = $(".write_comment").val();
-                let author = $(".my_name").text();
                 if (!commentText) return;
                 let param = {
-                    author: author,
                     userId: userId,
+                    commentatorName: author,
                     nickName: $.cookie("nickName"),
                     articleTitle: articleTitle,
                     articleId: articleId,
                     commentText: commentText
                 }
                 myAjax("POST", "post/addComment", param).then((res) =>{
-                    if (res.code == 10013) {
+                    if (res.code == 10000) {
                         let commentDetail = {
+                            commentatorName: author,
                             commentUserName: $.cookie("nickName"),
                             commentContent: commentText,
                             commentId: res.commentId,
@@ -446,17 +459,18 @@
                 if (!commentText) return;
                 event.stopPropagation();
                 let param = {
+                    author: author,
                     userId: userId,
-                    commentator: commentator,
+                    commentatorName: commentatorName,
                     nickName: $.cookie("nickName"),
                     articleId: articleId,
                     commentText: commentText,
                     commentId: commentId
                 }
                 myAjax("POST", "post/addChildrenComment", param).then((res) => {
-                    if (res.code == 10013) {
+                    if (res.code == 10000) {
                         let commentDetail = {
-                            commentator: commentator,
+                            commentatorName: commentatorName,
                             commentUserName: $.cookie('nickName'),
                             commentContent: commentText,
                             commentId: res.commentId,
@@ -465,6 +479,9 @@
                         $(".answer_box").text('');
                         $(this).parents(".comment_bottmo").before(childrenRenderComment(commentDetail));
                         $(this).parents(".comment_bottmo").css({display: "none"});
+                        let addCom = ($(".comment_total").text() * 1) + 1;
+                        $(".comment_num").text(`评论(${addCom})`);
+                        $(".comment_total").text(addCom);
                     }
                 })
             });
@@ -691,7 +708,7 @@
                         </div>
                         ${ isNewComment(item) }
                         <div class="coment_mid">
-                            <span class="reply_man">@${ item.commentator }</span>
+                            <span class="reply_man">@${ item.commentatorName }</span>
                             ${ item.commentContent }
                         </div>
                         <div class="eidt_answer">

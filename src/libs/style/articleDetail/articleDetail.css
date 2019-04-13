@@ -398,12 +398,17 @@
 .info_top {
     overflow: hidden;
 }
-.head_portrait {
+.head_portrait, .item-random-color {
     overflow: hidden;
     margin-bottom: 15px;
     width: 90px;
     height: 90px;
+    line-height: 90px;
+    font-size: 50px;
+    color: var(--white);
+    border-radius: 50px;
 }
+
 .my_name {
     font-size: 16px;
     line-height: 16px;

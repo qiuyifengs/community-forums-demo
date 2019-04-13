@@ -8,7 +8,7 @@ import { PostList } from '../../entitys/postList.entity';
 export class PostsController {
     constructor(private readonly postsService: PostsService) {}
 
-    @Get('/posts/:userId')
+    @Get('/posts/:nickName')
     @ApiOperation({ title: 'get balance from postList'})
     public async index(@Request() req, @Response() res, @Param() data): Promise<any> {
         const myArticleList = await this.postsService.myArticleList(data);
@@ -17,7 +17,7 @@ export class PostsController {
         });
         res.render('account/posts', { title: '我的帖子', myArticleList });
     }
-    @Get('/posts/:userId/:page')
+    @Get('/posts/:nickName/:page')
     @ApiOperation({ title: 'get balance from postList'})
     public async getArticle(@Param() param): Promise<any> {
         return this.postsService.myArticleList(param);

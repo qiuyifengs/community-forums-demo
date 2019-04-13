@@ -48,6 +48,7 @@ export class SettingService {
       await this.settingRepository.save(res);
       const data = {
         token: authToken,
+        code: ApiErrorCode.SUCCESS,
         message: '修改成功',
       };
       return data;
@@ -70,6 +71,7 @@ export class SettingService {
     res.email = param.newEmail;
     await this.settingRepository.save(res);
     const data = {
+      code: ApiErrorCode.SUCCESS,
       message: '修改成功',
     };
     return data;
@@ -101,6 +103,6 @@ export class SettingService {
         expiresIn: '2h',
       });
     Verification.verifica(param.type, param.userId, email, Etoken);
-    return { message: '已发至所绑定邮箱，请前往验证！' };
+    return { code: ApiErrorCode.SUCCESS, message: '已发至所绑定邮箱，请前往验证！' };
   }
 }
