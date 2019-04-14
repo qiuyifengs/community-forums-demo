@@ -175,7 +175,7 @@
                                                 <div class="comment_time time"><%= childrenItem.commentTime %></div>
                                             </div>
                                             <div class="coment_mid">
-                                                <span class="reply_man">@<%= childrenItem.commentatorName %></span>
+                                                @<span class="reply_man"><%= childrenItem.commentatorName %></span>
                                                 <%= childrenItem.commentContent %>
                                             </div>
                                             <div class="child_comment_id del_comment_id" style="display:none"><%= childrenItem.childCommentId %></div>
@@ -708,7 +708,7 @@
                         </div>
                         ${ isNewComment(item) }
                         <div class="coment_mid">
-                            <span class="reply_man">@${ item.commentatorName }</span>
+                            @<span class="reply_man">${ item.commentatorName }</span>
                             ${ item.commentContent }
                         </div>
                         <div class="eidt_answer">

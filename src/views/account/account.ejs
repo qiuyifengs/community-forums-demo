@@ -275,7 +275,7 @@
                     processData: false,
                     success: function(res){
                         layer.msg(res.message);
-                        if (res.code == 10000) {
+                        if (res.code == 10000 && nickName) {
                             $.cookie('nickName', nickName, { expires:7, path: '/' });
                         }
                     },

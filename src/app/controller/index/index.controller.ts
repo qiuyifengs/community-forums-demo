@@ -24,7 +24,6 @@ export class IndexController {
         postList.articleList.forEach((postItem, ind) => {
             postList.articleList[ind].articleLabel = postItem.articleLabel.split(',');
         });
-        console.log(postList.articleList)
         res.render('index', { title: 'index', postList });
     }
     @Get('topic/:articleType/:page')

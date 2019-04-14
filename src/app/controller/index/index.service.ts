@@ -75,6 +75,7 @@ export class IndexService {
           item.author = user.nickName;
         }
         const articleData = {
+          code: ApiErrorCode.SUCCESS,
           articleList: res,
           total: totalRes.length,
           menuList,

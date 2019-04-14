@@ -411,7 +411,7 @@
                     const url = articleType ? `topic/${articleType}/${currentPage}` : `topic/ALL${currentPage}`
                     myAjax('GET', url).then(res => {
                         console.log(res)
-                        if (res.code === 1) {
+                        if (res.code === 10000) {
                             $("#artivleTemplate").empty()
                             res.articleList.forEach(item => {
                                 $("#artivleTemplate").append(renderArticleHtml(item))
