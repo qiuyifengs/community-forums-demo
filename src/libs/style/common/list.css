@@ -241,6 +241,7 @@
 .ghost-list-vertical .ghost-list-item-meta-article-content {
 	overflow:hidden;
 	margin-top: 9px;
+	max-width: 740px;
 	text-overflow: ellipsis;
 	display:-webkit-box;
 	font-family:  "PingFangSC-Light","-apple-system","Helvetica Neue",Helvetica,Arial,"PingFang SC","Hiragino Sans GB","WenQuanYi Micro Hei","Microsoft Yahei",sans-serif;

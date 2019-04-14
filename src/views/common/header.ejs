@@ -83,17 +83,28 @@ let clearDropDownActive = () => {
 }
 $(document).ready(function(){
   
-    let renderHtml
+    let renderHtml, activity;
     // init mudule
     if (userId) {
         renderHtml = `${accountModule}${noticeModule}${publishModule}`
         // get user headerIcon
         myAjax("POST", 'account/getUserInfo', {nickName: nickName}, ).then((res) => {
             let headerDom
-            if (res.code == 10000 && res.headerIcon) {
-                headerDom = `<img src=/${res.headerIcon}>`
-                $(".user-headerIcon").append(headerDom)
-                
+            if (res.code == 10000) {
+                activity = res.activity;
+                if (res.headerIcon) {
+                    headerDom = `<img src=/${res.headerIcon}>`
+                    $(".user-headerIcon").append(headerDom)
+                } else {
+                    headerDom = `
+                        <span class="header-random-color" article-author="${$.cookie("nickName")}">${$.cookie("nickName").substring(0, 1)}</span>
+                    `
+                    $(".user-headerIcon").append(headerDom)
+                    $(".header-random-color").each(function() {
+                        const authorName = $(this).attr("article-author");
+                        $(this).css("background",renderColor(authorName));
+                    })
+                }
             } else {
                 headerDom = `
                     <span class="header-random-color" article-author="${$.cookie("nickName")}">${$.cookie("nickName").substring(0, 1)}</span>
@@ -204,16 +215,14 @@ $(document).ready(function(){
     $('#enterPublish').on('click', function(event) {
         event.stopPropagation()
         if ($.cookie("userId")) {
-            myAjax('POST', 'account/getUserInfo', { userId: userId }).then(res => {
-                if (res.activity) {
-                    goPage('post/publish/')
-                } else {
-                    if (confirm('该账户还未进行验证，请先进行验证！')) {
-                        let url = 'account/account/' + userId
-                        goPage(url)
-                    }
+            if (activity) {
+                goPage('post/publish/')
+            } else {
+                if (confirm('该账户还未进行验证，请先进行验证！')) {
+                    let url = 'account/account/' + nickName
+                    goPage(url)
                 }
-            })
+            }
         } else {
             goPage('user/login')
         }

@@ -243,6 +243,7 @@
             });
             // filter sensitive words and comment article
             $(".comment_btn").on("click", function() {
+                console.log(123)
                 saveArticle(false);
                 if (!isSubmitting) return false; 
                 isSubmitting = false;
@@ -279,16 +280,19 @@
                 if (articleTitle.indexOf('highlight') > 0 || isTrue) {
                     alert("文章标题或文章内容中不能含有敏感词汇！");
                     isSubmitting = true;
+                    autoSave();
                     return false;
                 }
                 if (!articleTitle ||  (contentArr[0].length < 1 && contentArr.length < 2)) {
                     alert("文章标题或文章内容中不能为空！");
                     isSubmitting = true;
+                    autoSave();
                     return false;
                 }
                 if (labelArr.length < 1) {
                     layer.msg("文章标签不能为空！");
                     isSubmitting = true;
+                    autoSave();
                     return false;
                 }
                 let param = {
@@ -305,7 +309,7 @@
                     layer.msg(res.message);
                     if (res.code == 10000) {
                         setTimeout(function() {
-                            goPage('account/posts/' + $.cookie("userId"));
+                            goPage('account/posts/' + $.cookie("nickName"));
                         }, 2000);
                     } else {
                         console.log(res.message);
@@ -396,18 +400,21 @@
                 }
                 
             }
-            $(".CodeMirror-code").bind("DOMNodeInserted", function(e) {
-                console.log(123)
-                if ($(".CodeMirror-code").text().replace(/\u200B/g, '') != "") {
-                    clearInterval(time);
-                    $(".saving").show();
-                    $(".saving").text("保存中...");
-                    saveArticle(true);
-                } else {
-                    saveArticle(false);
-                    $(".saving").text("保存中...");
-                }
-            })
+            autoSave();
+            function autoSave() {
+                $(".CodeMirror-code").bind("DOMNodeInserted", function(e) {
+                    if ($(".CodeMirror-code").text().replace(/\u200B/g, '') != "") {
+                        clearInterval(time);
+                        $(".saving").show();
+                        $(".saving").text("保存中...");
+                        saveArticle(true);
+                    } else {
+                        saveArticle(false);
+                        $(".saving").text("保存中...");
+                    }
+                })
+            }
         })
+        
     </script>
 </html>

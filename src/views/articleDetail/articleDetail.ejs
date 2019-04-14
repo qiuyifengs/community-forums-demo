@@ -631,7 +631,6 @@
             });
         })
         function renderCommentsHtml(item) {
-            console.log(11,item)
             return `
                 <div class="comment_item parent_comment bd-bottom">
                     <div class="comment_top">
@@ -643,7 +642,7 @@
                         ${ item.commentContent }
                     </div>
                     <div class="comment_id del_comment_id" style="display:none">${ item.commentId }</div>
-                    <div class="comment_userId" style="display:none">${ commentItem.userId }</div>
+                    <div class="comment_userId" style="display:none">${ item.userId }</div>
                     <div class="eidt_answer">
                         <div class="answer">回复</div>
                         <div class="comment_type" style="display: none">parent</div>

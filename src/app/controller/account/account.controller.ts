@@ -60,17 +60,20 @@ export class AccountController {
         const data = await this.accountService.getUserInfo(param);
         let msg = {
             code: 1,
+            activity: -1,
             headerIcon: '',
         };
         if (data) {
             msg = {
                 code: 10000,
                 headerIcon: data.headerIcon,
+                activity: data.activity,
             };
         } else {
             msg = {
                 code: -1,
                 headerIcon: '',
+                activity: -1,
             };
         }
         return msg;
