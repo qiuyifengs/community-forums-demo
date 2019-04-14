@@ -48,7 +48,7 @@
                         <li class="data_item">
                             <%= article.viewCount %> 次阅读
                         </li>
-                        <li class="data_item"><%= article.publishTime.substring(0, 10) %></li>
+                        <li class="data_item showTime"><%= article.publishTime.substring(0, 10) %></li>
                         <li class="data_item source-type">
                             <span class="article-source bd-radius-3">数据库</span>
                             <span class="article-source bd-radius-3">html</span>
@@ -269,6 +269,9 @@
     </body>
     <script type="text/javascript">
         let articleId, articleTitle;
+        function filterTime(item) {
+            return  resTime = formatDateFilter(item)
+        }
         $(function(){
             let author = $(".my_name").text();
             // init pagination config
@@ -295,6 +298,10 @@
                     })
                 }
             })
+            $(".showTime").each(function() {
+                let resTime = formatDateFilter($(this).text())
+                $(this).text(resTime)
+            });
             let userId =  $.cookie("userId");
             
             // Get article from the URL

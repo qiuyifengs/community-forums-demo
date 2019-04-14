@@ -8,7 +8,6 @@
         <link rel="stylesheet" href="/style/forum/forum.css">
         <link rel="stylesheet" href="/style/common/swiper.min.css">
         <% include ./common/script %>
-        
         <style>
             .menu-title {
                 margin-bottom: 20px;
@@ -85,6 +84,10 @@
             }
             .menu-item-val {
                 margin-left: 5px;
+            }
+            .index-tab {
+                position: fixed;
+                right: 0;
             }
             .tab-panel .tab-panel-item.tab-active {
                 position: relative;
@@ -199,7 +202,7 @@
                 <div class="ghost-pro-layouts-basic-layout-content ghost-layout-content">
                     <main  class="ghost-pro-components-page-header-wrapper-grid-content-main ghost-pro-components-page-header-wrapper-grid-content-wide">
                         <div class="ghost-row">
-                            <article class="ghost-col-xs-24 ghost-col-sm-24 ghost-col-md-24 ghost-col-lg-18 ghost-col-xl-18 gutter-pd8">
+                            <article class="ghost-col-xs-24 ghost-col-sm-24 ghost-col-md-24 ghost-col-lg-18 ghost-col-xl-18">
                                 <div class="swiper-container bd-radius-5">
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide"><img src="/images/1.png" alt=""></div>
@@ -293,23 +296,7 @@
                                     </div>
                                 </div>
                             </article>
-                            <aside class="ghost-col-xs-24 ghost-col-sm-24 ghost-col-md-24 ghost-col-lg-24 ghost-col-xl-6" style="padding-left: 24px !important">
-                                    
-                                <!-- <div class="menu-list">
-                                        <div class="menu-title">TAGS</div>
-                                        <ul class="tab-nav">
-                                            <% postList.menuList.forEach(function(menuItem) { %>
-                                                <li class="tab-nav-item bd-radius-5">
-                                                    <a href="javascript:;">
-                                                        <svg class="iconSvg" aria-hidden="true">
-                                                            <use xlink:href='#icon-<%= menuItem.menuId %>'></use>>
-                                                        </svg>
-                                                        <span class="menu-item-val"><%= menuItem.menu %></span>
-                                                    </a>
-                                                </li>
-                                            <% }) %>
-                                        </ul>
-                                </div> -->
+                            <aside class="ghost-col-xs-24 ghost-col-sm-24 ghost-col-md-24 ghost-col-lg-24 ghost-col-xl-6 index-tab">
                                 <h5 style="margin-bottom: 24px">TAGS</h5>
                                 <ul class="ghost-components-menu-vertical-index">
                                     <% postList.menuList.forEach(function(menuItem) { %>
@@ -321,21 +308,6 @@
                                     </li>
                                     <% }) %>
                                 </ul>
-
-                                <!-- <ul class="ghost-components-menu-vertical-index">
-                                    <li class="ghost-components-menu-item">
-                                        <svg class="iconSvg" aria-hidden="true">
-                                            <use xlink:href="#icon-ALL"></use>
-                                        </svg>
-                                        <span class="ghost-ment-item-title">ALL</span>
-                                    </li>
-                                    <li class="ghost-components-menu-item">
-                                        <svg class="iconSvg" aria-hidden="true">
-                                            <use xlink:href="#icon-HOT"></use>
-                                        </svg>
-                                        <span class="ghost-ment-item-title">HOT</span>
-                                    </li>
-                                </ul> -->
                         </aside>
                     </main>
                 </div>

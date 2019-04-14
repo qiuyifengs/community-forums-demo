@@ -10,7 +10,20 @@ export class SearchPageController {
     @Get('/search/:keyword')
     @ApiOperation({ title: 'get balance from articleDetail'})
     public async index(@Request() req, @Response() res, @Param() keyword): Promise<any> {
-        const articleList = await this.searchRepository.searchArticle(keyword);
-        res.render('searchPage/searchPage', { title: 'searchPage', articleList });
+        const postList = await this.searchRepository.searchArticle(keyword);
+        postList.data.forEach((postItem, ind) => {
+            postList.data[ind].articleLabel = postItem.articleLabel.split(',');
+        });
+        res.render('searchPage/searchPage', { title: 'searchPage', postList });
+    }
+
+    @Get('/search/:keyword/:page')
+    @ApiOperation({ title: 'get balance from articleDetail'})
+    public async getPage(@Param() keyword): Promise<any> {
+        const postList = await this.searchRepository.searchArticle(keyword);
+        postList.data.forEach((postItem, ind) => {
+            postList.data[ind].articleLabel = postItem.articleLabel.split(',');
+        });
+        return postList;
     }
 }
