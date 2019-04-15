@@ -27,7 +27,7 @@ export class IndexService {
         let res;
         let totalRes;
         const pageCount = data.pageCount ? data.pageCount * 1 : 10;
-        const page = data.page ? (data.page - 1) * 1 * pageCount : 0;
+        const page = data.page ? data.page * 1 * pageCount : 0;
         const menuList = await this.menuRepository.find();
         if (data.articleType && data.articleType !== 'ALL' && data.articleType !== 'HOT') {
             totalRes = await this.indexRepository.find({ articleType: data.articleType, isDrafts: false });
