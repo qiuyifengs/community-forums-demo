@@ -211,16 +211,14 @@
                                             </div>
                                         </div>
                                         <% } %>
-                                        <!-- <% if ((postList.total * 1) > 0) { %>
-                                            <ul class="ghost-pagination" style="margin: 24px 0 text-align: center"></ul>
-                                        <% } else { %>
+                                        <% if ((postList.total * 1) < 1) { %>
                                             <div class="ghost-empty">
                                                 <dvi class="ghost-empty-image">
                                                     <img src="/images/no_data.png" alt="">
                                                 </dvi>
                                                 <p class="ghost-empty-description">暂无相关文章</p>
                                             </div>
-                                        <% } %> -->
+                                        <% } %>
                                         <!-- <input type="hidden" id="totalPages" value="<%= postList.total %>" style="display: none" /> -->
                                     <!-- </div> -->
                                 </div>
@@ -337,11 +335,14 @@
             // })
             // init dropload config
             let isLoading = false;
+            
             let dropload = $('.ghost-layout').dropload({
                 loadDownFn: function(me){
                     if (isLoading) return false;
                     isLoading = true
-                    $(".dropload-down").remove()
+                    $('.dropload-up').remove()
+                    $('.dropload-down').remove()
+                    $('.dropload-refresh').remove()
                     const url = articleType ? `topic/${articleType}/${pageSize}` : `topic/ALL${pageSize}`
                     myAjax('GET', url).then(res => {
                         if (res.code === 10000 && res.articleList.length > 0) {
@@ -379,7 +380,9 @@
                     })
                 }
             })
-            
+            $('.dropload-up').remove()
+            $('.dropload-down').remove()
+            $('.dropload-refresh').remove()
             $('.tab-nav .tab-nav-item').on('click', function (e) {
                 e.preventDefault()
                 $(this).addClass('tab-active')
