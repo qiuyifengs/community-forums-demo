@@ -48,6 +48,8 @@ export class ArticleDetailService {
         const collectRes = await this.myCollectRepository.findOne({articleId: param.articleId, userId: curUserId.default.userId});
         if (commentRes.length > 0) {
             for (const item of commentRes) {
+                const user = await this.userRepository.findOne({ userId: item.userId });
+                item.hearderIcon = user.headerIcon;
                 const childrenComRes = await this.childrenCommentRepository.find({ articleId: param.articleId, commentId: item.commentId });
                 item.childrenComentList = childrenComRes;
                 commentNum += childrenComRes.length * 1;
@@ -62,6 +64,7 @@ export class ArticleDetailService {
         resObj.headerIcon = userInfoRes.headerIcon;
         resObj.commentTotal = commentNum + commentRes.length;
         delete resObj.userId;
+        console.log(resObj.comments)
         return resObj;
     }
     // add comment

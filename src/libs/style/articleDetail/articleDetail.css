@@ -287,10 +287,15 @@
     display: flex;
     align-items: center;
 }
-.commentator_img {
+.comment_top .commentator_img, .comment_top .commentator_user_name {
     overflow: hidden;
+    margin-bottom: 0;
     width: 30px;
     height: 30px;
+    text-align: center;
+    line-height: 30px;
+    font-size: var(--fs-14);
+    border-radius: 50px;
 }
 .dom-random-color {
     overflow: hidden;

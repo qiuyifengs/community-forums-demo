@@ -16,6 +16,7 @@ export class ArticleDetailController {
     @ApiOperation({ title: 'get balance from articleDetail' })
     public async index(@Request() req, @Response() res, @Param() param): Promise<any> {
         const article = await this.postsRepository.getArticle(param);
+        article.articleLabel = article.articleLabel.split(',');
         res.render('articleDetail/articleDetail', { title: 'articleDetail', article });
     }
     @Get('/articleDetail/:articleId/:page')
