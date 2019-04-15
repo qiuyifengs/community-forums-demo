@@ -596,6 +596,7 @@
 .app-author-info, .app-time {
     display: none;
 }
+
 @media screen and (max-width: 420px) {
     .comments-header {
         display: none;
