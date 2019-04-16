@@ -201,10 +201,10 @@ $(document).ready(function(){
         const LANG = $(this).attr('data-value')
         
         $('.lang-current-value .ghost-dropDown-text').text(LANG)
-        $('.lang-current-value img').attr('src', IMG)
+        $('.lang-current-value img').attr('src', LANGIMG)
         $('.lang-current-value img').attr('data-value', LANG)
         const langData = {
-            src: IMG,
+            src: LANGIMG,
             lang: LANG
         }
         localStorage.setItem('langData', JSON.stringify(langData))
@@ -304,11 +304,11 @@ $(document).ready(function(){
         $(this).addClass('selected');
         $(this).siblings().removeClass('selected')
         $('.app-lang-dropdown-list').removeClass('active')
-        const IMG = $(this).find('img').attr('src') 
+        const LANGIMG = $(this).find('img').attr('src') 
         const LANG = $(this).attr('data-value')
-        $('.app-lang-dropdown-list').prev('img').attr('src', IMG)
+        $('.app-lang-dropdown-list').prev('img').attr('src', LANGIMG)
         const langData = {
-            src: IMG,
+            src: LANGIMG,
             lang: LANG
         }
         localStorage.setItem('langData', JSON.stringify(langData))
