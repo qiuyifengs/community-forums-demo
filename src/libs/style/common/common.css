@@ -33,6 +33,9 @@ a {
     outline: none;
     color: none;
 }
+.app-display {
+    display: none;
+}
 .account-item {
     width: 900px!important;
     border-radius: 5px;
@@ -496,6 +499,9 @@ Footer: 底部布局，自带默认样式，其下可嵌套任何元素，只能
     display: none;
 }
 @media screen and (max-width: 420px) {
+    .web-display {
+        display: none;
+    }
     .app-page-header {
         position: fixed;
         top: 0;
