@@ -2,123 +2,123 @@
 <html>
     <head>
         <title><%= title %></title>
-        <link rel='stylesheet' href='/style/publish/publish.css'>
-        <link rel='stylesheet' href='/style/common/tagsinput.css'>
+        <link rel="stylesheet" href="/style/publish/publish.css">
+        <link rel="stylesheet" href="/style/common/tagsinput.css">
         <% include ../common/script %>
-        <!-- <link href='http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet'> -->
-        <script src='/richText/markdown-it/dist/markdown-it.js'></script>
-        <script src='/richText/toMark/dist/toMark.js'></script>
-        <script src='/richText/tui-code-snippet/dist/tui-code-snippet.js'></script>
-        <script src='/richText/tui-color-picker/dist/tui-color-picker.js'></script>
-        <script src='/richText/codemirror/lib/codemirror.js'></script>
-        <script src='/richText/highlightjs/highlight.pack.js'></script>
-        <script src='/richText/squire-rte/build/squire-raw.js'></script>
-        <link rel='stylesheet' href='/richText/codemirror/lib/codemirror.css'>
-        <script src='/js/sensitiveWords.js'></script>
+        <!-- <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
+        <script src="/richText/markdown-it/dist/markdown-it.js"></script>
+        <script src="/richText/toMark/dist/toMark.js"></script>
+        <script src="/richText/tui-code-snippet/dist/tui-code-snippet.js"></script>
+        <script src="/richText/tui-color-picker/dist/tui-color-picker.js"></script>
+        <script src="/richText/codemirror/lib/codemirror.js"></script>
+        <script src="/richText/highlightjs/highlight.pack.js"></script>
+        <script src="/richText/squire-rte/build/squire-raw.js"></script>
+        <link rel="stylesheet" href="/richText/codemirror/lib/codemirror.css">
+        <script src="/js/sensitiveWords.js"></script>
     </head>
     <body>
         <% include ../common/header %>
-        <div class='publish_page'>
-            <div class='publish_left box-shadow bd-radius-5'>
-                <div class='publish'>发布</div>
-                <div class='article_type'>
+        <div class="publish_page">
+            <div class="publish_left box-shadow bd-radius-5">
+                <div class="publish">发布</div>
+                <div class="article_type">
                     <% if (obj && obj.renderData) { %>
-                    <div class='cur_type_item' style='display: none'><%= obj.renderData.articleType %></div>
+                    <div class="cur_type_item" style="display: none"><%= obj.renderData.articleType %></div>
                     <% } %>
-                    <div class='type_label'>classification：</div>
-                    <ul class='type_list'>
+                    <div class="type_label">classification：</div>
+                    <ul class="type_list">
                         <% obj.menuList.forEach(function(menuItem) { %>
-                            <li class='type_item bd-radius-5'><%= menuItem.menu %></li>
+                            <li class="type_item bd-radius-5"><%= menuItem.menu %></li>
                         <% }) %>
                     </ul>
                 </div>
-                <div class='article_title'>
+                <div class="article_title">
                     <% if (obj && obj.renderData) { %>
-                    <div class='is_drafts' style='display:none'><%= obj.renderData.isDrafts %></div> 
-                    <div class='cur_article_label' style='display:none'><%= obj.renderData.articleLabel %></div>
+                    <div class="is_drafts" style="display:none"><%= obj.renderData.isDrafts %></div> 
+                    <div class="cur_article_label" style="display:none"><%= obj.renderData.articleLabel %></div>
                     <% } %>
-                    <input class='title_input publish_input' maxlength='30' placeholder='Input topic...'/>
-                    <div class='label-box mg-t20'>
-                        <input class='typle_input publish_input' placeholder='请输入选择标签，如php（用逗号，分号；分割）按Enter键确认' />
+                    <input class="title_input publish_input" maxlength="30" placeholder="Input topic..."/>
+                    <div class="label-box mg-t20">
+                        <input class="typle_input publish_input" placeholder="请输入选择标签，如php（用逗号，分号；分割）按Enter键确认" />
                     </div>
-                    <div class='label-data' style='display:none'><%= obj.getLabel %></div>
-                    <div id='tags-input'></div>
+                    <div class="label-data" style="display:none"><%= obj.getLabel %></div>
+                    <div id="tags-input"></div>
                 </div>
-                <!-- <div class='article_content' id='divText' contenteditable='true' data-placeholder='What do you want to say?'></div> -->
-                <div class='code-html'>
-                    <script src='/richText/plantuml-encoder/dist/plantuml-encoder.js'></script>
-                    <script src='/richText/raphael/raphael.js'></script>
-                    <script src='/richText/tui-chart/dist/tui-chart.js'></script>
-                    <script src='/richText/tui-editor-Editor-all.js'></script>
-                    <link rel='stylesheet' href='/richText/tui-editor.css'>
-                    <link rel='stylesheet' href='/richText/tui-editor-contents.css'>
-                    <link rel='stylesheet' href='/richText/tui-color-picker/dist/tui-color-picker.css'>
-                    <link rel='stylesheet' href='/richText/tui-chart/dist/tui-chart.css'>
-                    <div id='editSection'></div>
+                <!-- <div class="article_content" id="divText" contenteditable="true" data-placeholder="What do you want to say?"></div> -->
+                <div class="code-html">
+                    <script src="/richText/plantuml-encoder/dist/plantuml-encoder.js"></script>
+                    <script src="/richText/raphael/raphael.js"></script>
+                    <script src="/richText/tui-chart/dist/tui-chart.js"></script>
+                    <script src="/richText/tui-editor-Editor-all.js"></script>
+                    <link rel="stylesheet" href="/richText/tui-editor.css">
+                    <link rel="stylesheet" href="/richText/tui-editor-contents.css">
+                    <link rel="stylesheet" href="/richText/tui-color-picker/dist/tui-color-picker.css">
+                    <link rel="stylesheet" href="/richText/tui-chart/dist/tui-chart.css">
+                    <div id="editSection"></div>
                 </div>
                 <% if (obj.renderData && obj.renderData.articleContent) { %>
-                    <div class='edit_article_id' style='display: none'><%= obj.renderData.articleId %></div>
-                    <div class='edit_article_type' style='display:none'><%= obj.renderData.articleType %></div>
-                    <div class='edit_article_title'><%= obj.renderData.articleTitle %></div>
-                    <div class='edit_content'><%= obj.renderData.articleContent %></div>
+                    <div class="edit_article_id" style="display: none"><%= obj.renderData.articleId %></div>
+                    <div class="edit_article_type" style="display:none"><%= obj.renderData.articleType %></div>
+                    <div class="edit_article_title"><%= obj.renderData.articleTitle %></div>
+                    <div class="edit_content"><%= obj.renderData.articleContent %></div>
                 <% } %>
-                <div class='button_box'>
-                    <div class='comment_btn_box'>
-                        <div class='comment_btn'>publish</div>
+                <div class="button_box">
+                    <div class="comment_btn_box">
+                        <div class="comment_btn">publish</div>
                     </div>
-                    <!-- <div class='save_btn_box'>
-                        <div class='save_btn'>save</div>
+                    <!-- <div class="save_btn_box">
+                        <div class="save_btn">save</div>
                     </div> -->
-                    <div class='saving mg-l10'>保存中...</div>
+                    <div class="saving mg-l10">保存中...</div>
                 </div>
             </div>
         </div>
     </body>
-    <script type='text/javascript'>
+    <script type="text/javascript">
         $(function(){
-            let userId = $.cookie('userId')
-            let editType = $('.edit_article_type').text()
-            let isSubmitting = true
-            let isEdit = false
-            let isDrafts = $('.is_drafts').text()
-            let articleId = ''
-            let content = [].join('\n')
-            let editContent = $('.edit_content').text()
-            let articleSource = $('.type_list').children(':first').text()
-            let labelArr = []
-            let curLabelArr = $('.cur_article_label').text()
-            let labelData = JSON.parse($('.label-data').text())
-            if (curLabelArr !== '') {
-                curLabelArr.split(',').forEach(item => {
-                    let labelDiv = `<div class='show-label bd-radius-3'>
+            let userId = $.cookie("userId");
+            let editType = $(".edit_article_type").text();
+            let isSubmitting = true;
+            let isEdit = false;
+            let isDrafts = $(".is_drafts").text();
+            let articleId = '';
+            let content = [].join('\n');
+            let editContent = $(".edit_content").text();
+            let articleSource = $(".type_list").children(":first").text();
+            let labelArr = [];
+            let curLabelArr = $(".cur_article_label").text();
+            let labelData = JSON.parse($(".label-data").text());
+            if (curLabelArr !== "") {
+                curLabelArr.split(",").forEach(item => {
+                    let labelDiv = `<div class="show-label bd-radius-3">
                                         <span>${item}</span> 
-                                        <svg class='iconSvg' aria-hidden='true'>
-                                            <use xlink:href='#icon-guanbi'></use>
+                                        <svg class="iconSvg" aria-hidden="true">
+                                            <use xlink:href="#icon-guanbi"></use>
                                         </svg>
-                                    </div>`
-                    $('.typle_input').before(labelDiv)
-                    labelArr.push(item)
+                                    </div>`;
+                    $(".typle_input").before(labelDiv);
+                    labelArr.push(item);
                 })
             }
             if (!userId) {
-                goPage('user/login')
+                goPage('user/login');
             }
             if (editType) {
-                $('.type_item').each(function() {
+                $(".type_item").each(function() {
                     if ($(this).text() == editType) {
-                        $(this).addClass('actived')
+                        $(this).addClass("actived");
                     }
                 })
             } else {
-                $('.type_item').eq(0).addClass('actived')
+                $(".type_item").eq(0).addClass("actived");
             }
 
             if (editContent) {
-                content = JSON.parse($('.edit_content').text()).join('\n')
-                $('.title_input').val($('.edit_article_title').text())
-                articleId = $('.edit_article_id').text()
-                isEdit = true
-            }
+                content = JSON.parse($('.edit_content').text()).join('\n');
+                $(".title_input").val($(".edit_article_title").text());
+                articleId = $(".edit_article_id").text();
+                isEdit = true;
+            };
             
             let editor = new tui.Editor({
                 el: document.querySelector('#editSection'),
@@ -128,147 +128,146 @@
                 useCommandShortcut: true,
                 initialValue: content,
                 exts: ['scrollSync', 'colorSyntax', 'uml', 'chart', 'mark', 'table', 'taskCounter']
-            })
+            });
 
-            $('.typle_input').focus(function() {
-                $('#tags-input').css('display', 'block')
-            })
+            $(".typle_input").focus(function() {
+                $("#tags-input").css("display", "block");
+            });
             // label plugin config
-            $('#tags-input').tagsinput({
+            $("#tags-input").tagsinput({
                 labelTypeArr: labelData,
                 callback: label => {
-                     let labelDiv = `<div class='show-label bd-radius-3'>
+                     let labelDiv = `<div class="show-label bd-radius-3">
                                         <span>${label.label}</span> 
-                                        <svg class='iconSvg' aria-hidden='true'>
-                                            <use xlink:href='#icon-guanbi'></use>
+                                        <svg class="iconSvg" aria-hidden="true">
+                                            <use xlink:href="#icon-guanbi"></use>
                                         </svg>
-                                    </div>`
-                     let labelLen = $('.show-label').length
-                    if (labelLen == 5) return layer.msg('最多选择5个标签！')
+                                    </div>`;
+                     let labelLen = $(".show-label").length;
+                    if (labelLen == 5) return layer.msg('最多选择5个标签！');
                     for ( let i = 0; i <= $('.show-label').length - 1; i++) {
                         if ($('.show-label').eq(i).find('span').text() == label.label) {
-                            return false
+                            return false;
                         } 
                     }
-                    $('.show-label').each(function() {
-                        if ($(this).text() == label.label) return false
+                    $(".show-label").each(function() {
+                        if ($(this).text() == label.label) return false;
                     })
-                    $('.typle_input').before(labelDiv)
-                    labelArr.push(label.label)
+                    $(".typle_input").before(labelDiv);
+                    labelArr.push(label.label);
                 }
             })
 
-            $('.label-box').on('click', '.show-label', function(event) {
-                event.stopPropagation()
-                $(this).remove()
-                labelArr.splice($(this).index(), 1)
-            })
-            $('#tags-input').on('click', function(event) {
-                event.stopPropagation()
-                $('#tags-input').css('display', 'block')
-            })
+            $(".label-box").on("click", ".show-label", function(event) {
+                event.stopPropagation();
+                $(this).remove();
+                labelArr.splice($(this).index(), 1);
+            });
+            $("#tags-input").on("click", function(event) {
+                event.stopPropagation();
+                $("#tags-input").css("display", "block");
+            });
 
-            $('.label-box ').on('click', function(event) {
-                event.stopPropagation()
-                $('#tags-input').css('display', 'block')
+            $(".label-box ").on("click", function(event) {
+                event.stopPropagation();
+                $("#tags-input").css("display", "block");
             })
             // select label
-            $('.typle_input').keydown(function(event){
+            $(".typle_input").keydown(function(event){
                 if (event.keyCode == 13) {
-                    $(this).blur()
-                    let labelLen = $('.show-label').length
-                    if (labelLen == 5) return layer.msg('最多选择5个标签！')
-                    let keyword = $(this).val()
-                    if (!keyword || keyword == '') return false
-                    var regEn = /[`~!@#$%^&*()_+<>?:'{}.\\\/'[\]]/im,
-                        regCn = /[·！#￥（——）：“”‘、|《。》？、【】[\]]/im
-                        
-                    if (regEn.test(keyword) || regCn.test(keyword)) return layer.msg('标签不能含有其他特殊字符！')
+                    $(this).blur();
+                    let labelLen = $(".show-label").length;
+                    if (labelLen == 5) return layer.msg('最多选择5个标签！');
+                    let keyword = $(this).text();
+                    if (!keyword || keyword == '') return false;
+                    var regEn = /[`~!@#$%^&*()_+<>?:"{}.\\\/'[\]]/im,
+                        regCn = /[·！#￥（——）：“”‘、|《。》？、【】[\]]/im;
+                    if (regEn.test(keyword) || regCn.test(keyword)) return layer.msg("标签不能含有其他特殊字符！");
                     keyword = keyword.replace(/\,|\;|\，|\；/ig, ',')
-                    
                     if (keyword.indexOf(',') > 0) {
-                        let arr = keyword.split(',')
+                        let arr = keyword.split(',');
                         if (!arr[arr.length-1]) {
                             arr.splice(arr.length-1, 1)
                         }
-                         let len = arr.length + labelLen
-                        if(len > 5) return layer.msg('最多选择5个标签！')
+                         let len = arr.length + labelLen;
+                        if(len > 5) return layer.msg('最多选择5个标签！');
                         arr.forEach(item => {
                             for ( let i = 0; i <= $('.show-label').length - 1; i++) {
                                 if ($('.show-label').eq(i).find('span').text() == item) {
-                                    $('.show-label').eq(i).remove()
-                                    labelArr.splice(i, 1)
+                                    $('.show-label').eq(i).remove();
+                                    labelArr.splice(i, 1);
                                 } 
                             }
-                             let labelDiv = `<div class='show-label bd-radius-3'>
+                             let labelDiv = `<div class="show-label bd-radius-3">
                                                 <span>${item}</span> 
-                                                <svg class='iconSvg' aria-hidden='true'>
-                                                    <use xlink:href='#icon-guanbi'></use>
+                                                <svg class="iconSvg" aria-hidden="true">
+                                                    <use xlink:href="#icon-guanbi"></use>
                                                 </svg>
-                                            </div>`
-                            $(this).val('')
-                            $(this).before(labelDiv)
-                            labelArr.push(item)
+                                            </div>`;
+                            $(this).text('');
+                            $(this).before(labelDiv);
+                            labelArr.push(item);
                         })
                     } else {
                         for ( let i = 0; i <= $('.show-label').length - 1; i++) {
                             if ($('.show-label').eq(i).find('span').text() == keyword) {
-                                $('.show-label').eq(i).remove()
-                                labelArr.splice(i, 1)
+                                $('.show-label').eq(i).remove();
+                                labelArr.splice(i, 1);
                             } 
                         }
-                        let labelDiv = `<div class='show-label bd-radius-3'>
+                        let labelDiv = `<div class="show-label bd-radius-3">
                                             <span>${keyword}</span> 
-                                            <svg class='iconSvg' aria-hidden='true'>
-                                                <use xlink:href='#icon-guanbi'></use>
+                                            <svg class="iconSvg" aria-hidden="true">
+                                                <use xlink:href="#icon-guanbi"></use>
                                             </svg>
-                                        </div>`
-                        $(this).val('')
-                        $(this).before(labelDiv)
-                        labelArr.push(keyword)
+                                        </div>`;
+                        $(this).text('');
+                        $(this).before(labelDiv);
+                        labelArr.push(keyword);
                     }
-                    $('#tags-input').css('display', 'none')
+                    console.log(labelArr)
+                    $("#tags-input").css("display", "none");
                 }
-            })
-            $('.publish_page').on('click', function(event) {
-                event.stopPropagation()
-                $('#tags-input').css('display', 'none')
-            })
+            });
+            $(".publish_page").on("click", function(event) {
+                event.stopPropagation();
+                $("#tags-input").css("display", "none");
+            });
             // change classification
-            $('.type_list').find('.type_item').each(function() {
+            $(".type_list").find(".type_item").each(function() {
                 $(this).click(function() {
-                    articleSource = $(this).text()
-                    $(this).addClass('actived')
-                    $(this).siblings().removeClass('actived')
+                    articleSource = $(this).text();
+                    $(this).addClass("actived");
+                    $(this).siblings().removeClass("actived");
                 })
-            })
+            });
             // filter sensitive words and comment article
-            $('.comment_btn').on('click', function() {
+            $(".comment_btn").on("click", function() {
                 console.log(123)
-                saveArticle(false)
-                if (!isSubmitting) return false 
-                isSubmitting = false
-                let keySpans = document.getElementsByClassName('highlight')
-                if (keySpans.length) return false // if had sensitive words return
-                let reg = new RegExp(wordsList.join('|'), 'gi') // check sensitive words
-                let articleTitle = $('.title_input').val() // title
-                articleTitle = articleTitle.replace(reg, (word) => `<span class='highlight'>${word}</span>`)
-                $('.title_input').empty().append(articleTitle)
-                let contentArr = []
-                let classArr = document.getElementsByClassName('CodeMirror-line') // content list Dom
-                $('.cm-invalidchar').remove()
+                saveArticle(false);
+                if (!isSubmitting) return false; 
+                isSubmitting = false;
+                let keySpans = document.getElementsByClassName('highlight');
+                if (keySpans.length) return false; // if had sensitive words return
+                let reg = new RegExp(wordsList.join('|'), 'gi'); // check sensitive words
+                let articleTitle = $(".title_input").val(); // title
+                articleTitle = articleTitle.replace(reg, (word) => `<span class="highlight">${word}</span>`);
+                $('.title_input').empty().append(articleTitle);
+                let contentArr = [];
+                let classArr = document.getElementsByClassName("CodeMirror-line"); // content list Dom
+                $(".cm-invalidchar").remove();
                 for(let i = 0; i < classArr.length; i++) {
-                    contentArr.push(classArr[i].innerText)
+                    contentArr.push(classArr[i].innerText);
                 }
-                let isTrue = false
+                let isTrue = false;
                 contentArr.forEach((item, ind) => {
                     item = item.replace(/\u200B/g,'')
-                    contentArr[ind] = item.replace(reg, (word) => `<span class='highlight'>${word}</span>`)
-                    if (contentArr[ind].indexOf('highlight') > 0) {
-                        isTrue = true
+                    contentArr[ind] = item.replace(reg, (word) => `<span class="highlight">${word}</span>`);
+                    if (contentArr[ind].indexOf("highlight") > 0) {
+                        isTrue = true;
                     }
                 })
-                $('.tui-editor-defaultUI').remove() // remove old rich text
+                $('.tui-editor-defaultUI').remove(); // remove old rich text
                  let editor = new tui.Editor({ // new rich text
                     el: document.querySelector('#editSection'),
                     previewStyle: 'vertical',
@@ -277,27 +276,27 @@
                     useCommandShortcut: true,
                     initialValue: contentArr.join('\n'),
                     exts: ['scrollSync', 'colorSyntax', 'uml', 'chart', 'mark', 'table', 'taskCounter']
-                })
+                });
                 if (articleTitle.indexOf('highlight') > 0 || isTrue) {
-                    alert('文章标题或文章内容中不能含有敏感词汇！')
-                    isSubmitting = true
-                    autoSave()
-                    return false
+                    alert("文章标题或文章内容中不能含有敏感词汇！");
+                    isSubmitting = true;
+                    autoSave();
+                    return false;
                 }
                 if (!articleTitle ||  (contentArr[0].length < 1 && contentArr.length < 2)) {
-                    alert('文章标题或文章内容中不能为空！')
-                    isSubmitting = true
-                    autoSave()
-                    return false
+                    alert("文章标题或文章内容中不能为空！");
+                    isSubmitting = true;
+                    autoSave();
+                    return false;
                 }
                 if (labelArr.length < 1) {
-                    layer.msg('文章标签不能为空！')
-                    isSubmitting = true
-                    autoSave()
-                    return false
+                    layer.msg("文章标签不能为空！");
+                    isSubmitting = true;
+                    autoSave();
+                    return false;
                 }
                 let param = {
-                    userId: $.cookie('userId'),
+                    userId: $.cookie("userId"),
                     isEdit: isEdit,
                     isDrafts: false,
                     articleId: articleId,
@@ -305,32 +304,32 @@
                     articleContent: JSON.stringify(contentArr),
                     articleType: articleSource,
                     articleLabel: labelArr
-                }
-                myAjax('POST', 'post/publish', param).then((res) => {
-                    layer.msg(res.message)
+                };
+                myAjax("POST", 'post/publish', param).then((res) => {
+                    layer.msg(res.message);
                     if (res.code == 10000) {
                         setTimeout(function() {
-                            goPage('account/posts/' + $.cookie('nickName'))
-                        }, 2000)
+                            goPage('account/posts/' + $.cookie("nickName"));
+                        }, 2000);
                     } else {
-                        console.log(res.message)
+                        console.log(res.message);
                     }
-                    isSubmitting = true
+                    isSubmitting = true;
                 })
-            })
+            });
             // save article
-            // $('.save_btn').on('click', function() {
-            //     if (!isSubmitting) return false
-            //     isSubmitting = false
-            //     let articleTitle = $('.title_input').text() // title
-            //     let contentArr = []
-            //     let classArr = document.getElementsByClassName('CodeMirror-line') // content list Dom
-            //     $('.cm-invalidchar').remove()
-            //     for(let i = 0 i < classArr.length i++) {
-            //         contentArr.push(classArr[i].innerText)
+            // $(".save_btn").on("click", function() {
+            //     if (!isSubmitting) return false;
+            //     isSubmitting = false;
+            //     let articleTitle = $(".title_input").text(); // title
+            //     let contentArr = [];
+            //     let classArr = document.getElementsByClassName("CodeMirror-line"); // content list Dom
+            //     $(".cm-invalidchar").remove();
+            //     for(let i = 0; i < classArr.length; i++) {
+            //         contentArr.push(classArr[i].innerText);
             //     }
             //     let param = {
-            //         userId: $.cookie('userId'),
+            //         userId: $.cookie("userId"),
             //         isEdit: isEdit,
             //         isDrafts: true,
             //         articleId: articleId,
@@ -338,43 +337,43 @@
             //         articleContent: JSON.stringify(contentArr),
             //         articleType: articleSource,
             //         articleLabel: labelArr
-            //     }
-            //     myAjax('POST', 'post/publish', param).then((res) => {
+            //     };
+            //     myAjax("POST", 'post/publish', param).then((res) => {
             //         if (res.code == 1) {
-            //             layer.msg('保存成功！')
+            //             layer.msg('保存成功！');
             //             setTimeout(function() {
-            //                 goPage('account/posts/' + $.cookie('userId'))
-            //             }, 2000)
+            //                 goPage('account/posts/' + $.cookie("userId"));
+            //             }, 2000);
             //         } else {
-            //             layer.msg(res.message)
-            //             console.log(res.message)
+            //             layer.msg(res.message);
+            //             console.log(res.message);
             //         }
-            //         isSubmitting = true
+            //         isSubmitting = true;
             //     })
-            // })
+            // });
             // title remove highlight style
-            $('.title_input').focus(() => {
-                $('.title_input .highlight').removeClass('highlight')
+            $(".title_input").focus(() => {
+                $('.title_input .highlight').removeClass('highlight');
             })
             // content remove highlight style
-            $('.article_content').focus(() => {
-                $('.article_content .highlight').removeClass('highlight')
-            })
+            $(".article_content").focus(() => {
+                $('.article_content .highlight').removeClass('highlight');
+            });
             // save draft box
             let time
             function saveArticle(start) {
                 if (start) {
                     time = setInterval(function() {
-                        clearInterval(time)
-                        let articleTitle = $('.title_input').val() // title
-                        let contentArr = []
-                        let classArr = document.getElementsByClassName('CodeMirror-line') // content list Dom
-                        $('.cm-invalidchar').remove()
+                        clearInterval(time);
+                        let articleTitle = $(".title_input").val(); // title
+                        let contentArr = [];
+                        let classArr = document.getElementsByClassName("CodeMirror-line"); // content list Dom
+                        $(".cm-invalidchar").remove();
                         for(let i = 0; i < classArr.length; i++) {
-                            contentArr.push(classArr[i].innerText)
+                            contentArr.push(classArr[i].innerText);
                         }
                         let param = {
-                            userId: $.cookie('userId'),
+                            userId: $.cookie("userId"),
                             isEdit: isEdit,
                             isDrafts: isDrafts != '' ? isDrafts : true,
                             articleId: articleId,
@@ -382,36 +381,36 @@
                             articleContent: JSON.stringify(contentArr),
                             articleType: articleSource,
                             articleLabel: labelArr
-                        }
-                        myAjax('POST', 'post/publish', param).then((res) => {
+                        };
+                        myAjax("POST", 'post/publish', param).then((res) => {
                             if (res.code == 10000) {
                                 if (isEdit) {
-                                    $('.saving').text('已更新')
+                                    $(".saving").text("已更新");
                                 } else {
-                                    $('.saving').text('已保存')
+                                    $(".saving").text("已保存");
                                 }
-                                articleId = res.articleId
+                                articleId = res.articleId;
                             } else {
-                                console.log(res.message)
+                                console.log(res.message);
                             }
                         })
-                    }, 5000)
+                    }, 5000);
                 } else {
-                    clearInterval(time)
+                    clearInterval(time);
                 }
                 
             }
-            autoSave()
+            autoSave();
             function autoSave() {
-                $('.CodeMirror-code').bind('DOMNodeInserted', function(e) {
-                    if ($('.CodeMirror-code').text().replace(/\u200B/g, '') != '') {
-                        clearInterval(time)
-                        $('.saving').show()
-                        $('.saving').text('保存中...')
-                        saveArticle(true)
+                $(".CodeMirror-code").bind("DOMNodeInserted", function(e) {
+                    if ($(".CodeMirror-code").text().replace(/\u200B/g, '') != "") {
+                        clearInterval(time);
+                        $(".saving").show();
+                        $(".saving").text("保存中...");
+                        saveArticle(true);
                     } else {
-                        saveArticle(false)
-                        $('.saving').text('保存中...')
+                        saveArticle(false);
+                        $(".saving").text("保存中...");
                     }
                 })
             }

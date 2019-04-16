@@ -3,7 +3,26 @@
     <head>
         <title><%= title %></title>
         <link rel="stylesheet" href="/style/account/posts.css">
-        <% include ../common/script %>
+        <!-- set `maximum-scale` for some compatibility issues -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+        <!-- Delete the default Apple toolbar and menu bar -->
+        <meta content="yes" name="apple-mobile-web-app-capable"/>
+        <!-- Control status bar display style -->
+        <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+        <!-- Will not recognize the mailbox, tell the device to ignore the number in the page as a phone number -->
+        <meta content="telephone=no" name="format-detection"/>
+        <script src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script>
+        <script>
+            if ('addEventListener' in document) {
+            document.addEventListener('DOMContentLoaded', function() {
+                FastClick.attach(document.body)
+            }, false);
+            }
+            if(!window.Promise) {
+            document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
+            }
+        </script>
+        <% include ../common/mobile-script %>
     </head>
     <body>
         <div class="ghost-layout">
