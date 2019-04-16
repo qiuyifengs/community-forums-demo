@@ -4,6 +4,7 @@
         <title><%= title %></title>
         <link rel="icon" href="/images/collection.png" type="img/x-ico" />
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+        <meta name="viewport" content="initial-scale=1, user-scalable=0, minimal-ui" charset="UTF-8">
         <link rel='stylesheet' href='/style/index.css' />
         <link rel="stylesheet" href="/style/forum/forum.css">
         <link rel="stylesheet" href="/style/common/swiper.min.css">
@@ -86,8 +87,9 @@
                 margin-left: 5px;
             }
             .index-tab {
-                position: fixed;
-                right: 0;
+                /* position: fixed
+                right: 0 */
+                margin-left: 50px;
             }
             .tab-panel .tab-panel-item.tab-active {
                 position: relative;
@@ -103,96 +105,25 @@
                 -webkit-transform: translateX(100%);
                 transform: translateX(100%);
             }
-
-            /* .postsList .ghost-list-item {
-                -webkit-box-shadow: 0 5px 10px 0 rgba(217, 224, 252, 0.3);
-                box-shadow: 0 5px 10px 0 rgba(217, 224, 252, 0.3);
-                transition: all .3s ease;
-            } */
-            @media screen and (max-width: 420px) {
-                body {
-                    font-family: STHeitiSC-Light;
-                }
-                .tab-nav {
-                    position: fixed;
-                    top: 44px;
-                    left: 0;
-                    right: 0;
-                    z-index: 1;
-                    padding: 0 15px!important;
-                    background: var(--col-f5);
-                    border: none;
-                }
-                .tab-nav > .tab-active {
-                    background-color: var(--col-f5)!important;
-                }
-                
-                .ghost-layout-content {
-                    position: relative;
-                }
-                .ghost-list-item-extra {
-                    display: none;
-                }
-                .ghost-list-vertical .ghost-list-item-meta {
-                    margin-top: 16px;
-                    font-size: var(--fs-18);
-                    line-height: 24px;
-                    color: var(--col-24);
-                }
-                .pdl-24 {
-                    margin: 0 15px;
-                    padding-left: 0;
-                    border-bottom: .5px solid var(--col-e9);
-                }
-                .ghost-list-vertical .ghost-list-item-action {
-                    position: relative;
-                    margin-top: 0;
-                    margin-bottom: 4px;
-                }
-                .ghost-list-item-meta-title {
-                    margin-bottom: 0;
-                }
-                .ghost-list-item-action > .app-publishTime {
-                    display: block;
-                    position: absolute;
-                    top: 0;
-                    right: 0;
-                }
-                .app-display-none {
-                    display: none;
-                }
-                .app-btn-box {
-                    position: fixed;
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
-                    margin-bottom: 0!important;
-                }
-                .app-btn-box .ghost-btn-round.ghost-btn-lg {
-                    border-radius: 0;
-                }
-                .tab-panel {
-                    overflow: auto;
-                }
-                .ghost-empty {
-                    margin: 0;
-                    padding: 50% 0;
-                    background-color: var(--bg);
-                }
-            }
-            .target-go {
-                color: var(--col-88);
-            }
-            .ghost-pro-components-article-list-content-index-listContent h4:hover, .ghost-pro-components-article-list-content-index-listContent h4:focus {
-                color: var(--btn-col);
-                text-decoration: underline
-            }
-
-            .articleAuthor:hover, .articleAuthor:focus {
-                color: var(--btn-col);
-                text-decoration: underline
+            .ghost-list-vertical {
+                position: relative;
             }
             
+            .ghost-row {
+                height: 100%;
+            }
+            .ghost-layout {
+                position: absolute;
+                top: 0px;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                overflow-y: scroll;
+            }
+        
+            @media screen and (max-width: 420px) {
+
+            }
         </style>
     </head>
     <body>
@@ -201,8 +132,8 @@
                 <% include ./common/header %>
                 <div class="ghost-pro-layouts-basic-layout-content ghost-layout-content">
                     <main  class="ghost-pro-components-page-header-wrapper-grid-content-main ghost-pro-components-page-header-wrapper-grid-content-wide">
-                        <div class="ghost-row">
-                            <article class="ghost-col-xs-24 ghost-col-sm-24 ghost-col-md-24 ghost-col-lg-18 ghost-col-xl-18">
+                        <div class="ghost-row" style="display: flex">
+                            <article class="ghost-col-xs-24 ghost-col-sm-24 ghost-col-md-24 ghost-col-lg-18 ghost-col-xl-18 ghost-left-box">
                                 <div class="swiper-container bd-radius-5">
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide"><img src="/images/1.png" alt=""></div>
@@ -217,19 +148,18 @@
                                     <div class="swiper-button-next"></div> -->
                                 </div>
 
-                                <div class="ghost-card" style="background-color: transparent; box-shadow: none">
-                                    <div class="ghost-card-body" style="padding: 0">
+                                <div class="ghost-card-box" style="background-color: transparent; box-shadow: none">
+                                    <!-- <div class="ghost-card-body" style="padding: 0"> -->
                                         <div class="ghost-loading-mask" style="display: none">
                                             <div class="ghost-loading-spinner">
                                                 <svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg>
                                             </div>
                                         </div>
-
                                         <% if (postList.articleList && (postList.articleList.length > 0)) { %>
                                         <div class="ghost-list ghost-list-vertical">
                                             <div class="ghost-spin-container postsList" id="artivleTemplate">
                                                 <% postList.articleList.forEach(function(articleItem) {%>
-                                                    <div class="ghost-card gohst-index-page" article-id="<%= articleItem.articleId%>"">
+                                                    <div class="ghost-card gohst-index-page" article-id="<%= articleItem.articleId%>">
                                                         <div class="ghost-card-body" style="padding: 10px 20px">
                                                             <a class="target-go" target="_blank" href="/post/articleDetail/<%=articleItem.articleId%>">
                                                                 <div class="ghost-list-item">
@@ -261,7 +191,7 @@
                                                                                     <% } %>
                                                                                     
                                                                                 </span>
-                                                                                <a href="javascript:;" class="articleAuthor" style="color: var(--btn-col)">
+                                                                                <a href="javascript:" class="articleAuthor" style="color: var(--btn-col)">
                                                                                     <span class="author-name"><%=articleItem.author%></span>
                                                                                 </a>
                                                                                 <em class="showTime"><%= articleItem.publishTime %></em>
@@ -281,9 +211,7 @@
                                             </div>
                                         </div>
                                         <% } %>
-                                        <% if ((postList.total * 1) > 0) { %>
-                                            <ul class="ghost-pagination" style="margin: 24px 0; text-align: center"></ul>
-                                        <% } else { %>
+                                        <% if ((postList.total * 1) < 1) { %>
                                             <div class="ghost-empty">
                                                 <dvi class="ghost-empty-image">
                                                     <img src="/images/no_data.png" alt="">
@@ -291,12 +219,16 @@
                                                 <p class="ghost-empty-description">暂无相关文章</p>
                                             </div>
                                         <% } %>
-                                        <input type="hidden" id="totalPages" value="<%= postList.total %>" style="display: none" />
-                                    </div>
+                                        <!-- <input type="hidden" id="totalPages" value="<%= postList.total %>" style="display: none" /> -->
+                                    <!-- </div> -->
                                 </div>
                             </article>
                             <aside class="ghost-col-xs-24 ghost-col-sm-24 ghost-col-md-24 ghost-col-lg-24 ghost-col-xl-6 index-tab">
-                                <h5 style="margin-bottom: 24px">TAGS</h5>
+                                <h5 class="tag-title">
+                                    <span class="short-tag-border"></span>
+                                    <span> TAGS </span>
+                                    <span class="long-tag-border"></span>
+                                </h5>
                                 <ul class="ghost-components-menu-vertical-index">
                                     <% postList.menuList.forEach(function(menuItem) { %>
                                     <li class="ghost-components-menu-item">
@@ -317,6 +249,7 @@
     <script type="text/javascript">
         
         $(function() {
+            let pageSize = 1;
             var swiper = new Swiper('.swiper-container', {
                 spaceBetween: 30,
                 centeredSlides: true,
@@ -332,23 +265,24 @@
                     nextEl: '.swiper-button-next',
                     prevEl: '.swiper-button-prev',
                 },
-            });
+            })
             // random color
             $(".item-random-color").each(function() {
-                const authorName = $(this).attr("article-author");
-                $(this).css("background",renderColor(authorName));
+                const authorName = $(this).attr("article-author")
+                $(this).css("background",renderColor(authorName))
             })
             $(".showTime").each(function() {
                 let resTime = formatDateFilter($(this).text())
                 $(this).text(resTime)
-            });
+            })
 
-            const userId = $.cookie("userId");
+            const userId = $.cookie("userId")
             const articleType = this.location.pathname.split('/')[2] ? decodeURI(this.location.pathname.split('/')[2]) : 'ALL'
 
 
             $('.ghost-components-menu-vertical-index .ghost-components-menu-item').on('click', function (e) {
                 e.preventDefault()
+                pageSize = 0;
                 $(this).addClass('is-active')
                 $(this).siblings().removeClass('is-active')
                 goPage(`topic/${$(this).find('.ghost-ment-item-title').text()}`)
@@ -362,44 +296,56 @@
                 }
             })
 
-            // init Google Design button click effect 
-            Waves.attach('.float-button-light', ['waves-button', 'waves-float', 'waves-light'])
-            // Init Waves
-            Waves.init()
-
-            // init pagination config
-            $('.ghost-pagination').pagination({
-                total: document.getElementById('totalPages').value,
-                // total: 100,
-                pageSize: 10,
-                current: 1,
-                coping: true,
-                isHide: true,
-                callback: api => {
-                    $('.ghost-loading-mask').css('display', 'block')
-                    // dialog.loading.open()
-                    const currentPage = api.getCurrent()
-                    const url = articleType ? `topic/${articleType}/${currentPage}` : `topic/ALL${currentPage}`
+            // init dropload config
+            let isLoading = false;
+            
+            let dropload = $('.ghost-layout').dropload({
+                loadDownFn: function(me){
+                    if (isLoading) return false;
+                    isLoading = true
+                    $('.dropload-up').remove()
+                    $('.dropload-down').remove()
+                    $('.dropload-refresh').remove()
+                    const url = articleType ? `topic/${articleType}/${pageSize}` : `topic/ALL${pageSize}`
                     myAjax('GET', url).then(res => {
-                        console.log(res)
-                        if (res.code === 10000) {
-                            $("#artivleTemplate").empty()
-                            res.articleList.forEach(item => {
-                                $("#artivleTemplate").append(renderArticleHtml(item))
-                            })
+                        if (res.code === 10000 && res.articleList.length > 0) {
+                            $('.ghost-loading-mask').css('display', 'block')
+                            console.log(123)
+                            pageSize++
+                            let result = ''
+                            res.articleList.forEach((item, ind) => {
+                                result += renderArticleHtml(item)
+                                // if(ind == res.articleList.length - 1) {
+                                //     dropload.noData()
+                                // }
+                            });
+                            
                             $(".item-random-color").each(function() {
-                                const authorName = $(this).attr("article-author");
-                                $(this).css("background",renderColor(authorName));
-
+                                const authorName = $(this).attr("article-author")
+                                $(this).css("background",renderColor(authorName))
+                                
                             })
                             setTimeout(function() {
+                                // 每次数据加载完，必须重置
+                                dropload.resetload()
+                                isLoading = false
                                 $('.ghost-loading-mask').css('display', 'none')
-                            }, 500) 
+                                $("#artivleTemplate").append(result)
+                            }, 1000) 
+                        } else {
+                            // 即使加载出错，也得重置
+                            // dropload.noData();
+                            dropload.resetload()
+                            setTimeout(function() {
+                                isLoading = false
+                            }, 1000) 
                         }
                     })
                 }
             })
-
+            $('.dropload-up').remove()
+            $('.dropload-down').remove()
+            $('.dropload-refresh').remove()
             $('.tab-nav .tab-nav-item').on('click', function (e) {
                 e.preventDefault()
                 $(this).addClass('tab-active')
@@ -413,14 +359,14 @@
                 const articleId = $(this).parents(".gohst-index-page").attr("article-id")
                 myAjax("POST", "post/addView", { articleId: articleId, userId: $.cookie("userId") })
             })
-        }(window, jQuery));
+        })
         function isTop(item) {
             if (item) {
                 return `
                     <span class="ghost-tag ghost-tag-has-color" style="background-color: var(--col-top)">置顶</span>
                 `
             } else {
-                return '';
+                return ''
             }
         }
         function filterTime(item) {
@@ -432,11 +378,11 @@
                     <img src="/${ item.hearderIcon }">
                 `
             } else {
-                return `<span class="item-random-color" article-author="${item.author}">${item.author.substring(0, 1)}</span>`;
+                return `<span class="item-random-color" article-author="${item.author}">${item.author.substring(0, 1)}</span>`
             }
         }
         let renderArticleHtml = item => {
-            return `<div class="ghost-card">
+            return `<div class="ghost-card gohst-index-page" article-id="${item.articleId}">
                         <div class="ghost-card-body" style="padding: 10px 20px">
                             <a class="target-go" target="_blank" href="/post/articleDetail/${item.articleId}">
                                 <div class="ghost-list-item">
@@ -460,7 +406,7 @@
                                                 <span class="ghost-avatar ghost-pro-components-global-header-index-avatar ghost-avatar-mini ghost-avatar-circle ghost-avatar-image langue-show">
                                                     ${ showHeaderIcon(item) }
                                                 </span>
-                                                <a href="javascript:;" class="articleAuthor" style="color: var(--btn-col)">
+                                                <a href="javascript:" class="articleAuthor" style="color: var(--btn-col)">
                                                     <span class="author-name">${ item.author }</span>
                                                 </a>
                                                 <em class="showTime">${ filterTime(item.publishTime) }</em>
