@@ -1,0 +1,16 @@
+.app-footer {
+    overflow: hidden;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 50px;
+}
+.app-footer .app-btn {
+    width: 100%;
+    line-height: 50px;
+    text-align: center;
+    font-family: var(--font-f);
+    font-size: var(--fs-15);
+    border: none;
+}

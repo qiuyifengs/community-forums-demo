@@ -1,11 +1,5 @@
 @import '../index.css';
-/* .account-box .ghost-form:not(.ghost-form-inline):not(.ghost-form-vertical) {
-    max-width: 600px;
-} */
 
-.ghost-card {
-    /* text-align: center; */
-}
 .ghost-form-item {
     display: flex;
     align-items: center;

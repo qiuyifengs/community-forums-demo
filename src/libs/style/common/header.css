@@ -1,6 +1,4 @@
-.app-header {
-    display: none;
-}
+
 .header_search {
     position: fixed;
     z-index: 9999;
@@ -244,20 +242,9 @@
 }
 
 @media screen and (max-width: 420px) {
-    .web-header {
-        display: none;
-    }
-    .app-header {
-        display: block;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 100;
-    }
     .app-header > .app-gohost-hearder {
         display: flex;
-        padding: 0 10px;
+        padding: 0 15px 0 10px;
         height: 44px;
         justify-content: space-between;
         align-items: center;
