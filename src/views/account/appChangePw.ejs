@@ -55,17 +55,83 @@
                             </div>
                         </div>
                     </div>
+                    <footer class="app-footer app-display">
+                        <button type="submit" class="app-btn ghost-btn-primary btn_submit">确认修改</button>
+                    </footer>
                 </form>
             </section>
-            <footer class="app-footer app-display">
-                <button type="button" class="app-btn ghost-btn-primary btn_submit">确认修改</button>
-            </footer>
+            
         </div>
     </body>
     <script type="text/javascript">
         $(function() {
             // app title
             $('.app-page-title').text('修改密码')
+            $("#appChangePw").validate({
+                debug: true,
+                submitHandler: function(form) {
+                    const params = {
+                        userId: $.cookie("userId"),
+                        oldPassword: $('#oldPassword').val(),
+                        passWordOne: $('#newPassword').val(),
+                        passWordTwo: $('#confirmPassword').val()
+                    }
+                    myAjax("POST", "account/resetPassword", params).then((res) => {
+                        layer.msg(res.message)
+                        if (res.code == 10000) {
+                            setTimeout(function() {
+                                history.go(-1)
+                            }, 2000)
+                        }
+                    })
+                },
+                onfocusin: function(element) { $(element).valid() },
+                onfocusout: function(element) { $(element).valid() },
+                onkeyup: function(element) { $(element).valid() },
+                focusInvalid: function(element) { $(element).valid() },
+                errorElement: 'div',
+                errorClass:"ghost-form-explain",
+                highlight: function(element, errorClass, validClass) {
+                    const elementId = $(`#${element.id}-error`)
+                    $(elementId).addClass("ghost-form-explain")
+                    $(elementId).parent().addClass('has-error')
+                },
+                unhighlight:function(element, errorClass){
+                    const elementId = $(`#${element.id}-error`)
+                    $(elementId).parent().removeClass('has-error').addClass('has-success')
+                    $(elementId).parents().removeClass('ghost-form-item-with-help')
+                },
+                rules: {
+                    oldPassword: {
+                        required: true,
+                        minlength: 6
+                    },
+                    newPassword: {
+                        required: true,
+                        minlength: 6
+                    },
+                    confirmPassword: {
+                        required: true,
+                        minlength: 6,
+                        equalTo: "#newPassword"
+                    },
+                },
+                messages: {
+                    oldPassword: {
+                        required: "请输入旧密码",
+                        minlength: "旧密码长度不能小于 6 位数"
+                    },
+                    newPassword: {
+                        required: "请输入新密码",
+                        minlength: "新密码长度不能小于 6 位数"
+                    },
+                    confirmPassword: {
+                        required: "请再次输入密码",
+                        minlength: "密码长度不能小于 6 位数",
+                        equalTo: "两次密码输入不一致"
+                    }
+                }
+            }) 
 
         })
     </script>

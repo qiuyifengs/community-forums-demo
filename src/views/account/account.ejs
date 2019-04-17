@@ -263,7 +263,7 @@
                 </div>
             </div>
             <footer class="app-footer app-display">
-                <button type="button" class="app-btn ghost-btn-primary btn_submit">保存</button>
+                <button type="button" class="app-btn ghost-btn-primary btn_submit submit-info">保存</button>
             </footer>
         </div>
     </body>
@@ -281,7 +281,7 @@
             // app title
             $('.app-page-title').text('个人中心')
             // save
-            $('.btn_submit').click(function(){
+            $('.submit-info').click(function(){
                 let nickName = document.querySelector('.nick-name').value;
                 let personalProfile = document.querySelector('.personal-profile').value;
                 if ($.cookie("nickName") == nickName) return layer.msg("新昵称不能与旧昵称相同！");

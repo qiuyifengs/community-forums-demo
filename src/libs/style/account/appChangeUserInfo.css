@@ -13,3 +13,6 @@
     padding: 10px 15px 5px;
     background: #fff;
 }
+.ghost-form-explain, .ghost-form-extra {
+    text-indent: 0;
+}
