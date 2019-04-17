@@ -1,0 +1,30 @@
+<header class="app-header app-display bd-bottom">
+    <section class="app-gohost-hearder">
+        <div class="app-gohost-hearder-left ghost-avatar-image">
+            <a href="javascript:history.go(-1)">
+                <svg class="iconSvg app-back-icon" aria-hidden="true">
+                    <use xlink:href="#icon-icon-arrow-left2"></use>
+                </svg>
+            </a>
+        </div>
+        <div class="app-gohost-hearder-mid">
+            <div class="app-page-title"></div>
+        </div>
+        <div class="app-gohost-hearder-right">
+            <div class="app-gohost-hearder-right-text">写文章</div>
+        </div>
+    </section>
+</header>
+<script type="text/javascript">
+    $(function() {
+        // go back
+        $('.app-back-icon').on('click', function(e) {
+            e.stopPropagation()
+        })
+        // go publish page
+        $('.app-gohost-hearder-right-text').on('click', function(e) {
+            e.stopPropagation()
+            goPage('post/publish/')
+        })
+    })
+</script>

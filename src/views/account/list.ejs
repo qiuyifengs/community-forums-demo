@@ -1,35 +1,37 @@
 
-<ul class="ghost-menu ghost-menu-light ghost-menu-root ghost-menu-inline">
-        <li class="ghost-menu-item" data-id="1">
-            <span>我的主页</span>
-        </li>
-        <li class="ghost-menu-item" data-id="2">
-            <span>我的帖子</span>
-        </li>
-        <li class="ghost-menu-item" data-id="3">
-            <span>我的回复</span>
-        </li>
-        <li class="ghost-menu-item" data-id="4">
-            <span>我的收藏</span>
-        </li>
-    </ul>
+<ul class="ghost-menu ghost-menu-light ghost-menu-root ghost-menu-inline web-display">
+    <li class="ghost-menu-item" data-id="1">
+        <span>我的主页</span>
+    </li>
+    <li class="ghost-menu-item" data-id="2">
+        <span>我的帖子</span>
+    </li>
+    <li class="ghost-menu-item" data-id="3">
+        <span>我的回复</span>
+    </li>
+    <li class="ghost-menu-item" data-id="4">
+        <span>我的收藏</span>
+    </li>
+</ul>
+
 <script type="text/javascript">
-
-$(function(){
-    const CURRENT_ROUTER = this.location.pathname.split('/')[2]
-    const USERID = $.cookie("userId")
-    const nickName = $.cookie("nickName")
-
-    let routerIdFilter = value => {
-        const router = {
-            'account': 1,
-            'posts': 2,
-            'reply': 3,
-            'collect': 4,
-            'focus': 5
+    $(function(){
+        const CURRENT_ROUTER = this.location.pathname.split('/')[2]
+        const USERID = $.cookie("userId")
+        const nickName = $.cookie("nickName")
+        console.log(111, nickName)
+        let routerIdFilter = value => {
+            const router = {
+                'account': 1,
+                'posts': 2,
+                'reply': 3,
+                'collect': 4,
+                'focus': 5
+            }
+            return router[value]
         }
         return router[value]
-    }
+    
 
     let routerAddressFilter = value => {
         const address = {

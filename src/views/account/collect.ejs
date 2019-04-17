@@ -2,7 +2,7 @@
 <html>
     <head>
         <title><%= title %></title>
-        <link rel="stylesheet" href="/style/account/posts.css">
+        <link rel="stylesheet" href="/style/account/collect.css">
         <!-- set `maximum-scale` for some compatibility issues -->
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
         <!-- Delete the default Apple toolbar and menu bar -->
@@ -11,85 +11,94 @@
         <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
         <!-- Will not recognize the mailbox, tell the device to ignore the number in the page as a phone number -->
         <meta content="telephone=no" name="format-detection"/>
-        <!-- <script src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script> -->
-        <script src="/js/jquery-3.3.1.min.js"></script>
-        <script src="/js/common.js"></script>
-        <script src="//at.alicdn.com/t/font_1098338_doclvgd33hj.js"></script>
-        <script src="/js/ghost-ui.js"></script>
-        <script src="/js/jquery.cookie.js"></script>
+        <script src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script>
+        <!-- <script>
+            if ('addEventListener' in document) {
+            document.addEventListener('DOMContentLoaded', function() {
+                FastClick.attach(document.body)
+            }, false);
+            }
+            if(!window.Promise) {
+            document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
+            }
+        </script> -->
         <% include ../common/script %>
-        
     </head>
     <body>
-            <div class="ghost-layout">
-                    <% include ../common/header %>
-                    <div class="ghost-pro-layouts-basic-layout-content ghost-layout-content">
-                        <div class="ghost-pro-components-page-header-wrapper-grid-content-main ghost-pro-components-page-header-wrapper-grid-content-wide" style="margin-bottom: 24px">
-                            <main class="ghost-pro-pages-account-settings-info-main">
-                                <aside class="ghost-pro-pages-account-settings-info-leftmenu">
-                                    <% include ./list %>
-                                </aside>
-                                <div class="ghost-pro-pages-account-settings-info-right">
-                                    <div class="ghost-pro-pages-account-settings-info-title">
-                                        <span>我的收藏</span>
-                                    </div>
-                                    <div class="ghost-card-body">
-                                        <div class="ghost-list ghost-list-vertical ghost-list-split">
-                                            <div class="ghost-spin-nested-loading">
-                                                <% collectList.articleList.forEach(function(item) {%>
-                                                <div class="ghost-list-item collect-item bd-bottom">
-                                                    <div class="ghost-list-item-main list-box">
-                                                        <div class="ghost-list-item-main">
-                                                            <div class="ghost-list-item-meta-content">
-                                                                <h4 class="ghost-list-item-meta-title"><%= item.articleTitle %></h4>
-                                                            </div>
-                                                            <div class="ghost-list-item-meta-article-content"><%- item.articleContent %></div>
-                                                        </div>
-                                                        <ul class="ghost-list-item-action">
-                                                            <li class="list-item">
-                                                                <a>
-                                                                    <%= item.viewCount %> 阅读
-                                                                </a>
-                                                            </li>
-                                                            <li class="list-item">
-                                                                <span>
-                                                                    <%= item.commentCount %> 评论
-                                                                </span>
-                                                            </li>
-                                                            <li class="list-item">
-                                                                <span>
-                                                                    <%= item.collectCount %> 收藏
-                                                                </span>
-                                                            </li>
-                                                            <li class="list-item">
-                                                                <span>
-                                                                    <%= item.likeCount %> 喜欢
-                                                                </span>
-                                                            </li>
-                                                            <li class="list-item">
-                                                                <span class="time">
-                                                                    <%= item.publishTime %>
-                                                                </span>
-                                                            </li>
-                                                            <% if (item.articleLabel) { %>
-                                                            <li class="source-type">
-                                                                <% item.articleLabel.forEach(function(labelItem) {%>
-                                                                <span class="article-source bd-radius-3"><%= labelItem %></span>
-                                                                <% }) %>
-                                                            </li>
-                                                            <% } %>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="ghost-list-item-extra">
-                                                        <ul class="ghost-list-item-action">
-                                                            <li>
-                                                                <div class="ghost-list-item-id" style="display: none"><%= item.articleId %></div>
-                                                                <button style="font-size: 12px" class="ghost-btn ghost-btn-primary">取消收藏</button>
-                                                            </li>
-                                                        </ul>
+        <div class="ghost-layout">
+            <% include ../common/header %>
+            <% include ../common/appHeader %>
+            <div class="ghost-pro-layouts-basic-layout-content ghost-layout-content">
+
+                <div class="ghost-pro-components-page-header-wrapper-grid-content-main ghost-pro-components-page-header-wrapper-grid-content-wide" style="margin-bottom: 24px">
+                    <main class="ghost-pro-pages-account-settings-info-main">
+                        <aside class="ghost-pro-pages-account-settings-info-leftmenu">
+                            <% include ./list %>
+                        </aside>
+                        <div class="ghost-pro-pages-account-settings-info-right">
+                            <div class="ghost-pro-pages-account-settings-info-title web-display">
+                                <span>我的收藏</span>
+                            </div>
+                            <div class="ghost-card-body">
+                                <div class="ghost-list ghost-list-vertical ghost-list-split">
+                                    <div class="ghost-spin-nested-loading">
+                                        <% collectList.articleList.forEach(function(item) {%>
+                                        <div class="ghost-list-item collect-item bd-bottom">
+                                            <div class="ghost-list-item-main list-box">
+                                                <div class="ghost-list-item-main">
+                                                    <div class="ghost-list-item-meta-content item-title-box">
+                                                        <h4 class="ghost-list-item-meta-title article_title">
+                                                            <span class="item-title"><%= item.articleTitle %></span>
+                                                        </h4>
                                                     </div>
                                                 </div>
-                                                <% }) %>   
+                                                <ul class="ghost-list-item-action">
+                                                    <li class="list-item web-display">
+                                                        <a>
+                                                            <%= item.viewCount %> 阅读
+                                                        </a>
+                                                    </li>
+                                                    <li class="list-item web-display">
+                                                        <span>
+                                                            <%= item.commentCount %> 评论
+                                                        </span>
+                                                    </li>
+                                                    <li class="list-item web-display">
+                                                        <span>
+                                                            <%= item.collectCount %> 收藏
+                                                        </span>
+                                                    </li>
+                                                    <li class="list-item web-display">
+                                                        <span>
+                                                            <%= item.likeCount %> 喜欢
+                                                        </span>
+                                                    </li>
+                                                    <li class="list-item web-display">
+                                                        <span class="time">
+                                                            <%= item.publishTime %>
+                                                        </span>
+                                                    </li>
+                                                    <% if (item.articleLabel) { %>
+                                                    <li class="list-item source-type">
+                                                        <% item.articleLabel.forEach(function(labelItem) {%>
+                                                        <span class="article-source bd-radius-3"><%= labelItem %></span>
+                                                        <% }) %>
+                                                    </li>
+                                                    <% } %>
+                                                    <li class="app-time app-display">
+                                                        <span class="time">
+                                                            <%= item.publishTime %>
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="ghost-list-item-extra web-display">
+                                                <ul class="ghost-list-item-action">
+                                                    <li>
+                                                        <div class="ghost-list-item-id" style="display: none"><%= item.articleId %></div>
+                                                        <button style="font-size: 12px" class="ghost-btn ghost-btn-primary">取消收藏</button>
+                                                    </li>
+                                                </ul>
                                             </div>
                                             
                                         </div>
@@ -120,6 +129,8 @@
     <script type="text/javascript">
 
         $(function() {
+            // app title
+            $('.app-page-title').text('我的收藏')
             // init pagination config
             $('.ghost-pagination').pagination({
                 total: document.getElementById('totalPages').value,
@@ -131,7 +142,7 @@
                 callback: api => {
                     $('.ghost-loading-mask').css('display', 'block')
                     const currentPage = api.getCurrent()
-                    const url = `account/collect/${$.cookie("userId")}/${currentPage}`;
+                    const url = `account/collect/${$.cookie("nickName")}/${currentPage}`;
                     myAjax('GET', url).then(res => {
                         if (res.code === 1) {
                             $("#myArticleTemplate").empty()
@@ -185,30 +196,32 @@
             return `
                 <div class="ghost-list-item collect-item bd-bottom">
                     <div class="ghost-list-item-main list-box">
-                        <div class="ghost-list-item-main">
-                            <div class="ghost-list-item-meta-content">
-                                <div class="ghost-list-item-meta-content">
-                                    <h4 class="ghost-list-item-meta-title">${ item.articleTitle }</h4>
+                        <div class="ghost-list-item-main list-box">
+                            <div class="ghost-list-item-main">
+                                <div class="ghost-list-item-meta-content item-title-box">
+                                    <h4 class="ghost-list-item-meta-title">
+                                        <span class="item-title">${ item.articleTitle }</span>
+                                    </h4>
                                 </div>
                                 <div class="ghost-list-item-meta-article-content">${ item.articleContent }</div>
                             </div>
                             <ul class="ghost-list-item-action">
-                                <li class="list-item">
+                                <li class="list-item web-display">
                                     <a>
                                         ${ item.viewCount } 阅读
                                     </a>
                                 </li>
-                                <li class="list-item">
+                                <li class="list-item web-display">
                                     <span>
                                         ${ item.commentCount } 评论
                                     </span>
                                 </li>
-                                <li class="list-item">
+                                <li class="list-item web-display">
                                     <span>
                                         ${ item.collectCount } 收藏
                                     </span>
                                 </li>
-                                <li class="list-item">
+                                <li class="list-item web-display">
                                     <span>
                                         ${ item.likeCount } 喜欢
                                     </span>
@@ -219,6 +232,11 @@
                                     </span>
                                 </li>
                                 ${ renderArticleLabel(item.articleLabel) }
+                                <li class="app-time app-display">
+                                    <span class="time">
+                                        ${ item.publishTime }
+                                    </span>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -235,7 +253,7 @@
                 item.split(',').forEach(labelItem => {
                     labelDom += `<span class="article-source bd-radius-3">${ labelItem }</span>`
                 })
-                return `<li class="source-type">
+                return `<li class="list-item source-type">
                     ${ labelDom }
                 </li>`
             } else {

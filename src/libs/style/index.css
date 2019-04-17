@@ -26,6 +26,8 @@
 @import './common/tag.css';
 @import './common/dropdown.css';
 @import './common/dropload/dropload.css';
+@import './common/footer.css';
+@import './common//appHeader.css';
 
 .home-page {
     display: flex;

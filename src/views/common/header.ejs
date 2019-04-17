@@ -1,4 +1,4 @@
-<header class="ghost-layout-header ghost-pro-layouts-header-fixedHeader clearfix web-header comments-header" id="web-header" style="padding: 0; width: 100%">
+<header class="ghost-layout-header ghost-pro-layouts-header-fixedHeader clearfix web-header comments-header web-display" id="web-header" style="padding: 0; width: 100%">
     <div class="ghost-pro-components-top-nav-header-index-head ghost-pro-components-top-nav-header-index-light">
         <div class="ghost-pro-components-top-nav-header-index-main ghost-pro-components-top-nav-header-index-wide">
             <div style="width: 100%; display:flex; justify-content: space-between">
@@ -26,19 +26,26 @@
         </div>
     </div>
 </header>
-<header class="app-header comments-header">
+<header class="app-header comments-header app-display">
     <section class="app-gohost-hearder">
         <div class="app-gohost-hearder-left ghost-avatar-image">
             <svg class="iconSvg" aria-hidden="true">
                 <use xlink:href="#icon-fenlei"></use>
             </svg>
         </div>
-        <div class="app-gohost-hearder-mid">FORUM</div>
+        <div class="app-gohost-hearder-mid">首页</div>
         <div class="app-gohost-hearder-right">
-            <div class="langue-icon">
-                <svg class="iconSvg" aria-hidden="true">
-                    <use xlink:href="#icon-geren5"></use>
-                </svg>
+            <div class="lang-icon app-lang-dropdown">
+                <ul class="app-lang-dropdown-list lang-menu">
+                    <li class="app-lang-dropdown-item" data-value="cn">
+                        <img src="https://image.flaticon.com/icons/svg/299/299914.svg">
+                        <span class="app-ghost-dropDown-text">中文</span>   
+                    </li>
+                    <li class="app-lang-dropdown-item selected" data-value="en">
+                        <img src="https://image.flaticon.com/icons/svg/299/299722.svg">
+                        <span class="app-ghost-dropDown-text">En</span>      
+                    </li>
+                </ul>
             </div>
             <div class="search-icon">
                 <svg class="iconSvg" aria-hidden="true">
@@ -54,12 +61,18 @@
                     <use xlink:href="#icon-fenlei"></use>
                 </svg>
             </div>
-            <div class="user-sign bd-bottom ghost-avatar-image">
-                <img class="user-header-icon" src="/images/header_icon.png">
-                <span class="login-enty">登录/注册</span>
+            <div class="bd-bottom ghost-avatar-image">
+
+                <div class="user-headerIcon">
+                    <div class="user-sign">
+                        <img class="user-header-icon" src="/images/header_icon.png">
+                        <span class="login-enty">登录/注册</span>
+                    </div>
+                </div>
+                
             </div>
             <ul class="drop-down-list" id="accountMenu">
-                <li class="drop-down-item account-dropdown-item" data-id='1'>个人资料</li>
+                <li class="drop-down-item account-dropdown-item" data-id='1'>个人中心</li>
                 <!-- <li class="drop-down-item">安全设置</li> -->
                 <li class="drop-down-item account-dropdown-item" data-id='2'>我的帖子</li>
                 <li class="drop-down-item account-dropdown-item" data-id='3'>我的回复</li>
@@ -71,12 +84,10 @@
         </div>
     </section>
 </header>
-
-<script>
-
-
+<script type="text/javascript">
 const userId = $.cookie("userId")
 const nickName = $.cookie("nickName")
+const lang = JSON.parse(localStorage.getItem('langData'))
 
 let clearDropDownActive = () => {
     $('.ghost-dropdown-menu').each(function() {
@@ -84,16 +95,17 @@ let clearDropDownActive = () => {
     })
 }
 $(document).ready(function(){
-  
     let renderHtml, activity
     // init mudule
     if (userId) {
-        renderHtml = `${accountModule}${noticeModule}${publishModule}`
+        renderHtml = `${accountModule}${noticeModule}`
+        $('.user-sign').remove()
         // get user headerIcon
         myAjax("POST", 'account/getUserInfo', {nickName: nickName}, ).then((res) => {
             let headerDom
             if (res.code == 10000) {
                 activity = res.activity
+                localStorage.setItem('activity', res.activity)
                 if (res.headerIcon) {
                     headerDom = `<img src=/${res.headerIcon}>`
                     $(".user-headerIcon").append(headerDom)
@@ -122,15 +134,17 @@ $(document).ready(function(){
     } else {
         renderHtml = registerAndLoginModule
     }
-    $('.ghost-pro-components-global-header-index-right').append(`${langModule}${renderHtml}`)
+    $('.ghost-pro-components-global-header-index-right').append(`${langModule}${renderHtml}${publishModule}`)
 
     $(document).on('click', function(e) {
         $('.account-dropdown, #accountMenu').removeClass('active') 
+        $('.lang-dropdown, #langMenu').removeClass('active') 
+        $('.app-lang-dropdown-list').removeClass('active')
     })
 
-    $(document).on('click', function(e) {
-        $('.lang-dropdown, #langMenu').removeClass('active') 
-    })
+    // $(document).on('click', function(e) {
+    //     $('.lang-dropdown, #langMenu').removeClass('active') 
+    // })
 
     
     // open account menu dropDown
@@ -184,11 +198,17 @@ $(document).ready(function(){
         $(this).addClass('selected').siblings().removeClass('selected')
         $('#langMenu').removeClass('active')
         
-        const IMG = $(this).find('img').attr('src')   
+        const LANGIMG = $(this).find('img').attr('src')   
         const LANG = $(this).attr('data-value')
         
         $('.lang-current-value .ghost-dropDown-text').text(LANG)
-        $('.lang-current-value img').attr('src', IMG)
+        $('.lang-current-value img').attr('src', LANGIMG)
+        $('.lang-current-value img').attr('data-value', LANG)
+        const langData = {
+            src: LANGIMG,
+            lang: LANG
+        }
+        localStorage.setItem('langData', JSON.stringify(langData))
     })
 
     $('#loginBtn').on('click', function(e) {
@@ -245,11 +265,24 @@ $(document).ready(function(){
             goPage(url)
         }
     })
-
+    if (lang) {
+        $('.lang-current-value .ghost-dropDown-text').text(lang.lang)
+        $('.lang-current-value img').attr('src', lang.src)
+        $('.app-lang-dropdown-list').before(`<img src="${lang.src}" data-value="${lang.lang}">`)
+        $('.lang-menu li').each(function() {
+            if ($(this).attr('data-value') == lang.lang) {
+                $(this).addClass('selected').siblings().removeClass('selected')
+            }
+        })
+    } else {
+        $('.app-lang-dropdown-list').before(`<img src="https://image.flaticon.com/icons/svg/299/299722.svg" data-value="en">`)
+    }
     // ------------------------webApp------------------------
+    // show left menu
     $('.app-gohost-hearder-left').on('click', function() {
         $(".app-ghost-drop-down").css("display", "block")
     })
+
     $(".app-ghost-drop-down").on("click", function(event) {
         event.stopPropagation()
         $(".app-ghost-drop-down").css("display", "none")
@@ -258,6 +291,31 @@ $(document).ready(function(){
         event.stopPropagation()
         $(".app-ghost-drop-down").css("display", "none")
     })
+    // user sign
+    $('.user-sign').on('click', function(e) {
+        event.stopPropagation()
+        goPage('user/login')
+    })
+    // app select lang
+    $('.app-lang-dropdown').on('click', function(e) {
+        event.stopPropagation()
+        $('.app-lang-dropdown-list').toggleClass('active')
+    })
+    $('.app-lang-dropdown-list .app-lang-dropdown-item').on('click', function(e) {
+        event.stopPropagation()
+        $(this).addClass('selected');
+        $(this).siblings().removeClass('selected')
+        $('.app-lang-dropdown-list').removeClass('active')
+        const LANGIMG = $(this).find('img').attr('src') 
+        const LANG = $(this).attr('data-value')
+        $('.app-lang-dropdown-list').prev('img').attr('src', LANGIMG)
+        const langData = {
+            src: LANGIMG,
+            lang: LANG
+        }
+        localStorage.setItem('langData', JSON.stringify(langData))
+    })
+    
 })
 
 
@@ -265,32 +323,30 @@ $(document).ready(function(){
         $(".header-random-color").text(nickName.substring(0, 1)).css("background",renderColor(nickName))
     }
 
-    
-   
-
     let publishModule = `<button style="margin-left: 16px" class="ghost-btn ghost-btn-primary" id="enterPublish">
                             <span>写文章</span>
                         </button>`
 
-    let registerAndLoginModule = `<button style="margin-right: 8px padding: 0 12px" class="ghost-btn ghost-btn-text" id="loginBtn">
-                                    <span>LOGIN US</span>
+    let registerAndLoginModule = `
+                            <li class='user-state' style='list-style:none;display:flex;justify-content: space-between;align-items: center'>
+                                <button style="margin-right: 8px; padding: 0 12px" class="ghost-btn ghost-btn-text" id="loginBtn">
+                                    <span>LOGIN</span>
                                 </button>
 
-                                <button class="ghost-btn ghost-btn-primary" id="registerBtn">
+                                <button class="ghost-btn " id="registerBtn">
                                     <span>JOIN US</span>
-                                </button>`
+                                </button>
+                            </li>`
     
-    let langModule = `<li style="margin: 0 32px padding: 0" class="ghost-pro-components-select-lang-index-dropDown ghost-pro-components-global-header-index-action ghost-dropdown-trigger">
-                        <div class="ghost-dropDown lang-dropdown" style="padding: 0 12px">
+    let langModule = `<li style="margin-right: 55px; padding: 0" class="ghost-pro-components-select-lang-index-dropDown ghost-pro-components-global-header-index-action ghost-dropdown-trigger">
+                        <div class="ghost-dropDown lang-dropdown">
                             <div class="ghost-current-value lang-current-value">
                                 <div class="ghost-dropDown-item">
                                     <img src="https://image.flaticon.com/icons/svg/299/299722.svg">
                                     <span class="ghost-dropDown-text">EN</span> 
                                 </div>
                             </div>
-                            
-                            <ul class="ghost-dropdown-menu" id="langMenu">
-                                
+                            <ul class="ghost-dropdown-menu lang-menu" id="langMenu">
                                 <li class="ghost-dropDown-item lang-item gutter-pd16" data-value='cn'>
                                     <img src="https://image.flaticon.com/icons/svg/299/299914.svg">
                                     <span class="ghost-dropDown-text">简体中文</span>      
@@ -305,7 +361,7 @@ $(document).ready(function(){
                         </div>
                     </li>`
                             
-    let accountModule = `<li style="margin: 0 32px" class="ghost-pro-components-global-header-index-action ghost-pro-components-global-header-index-account ghost-dropdown-trigger">
+    let accountModule = `<li style="margin: 0 32px 0 0;padding-left:0" class="ghost-pro-components-global-header-index-action ghost-pro-components-global-header-index-account ghost-dropdown-trigger">
                         <div class="ghost-dropDown account-dropdown" style="padding: 0 12px">
                             <div class="ghost-current-value">
                                 <div class="ghost-dropDown-item user-headerIcon"></div>

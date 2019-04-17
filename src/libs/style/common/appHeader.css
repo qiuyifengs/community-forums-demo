@@ -1,0 +1,30 @@
+
+@media screen and (max-width: 420px) {
+    .comments-header {
+        display: none;
+    }
+    .app-gohost-hearder-left {
+        flex-basis: 25%;
+    }
+    .ghost-avatar-image .iconSvg {
+        font-size: var(--fs-18);
+        color: var(--col-333);
+    }
+    .app-gohost-hearder-mid {
+        flex-basis: 50%;
+        text-align: center;
+        font-family: STHeitiSC-Light;
+        font-size: var(--fs-18);
+        /* color: var(--btn-col); */
+    }
+
+    .app-gohost-hearder-right {
+        display: flex;
+        flex-basis: 25%;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    .app-gohost-hearder-right .app-gohost-hearder-right-text {
+        font-size: var(--fs-14);
+    }
+}
