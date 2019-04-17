@@ -13,7 +13,7 @@ import { ArticlesModule } from './controller/articles/articles.module';
 import { ArticleDetailModule } from './controller/articleDetail/articleDetail.module';
 import { CollectModule } from './controller/collect/collect.module';
 import { SearchPageModule } from './controller/searchPage/searchPage.module';
-import { AuthModule } from './controller/login/auth/auth.module';
+import { AuthModule } from './controller/auth/auth.module';
 import { from } from 'rxjs';
 
 const modules = [

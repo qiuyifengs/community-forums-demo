@@ -16,7 +16,7 @@ export class LoginController {
         res.render('login/login', { title: 'login' });
     }
 
-//    @UseGuards(AuthGuard('jwt'))
+    //@UseGuards(AuthGuard())
     @Post('login')
     @HttpCode(HttpStatus.OK)
     @ApiOperation({ title: 'user login' })

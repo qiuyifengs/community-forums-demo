@@ -1,15 +1,16 @@
 import { Injectable, HttpStatus, Next } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ApiErrorCode } from '../../../bing/common/enums/api-error-code.enum';
-import { JwtPayload } from './auth/jwt-payload.interface';
+import { JwtPayload } from '../auth/jwt-payload.interface';
+import * as curUserId from '../../global';
 import { Repository } from 'typeorm';
-import {AuthService} from './auth/auth.service'
 import { User } from '../../entitys/user.entity';
 import { md5 } from '@/bing/common/encrypt';
 import { Verification } from '../register/e-mail/send.e-mail';
 import * as jwt from 'jsonwebtoken';
 import { from } from 'rxjs';
 const config = require('../../../util/token.config');
+const user: JwtPayload = { userId: '' };
 
 @Injectable()
 export class LoginService {
@@ -20,30 +21,29 @@ export class LoginService {
     private readonly signRepository: Repository<User>,
   ) { }
   // createToken
-  async createToken(userId: string): Promise<any> {
-    const user: JwtPayload = { userId};
+  public async createToken(userId: string): Promise<any> {
+    const user: JwtPayload = {userId};
+    console.log(1111,user.userId);
+    
 
     return jwt.sign({
       user,
     }, config.session.secrets
       , {
-        expiresIn: '36',
+        expiresIn: '3600s',
       });
   }
-  // validateUser
-  public async findbyUserId(userId: string): Promise<any> {
-    return this.signRepository.findOne({ userId });
-  }
 
-  getUser(): User {
-    return this.user;
-  }
+  
+  
   // login
   async login(data): Promise<any> {
 
     const user: JwtPayload = { userId: data.userId };
+    console.log();
+    
 
-    const res = await this.signRepository.findOne({ userId: data.userId });
+    const res = await this.signRepository.findOne({ userId: user.userId });
     const msg = {
       code: 1,
       message: '',
@@ -54,7 +54,7 @@ export class LoginService {
     if (res) {
       if (md5(data.passWord) === res.passWord) {
         // 登入成功返回ｔｏｋｅｎ
-        const token = await this.createToken(res.userId);
+        const token = await this.createToken(user.userId);
         console.log(token);
         msg.code = ApiErrorCode.USER_LOGIN_SUCCESS;
         msg.message = '登入成功';
