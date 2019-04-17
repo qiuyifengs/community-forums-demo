@@ -73,3 +73,93 @@
     border-radius: 5px;
     background: rgba(0, 0, 0, .7)
 }
+@media screen and (max-width: 420px) {
+    .ghost-pro-layouts-basic-layout-content {
+        overflow: hidden;
+    }
+    .ghost-pro-pages-account-settings-info-main {
+        padding: 0;
+    }
+    .ghost-pro-pages-account-settings-info-main .ghost-pro-pages-account-settings-info-right {
+        padding: 0;
+        background: var(--col-f8);
+    }
+    .ghost-pro-pages-account-settings-base-view-left .ghost-form .ghost-form-item {
+        display: block;
+        margin-bottom: 10px;
+        padding: 10px 15px 6px;
+        background: var(--white);
+    }
+    .ghost-form-item .ghost-form-item-control-wrapper .ghost-form-item-control .icon-from-item-children {
+        padding: 40px 0 45px;
+        background: var(--white);
+    }
+    .ghost-pro-pages-account-settings-base-view-left .header-box{
+        position: relative;
+        margin: auto;
+        width: 110px;
+        height: 110px;
+        border-radius: 50px;
+    }
+    .ghost-pro-pages-account-settings-base-view-left .header-box .app-tackPhoto {
+        position: absolute;
+        right: -10px;
+        bottom: -10px;
+        width: 40px;
+        height: 40px;
+        line-height: 47px;
+        border-radius: 50px;
+        opacity: 0.8;
+        text-align: center;
+        background: var(--btn-col);
+    }
+    .ghost-pro-pages-account-settings-base-view-left .header-box .app-tackPhoto > .iconSvg {
+        font-size: var(--fs-22);
+        color: var(--white);
+    }
+    .ghost-form-item .ghost-form-item-label {
+        width: auto;
+        line-height: 14px;
+    }
+    .ghost-form-item .ghost-form-item-label>label {
+        color: var(--header);
+    }
+    .ghost-form-item .ghost-form-item-control-wrapper .ghost-form-item-children {
+        padding: 0;
+    }
+    
+    .ghost-form-item .ghost-form-item-control-wrapper .ghost-form-item-control {
+        line-height: 36px;
+    }
+    .ghost-form-item .ghost-form-item-control-wrapper .ghost-form-item-children .ghost-input {
+        padding: 0;
+        height: 26px;
+        font-size: var(--fs-15);
+        box-shadow: none;
+        border: none;
+    }
+    .ghost-form-item-children textarea {
+        padding-top: 10px!important;
+        resize: none;
+        height: 80px!important;
+        line-height: 22px;
+    }
+    .ghost-pro-pages-account-settings-base-view-left .ghost-form .app-from-style {
+        display: flex;
+    }
+    .ghost-pro-pages-account-settings-base-view-left .ghost-form .app-from-style .ghost-form-item-control-wrapper {
+        width: auto;
+    }
+    .ghost-pro-pages-account-settings-base-view-left .ghost-form .app-from-style .ghost-form-item-control-wrapper .ghost-form-item-control {
+        padding-left: 10px;
+        font-size: var(--fs-12);
+        color: var(--col-a1);
+    }
+    .app-right-icon {
+        width: 40px;
+        text-align: right;
+        font-size: var(--fs-15);
+        transform: translateX(4px);
+        color: var(--col-a1);
+    }
+}

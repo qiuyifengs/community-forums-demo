@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="/style/account/account.css">
+        <link rel="stylesheet" href="/style/common/avatar.css">
+        <% include ../common/script %>
+        <script src="/js/jquery.imgareaselect.min.js"></script>
+        <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+        <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+        <script src="https://cdn.bootcss.com/rxjs/6.4.0/rxjs.umd.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.0.0-beta.12/Rx.min.js"></script>
+    </head>
+    <body>
+        <div class="app-change-userInfo-page">
+            <% include ../common/appHeader %>
+            <section>
+
+            </section>
+            <footer class="app-footer app-display">
+                <button type="button" class="app-btn ghost-btn-primary btn_submit">确认修改</button>
+            </footer>
+        </div>
+    </body>
+    <script type="text/javascript">
+        $(function() {
+            // app title
+            $('.app-page-title').text('修改邮箱')
+
+        })
+    </script>
+</html>

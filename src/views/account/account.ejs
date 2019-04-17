@@ -2,6 +2,7 @@
 <html>
     <head>
         <title><%= title %></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
         <link rel="stylesheet" href="/style/account/account.css">
         <link rel="stylesheet" href="/style/common/avatar.css">
         <% include ../common/script %>
@@ -14,15 +15,15 @@
     <body>
         <div class="ghost-layout account-page">
             <% include ../common/header %>
+            <% include ../common/appHeader %>
             <div class="ghost-pro-layouts-basic-layout-content ghost-layout-content">
-
                 <div class="ghost-pro-components-page-header-wrapper-grid-content-main ghost-pro-components-page-header-wrapper-grid-content-wide" style="margin-bottom: 24px">
                     <main class="ghost-pro-pages-account-settings-info-main">
-                        <aside class="ghost-pro-pages-account-settings-info-leftmenu">
+                        <aside class="ghost-pro-pages-account-settings-info-leftmenu web-display">
                             <% include ./list %>
                         </aside>
                         <div class="ghost-pro-pages-account-settings-info-right">
-                            <div class="ghost-pro-pages-account-settings-info-title">
+                            <div class="ghost-pro-pages-account-settings-info-title web-display">
                                 <span>个人中心</span>
                             </div>
                             <div class="ghost-pro-pages-account-settings-base-view-left">
@@ -30,20 +31,25 @@
                                     <section class="account-box">
                                         <form class="ghost-row ghost-form ghost-form-horizontal" enctype = "multipart/form-data">
                                             <div class="ghost-row ghost-form-item">
-                                                <div class="ghost-form-item-label">
+                                                <div class="ghost-form-item-label web-display">
                                                     <label for="account_name" class="new－ghost-form-item-required" title="header-icon">头像</label>
                                                 </div>
                                                 <div class="ghost-form-item-control-wrapper">
                                                     <div class="ghost-form-item-control">
-                                                        <div class="ghost-form-item-children">
+                                                        <div class="ghost-form-item-children icon-from-item-children">
                                                             <div class="header-box">
                                                                 <% if (result.headerIcon) { %>
                                                                     <img class="ghost-header-icon header-icon" src="/<%= result.headerIcon %>" alt="头像">
                                                                 <% } else { %>
-                                                                    <img class="ghost-header-icon header-icon" src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png" alt="avatar">
+                                                                    <img class="ghost-header-icon header-icon" src="/images/header_icon.png" alt="avatar">
                                                                 <% } %>
                                                                 <input id="upload" type="file" name="file" onchange="uploadImg(this)"/> 
-                                                                <div class="hover-show">点击上传</div>
+                                                                <div class="hover-show web-display">点击上传</div>
+                                                                <div class="app-tackPhoto app-diplay">
+                                                                    <svg class="iconSvg" aria-hidden="true">
+                                                                        <use xlink:href="#icon-paizhao"></use>
+                                                                    </svg>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -70,12 +76,13 @@
                                                 <div class="ghost-form-item-control-wrapper">
                                                     <div class="ghost-form-item-control">
                                                         <div class="ghost-form-item-children">
-                                                            <input type="text" name="personalProfile" placeholder="<%=result.personalProfile%>" class="ghost-input ghost-input-lg personal-profile">
+                                                            <input type="text" name="personalProfile" placeholder="<%=result.personalProfile%>" class="ghost-input ghost-input-lg personal-profile web-display">
+                                                            <textarea type="text" name="personalProfile" placeholder="<%=result.personalProfile%>" class="ghost-input ghost-input-lg personal-profile app-display"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="ghost-row ghost-form-item">
+                                            <div class="ghost-row ghost-form-item app-from-style">
                                                 <div class="ghost-form-item-label">
                                                     <label for="account_name" class='ac' title="password">登录密码</label>
                                                 </div>
@@ -83,14 +90,19 @@
                                                     <div class="ghost-form-item-control">
                                                         <div class="ghost-form-item-children setting-password">
                                                             <h4>••••••</h4>
-                                                            <button type="button" data-toggle="ghostModel" data-target="openUpdatePasswordModel" class="ghost-btn ghost-btn-text reset-user-password">
+                                                            <button type="button" data-toggle="ghostModel" data-target="openUpdatePasswordModel" class="ghost-btn ghost-btn-text reset-user-password web-display">
                                                                 <span>修改密码</span>
                                                             </button>
+                                                            <a class="app-right-icon app-display" href="/account/user/changePassWord">
+                                                                <svg class="iconSvg app-back-icon" aria-hidden="true">
+                                                                    <use xlink:href="#icon-iconfonticonfonti2copycopy"></use>
+                                                                </svg>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="ghost-row ghost-form-item">
+                                            <div class="ghost-row ghost-form-item app-from-style">
                                                 <div class="ghost-form-item-label">
                                                     <label for="account_name" class='ac' title="password">邮箱验证</label>
                                                 </div>
@@ -99,19 +111,30 @@
                                                         <div class="ghost-form-item-children setting-password">
                                                             <h4>已绑定邮箱<%= result.email %></h4>
                                                             <% if(result.activity) { %>
-                                                                <button type="button" class="ghost-btn ghost-btn-text" data-toggle="ghostModel" data-target="openUpdateEmailModel">
+                                                                <button type="button" class="ghost-btn ghost-btn-text web-display" data-toggle="ghostModel" data-target="openUpdateEmailModel">
                                                                     <span>修改邮箱</span>
                                                                 </button>
+                                                                <a class="app-right-icon app-display" href="/account/user/changeEmail">
+                                                                    <svg class="iconSvg app-back-icon" aria-hidden="true">
+                                                                        <use xlink:href="#icon-iconfonticonfonti2copycopy"></use>
+                                                                    </svg>
+                                                                </a> 
                                                             <% } else { %>
-                                                                <button type="button" class="ghost-btn ghost-btn-text validate-user-email">
+                                                                <button type="button" class="ghost-btn ghost-btn-text validate-user-email web-display">
                                                                     <span>邮箱验证</span>
                                                                 </button>
-                                                            <% } %>   
+                                                                <div class="app-right-icon app-display validate-user-email">
+                                                                    <svg class="iconSvg app-back-icon validate-user-email" aria-hidden="true">
+                                                                        <use xlink:href="#icon-iconfonticonfonti2copycopy"></use>
+                                                                    </svg>
+                                                                </div> 
+                                                            <% } %>  
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="ghost-row ghost-form-item">
+                                            <div class="ghost-row ghost-form-item web-display">
                                                 <div
                                                     class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-xs-offset-0 ghost-col-sm-16" style="margin-left: 80px">
                                                     <div class="ghost-form-item-control">
@@ -132,113 +155,116 @@
 
                     <!-- start update password model -->
                     <section class="ghost-model fade-in" id="openUpdatePasswordModel">
-                            <div class="ghost-model-content">
-                                <h3 class="pd-24">修改密码</h3>
-                                <form class="ghost-row ghost-form ghost-form-horizontal pd-24" id="resetPasswordForm">
-                                    <div class="ghost-row ghost-form-item">
-                                        <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-4">
-                                            <label for="oldPassword" class="new－ghost-form-item-required" title="E-mail">旧密码</label>
-                                        </div>
-                                        <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-sm-20">
-                                            <div class="ghost-form-item-control">
-                                                <div class="ghost-form-item-children">
-                                                    <input type="password" placeholder="Please enter the old password" required name="oldPassword" id="oldPassword" class="ghost-input ghost-input-lg">
-                                                </div>
+                        <div class="ghost-model-content">
+                            <h3 class="pd-24">修改密码</h3>
+                            <form class="ghost-row ghost-form ghost-form-horizontal pd-24" id="resetPasswordForm">
+                                <div class="ghost-row ghost-form-item">
+                                    <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-4">
+                                        <label for="oldPassword" class="new－ghost-form-item-required" title="E-mail">旧密码</label>
+                                    </div>
+                                    <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-sm-20">
+                                        <div class="ghost-form-item-control">
+                                            <div class="ghost-form-item-children">
+                                                <input type="password" placeholder="Please enter the old password" required name="oldPassword" id="oldPassword" class="ghost-input ghost-input-lg">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="ghost-row ghost-form-item">
-                                        <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-4">
-                                            <label for="newPassword" class="new－ghost-form-item-required" title="New Password">新密码</label>
-                                        </div>
-                                        <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-sm-20">
-                                            <div class="ghost-form-item-control">
-                                                <div class="ghost-form-item-children">
-                                                    <input type="password" placeholder="Please enter a new password" required name="newPassword" id="newPassword" class="ghost-input ghost-input-lg">
-                                                </div>
+                                </div>
+                                <div class="ghost-row ghost-form-item">
+                                    <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-4">
+                                        <label for="newPassword" class="new－ghost-form-item-required" title="New Password">新密码</label>
+                                    </div>
+                                    <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-sm-20">
+                                        <div class="ghost-form-item-control">
+                                            <div class="ghost-form-item-children">
+                                                <input type="password" placeholder="Please enter a new password" required name="newPassword" id="newPassword" class="ghost-input ghost-input-lg">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="ghost-row ghost-form-item">
-                                        <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-4">
-                                            <label for="confirmPassword" class="new－ghost-form-item-required" title="Confirm Password">确认密码</label>
-                                        </div>
-                                        <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-sm-20">
-                                            <div class="ghost-form-item-control">
-                                                <div class="ghost-form-item-children">
-                                                    <input type="password" placeholder="Please confirm your password" required name="confirmPassword" id="confirmPassword" class="ghost-input ghost-input-lg">
-                                                </div>
+                                </div>
+                                <div class="ghost-row ghost-form-item">
+                                    <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-4">
+                                        <label for="confirmPassword" class="new－ghost-form-item-required" title="Confirm Password">确认密码</label>
+                                    </div>
+                                    <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-sm-20">
+                                        <div class="ghost-form-item-control">
+                                            <div class="ghost-form-item-children">
+                                                <input type="password" placeholder="Please confirm your password" required name="confirmPassword" id="confirmPassword" class="ghost-input ghost-input-lg">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="ghost-row ghost-form-item error_tip_next">
-                                        <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-4">
-                                            <!-- <label for="confirmPassword" class="new－ghost-form-item-required" title="Confirm Password"></label> -->
+                                </div>
+                                <div class="ghost-row ghost-form-item error_tip_next">
+                                    <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-4">
+                                        <!-- <label for="confirmPassword" class="new－ghost-form-item-required" title="Confirm Password"></label> -->
+                                    </div>
+                                    <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-xs-offset-0 ghost-col-sm-16 ghost-col-sm-offset-4">
+                                        <div class="ghost-form-item-control">
+                                            <button class="ghost-btn ghost-btn-primary ghost-btn-lg waves-float float-button-light waves-effect waves-button waves-float waves-light" name="password-submit" id="submit" style="margin-right: 70px">
+                                                <span>确认</span>
+                                            </button>
+                                            <button type="button" data-dismiss="ghostModel" name="password-cancel" class="ghost-btn ghost-btn-default ghost-btn-lg">
+                                                <span>取消</span>    
+                                            </button>
                                         </div>
-                                        <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-xs-offset-0 ghost-col-sm-16 ghost-col-sm-offset-4">
-                                            <div class="ghost-form-item-control">
-                                                <button class="ghost-btn ghost-btn-primary ghost-btn-lg waves-float float-button-light waves-effect waves-button waves-float waves-light" name="password-submit" id="submit" style="margin-right: 70px">
-                                                    <span>确认</span>
-                                                </button>
-                                                <button type="button" data-dismiss="ghostModel" name="password-cancel" class="ghost-btn ghost-btn-default ghost-btn-lg">
-                                                    <span>取消</span>    
-                                                </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+                    <!-- end update password model -->
+                    <section class="ghost-model fade-in" id="openUpdateEmailModel">
+                        <div class="ghost-model-content">
+                            <h3 class="pd-24">修改邮箱</h3>
+                            <form class="ghost-row ghost-form ghost-form-horizontal pd-24" id="resetEmail">
+                                <div class="ghost-row ghost-form-item">
+                                    <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-4">
+                                        <label for="oldEmail" class="new－ghost-form-item-required" title="Old email">旧邮箱</label>
+                                    </div>
+                                    <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-sm-20">
+                                        <div class="ghost-form-item-control">
+                                            <div class="ghost-form-item-children">
+                                                <input type="email" placeholder="Please enter the old email" required name="oldEmail" id="oldEmail" class="ghost-input ghost-input-lg">
                                             </div>
                                         </div>
                                     </div>
-                                </form>
-                            </div>
-                        </section>
-                        <!-- end update password model -->
-                        <section class="ghost-model fade-in" id="openUpdateEmailModel">
-                            <div class="ghost-model-content">
-                                <h3 class="pd-24">修改邮箱</h3>
-                                <form class="ghost-row ghost-form ghost-form-horizontal pd-24" id="resetEmail">
-                                    <div class="ghost-row ghost-form-item">
-                                        <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-4">
-                                            <label for="oldEmail" class="new－ghost-form-item-required" title="Old email">旧邮箱</label>
-                                        </div>
-                                        <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-sm-20">
-                                            <div class="ghost-form-item-control">
-                                                <div class="ghost-form-item-children">
-                                                    <input type="email" placeholder="Please enter the old email" required name="oldEmail" id="oldEmail" class="ghost-input ghost-input-lg">
-                                                </div>
+                                </div>
+                                <div class="ghost-row ghost-form-item">
+                                    <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-4">
+                                        <label for="newEmail" class="new－ghost-form-item-required" title="New eamil">新邮箱</label>
+                                    </div>
+                                    <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-sm-20">
+                                        <div class="ghost-form-item-control">
+                                            <div class="ghost-form-item-children">
+                                                <input type="email" placeholder="Please enter a new email" required name="newEmail" id="newEmail" class="ghost-input ghost-input-lg">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="ghost-row ghost-form-item">
-                                        <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-4">
-                                            <label for="newEmail" class="new－ghost-form-item-required" title="New eamil">新邮箱</label>
-                                        </div>
-                                        <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-sm-20">
-                                            <div class="ghost-form-item-control">
-                                                <div class="ghost-form-item-children">
-                                                    <input type="email" placeholder="Please enter a new email" required name="newEmail" id="newEmail" class="ghost-input ghost-input-lg">
-                                                </div>
-                                            </div>
+                                </div>
+                                <div class="ghost-row ghost-form-item error_tip_next">
+                                    <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-4">
+                                        <!-- <label for="confirmPassword" class="new－ghost-form-item-required" title="Confirm Password"></label> -->
+                                    </div>
+                                    <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-xs-offset-0 ghost-col-sm-16 ghost-col-sm-offset-4">
+                                        <div class="ghost-form-item-control">
+                                            <button class="ghost-btn ghost-btn-primary ghost-btn-lg " name="emial-submit" id="email-submit" style="margin-right: 70px">
+                                                <span>确认</span>
+                                            </button>
+                                            <button type="button" data-dismiss="ghostModel" name="email-cancel" class="ghost-btn ghost-btn-default ghost-btn-lg">
+                                                <span>取消</span>    
+                                            </button>
                                         </div>
                                     </div>
-                                    <div class="ghost-row ghost-form-item error_tip_next">
-                                        <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-4">
-                                            <!-- <label for="confirmPassword" class="new－ghost-form-item-required" title="Confirm Password"></label> -->
-                                        </div>
-                                        <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-xs-offset-0 ghost-col-sm-16 ghost-col-sm-offset-4">
-                                            <div class="ghost-form-item-control">
-                                                <button class="ghost-btn ghost-btn-primary ghost-btn-lg " name="emial-submit" id="email-submit" style="margin-right: 70px">
-                                                    <span>确认</span>
-                                                </button>
-                                                <button type="button" data-dismiss="ghostModel" name="email-cancel" class="ghost-btn ghost-btn-default ghost-btn-lg">
-                                                    <span>取消</span>    
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </section>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
                         
                 </div>
             </div>
+            <footer class="app-footer app-display">
+                <button type="button" class="app-btn ghost-btn-primary btn_submit">保存</button>
+            </footer>
         </div>
     </body>
     <script type="text/javascript">
@@ -252,7 +278,10 @@
             $('#openUpdatePasswordModel').removeClass('show')
         }
         $(function() {
-            $('#btn_submit').click(function(){
+            // app title
+            $('.app-page-title').text('个人中心')
+            // save
+            $('.btn_submit').click(function(){
                 let nickName = document.querySelector('.nick-name').value;
                 let personalProfile = document.querySelector('.personal-profile').value;
                 if ($.cookie("nickName") == nickName) return layer.msg("新昵称不能与旧昵称相同！");

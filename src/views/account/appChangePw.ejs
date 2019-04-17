@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="/style/account/account.css">
+        <link rel="stylesheet" href="/style/common/avatar.css">
+        <link rel="stylesheet" href="/style/account/appChangeUserInfo.css">
+        <% include ../common/script %>
+        <script src="/js/jquery.imgareaselect.min.js"></script>
+        <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+        <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+        <script src="https://cdn.bootcss.com/rxjs/6.4.0/rxjs.umd.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.0.0-beta.12/Rx.min.js"></script>
+    </head>
+    <body>
+
+        <div class="app-change-userInfo-page">
+            <% include ../common/appHeader %>
+            <section class="">
+                <form class="ghost-form ghost-form-horizontal" id="appChangePw">
+                    <div class="ghost-form-item">
+                        <div class="ghost-form-item-label">
+                            <label for="oldPassword" class="new－ghost-form-item-required" title="E-mail">旧密码</label>
+                        </div>
+                        <div class="ghost-form-item-control-wrapper">
+                            <div class="ghost-form-item-control">
+                                <div class="ghost-form-item-children">
+                                    <input type="password" placeholder="Please enter the old password" required name="oldPassword" id="oldPassword" class="ghost-input ghost-input-lg">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ghost-row ghost-form-item">
+                        <div class="ghost-form-item-label">
+                            <label for="newPassword" class="new－ghost-form-item-required" title="New Password">新密码</label>
+                        </div>
+                        <div class="ghost-form-item-control-wrapper">
+                            <div class="ghost-form-item-control">
+                                <div class="ghost-form-item-children">
+                                    <input type="password" placeholder="Please enter a new password" required name="newPassword" id="newPassword" class="ghost-input ghost-input-lg">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ghost-row ghost-form-item">
+                        <div class="ghost-form-item-label">
+                            <label for="confirmPassword" class="new－ghost-form-item-required" title="Confirm Password">确认密码</label>
+                        </div>
+                        <div class="ghost-form-item-control-wrapper">
+                            <div class="ghost-form-item-control">
+                                <div class="ghost-form-item-children">
+                                    <input type="password" placeholder="Please confirm your password" required name="confirmPassword" id="confirmPassword" class="ghost-input ghost-input-lg">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </section>
+            <footer class="app-footer app-display">
+                <button type="button" class="app-btn ghost-btn-primary btn_submit">确认修改</button>
+            </footer>
+        </div>
+    </body>
+    <script type="text/javascript">
+        $(function() {
+            // app title
+            $('.app-page-title').text('修改密码')
+
+        })
+    </script>
+</html>

@@ -352,6 +352,13 @@
         height: 60px;
         border-radius: 50px;
     }
+    .user-headerIcon .header-random-color {
+        width: 60px;
+        height: 60px;
+        font-size: 30px;
+        line-height: 60px;
+        border-radius: 50px;
+    }
     .app-ghost-drop-down .drop-down-list {
         font-family: STHeitiSC-Light;
         font-size: var(--fs-15);

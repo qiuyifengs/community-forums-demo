@@ -46,8 +46,10 @@
                                         <div class="ghost-list-item collect-item bd-bottom">
                                             <div class="ghost-list-item-main list-box">
                                                 <div class="ghost-list-item-main">
-                                                    <div class="ghost-list-item-meta-content">
-                                                        <h4 class="ghost-list-item-meta-title"><%= item.articleTitle %></h4>
+                                                    <div class="ghost-list-item-meta-content item-title-box">
+                                                        <h4 class="ghost-list-item-meta-title article_title">
+                                                            <span class="item-title"><%= item.articleTitle %></span>
+                                                        </h4>
                                                     </div>
                                                     <div class="ghost-list-item-meta-article-content"><%- item.articleContent %></div>
                                                 </div>
@@ -78,12 +80,17 @@
                                                         </span>
                                                     </li>
                                                     <% if (item.articleLabel) { %>
-                                                    <li class="source-type">
+                                                    <li class="list-item source-type">
                                                         <% item.articleLabel.forEach(function(labelItem) {%>
                                                         <span class="article-source bd-radius-3"><%= labelItem %></span>
                                                         <% }) %>
                                                     </li>
                                                     <% } %>
+                                                    <li class="app-time app-display">
+                                                        <span class="time">
+                                                            <%= item.publishTime %>
+                                                        </span>
+                                                    </li>
                                                 </ul>
                                             </div>
                                             <div class="ghost-list-item-extra web-display">
@@ -192,30 +199,32 @@
             return `
                 <div class="ghost-list-item collect-item bd-bottom">
                     <div class="ghost-list-item-main list-box">
-                        <div class="ghost-list-item-main">
-                            <div class="ghost-list-item-meta-content">
-                                <div class="ghost-list-item-meta-content">
-                                    <h4 class="ghost-list-item-meta-title">${ item.articleTitle }</h4>
+                        <div class="ghost-list-item-main list-box">
+                            <div class="ghost-list-item-main">
+                                <div class="ghost-list-item-meta-content item-title-box">
+                                    <h4 class="ghost-list-item-meta-title">
+                                        <span class="item-title">${ item.articleTitle }</span>
+                                    </h4>
                                 </div>
                                 <div class="ghost-list-item-meta-article-content">${ item.articleContent }</div>
                             </div>
                             <ul class="ghost-list-item-action">
-                                <li class="list-item">
+                                <li class="list-item web-display">
                                     <a>
                                         ${ item.viewCount } 阅读
                                     </a>
                                 </li>
-                                <li class="list-item">
+                                <li class="list-item web-display">
                                     <span>
                                         ${ item.commentCount } 评论
                                     </span>
                                 </li>
-                                <li class="list-item">
+                                <li class="list-item web-display">
                                     <span>
                                         ${ item.collectCount } 收藏
                                     </span>
                                 </li>
-                                <li class="list-item">
+                                <li class="list-item web-display">
                                     <span>
                                         ${ item.likeCount } 喜欢
                                     </span>
@@ -226,6 +235,11 @@
                                     </span>
                                 </li>
                                 ${ renderArticleLabel(item.articleLabel) }
+                                <li class="app-time app-display">
+                                    <span class="time">
+                                        ${ item.publishTime }
+                                    </span>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -242,7 +256,7 @@
                 item.split(',').forEach(labelItem => {
                     labelDom += `<span class="article-source bd-radius-3">${ labelItem }</span>`
                 })
-                return `<li class="source-type">
+                return `<li class="list-item source-type">
                     ${ labelDom }
                 </li>`
             } else {
