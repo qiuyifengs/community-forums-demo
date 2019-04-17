@@ -71,8 +71,10 @@
         </div>
     </section>
 </header>
-<script type="text/javascript" src="/js/common.js"></script>
-<script type="text/javascript">
+
+<script>
+
+
 const userId = $.cookie("userId")
 const nickName = $.cookie("nickName")
 
@@ -257,6 +259,8 @@ $(document).ready(function(){
         $(".app-ghost-drop-down").css("display", "none")
     })
 })
+
+
     if (nickName) {
         $(".header-random-color").text(nickName.substring(0, 1)).css("background",renderColor(nickName))
     }
@@ -350,5 +354,4 @@ $(document).ready(function(){
                                     <sup class="ghost-scroll-number ghost-badge-dot"></sup>
                                 </span>
                             </li>`
-    
 </script>

@@ -11,118 +11,114 @@
         <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
         <!-- Will not recognize the mailbox, tell the device to ignore the number in the page as a phone number -->
         <meta content="telephone=no" name="format-detection"/>
-        <script src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script>
-        <script>
-            if ('addEventListener' in document) {
-            document.addEventListener('DOMContentLoaded', function() {
-                FastClick.attach(document.body)
-            }, false);
-            }
-            if(!window.Promise) {
-            document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
-            }
-        </script>
-        <% include ../common/mobile-script %>
+        <!-- <script src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script> -->
+        <script src="/js/jquery-3.3.1.min.js"></script>
+        <script src="/js/common.js"></script>
+        <script src="//at.alicdn.com/t/font_1098338_doclvgd33hj.js"></script>
+        <script src="/js/ghost-ui.js"></script>
+        <script src="/js/jquery.cookie.js"></script>
+        <% include ../common/script %>
+        
     </head>
     <body>
-        <div class="ghost-layout">
-            <% include ../common/header %>
-            <div class="ghost-pro-layouts-basic-layout-content ghost-layout-content">
-
-                <div class="ghost-pro-components-page-header-wrapper-grid-content-main ghost-pro-components-page-header-wrapper-grid-content-wide" style="margin-bottom: 24px">
-                    <main class="ghost-pro-pages-account-settings-info-main">
-                        <aside class="ghost-pro-pages-account-settings-info-leftmenu">
-                            <% include ./list %>
-                        </aside>
-                        <div class="ghost-pro-pages-account-settings-info-right">
-                            <div class="ghost-pro-pages-account-settings-info-title">
-                                <span>我的收藏</span>
-                            </div>
-                            <div class="ghost-card-body">
-                                <div class="ghost-list ghost-list-vertical ghost-list-split">
-                                    <div class="ghost-spin-nested-loading">
-                                        <% collectList.articleList.forEach(function(item) {%>
-                                        <div class="ghost-list-item collect-item bd-bottom">
-                                            <div class="ghost-list-item-main list-box">
-                                                <div class="ghost-list-item-main">
-                                                    <div class="ghost-list-item-meta-content">
-                                                        <h4 class="ghost-list-item-meta-title"><%= item.articleTitle %></h4>
+            <div class="ghost-layout">
+                    <% include ../common/header %>
+                    <div class="ghost-pro-layouts-basic-layout-content ghost-layout-content">
+                        <div class="ghost-pro-components-page-header-wrapper-grid-content-main ghost-pro-components-page-header-wrapper-grid-content-wide" style="margin-bottom: 24px">
+                            <main class="ghost-pro-pages-account-settings-info-main">
+                                <aside class="ghost-pro-pages-account-settings-info-leftmenu">
+                                    <% include ./list %>
+                                </aside>
+                                <div class="ghost-pro-pages-account-settings-info-right">
+                                    <div class="ghost-pro-pages-account-settings-info-title">
+                                        <span>我的收藏</span>
+                                    </div>
+                                    <div class="ghost-card-body">
+                                        <div class="ghost-list ghost-list-vertical ghost-list-split">
+                                            <div class="ghost-spin-nested-loading">
+                                                <% collectList.articleList.forEach(function(item) {%>
+                                                <div class="ghost-list-item collect-item bd-bottom">
+                                                    <div class="ghost-list-item-main list-box">
+                                                        <div class="ghost-list-item-main">
+                                                            <div class="ghost-list-item-meta-content">
+                                                                <h4 class="ghost-list-item-meta-title"><%= item.articleTitle %></h4>
+                                                            </div>
+                                                            <div class="ghost-list-item-meta-article-content"><%- item.articleContent %></div>
+                                                        </div>
+                                                        <ul class="ghost-list-item-action">
+                                                            <li class="list-item">
+                                                                <a>
+                                                                    <%= item.viewCount %> 阅读
+                                                                </a>
+                                                            </li>
+                                                            <li class="list-item">
+                                                                <span>
+                                                                    <%= item.commentCount %> 评论
+                                                                </span>
+                                                            </li>
+                                                            <li class="list-item">
+                                                                <span>
+                                                                    <%= item.collectCount %> 收藏
+                                                                </span>
+                                                            </li>
+                                                            <li class="list-item">
+                                                                <span>
+                                                                    <%= item.likeCount %> 喜欢
+                                                                </span>
+                                                            </li>
+                                                            <li class="list-item">
+                                                                <span class="time">
+                                                                    <%= item.publishTime %>
+                                                                </span>
+                                                            </li>
+                                                            <% if (item.articleLabel) { %>
+                                                            <li class="source-type">
+                                                                <% item.articleLabel.forEach(function(labelItem) {%>
+                                                                <span class="article-source bd-radius-3"><%= labelItem %></span>
+                                                                <% }) %>
+                                                            </li>
+                                                            <% } %>
+                                                        </ul>
                                                     </div>
-                                                    <div class="ghost-list-item-meta-article-content"><%- item.articleContent %></div>
+                                                    <div class="ghost-list-item-extra">
+                                                        <ul class="ghost-list-item-action">
+                                                            <li>
+                                                                <div class="ghost-list-item-id" style="display: none"><%= item.articleId %></div>
+                                                                <button style="font-size: 12px" class="ghost-btn ghost-btn-primary">取消收藏</button>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                                <ul class="ghost-list-item-action">
-                                                    <li class="list-item">
-                                                        <a>
-                                                            <%= item.viewCount %> 阅读
-                                                        </a>
-                                                    </li>
-                                                    <li class="list-item">
-                                                        <span>
-                                                            <%= item.commentCount %> 评论
-                                                        </span>
-                                                    </li>
-                                                    <li class="list-item">
-                                                        <span>
-                                                            <%= item.collectCount %> 收藏
-                                                        </span>
-                                                    </li>
-                                                    <li class="list-item">
-                                                        <span>
-                                                            <%= item.likeCount %> 喜欢
-                                                        </span>
-                                                    </li>
-                                                    <li class="list-item">
-                                                        <span class="time">
-                                                            <%= item.publishTime %>
-                                                        </span>
-                                                    </li>
-                                                    <% if (item.articleLabel) { %>
-                                                    <li class="source-type">
-                                                        <% item.articleLabel.forEach(function(labelItem) {%>
-                                                        <span class="article-source bd-radius-3"><%= labelItem %></span>
-                                                        <% }) %>
-                                                    </li>
-                                                    <% } %>
-                                                </ul>
+                                                <% }) %>   
                                             </div>
-                                            <div class="ghost-list-item-extra">
-                                                <ul class="ghost-list-item-action">
-                                                    <li>
-                                                        <div class="ghost-list-item-id" style="display: none"><%= item.articleId %></div>
-                                                        <button style="font-size: 12px" class="ghost-btn ghost-btn-primary">取消收藏</button>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                            
                                         </div>
-                                        <% }) %>   
                                     </div>
-                                    
-                                </div>
-                            </div>
-                            <% if (collectList.length > 0) { %>
-                                <ul class="ghost-pagination article_page" style="margin: 24px 0; text-align: center"></ul>
-                            <% } %>
-                            <input type="hidden" id="totalPages" value="<%= collectList.total %>" style="display: none" />
-                            <% if (collectList.articleList.length < 1) { %>
-                                <div class="ghost-empty">
-                                        <dvi class="ghost-empty-image">
-                                            <img src="/images/no_collect.png" alt="">
-                                        </dvi>
-                                        <p class="ghost-empty-description">暂无收藏</p>
+                                    <% if (collectList.length > 0) { %>
+                                        <ul class="ghost-pagination article_page" style="margin: 24px 0; text-align: center"></ul>
+                                    <% } %>
+                                    <input type="hidden" id="totalPages" value="<%= collectList.total %>" style="display: none" />
+                                    <% if (collectList.articleList.length < 1) { %>
+                                        <div class="ghost-empty">
+                                                <div class="ghost-empty-image">
+                                                    <img src="/images/no_collect.png" alt="">
+                                                </div>
+                                                <p class="ghost-empty-description">暂无收藏</p>
+                                            </div>
+                                    <% } %>
+                                    <div class="ghost-loading-mask" style="display: none">
+                                        <div class="ghost-loading-spinner">
+                                            <svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg>
+                                        </div>
                                     </div>
-                            <% } %>
-                            <div class="ghost-loading-mask" style="display: none">
-                                <div class="ghost-loading-spinner">
-                                    <svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg>
                                 </div>
-                            </div>
+                            </main>
                         </div>
-                    </main>
+                    </div>
                 </div>
-            </div>
-        </div>
     </body>
     <script type="text/javascript">
+
         $(function() {
             // init pagination config
             $('.ghost-pagination').pagination({

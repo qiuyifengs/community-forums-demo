@@ -1,59 +1,59 @@
 
 <ul class="ghost-menu ghost-menu-light ghost-menu-root ghost-menu-inline">
-    <li class="ghost-menu-item" data-id="1">
-        <span>我的主页</span>
-    </li>
-    <li class="ghost-menu-item" data-id="2">
-        <span>我的帖子</span>
-    </li>
-    <li class="ghost-menu-item" data-id="3">
-        <span>我的回复</span>
-    </li>
-    <li class="ghost-menu-item" data-id="4">
-        <span>我的收藏</span>
-    </li>
-</ul>
-
+        <li class="ghost-menu-item" data-id="1">
+            <span>我的主页</span>
+        </li>
+        <li class="ghost-menu-item" data-id="2">
+            <span>我的帖子</span>
+        </li>
+        <li class="ghost-menu-item" data-id="3">
+            <span>我的回复</span>
+        </li>
+        <li class="ghost-menu-item" data-id="4">
+            <span>我的收藏</span>
+        </li>
+    </ul>
 <script type="text/javascript">
-    $(function(){
-        const CURRENT_ROUTER = this.location.pathname.split('/')[2]
-        const USERID = $.cookie("userId")
-        const nickName = $.cookie("nickName")
 
-        let routerIdFilter = value => {
-            const router = {
-                'account': 1,
-                'posts': 2,
-                'reply': 3,
-                'collect': 4,
-                'focus': 5
-            }
-            return router[value]
+$(function(){
+    const CURRENT_ROUTER = this.location.pathname.split('/')[2]
+    const USERID = $.cookie("userId")
+    const nickName = $.cookie("nickName")
+
+    let routerIdFilter = value => {
+        const router = {
+            'account': 1,
+            'posts': 2,
+            'reply': 3,
+            'collect': 4,
+            'focus': 5
         }
+        return router[value]
+    }
 
-        let routerAddressFilter = value => {
-            const address = {
-                1: 'account',
-                2: 'posts',
-                3: 'reply',
-                4: 'collect',
-                5: 'focus'
-            }
-            return `account/${ address[value] }/${ nickName }`
+    let routerAddressFilter = value => {
+        const address = {
+            1: 'account',
+            2: 'posts',
+            3: 'reply',
+            4: 'collect',
+            5: 'focus'
         }
+        return `account/${ address[value] }/${ nickName }`
+    }
 
-        $('.ghost-menu .ghost-menu-item').each(function() {
-            if (routerIdFilter(CURRENT_ROUTER) == $(this).attr('data-id')) {
-                $(this).addClass('ghost-menu-item-selected')
-                $(this).siblings().removeClass('ghost-menu-item-selected')
-            }
-        })
-
-        $('.ghost-menu').on('click', '.ghost-menu-item', function(e) {
-            e.preventDefault()
-            const url = routerAddressFilter($(this).attr('data-id'))
-            goPage(url)
-        })
+    $('.ghost-menu .ghost-menu-item').each(function() {
+        if (routerIdFilter(CURRENT_ROUTER) == $(this).attr('data-id')) {
+            $(this).addClass('ghost-menu-item-selected')
+            $(this).siblings().removeClass('ghost-menu-item-selected')
+        }
     })
+
+    $('.ghost-menu').on('click', '.ghost-menu-item', function(e) {
+        e.preventDefault()
+        const url = routerAddressFilter($(this).attr('data-id'))
+        goPage(url)
+    })
+})
+
 </script>
-    
