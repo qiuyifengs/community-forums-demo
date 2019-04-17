@@ -30,6 +30,7 @@ export class AccountController {
         };
         res.render('account/account', { title: '个人中心', result });
     }
+
     @Post('upload')
     @UseInterceptors(FileInterceptor('file',
         {
@@ -54,6 +55,7 @@ export class AccountController {
         }
         return await this.accountService.changeUserInfo(params);
     }
+
     @Post('getUserInfo')
     @ApiOperation({ title: 'get balance from user' })
     async getUserInfo(@Body() param): Promise<any> {
@@ -77,5 +79,17 @@ export class AccountController {
             };
         }
         return msg;
+    }
+
+    @Get('user/changePassWord')
+    @ApiOperation({ title: 'get balance from user' })
+    public async changePassWord(@Request() req, @Response() res, @Param() param): Promise<any> {
+        res.render('account/appChangePw', { title: '修改密码'});
+    }
+
+    @Get('user/changeEmail')
+    @ApiOperation({ title: 'get balance from user' })
+    public async changeEmail(@Request() req, @Response() res, @Param() param): Promise<any> {
+        res.render('account/appChangeEmail', { title: '修改邮箱'});
     }
 }

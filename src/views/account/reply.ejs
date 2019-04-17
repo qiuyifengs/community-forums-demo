@@ -2,6 +2,7 @@
 <html>
     <head>
         <title><%= title %></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
         <link rel="stylesheet" href="/style/account/reply.css">
         <% include ../common/script %>
         <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
@@ -10,6 +11,7 @@
     <body>
         <div class="ghost-layout">
             <% include ../common/header %>
+            <% include ../common/appHeader %>
             <div class="ghost-pro-layouts-basic-layout-content ghost-layout-content">
                 <div class="ghost-pro-components-page-header-wrapper-grid-content-main ghost-pro-components-page-header-wrapper-grid-content-wide" style="margin-bottom: 24px">
                     <main class="ghost-pro-pages-account-settings-info-main">
@@ -157,6 +159,8 @@
                                     </div>
                                 </form>`
         $(function() {
+            // app title
+            $('.app-page-title').text('我的回复')
             // init Google Design button click effect 
             Waves.attach('.float-button-light', ['waves-button', 'waves-float', 'waves-light'])
             // Init Waves

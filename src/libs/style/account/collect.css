@@ -66,9 +66,7 @@
         
     }
     .ghost-list .ghost-list-item {
-        position: relative;
         display: block;
-        margin-bottom: 10px;
         padding: 0 15px;
         border: none;
         background: var(--white);
@@ -80,7 +78,7 @@
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-    .ghost-spin-nested-loading .ghost-list-item-main .ghost-list-item-meta-content .ghost-list-item-meta-article-content {
+    .ghost-spin-nested-loading .ghost-list-item-meta-article-content {
         margin-top: 0;
     }
     .ghost-list-item-main .ghost-list-item-action .list-item{
@@ -94,14 +92,16 @@
         transform: scale(.8) translateX(-12%);
     }
     .ghost-spin-nested-loading .ghost-list-item-main .ghost-list-item-action {
+        position: relative;
+        margin: 8px 0 0 auto;
         padding-bottom: 10px;
         border-bottom: .5px solid var(--col-e9); 
     }
+    .ghost-spin-nested-loading .ghost-list-item-main .ghost-list-item-action:nth-last-of-type() {
+        border: none;
+    }
     .ghost-spin-nested-loading .ghost-list-item-extra {
         margin: 0;
-    }
-    .ghost-spin-nested-loading .ghost-list-item-extra .ghost-list-item-action {
-        margin: 8px 0 8px auto;
     }
     .ghost-list-vertical .ghost-list-item-action .delete_icon {
         padding-right: 0;
@@ -115,7 +115,7 @@
     .ghost-list-item-main .ghost-list-item-action .app-time {
         position: absolute;
         right: 15px;
-        bottom: 48px;
+        bottom: 8px;
         padding: 0;
         font-size: var(--fs-11);
         transform: scale(.8) translateX(12%);

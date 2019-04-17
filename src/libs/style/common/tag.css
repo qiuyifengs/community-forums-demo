@@ -58,4 +58,24 @@
     background-color: #f56c6c
 }
 
+.ghost-tag-checkable {
+    background-color: #e9e9e9;
+    border-color: transparent;
+    font-size: 14px;
+    color: #a1a1a1;
+    padding: 5px 10px;
+}
+
+.ghost-tag-checkable:not(.ghost-tag-checkable-checked):hover {
+    color: var(--withPhone)
+}
+
+.ghost-tag-checkable-checked {
+    background-color: var(--btn-col)
+}
+
+.ghost-tag-checkable:active, .ghost-tag-checkable-checked {
+    color: #fff
+}
+
 

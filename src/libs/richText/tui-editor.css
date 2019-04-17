@@ -9,6 +9,9 @@
 .auto-height .tui-editor-defaultUI {
     height: auto;
 }
+.tui-editor-defaultUI {
+    border-radius: 5px;
+}
 
 .auto-height .tui-editor {
     position: relative;
@@ -225,11 +228,12 @@
 }
 
 .tui-editor-defaultUI-toolbar {
-    padding: 0 25px;
-    height: 31px;
+    padding: 8px 25px;
     background-color: #fff;
     border: 0;
     overflow: hidden;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px 
 }
 
 .tui-toolbar-divider {
@@ -248,7 +252,6 @@
 }
 
 .te-toolbar-section {
-    height: 32px;
     box-sizing: border-box;
     border-bottom: 1px solid #e5e5e5;
 }
@@ -606,7 +609,7 @@
 }
 
 .te-heading-add ul li {
-    padding: 2px 10px;
+    padding: 12px 10px;
     cursor: pointer;
 }
 

@@ -25,6 +25,9 @@
 @import './common/layer.css';
 @import './common/tag.css';
 @import './common/dropdown.css';
+@import './common/dropload/dropload.css';
+@import './common/footer.css';
+@import './common//appHeader.css';
 
 .home-page {
     display: flex;
@@ -64,6 +67,15 @@
     color: var(--btn-col);
     border-bottom: 2px solid var(--btn-col);
 }
+/* .ghost-list {
+    -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        background-color: #fff;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+} */
 .article_list {
     background: var(--white); 
     
@@ -150,6 +162,7 @@
     -webkit-line-clamp: 2;
     line-height: 22px;
     padding-top: 12px;
+    color: var(--col-88);
 }
 .ghost-components-article-list-content-index-listContent .ghost-components-article-list-content-index-extra {
     margin-top: 16px;
@@ -166,12 +179,32 @@
     display: table;
     content: ''
 }
+.tag-title {
+    display: flex; 
+    margin-bottom: 24px; 
+    width: 250px;
+    justify-content: space-between;
+    align-items: center;
+    text-indent: 2px
+}
+.short-tag-border {
+    display: inline-block;
+    height: 1px;
+    width: 10px;
+    background: var(--col-e0);
+}
+.long-tag-border {
+    display: inline-block;
+    height: 1px;
+    width: 180px;
+    background: var(--col-e0);
+}
 .ghost-components-menu-item {
     height: 40px;
     line-height: 40px;
     font-size: 14px;
     color: #303133;
-    padding: 0 20px;
+    padding: 0 12px;
     list-style: none;
     cursor: pointer;
     position: relative;

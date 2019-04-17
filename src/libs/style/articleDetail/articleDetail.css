@@ -596,83 +596,8 @@
 .app-author-info, .app-time {
     display: none;
 }
+
 @media screen and (max-width: 420px) {
-    .comments-header {
-        display: none;
-    }
-    .article_detail_page {
-        display: block;
-        padding: 0 15px;
-        margin-top: 44.5px;
-        font-family: var(--app-font-f);
-        background: var(--white);
-    }
-    .app-author-info {
-        display: flex;
-        padding: 18px 0 16px;
-        align-items: center;
-    }
-    .app-author-info > .app-author-headerIcon {
-        overflow: hidden;
-        margin-right: 11px;
-    }
-    .app-author-info .head_portrait {
-        margin-bottom: 0;
-        width: 36px;
-        height: 36px;
-    }
-    .app-author-info > .app-author-userIfo > .author_name {
-        margin-bottom: 5px;
-        font-size: var(--fs-15);
-        line-height: var(--fs-15);
-        color: var(--black);
-    }
-    .app-author-info > .app-author-userIfo > .author_autograph {
-        font-size: var(--fs-12);
-        line-height: var(--fs-12);
-        color: var(--col-a8);
-    }
-    .article_detail_page > .article_left {
-        margin: 0;
-        padding: 0;
-        box-shadow: none;
-    }
-    .article_detail_page > .article_left .title_box {
-        padding: 0;
-        border-bottom: 0;
-        
-    }
-    .article_detail_page > .article_left .title_box > .title {
-        font-size: var(--fs-22);
-        line-height: 30px;
-        color: var(--black);
-    }
-    .article_detail_page > .article_left .title_box > .icon_data {
-        margin: 0;
-    }
-    .article_detail_page > .article_left .title_box > .icon_data .data_item {
-        margin-right: 10px;
-        line-height: 14px;
-    }
-    .web-time {
-        display: none;
-    }
-    .app-time {
-        position: absolute;
-        right: 0;
-        display: block;
-        margin-right: 0;
-    }
-    .article_detail_page .code-html {
-        border: none;
-    }
-    .article_detail_page .tui-editor .te-preview-style-vertical .te-preview {
-        padding: 0;
-        font-size: var(--fs-18);
-        line-height: 25px;
-    }
-    .article_detail_page .tui-editor-contents p {
-        color: var(--black)!important;
-    }
+    
     
 }

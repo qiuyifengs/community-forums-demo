@@ -260,10 +260,10 @@
                         <use xlink:href='#icon-shanchu1'></use>
                     </svg>
                 </div>
-                <div class='modal_body'><h5>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</h5></div> 
+                
             </div>
         </div>
-        <div class='ghost-loading-mask' style='display: none'>
+        <div class='ghost-loading-mask'>
             <div class='ghost-loading-spinner'>
                 <svg viewBox='25 25 50 50' class='circular'><circle cx='50' cy='50' r='20' fill='none' class='path'></circle></svg>
             </div>
@@ -339,9 +339,7 @@
                 _width = 600,
                 _height = 600,
                 _top = (screen.height-_height)/2,
-                _left = (screen.width-_width)/2,
-                _url = 'http://traveliceland.lofter.com/post/352b58_579d8e7',
-                _pic = 'http://m3.img.srcdd.com/farm4/d/2015/0113/11/6AE3FEBE500857BF82CA97E8F03DD6A8_B500_900_500_411.jpeg'
+                _left = (screen.width-_width)/2
             // show share box
             $('.shared_div').on('click', function(event) {
                 event.stopPropagation()
@@ -351,7 +349,19 @@
             $('.shared_wechart').on('click', function(event) {
                 event.stopPropagation()
                 $('canvas').remove()
+                $('.modal_body').remove()
                 let qrcode = $('.shared_wechart').qrcode(location.href)
+                $('.modal_box').append(`<div class='modal_body'><h5>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</h5></div> `)
+                $('.modal_body').append(qrcode.find('canvas'))
+                $('.qrcode_body').css('display', 'block')
+            })
+            // shareToErweima
+            $('.shared_erweima').on('click', function(event) {
+                event.stopPropagation()
+                $('canvas').remove()
+                $('.modal_body').remove()
+                let qrcode = $('.shared_wechart').qrcode(location.href)
+                $('.modal_box').append(`<div class='modal_body'></div> `)
                 $('.modal_body').append(qrcode.find('canvas'))
                 $('.qrcode_body').css('display', 'block')
             })
@@ -416,8 +426,16 @@
                 initialEditType: 'markdown',
                 useCommandShortcut: true,
                 initialValue: content,
-                exts: ['scrollSync', 'colorSyntax', 'uml', 'chart', 'mark', 'table', 'taskCounter']
+                exts: ['scrollSync', 'colorSyntax', 'uml', 'chart', 'mark', 'table', 'taskCounter'],
             })
+            // loading mask
+            let setTime = setInterval(() => {
+                let editorH = document.getElementsByClassName('code-html')[0].offsetHeight
+                if (editorH > 0) {
+                    $('.ghost-loading-mask').css('display', 'none')
+                    clearInterval(setTime);
+                }
+            }, 500);
             // create answer box
             let commentatorName
             $('.comment_list').on('click', '.answer', function(event) {    

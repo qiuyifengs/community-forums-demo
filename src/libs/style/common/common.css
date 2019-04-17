@@ -33,6 +33,9 @@ a {
     outline: none;
     color: none;
 }
+.app-display {
+    display: none;
+}
 .account-item {
     width: 900px!important;
     border-radius: 5px;
@@ -496,6 +499,17 @@ Footer: 底部布局，自带默认样式，其下可嵌套任何元素，只能
     display: none;
 }
 @media screen and (max-width: 420px) {
+    .web-display {
+        display: none;
+    }
+    .app-header {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+    }
     .app-page-header {
         position: fixed;
         top: 0;
@@ -531,7 +545,8 @@ Footer: 底部布局，自带默认样式，其下可嵌套任何元素，只能
     }
     .ghost-pro-layouts-basic-layout-content {
         margin: 0;
-        padding-top: 91px;
+        padding-top: 44px;
+        width: 100%;
     }
     .gutter-pd8 {
         padding: 0!important;
