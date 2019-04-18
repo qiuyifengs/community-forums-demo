@@ -63,7 +63,7 @@
                                                 <div class="ghost-form-item-control-wrapper">
                                                     <div class="ghost-form-item-control">
                                                         <div class="ghost-form-item-children">
-                                                            <input type="text" name="nickName" placeholder="<%=result.nickName%>" class="ghost-input ghost-input-lg nick-name">
+                                                            <input type="text" name="nickName" placeholder="昵称" value="<%=result.nickName%>" class="ghost-input ghost-input-lg nick-name">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -76,8 +76,8 @@
                                                 <div class="ghost-form-item-control-wrapper">
                                                     <div class="ghost-form-item-control">
                                                         <div class="ghost-form-item-children">
-                                                            <input type="text" name="personalProfile" placeholder="<%=result.personalProfile%>" class="ghost-input ghost-input-lg personal-profile web-display">
-                                                            <textarea type="text" name="personalProfile" placeholder="<%=result.personalProfile%>" class="ghost-input ghost-input-lg personal-profile app-display"></textarea>
+                                                            <input type="text" name="personalProfile" placeholder="这个人很懒！" value="<%=result.personalProfile%>" class="ghost-input ghost-input-lg personal-profile web-display">
+                                                            <textarea type="text" name="personalProfile" placeholder="这个人很懒！" value="<%=result.personalProfile%>" class="ghost-input ghost-input-lg personal-profile app-display"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -284,7 +284,7 @@
             $('.submit-info').click(function(){
                 let nickName = document.querySelector('.nick-name').value;
                 let personalProfile = document.querySelector('.personal-profile').value;
-                if ($.cookie("nickName") == nickName) return layer.msg("新昵称不能与旧昵称相同！");
+                // if ($.cookie("nickName") == nickName) return layer.msg("新昵称不能与旧昵称相同！");
                 let myForm = new FormData(document.getElementById("myForm"));
                 myForm.append("userId", $.cookie("userId"));
                 myForm.append("nickName", document.querySelector('.nick-name').value);       // append()方法添加字段

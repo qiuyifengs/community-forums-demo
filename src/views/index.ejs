@@ -326,6 +326,7 @@
                                                                                 <% }) %>
                                                                             </span>
                                                                             <span class="showTime app-display app-time"><%= articleItem.publishTime %></span>
+                                                                            <span class="from-type">来自分类：<%= articleItem.articleType %></span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -350,7 +351,6 @@
                             </article>
                             <aside class="ghost-col-xs-24 ghost-col-sm-24 ghost-col-md-24 ghost-col-lg-24 ghost-col-xl-6 index-tab web-display">
                                 <h5 class="tag-title">
-                                    <span class="short-tag-border"></span>
                                     <span> TAGS </span>
                                     <span class="long-tag-border"></span>
                                 </h5>
@@ -571,6 +571,7 @@
                                                     <span class="ghost-tag ghost-tag-has-color ghost-tag-color-primary">${ item.articleType }</span>
                                                 </span>
                                                 <span class="showTime app-display app-time">${ filterTime(item.publishTime) }</span>
+                                                <span class="from-type">来自分类：${ item.articleType }</span>
                                             </div>
                                         </div>
                                     </div>

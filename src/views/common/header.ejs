@@ -119,6 +119,9 @@ $(document).ready(function(){
                         $(this).css("background",renderColor(authorName))
                     })
                 }
+                if (res.hadNews) {
+                    $('.ghost-pro-components-notice-icon-index-badge').append(`<sup class="ghost-scroll-number ghost-badge-dot"></sup>`)
+                }
             } else {
                 headerDom = `
                     <span class="header-random-color" article-author="${$.cookie("nickName")}">${$.cookie("nickName").substring(0, 1)}</span>
@@ -407,7 +410,6 @@ $(document).ready(function(){
                                     <svg class="iconSvg" aria-hidden="true">
                                         <use xlink:href="#icon-tongzhi"></use>
                                     </svg>
-                                    <sup class="ghost-scroll-number ghost-badge-dot"></sup>
                                 </span>
                             </li>`
 </script>

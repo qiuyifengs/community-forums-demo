@@ -23,6 +23,8 @@ export class ReplyService {
     const pageCount = param.pageCount ? param.pageCount * 1 : 5;
     const page = param.page ? (param.page - 1) * 1 * pageCount : 0;
     const user = await this.userCommentRepository.findOne({nickName: param.nickName});
+    user.hadNews = false;
+    this.userCommentRepository.save(user);
     const totalRes = await this.commentRepository.find({commentatorId: user.userId});
     commentRes = await this.commentRepository
                 .createQueryBuilder('commentleList')

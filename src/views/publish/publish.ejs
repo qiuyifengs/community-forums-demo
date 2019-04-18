@@ -178,12 +178,13 @@
                     $(this).blur();
                     let labelLen = $(".show-label").length;
                     if (labelLen == 5) return layer.msg('最多选择5个标签！');
-                    let keyword = $(this).text();
+                    let keyword = $(this).val();
                     if (!keyword || keyword == '') return false;
                     var regEn = /[`~!@#$%^&*()_+<>?:"{}.\\\/'[\]]/im,
                         regCn = /[·！#￥（——）：“”‘、|《。》？、【】[\]]/im;
                     if (regEn.test(keyword) || regCn.test(keyword)) return layer.msg("标签不能含有其他特殊字符！");
                     keyword = keyword.replace(/\,|\;|\，|\；/ig, ',')
+                    console.log(111, keyword)
                     if (keyword.indexOf(',') > 0) {
                         let arr = keyword.split(',');
                         if (!arr[arr.length-1]) {
@@ -204,7 +205,7 @@
                                                     <use xlink:href="#icon-guanbi"></use>
                                                 </svg>
                                             </div>`;
-                            $(this).text('');
+                            $(this).val('');
                             $(this).before(labelDiv);
                             labelArr.push(item);
                         })
@@ -221,11 +222,10 @@
                                                 <use xlink:href="#icon-guanbi"></use>
                                             </svg>
                                         </div>`;
-                        $(this).text('');
+                        $(this).val('');
                         $(this).before(labelDiv);
                         labelArr.push(keyword);
                     }
-                    console.log(labelArr)
                     $("#tags-input").css("display", "none");
                 }
             });
@@ -309,7 +309,7 @@
                     layer.msg(res.message);
                     if (res.code == 10000) {
                         setTimeout(function() {
-                            goPage('account/posts/' + $.cookie("nickName"));
+                            goPage(`post/articleDetail/${res.articleId}`);
                         }, 2000);
                     } else {
                         console.log(res.message);

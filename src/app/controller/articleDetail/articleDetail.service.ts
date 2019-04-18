@@ -64,13 +64,16 @@ export class ArticleDetailService {
         resObj.headerIcon = userInfoRes.headerIcon;
         resObj.commentTotal = commentNum + commentRes.length;
         delete resObj.userId;
-        console.log(resObj.comments)
         return resObj;
     }
     // add comment
     async addComment(param): Promise<any> {
         const dateNum = new Date().getTime().toString().substring(-10);
         const user = await this.userRepository.findOne({nickName: param.commentatorName});
+        if (user.userId !== param.userId) {
+            user.hadNews = true;
+            this.userRepository.save(user);
+        }
         const comment = new CommentsList();
         comment.userId = param.userId;
         comment.commentatorId = user.userId;
@@ -96,12 +99,18 @@ export class ArticleDetailService {
     // add childrenComment
     async addChildrenComment(param): Promise<any> {
         const user = await this.userRepository.findOne({nickName: param.author});
+        const commentatorUserInfo = await this.userRepository.findOne({nickName: param.commentatorName});
         const dateNum = new Date().getTime().toString().substring(-11);
         const childrenCom = new ChildrenComments();
+        if (user.userId !== param.userId) {
+            user.hadNews = true;
+            this.userRepository.save(user);
+        }
         childrenCom.userId = param.userId;
         childrenCom.commentUserName = param.nickName;
         childrenCom.author = param.author;
-        childrenCom.commentatorId = user.userId;
+        childrenCom.authorId = user.userId;
+        childrenCom.commentatorId = commentatorUserInfo.userId;
         childrenCom.commentatorName = param.commentatorName;
         childrenCom.articleId = param.articleId;
         childrenCom.commentContent = param.commentText;
@@ -208,6 +217,7 @@ export class ArticleDetailService {
         const articleRes =  await this.articleRepository.findOne({articleId: param.articleId});
         const postRes =  await this.articleRepository.findOne({articleId: param.articleId});
         const collectRes = await this.myCollectRepository.findOne({articleId: param.articleId, userId: param.userId});
+        const user = await this.userRepository.findOne({nickName: param.author});
         if (!collectRes) {
             const myCollection = new MyCollectionList();
             articleRes.collectCount = articleRes.collectCount + 1;
@@ -217,6 +227,7 @@ export class ArticleDetailService {
             await this.postListRepository.save(postRes);
             const paramObj = Object.assign(myCollection, articleRes);
             paramObj.userId = param.userId;
+            paramObj.authorId = user.userId;
             paramObj.isCollect = true;
             paramObj.articleContent = postRes.articleContent;
             delete paramObj.serialNum;

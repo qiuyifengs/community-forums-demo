@@ -82,8 +82,8 @@ export class PublishService {
             } else {
                 data.isDrafts = false;
                 msg.code = ApiErrorCode.SUCCESS;
+                msg.articleId = data.articleId;
                 msg.message = '发表成功！';
-                delete msg.articleId;
             }
             await this.addArticleDetail(data);
             const res = await this.postsRepository.save(data);

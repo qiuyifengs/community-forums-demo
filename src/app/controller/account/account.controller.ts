@@ -5,7 +5,6 @@ import { AccountService } from './account.service';
 import { User } from '../../entitys/user.entity';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
-import { async } from 'rxjs/internal/scheduler/async';
 
 @Controller('account')
 export class AccountController {
@@ -63,18 +62,21 @@ export class AccountController {
         let msg = {
             code: 1,
             activity: -1,
+            hadNews: false,
             headerIcon: '',
         };
         if (data) {
             msg = {
                 code: 10000,
                 headerIcon: data.headerIcon,
+                hadNews: data.hadNews,
                 activity: data.activity,
             };
         } else {
             msg = {
                 code: -1,
                 headerIcon: '',
+                hadNews: false,
                 activity: -1,
             };
         }

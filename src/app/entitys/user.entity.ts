@@ -18,13 +18,15 @@ export class User {
     // headerIcon
     @Column({ default: null }) headerIcon: string;
     // personalProfile
-    @Column({ default: 'aaa...' }) personalProfile: string;
+    @Column({ default: '这个人很懒！' }) personalProfile: string;
     // tel
     @Column({ default: null }) tel: string;
     // focusCount
     @Column({ default: 0 }) focusCount: number;
     // articleCount
     @Column({ default: 0 }) articleCount: number;
+    // hadNews
+    @Column({ default: false }) hadNews: boolean;
     // registerdate
     @Column() time: string;
     // Permission

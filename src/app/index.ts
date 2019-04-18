@@ -14,7 +14,7 @@ import { ArticleDetailModule } from './controller/articleDetail/articleDetail.mo
 import { CollectModule } from './controller/collect/collect.module';
 import { SearchPageModule } from './controller/searchPage/searchPage.module';
 import { AuthModule } from './controller/login/auth/auth.module';
-import { from } from 'rxjs';
+import { DownloadModule } from './controller/download/download.module';
 
 const modules = [
     EJSModule,
@@ -33,6 +33,7 @@ const modules = [
     CollectModule,
     SearchPageModule,
     AuthModule,
+    DownloadModule,
 ];
 
 export default modules;
