@@ -31,9 +31,10 @@
     <script src="/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
         window.onload = function() {
-            var appendDom = $(".app-version").eq(0)
+            var appendDom = $(".app-version")
             var u = navigator.userAgent
             alert(u)
+            $(".download-btn").remove();
             if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
                 alert("安卓手机")
                 var btnDom = `
@@ -42,7 +43,7 @@
                         <span>Android 版下载</span>
                     </button>
                 `
-                appendDom.before().append(btnDom)
+                appendDom.before(btnDom)
             } else if (u.indexOf('iPhone') > -1) {//苹果手机
                 alert("苹果手机")
                 var btnDom = `
@@ -51,7 +52,7 @@
                         <span>iOS 版下载</span>
                     </button>
                 `
-                appendDom.before().append(btnDom)
+                appendDom.before(btnDom)
             } else if (u.indexOf('Windows Phone') > -1) {//winphone手机
                 alert("winphone手机")
                 var btnDom = `
@@ -60,7 +61,7 @@
                         <span>Android 版下载</span>
                     </button>
                 `
-                appendDom.before().append(btnDom)
+                appendDom.before(btnDom)
             }
             
         }
