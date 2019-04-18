@@ -98,7 +98,7 @@ export class AccountService {
       .where('userId = :userId', {userId: res.userId})
       .execute();
 
-      await this.childCommentRepository // childComment db --- commentUserName
+      await this.childCommentRepository // childComment db --- author
       .createQueryBuilder()
       .update()
       .set({author: res.nickName})
