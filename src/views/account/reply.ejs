@@ -2,7 +2,14 @@
 <html>
     <head>
         <title><%= title %></title>
+        <!-- set `maximum-scale` for some compatibility issues -->
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+        <!-- Delete the default Apple toolbar and menu bar -->
+        <meta content="yes" name="apple-mobile-web-app-capable"/>
+        <!-- Control status bar display style -->
+        <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+        <!-- Will not recognize the mailbox, tell the device to ignore the number in the page as a phone number -->
+        <meta content="telephone=no" name="format-detection"/>
         <link rel="stylesheet" href="/style/account/reply.css">
         <% include ../common/script %>
         <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
