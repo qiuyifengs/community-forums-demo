@@ -737,8 +737,9 @@
             return childComment
         }
         function isNewComment(item) {
+            console.log(item)
             return `
-                <div class='child_comment_id del_comment_id' style='display:none'>${ item.childCommentId }</div>
+                <div class='child_comment_id del_comment_id' style='display:none'>${ item.commentId }</div>
                 <div class='comment_userId' style='display:none'>${ $.cookie('userId') }</div>
             `
         }

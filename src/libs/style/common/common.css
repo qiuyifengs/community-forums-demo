@@ -582,11 +582,13 @@ Footer: 底部布局，自带默认样式，其下可嵌套任何元素，只能
 }
 
 .ghost-pro-pages-account-settings-info-main .ghost-pro-pages-account-settings-info-right .ghost-pro-pages-account-settings-info-title {
-    margin-bottom: 12px;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
     color: rgba(0,0,0,.85);
     font-weight: 500;
     font-size: 20px;
     line-height: 28px;
+    border-bottom: .5px solid var(--col-e9);
 }
 
 @media screen and (max-width: 768px) {

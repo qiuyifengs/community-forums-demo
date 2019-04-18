@@ -18,8 +18,7 @@
     $(function(){
         const CURRENT_ROUTER = this.location.pathname.split('/')[2]
         const USERID = $.cookie("userId")
-        const nickName = $.cookie("nickName")
-        console.log(111, nickName)
+        let nickName = $.cookie("nickName")
         let routerIdFilter = value => {
             const router = {
                 'account': 1,
@@ -51,6 +50,7 @@
 
         $('.ghost-menu').on('click', '.ghost-menu-item', function(e) {
             e.preventDefault()
+            nickName = $.cookie("nickName")
             const url = routerAddressFilter($(this).attr('data-id'))
             goPage(url)
         })

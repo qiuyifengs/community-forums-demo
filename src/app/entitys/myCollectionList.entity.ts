@@ -8,11 +8,14 @@ export class MyCollectionList {
     // author
     @Column() author: string;
 
-    // title
-    @Column() articleTitle: string;
+    // authorId
+    @Column() authorId: string;
 
     // articleId
     @Column() articleId: string;
+
+    // title
+    @Column() articleTitle: string;
 
     // articleContent
     @Column({ length: 12000 }) articleContent: string;

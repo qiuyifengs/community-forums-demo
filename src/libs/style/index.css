@@ -137,6 +137,10 @@
 .app-display {
     display: none!important;
 }
+.from-type {
+    float: right;
+    font-size: var(--fs-12);
+}
 @media screen and (max-width: 420px) {
     #web-header {
         display: none;
@@ -185,7 +189,7 @@
     width: 250px;
     justify-content: space-between;
     align-items: center;
-    text-indent: 2px
+    text-indent: 12px
 }
 .short-tag-border {
     display: inline-block;
