@@ -33,10 +33,8 @@
         window.onload = function() {
             var appendDom = $(".app-version")
             var u = navigator.userAgent
-            alert(u)
             $(".download-btn").remove();
             if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
-                alert("安卓手机")
                 var btnDom = `
                     <button class="download-btn android-download" type="button">
                         <img src="/images/Android_logo.png" alt="">
@@ -45,7 +43,6 @@
                 `
                 appendDom.before(btnDom)
             } else if (u.indexOf('iPhone') > -1) {//苹果手机
-                alert("苹果手机")
                 var btnDom = `
                     <button class="download-btn ios-download" type="button">
                         <img src="/images/ios_logo.png" alt="">
@@ -54,7 +51,6 @@
                 `
                 appendDom.before(btnDom)
             } else if (u.indexOf('Windows Phone') > -1) {//winphone手机
-                alert("winphone手机")
                 var btnDom = `
                     <button class="download-btn android-download" type="button">
                         <img src="/images/Android_logo.png" alt="">
