@@ -51,7 +51,6 @@
                                                             <span class="item-title"><%= item.articleTitle %></span>
                                                         </h4>
                                                     </div>
-                                                    <div class="ghost-list-item-meta-article-content"><%- item.articleContent %></div>
                                                 </div>
                                                 <ul class="ghost-list-item-action">
                                                     <li class="list-item web-display">
@@ -101,36 +100,34 @@
                                                     </li>
                                                 </ul>
                                             </div>
+                                            
                                         </div>
-                                        <% }) %>   
                                     </div>
-                                    
-                                </div>
-                            </div>
-                            <% if (collectList.length > 0) { %>
-                                <ul class="ghost-pagination article_page" style="margin: 24px 0; text-align: center"></ul>
-                            <% } %>
-                            <input type="hidden" id="totalPages" value="<%= collectList.total %>" style="display: none" />
-                            <% if (collectList.articleList.length < 1) { %>
-                                <div class="ghost-empty">
-                                        <dvi class="ghost-empty-image">
-                                            <img src="/images/no_collect.png" alt="">
-                                        </dvi>
-                                        <p class="ghost-empty-description">暂无收藏</p>
+                                    <% if (collectList.length > 0) { %>
+                                        <ul class="ghost-pagination article_page" style="margin: 24px 0; text-align: center"></ul>
+                                    <% } %>
+                                    <input type="hidden" id="totalPages" value="<%= collectList.total %>" style="display: none" />
+                                    <% if (collectList.articleList.length < 1) { %>
+                                        <div class="ghost-empty">
+                                                <div class="ghost-empty-image">
+                                                    <img src="/images/no_collect.png" alt="">
+                                                </div>
+                                                <p class="ghost-empty-description">暂无收藏</p>
+                                            </div>
+                                    <% } %>
+                                    <div class="ghost-loading-mask" style="display: none">
+                                        <div class="ghost-loading-spinner">
+                                            <svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg>
+                                        </div>
                                     </div>
-                            <% } %>
-                            <div class="ghost-loading-mask" style="display: none">
-                                <div class="ghost-loading-spinner">
-                                    <svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg>
                                 </div>
-                            </div>
+                            </main>
                         </div>
-                    </main>
+                    </div>
                 </div>
-            </div>
-        </div>
     </body>
     <script type="text/javascript">
+
         $(function() {
             // app title
             $('.app-page-title').text('我的收藏')

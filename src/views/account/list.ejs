@@ -29,31 +29,33 @@
             }
             return router[value]
         }
-
-        let routerAddressFilter = value => {
-            const address = {
-                1: 'account',
-                2: 'posts',
-                3: 'reply',
-                4: 'collect',
-                5: 'focus'
-            }
-            return `account/${ address[value] }/${ nickName }`
-        }
-
-        $('.ghost-menu .ghost-menu-item').each(function() {
-            if (routerIdFilter(CURRENT_ROUTER) == $(this).attr('data-id')) {
-                $(this).addClass('ghost-menu-item-selected')
-                $(this).siblings().removeClass('ghost-menu-item-selected')
-            }
-        })
-
-        $('.ghost-menu').on('click', '.ghost-menu-item', function(e) {
-            e.preventDefault()
-            nickName = $.cookie("nickName")
-            const url = routerAddressFilter($(this).attr('data-id'))
-            goPage(url)
-        })
-    })
-</script>
+        return router[value]
     
+
+    let routerAddressFilter = value => {
+        const address = {
+            1: 'account',
+            2: 'posts',
+            3: 'reply',
+            4: 'collect',
+            5: 'focus'
+        }
+        return `account/${ address[value] }/${ nickName }`
+    }
+
+    $('.ghost-menu .ghost-menu-item').each(function() {
+        if (routerIdFilter(CURRENT_ROUTER) == $(this).attr('data-id')) {
+            $(this).addClass('ghost-menu-item-selected')
+            $(this).siblings().removeClass('ghost-menu-item-selected')
+        }
+    })
+
+    $('.ghost-menu').on('click', '.ghost-menu-item', function(e) {
+        e.preventDefault()
+        nickName = $.cookie("nickName")
+        const url = routerAddressFilter($(this).attr('data-id'))
+        goPage(url)
+    })
+})
+
+</script>
