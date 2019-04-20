@@ -34,12 +34,12 @@ export class CollectService {
           .take(pageCount)
           .getMany();
     res.forEach((item, ind) => {
-        res[ind].articleContent = item.articleContent.substr(2).substring(0, item.articleContent.length - 4).replace('","', '\n');
+        // res[ind].articleContent = item.articleContent.substr(2).substring(0, item.articleContent.length - 4).replace('","', '\n');
     });
     const articleData = {
       articleList: res,
       total: totalRes.length,
-  };
+    };
     return articleData;
   }
   // remove collect article

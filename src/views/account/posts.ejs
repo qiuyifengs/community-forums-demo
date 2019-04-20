@@ -169,6 +169,14 @@
                     })
                 }
             })
+
+            $('.ghost-list-item-meta-article-content').each(function() {
+                let showContent = ''
+                dealPostList(JSON.parse($(this).text())).forEach(item => {
+                    showContent += item.value
+                })
+                $(this).html(showContent)
+            })
             $(".time").each(function() {
                 let resTime = formatDateFilter($(this).text())
                 $(this).text(resTime)
@@ -236,6 +244,13 @@
         function filterTime(item) {
             return  resTime = formatDateFilter(item)
         }
+        function showText(content) {
+            let showContent = ''
+            dealPostList(JSON.parse(content)).forEach(item => {
+                showContent += item.value
+            })
+            return showContent
+        }
         function renderArticleHtml(item) {
             return `<div class="ghost-list-item bd-bottom">
                         <div class="ghost-list-item-main">
@@ -246,7 +261,7 @@
                                         <span class="item-title">${ item.articleTitle }</span>
                                     </h4>
                                 </div>
-                                <div class="ghost-list-item-meta-article-content">${ item.articleContent }</div>
+                                <div class="ghost-list-item-meta-article-content">${ showText(item.articleContent) }</div>
                             </div>
                             <ul class="ghost-list-item-action">
                                 <li class="list-item web-display">

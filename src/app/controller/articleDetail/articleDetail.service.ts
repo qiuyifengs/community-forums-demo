@@ -171,6 +171,7 @@ export class ArticleDetailService {
         const likeRes =  await this.articleRepository.findOne({articleId: param.articleId});
         const postRes =  await this.articleRepository.findOne({articleId: param.articleId});
         const collectRes = await this.myCollectRepository.findOne({articleId: param.articleId, userId: param.userId});
+        const user = await this.userRepository.findOne({nickName: param.author});
         if (!collectRes) {
             const myCollection = new MyCollectionList();
             likeRes.likeCount = likeRes.likeCount + 1;
@@ -181,6 +182,7 @@ export class ArticleDetailService {
             const paramObj = Object.assign(myCollection, likeRes);
             delete paramObj.serialNum;
             paramObj.userId = param.userId;
+            paramObj.authorId = user.userId;
             paramObj.articleContent = postRes.articleContent;
             paramObj.isLike = true;
             await this.myCollectRepository.manager.save(paramObj);
