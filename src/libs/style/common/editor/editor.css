@@ -1,0 +1,200 @@
+.emoji_content img, .emoji_preview img {
+  display: inline !important;
+}
+
+.Editor .form-control {
+  margin-top: 0;
+  box-sizing: border-box;
+  outline: 0;
+}
+.Editor .editor_btns {
+  /* margin: 10px 0; */
+  font-size: 14px;
+  color: #666;
+  line-height: 30px;
+  position: relative;
+}
+.Editor .iconfont {
+  margin-right: 3px;
+  font-size: 15px;
+}
+.Editor .editor_btns span {
+  margin-right: 10px;
+  cursor: pointer;
+}
+.Editor .editor_btns span.disabled {
+  opacity: .5;
+}
+.Editor .editor_btns .tip {
+  position: absolute;
+  right: 10px;
+  top: 0;
+  color: green;
+  display: none;
+}
+.Editor .J_function {
+  color: #485ec0;
+}
+.Editor .editor_body {
+  position: relative;
+}
+.Editor .editor_body .text {
+  padding: 8px 0;
+  background: #ffffff;
+  /* position: relative; */
+  /* overflow: hidden; */
+  border-bottom: .5px solid #e9e9e9;
+}
+
+.Editor .editor_body .text:last-of-type {
+  border: none;
+}
+.Editor .editor_body .J_bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #666666;
+}
+.Editor .editor_body .J_bottom .J_del {
+  margin-right: 0;
+}
+.Editor .editor_body .J_delete {
+  margin-right: 0;
+  color: #ef2828;
+}
+.Editor .editor_body .pic_box .J_bottom {
+  margin-top: 10px;
+  justify-content: flex-end;
+  font-size: 14px;
+}
+.Editor .editor_body .text .del {
+  cursor: pointer;
+}
+
+.Editor .editor_body .text .del .iconfont:hover {
+  color: #666;
+}
+.Editor .editor_body .text .drag {
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  cursor: move;
+}
+.Editor .editor_body .text .drag em {
+  display: none;
+  color: #999;
+}
+.Editor .editor_body .text .drag:hover .iconfont {
+  display: none;
+}
+.Editor .editor_body .text .drag:hover em {
+  display: block;
+}
+.Editor .editor_body .text .drag .iconfont {
+  font-size: 15px;
+  color: #666;
+}
+.Editor .editor_body .text textarea {
+  padding: 10px;
+  width: 100%;
+  height: 100px;
+  resize: none;
+  display: block;
+  font-size: 14px;
+  line-height: 20px;
+  border: solid 1px #d5d8de;
+  border-radius: 5px;
+  color: #000;
+}
+.Editor .editor_body .J_drag {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #a8a8a8;
+}
+
+.Editor .editor_body .text textarea:focus {
+  border: solid 1px #445dc3;
+  box-shadow: 0px 0px 10px 0px 
+		rgba(68, 93, 195, 0.5);
+} 
+.Editor .editor_body .text .emoji {
+  cursor: pointer;
+  float: left;
+  padding-top: 5px;
+  color: #666;
+  font-size: 12px;
+}
+.Editor .editor_body .text .emoji:before {
+  color: #feb83e;
+  font-size: 16px;
+  position: relative;
+  top: 1px;
+  margin-right: 2px;
+}
+.Editor .editor_body .pic_box {
+  padding-left: 310px;
+}
+.Editor .editor_body .pic_box .pic {
+  float: left;
+  margin-left: -310px;
+  width: 300px;
+  height: 200px;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: solid 1px #d5d8de;
+  background-color: #fff;
+  background-size: contain;
+}
+.Editor .editor_body .pic_box .video {
+  float: left;
+  margin-left: -310px;
+  width: 300px;
+  height: 200px;
+  border: solid 1px #ddd;
+  background-color: #fff;
+}
+.Editor .editor_body .pic_box textarea {
+  height: 200px;
+}
+.Editor .editor_body .link .J_addLink {
+  font-size: 14px;
+  color: #666666;
+}
+.Editor .editor_body .link li {
+  position: relative;
+  margin-bottom: 15px;
+  align-content: center;
+  font-size: 14px;
+  color: #333333;
+}
+.Editor .editor_body .link input {
+  width: 45%;
+  margin-right: 4%;
+  border: .5px solid #e9e9e9;
+  line-height: 30px;
+  border-radius: 5px;
+  text-indent: 10px;
+}
+.Editor .editor_body .link input:focus {
+  border: solid .5px #445dc3;
+  box-shadow: 0px 0px 10px 0px 
+		rgba(68, 93, 195, 0.5);
+}
+.Editor .editor_body .text .error {
+  border: solid .5px #ff0000;
+  box-shadow: 0px 0px 10px 0px 
+		rgba(255, 0, 0, 0.5);
+}
+.Editor .editor_body .link .btn {
+  display: block;
+  margin: 0 auto;
+}
+.Editor .editor_body .link li span {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+

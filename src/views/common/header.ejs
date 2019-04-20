@@ -246,6 +246,7 @@ $(document).ready(function(){
         event.stopPropagation()
         if ($.cookie("userId")) {
             if (activity) {
+                sessionStorage.removeItem('jStorage')
                 goPage('post/publish/')
             } else {
                 if (confirm('该账户还未进行验证，请先进行验证！')) {

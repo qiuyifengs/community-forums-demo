@@ -4,16 +4,24 @@
         <title><%= title %></title>
         <link rel="stylesheet" href="/style/publish/publish.css">
         <link rel="stylesheet" href="/style/common/tagsinput.css">
+        <link rel="stylesheet" type="text/css" href="/style/common/editor/jquery.emoji.css">
+        <link rel="stylesheet" type="text/css" href="/style/common/editor/jquery.mCustomScrollbar.css">
+        <link rel="stylesheet" href="/style/common/editor/editor.css">
         <% include ../common/script %>
+        <script src="/js/editor/jquery-ui.min.js"></script>
+        <script src="/js/editor/jquery.form.min.js"></script>
+        <script src="/js/editor/jquery.emoji.min.js"></script>
+        <script src="/js/editor/jquery.mCustomScrollbar.min.js"></script>
+        <script src="/js/editor/jquery.editor.js"></script>
         <!-- <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
-        <script src="/richText/markdown-it/dist/markdown-it.js"></script>
+        <!-- <script src="/richText/markdown-it/dist/markdown-it.js"></script>
         <script src="/richText/toMark/dist/toMark.js"></script>
         <script src="/richText/tui-code-snippet/dist/tui-code-snippet.js"></script>
         <script src="/richText/tui-color-picker/dist/tui-color-picker.js"></script>
         <script src="/richText/codemirror/lib/codemirror.js"></script>
         <script src="/richText/highlightjs/highlight.pack.js"></script>
         <script src="/richText/squire-rte/build/squire-raw.js"></script>
-        <link rel="stylesheet" href="/richText/codemirror/lib/codemirror.css">
+        <link rel="stylesheet" href="/richText/codemirror/lib/codemirror.css"> -->
         <script src="/js/sensitiveWords.js"></script>
     </head>
     <body>
@@ -37,24 +45,25 @@
                     <div class="is_drafts" style="display:none"><%= obj.renderData.isDrafts %></div> 
                     <div class="cur_article_label" style="display:none"><%= obj.renderData.articleLabel %></div>
                     <% } %>
-                    <input class="title_input publish_input" maxlength="30" placeholder="Input topic..."/>
+                    <input class="title_input publish_input" maxlength="30" placeholder="Input topic..." onchange="saveArticle()"/>
                     <div class="label-box mg-t20">
-                        <input class="typle_input publish_input" placeholder="请输入选择标签，如php（用逗号，分号；分割）按Enter键确认" />
+                        <input class="typle_input publish_input" placeholder="请输入选择标签，如php（用逗号，分号；分割）按Enter键确认" onchange="saveArticle()"/>
                     </div>
                     <div class="label-data" style="display:none"><%= obj.getLabel %></div>
                     <div id="tags-input"></div>
                 </div>
                 <!-- <div class="article_content" id="divText" contenteditable="true" data-placeholder="What do you want to say?"></div> -->
                 <div class="code-html">
-                    <script src="/richText/plantuml-encoder/dist/plantuml-encoder.js"></script>
+                    <!-- <script src="/richText/plantuml-encoder/dist/plantuml-encoder.js"></script>
                     <script src="/richText/raphael/raphael.js"></script>
                     <script src="/richText/tui-chart/dist/tui-chart.js"></script>
                     <script src="/richText/tui-editor-Editor-all.js"></script>
                     <link rel="stylesheet" href="/richText/tui-editor.css">
                     <link rel="stylesheet" href="/richText/tui-editor-contents.css">
                     <link rel="stylesheet" href="/richText/tui-color-picker/dist/tui-color-picker.css">
-                    <link rel="stylesheet" href="/richText/tui-chart/dist/tui-chart.css">
-                    <div id="editSection"></div>
+                    <link rel="stylesheet" href="/richText/tui-chart/dist/tui-chart.css"> -->
+                    <!-- <div id="editSection"></div> -->
+                    <div id="Editor"></div>
                 </div>
                 <% if (obj.renderData && obj.renderData.articleContent) { %>
                     <div class="edit_article_id" style="display: none"><%= obj.renderData.articleId %></div>
@@ -66,28 +75,29 @@
                     <div class="comment_btn_box">
                         <div class="comment_btn">publish</div>
                     </div>
-                    <!-- <div class="save_btn_box">
-                        <div class="save_btn">save</div>
-                    </div> -->
-                    <div class="saving mg-l10">保存中...</div>
+                    <div class="save_btn_box">
+                        <div class="save_btn">preview</div>
+                    </div>
+                    <!-- <div class="saving mg-l10">保存中...</div> -->
                 </div>
             </div>
         </div>
     </body>
     <script type="text/javascript">
-        $(function(){
-            let userId = $.cookie("userId");
-            let editType = $(".edit_article_type").text();
-            let isSubmitting = true;
-            let isEdit = false;
-            let isDrafts = $(".is_drafts").text();
-            let articleId = '';
-            let content = [].join('\n');
-            let editContent = $(".edit_content").text();
-            let articleSource = $(".type_list").children(":first").text();
-            let labelArr = [];
-            let curLabelArr = $(".cur_article_label").text();
-            let labelData = JSON.parse($(".label-data").text());
+        // let userId = $.cookie("userId");
+        let editType = $(".edit_article_type").text();
+        let isSubmitting = true;
+        let isEdit = false;
+        let isDrafts = $(".is_drafts").text();
+        let articleId = '';
+        // let content = [].join('\n');
+        let content = null
+        let editContent = $(".edit_content").text();
+        let articleSource = $(".type_list").children(":first").text();
+        let labelArr = [];
+        let curLabelArr = $(".cur_article_label").text();
+        let labelData = JSON.parse($(".label-data").text());
+        $(function(){      
             if (curLabelArr !== "") {
                 curLabelArr.split(",").forEach(item => {
                     let labelDiv = `<div class="show-label bd-radius-3">
@@ -100,7 +110,7 @@
                     labelArr.push(item);
                 })
             }
-            if (!userId) {
+            if (!$.cookie("userId")) {
                 goPage('user/login');
             }
             if (editType) {
@@ -113,22 +123,39 @@
                 $(".type_item").eq(0).addClass("actived");
             }
 
+            // if (editContent) {
+            //     content = JSON.parse($('.edit_content').text()).join('\n');
+            //     $(".title_input").val($(".edit_article_title").text());
+            //     articleId = $(".edit_article_id").text();
+            //     isEdit = true;
+            // };
             if (editContent) {
-                content = JSON.parse($('.edit_content').text()).join('\n');
+                content = JSON.parse($('.edit_content').text());
                 $(".title_input").val($(".edit_article_title").text());
                 articleId = $(".edit_article_id").text();
                 isEdit = true;
             };
-            
-            let editor = new tui.Editor({
-                el: document.querySelector('#editSection'),
-                previewStyle: 'vertical',
-                height: '500px',
-                initialEditType: 'markdown',
-                useCommandShortcut: true,
-                initialValue: content,
-                exts: ['scrollSync', 'colorSyntax', 'uml', 'chart', 'mark', 'table', 'taskCounter']
+            // init editor
+            var editor = new Editor();
+            editor.init({
+                box:'#Editor',
+                debugger:true,
+                uploadUrl:'http://127.0.0.1:3002/post/articleImg',
+                data: content,
+                callback: val => {
+                    saveArticle(val)
+                    content = JSON.parse(val)
+                }
             });
+            // let editor = new tui.Editor({
+            //     el: document.querySelector('#editSection'),
+            //     previewStyle: 'vertical',
+            //     height: '500px',
+            //     initialEditType: 'markdown',
+            //     useCommandShortcut: true,
+            //     initialValue: content,
+            //     exts: ['scrollSync', 'colorSyntax', 'uml', 'chart', 'mark', 'table', 'taskCounter']
+            // });
 
             $(".typle_input").focus(function() {
                 $("#tags-input").css("display", "block");
@@ -137,6 +164,7 @@
             $("#tags-input").tagsinput({
                 labelTypeArr: labelData,
                 callback: label => {
+                    console.log(label)
                      let labelDiv = `<div class="show-label bd-radius-3">
                                         <span>${label.label}</span> 
                                         <svg class="iconSvg" aria-hidden="true">
@@ -155,6 +183,7 @@
                     })
                     $(".typle_input").before(labelDiv);
                     labelArr.push(label.label);
+                    saveArticle()
                 }
             })
 
@@ -243,8 +272,8 @@
             });
             // filter sensitive words and comment article
             $(".comment_btn").on("click", function() {
-                console.log(123)
-                saveArticle(false);
+                
+                // saveArticle(false);
                 if (!isSubmitting) return false; 
                 isSubmitting = false;
                 let keySpans = document.getElementsByClassName('highlight');
@@ -254,45 +283,56 @@
                 articleTitle = articleTitle.replace(reg, (word) => `<span class="highlight">${word}</span>`);
                 $('.title_input').empty().append(articleTitle);
                 let contentArr = [];
-                let classArr = document.getElementsByClassName("CodeMirror-line"); // content list Dom
-                $(".cm-invalidchar").remove();
-                for(let i = 0; i < classArr.length; i++) {
-                    contentArr.push(classArr[i].innerText);
-                }
                 let isTrue = false;
-                contentArr.forEach((item, ind) => {
-                    item = item.replace(/\u200B/g,'')
-                    contentArr[ind] = item.replace(reg, (word) => `<span class="highlight">${word}</span>`);
-                    if (contentArr[ind].indexOf("highlight") > 0) {
-                        isTrue = true;
+                // let classArr = document.getElementsByClassName("CodeMirror-line"); // content list Dom
+                // $(".cm-invalidchar").remove();
+                // for(let i = 0; i < classArr.length; i++) {
+                //     contentArr.push(classArr[i].innerText);
+                // }
+                // contentArr.forEach((item, ind) => {
+                //     item = item.replace(/\u200B/g,'')
+                //     contentArr[ind] = item.replace(reg, (word) => `<span class="highlight">${word}</span>`);
+                //     if (contentArr[ind].indexOf("highlight") > 0) {
+                //         isTrue = true;
+                //     }
+                // })
+                // $('.tui-editor-defaultUI').remove(); // remove old rich text
+                //  let editor = new tui.Editor({ // new rich text
+                //     el: document.querySelector('#editSection'),
+                //     previewStyle: 'vertical',
+                //     height: '500px',
+                //     initialEditType: 'markdown',
+                //     useCommandShortcut: true,
+                //     initialValue: contentArr.join('\n'),
+                //     exts: ['scrollSync', 'colorSyntax', 'uml', 'chart', 'mark', 'table', 'taskCounter']
+                // });
+
+                for (let i = 0; i < content.length - 1; i++) {
+                    if (reg.test(content[i].value)) {
+                        $('.form-control').eq(i).addClass('error');
+                        isSubmitting = true;
+                        alert('内容不能含有敏感词汇')
+                        return false
                     }
-                })
-                $('.tui-editor-defaultUI').remove(); // remove old rich text
-                 let editor = new tui.Editor({ // new rich text
-                    el: document.querySelector('#editSection'),
-                    previewStyle: 'vertical',
-                    height: '500px',
-                    initialEditType: 'markdown',
-                    useCommandShortcut: true,
-                    initialValue: contentArr.join('\n'),
-                    exts: ['scrollSync', 'colorSyntax', 'uml', 'chart', 'mark', 'table', 'taskCounter']
-                });
-                if (articleTitle.indexOf('highlight') > 0 || isTrue) {
-                    alert("文章标题或文章内容中不能含有敏感词汇！");
+                }
+
+                contentArr = content;
+                if (articleTitle.indexOf('highlight') > 0) {
+                    alert("文章标题中不能含有敏感词汇！");
                     isSubmitting = true;
-                    autoSave();
+                    // autoSave();
                     return false;
                 }
-                if (!articleTitle ||  (contentArr[0].length < 1 && contentArr.length < 2)) {
+                if (!articleTitle ||  contentArr.length < 1) {
                     alert("文章标题或文章内容中不能为空！");
                     isSubmitting = true;
-                    autoSave();
+                    // autoSave();
                     return false;
                 }
                 if (labelArr.length < 1) {
                     layer.msg("文章标签不能为空！");
                     isSubmitting = true;
-                    autoSave();
+                    // autoSave();
                     return false;
                 }
                 let param = {
@@ -308,6 +348,7 @@
                 myAjax("POST", 'post/publish', param).then((res) => {
                     layer.msg(res.message);
                     if (res.code == 10000) {
+                        sessionStorage.removeItem('jStorage')
                         setTimeout(function() {
                             goPage(`post/articleDetail/${res.articleId}`);
                         }, 2000);
@@ -317,40 +358,12 @@
                     isSubmitting = true;
                 })
             });
-            // save article
-            // $(".save_btn").on("click", function() {
-            //     if (!isSubmitting) return false;
-            //     isSubmitting = false;
-            //     let articleTitle = $(".title_input").text(); // title
-            //     let contentArr = [];
-            //     let classArr = document.getElementsByClassName("CodeMirror-line"); // content list Dom
-            //     $(".cm-invalidchar").remove();
-            //     for(let i = 0; i < classArr.length; i++) {
-            //         contentArr.push(classArr[i].innerText);
-            //     }
-            //     let param = {
-            //         userId: $.cookie("userId"),
-            //         isEdit: isEdit,
-            //         isDrafts: true,
-            //         articleId: articleId,
-            //         articleTitle: articleTitle ? articleTitle : '未指定文章标题',
-            //         articleContent: JSON.stringify(contentArr),
-            //         articleType: articleSource,
-            //         articleLabel: labelArr
-            //     };
-            //     myAjax("POST", 'post/publish', param).then((res) => {
-            //         if (res.code == 1) {
-            //             layer.msg('保存成功！');
-            //             setTimeout(function() {
-            //                 goPage('account/posts/' + $.cookie("userId"));
-            //             }, 2000);
-            //         } else {
-            //             layer.msg(res.message);
-            //             console.log(res.message);
-            //         }
-            //         isSubmitting = true;
-            //     })
-            // });
+
+            // preview article
+            $('.save_btn').on('click', function() {
+                goPage(`post/preview/${articleId}`, true)
+            })
+
             // title remove highlight style
             $(".title_input").focus(() => {
                 $('.title_input .highlight').removeClass('highlight');
@@ -359,62 +372,85 @@
             $(".article_content").focus(() => {
                 $('.article_content .highlight').removeClass('highlight');
             });
+
+            
+
             // save draft box
-            let time
-            function saveArticle(start) {
-                if (start) {
-                    time = setInterval(function() {
-                        clearInterval(time);
-                        let articleTitle = $(".title_input").val(); // title
-                        let contentArr = [];
-                        let classArr = document.getElementsByClassName("CodeMirror-line"); // content list Dom
-                        $(".cm-invalidchar").remove();
-                        for(let i = 0; i < classArr.length; i++) {
-                            contentArr.push(classArr[i].innerText);
-                        }
-                        let param = {
-                            userId: $.cookie("userId"),
-                            isEdit: isEdit,
-                            isDrafts: isDrafts != '' ? isDrafts : true,
-                            articleId: articleId,
-                            articleTitle: articleTitle ? articleTitle : '未指定文章标题',
-                            articleContent: JSON.stringify(contentArr),
-                            articleType: articleSource,
-                            articleLabel: labelArr
-                        };
-                        myAjax("POST", 'post/publish', param).then((res) => {
-                            if (res.code == 10000) {
-                                if (isEdit) {
-                                    $(".saving").text("已更新");
-                                } else {
-                                    $(".saving").text("已保存");
-                                }
-                                articleId = res.articleId;
-                            } else {
-                                console.log(res.message);
-                            }
-                        })
-                    }, 5000);
-                } else {
-                    clearInterval(time);
-                }
+            // let time
+            // function saveArticle(start) {
+            //     if (start) {
+            //         time = setInterval(function() {
+            //             clearInterval(time);
+            //             let articleTitle = $(".title_input").val(); // title
+            //             let contentArr = [];
+            //             let classArr = document.getElementsByClassName("CodeMirror-line"); // content list Dom
+            //             $(".cm-invalidchar").remove();
+            //             for(let i = 0; i < classArr.length; i++) {
+            //                 contentArr.push(classArr[i].innerText);
+            //             }
+            //             let param = {
+            //                 userId: $.cookie("userId"),
+            //                 isEdit: isEdit,
+            //                 isDrafts: isDrafts != '' ? isDrafts : true,
+            //                 articleId: articleId,
+            //                 articleTitle: articleTitle ? articleTitle : '未指定文章标题',
+            //                 articleContent: JSON.stringify(contentArr),
+            //                 articleType: articleSource,
+            //                 articleLabel: labelArr
+            //             };
+            //             myAjax("POST", 'post/publish', param).then((res) => {
+            //                 if (res.code == 10000) {
+            //                     if (isEdit) {
+            //                         $(".saving").text("已更新");
+            //                     } else {
+            //                         $(".saving").text("已保存");
+            //                     }
+            //                     articleId = res.articleId;
+            //                 } else {
+            //                     console.log(res.message);
+            //                 }
+            //             })
+            //         }, 5000);
+            //     } else {
+            //         clearInterval(time);
+            //     }
                 
-            }
-            autoSave();
-            function autoSave() {
-                $(".CodeMirror-code").bind("DOMNodeInserted", function(e) {
-                    if ($(".CodeMirror-code").text().replace(/\u200B/g, '') != "") {
-                        clearInterval(time);
-                        $(".saving").show();
-                        $(".saving").text("保存中...");
-                        saveArticle(true);
-                    } else {
-                        saveArticle(false);
-                        $(".saving").text("保存中...");
-                    }
-                })
-            }
+            // }
+            // autoSave();
+            // function autoSave() {
+            //     $(".CodeMirror-code").bind("DOMNodeInserted", function(e) {
+            //         if ($(".CodeMirror-code").text().replace(/\u200B/g, '') != "") {
+            //             clearInterval(time);
+            //             $(".saving").show();
+            //             $(".saving").text("保存中...");
+            //             saveArticle(true);
+            //         } else {
+            //             saveArticle(false);
+            //             $(".saving").text("保存中...");
+            //         }
+            //     })
+            // }
         })
-        
+        function saveArticle(content) {
+            console.log(111)
+            let articleTitle = $(".title_input").val(); // title
+            let param = {
+                userId: $.cookie("userId"),
+                isEdit: isEdit,
+                isDrafts: isDrafts != '' ? isDrafts : true,
+                articleId: articleId,
+                articleTitle: articleTitle ? articleTitle : '未指定文章标题',
+                articleContent: content,
+                articleType: articleSource,
+                articleLabel: labelArr
+            };
+            myAjax("POST", 'post/publish', param).then((res) => {
+                if (res.code == 10000) {
+                    articleId = res.articleId;
+                } else {
+                    console.log(res.message);
+                }
+            })
+        }
     </script>
 </html>

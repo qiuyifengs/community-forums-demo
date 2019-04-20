@@ -70,7 +70,7 @@ export class IndexService {
         }
         for (const item of res) {
           const user = await this.userRepository.findOne({ userId: item.userId });
-          item.articleContent = item.articleContent.substr(2).substring(0, item.articleContent.length - 4).replace('","', '\n');
+          // item.articleContent = item.articleContent.substr(2).substring(0, item.articleContent.length - 4).replace('","', '\n');
           item.hearderIcon = user.headerIcon;
           item.author = user.nickName;
         }
