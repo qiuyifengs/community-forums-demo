@@ -418,7 +418,6 @@
                         showImg = `<img class="post-pic" src="${item.url}" />`
                     }
                 })
-                console.log(dealPostList(JSON.parse($(this).text())))
                 $(this).html(showContent)
                 $(this).after(showImg)
             })

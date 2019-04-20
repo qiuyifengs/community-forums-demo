@@ -37,7 +37,9 @@
                                                                     <span class="item-title"><%= item.articleTitle %></span>
                                                                 </h4>
                                                             </div>
-                                                            <div class="ghost-list-item-meta-article-content"><%- item.articleContent %></div>
+                                                            <div class="item-content-flex">
+                                                                <div class="ghost-list-item-meta-article-content"><%- item.articleContent %></div>
+                                                            </div>
                                                         </div>
 
                                                         <ul class="ghost-list-item-action">
@@ -172,10 +174,15 @@
 
             $('.ghost-list-item-meta-article-content').each(function() {
                 let showContent = ''
+                let showImg = ''
                 dealPostList(JSON.parse($(this).text())).forEach(item => {
                     showContent += item.value
+                    if (item.type == 'pic' && item.url) {
+                        showImg = `<img class="post-pic" src="${item.url}" />`
+                    }
                 })
                 $(this).html(showContent)
+                $(this).after(showImg)
             })
             $(".time").each(function() {
                 let resTime = formatDateFilter($(this).text())
@@ -245,11 +252,16 @@
             return  resTime = formatDateFilter(item)
         }
         function showText(content) {
+            let showImg = ''
             let showContent = ''
             dealPostList(JSON.parse(content)).forEach(item => {
                 showContent += item.value
+                if (item.type == 'pic' && item.url) {
+                    showImg = `<img class="post-pic" src="${item.url}" />`
+                }
             })
-            return showContent
+            let result =`<div class="ghost-list-item-meta-article-content">${showContent}</div>${showImg}`
+            return result
         }
         function renderArticleHtml(item) {
             return `<div class="ghost-list-item bd-bottom">
@@ -261,7 +273,7 @@
                                         <span class="item-title">${ item.articleTitle }</span>
                                     </h4>
                                 </div>
-                                <div class="ghost-list-item-meta-article-content">${ showText(item.articleContent) }</div>
+                                <div class="item-content-flex">${ showText(item.articleContent) }</div>
                             </div>
                             <ul class="ghost-list-item-action">
                                 <li class="list-item web-display">
