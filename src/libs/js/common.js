@@ -1,7 +1,7 @@
 
 // baseUrl
-// var baseUrl = 'http://192.168.4.188:3002/';
-var baseUrl = 'http://127.0.0.1:3002/';
+var baseUrl = 'http://192.168.4.188:3002/';
+// var baseUrl = 'http://127.0.0.1:3002/';
 /**
  * checkEmail
  * @param {*} email 
@@ -192,6 +192,7 @@ function dealPostList(valArr) {
             item.value = linkVal.join('')
         } else if (item.type === 'pic') {
             item.value = `${item.value}`
+            item.url = `${item.url}`
         } else if (item.type === 'video') {
             item.value = `${item.value}`
         }
