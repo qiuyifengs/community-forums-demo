@@ -741,8 +741,16 @@
                 $('.user-comment-content-mask').css('display', 'block')
                 $('.user-comment-textarea').focus();
             })
-            $(document).on("touchmove",function(e) {
-                e.preventDefault(); 
+            $('.user-comment-content-mask').on("touchmove",function(e) {
+                e.preventDefault()
+                e.stopPropagation()
+            })
+            $('.user-comment-content-mask').on('click', function(e) {
+                e.stopPropagation()
+                $('.user-comment-content-mask').css('display', 'none')
+            })
+            $('.user-comment-content').on('click', function(e) {
+                e.stopPropagation()
             })
         })
         function renderCommentsHtml(item) {
