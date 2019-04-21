@@ -2,6 +2,7 @@
 <html>
     <head>
         <title><%= title %></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
         <link rel='stylesheet' href='/style/articleDetail/articleDetail.css'>
         <!-- <link rel='stylesheet' href='/style/index.css'> -->
         <% include ../common/script %>
@@ -19,206 +20,12 @@
         <script type='text/javascript' src='/js/jquery.qrcode.min.js'></script>
     </head>
     <body>
-        <% include ../common/header %>
-        <!-- <header class='app-page-header bd-bottom'>
-            <div class='app-page-header-left'>
-                <svg class='iconSvg' aria-hidden='true'>
-                    <use xlink:href='#icon-fanhui'></use>
-                </svg>
-            </div>
-            <div class='app-page-header-mid'></div>
-            <div class='app-page-header-right'></div>
-        </header> -->
-        <section class='article_detail_page'>
-            <div class='app-author-info'>
-                <div class='app-author-headerIcon'>
-                    <img class='head_portrait' src='/images/header_icon.png' alt='个人头像'>
-                </div>
-                <div class='app-author-userIfo'>
-                    <div class='author_name'><%= article.author %></div>
-                    <div class='author_autograph'><%= article.personalProfile %></div>
-                </div>
-            </div>
-            <div class='article_left box-shadow bd-radius-5'>
-                <div class='title_box pd-rl30'>
-                    <div class='title'><%= article.articleTitle %></div>
-                    <ul class='icon_data'>
-                        <li class='data_item'>
-                            source：<a target='_blank' href='/topic/<%= article.articleType %>'><span class='eth'><%= article.articleType %></span></a>
-                        </li>
-                        <li class='data_item'>
-                            <%= article.viewCount %> 次阅读
-                        </li>
-                        <li class='data_item showTime'><%= article.publishTime.substring(0, 10) %></li>
-                        <li class='data_item source-type'>
-                            <%  article.articleLabel.forEach(function(item) { %>
-                            <span class='article-source bd-radius-3'><%= item %></span>
-                            <% }) %>
-                        </li>
-                    </ul>
-                </div>
-                <div class='content'>
-                        <%= article.articleContent %>
-                </div>
-                <div class='code-html pd-rl30'>
-                    <!-- <script src='/richText/plantuml-encoder/dist/plantuml-encoder.js'></script>
-                    <script src='/richText/raphael/raphael.js'></script>
-                    <script src='/richText/tui-chart/dist/tui-chart.js'></script>
-                    <script src='/richText/tui-editor-Editor-all.js'></script>
-                    <link rel='stylesheet' href='/richText/tui-editor.css'>
-                    <link rel='stylesheet' href='/richText/tui-editor-contents.css'>
-                    <link rel='stylesheet' href='/richText/tui-color-picker/dist/tui-color-picker.css'>
-                    <link rel='stylesheet' href='/richText/tui-chart/dist/tui-chart.css'>
-                    <div id='editSection'></div> -->
-                </div>
-                <div class='btn_box web-display'>
-                    <div class='shared_icon_box'>
-                        <ul class='share_icon'>
-                            <li class='shared_item shared_wechart'>
-                                <svg class='iconSvg' aria-hidden='true'>
-                                    <use xlink:href='#icon-weixin'></use>
-                                </svg>
-                            </li>
-                            <li class='shared_item shared_weibo'>
-                                <svg class='iconSvg' aria-hidden='true'>
-                                    <use xlink:href='#icon-weibo'></use>
-                                </svg>
-                            </li>
-                            <li class='shared_item shared_douban'>
-                                <svg class='iconSvg' aria-hidden='true'>
-                                    <use xlink:href='#icon-douban1'></use>
-                                </svg>
-                            </li>
-                            <li class='shared_item shared_tieba'>
-                                <svg class='iconSvg' aria-hidden='true'>
-                                    <use xlink:href='#icon-tieba'></use>
-                                </svg>
-                            </li>
-                            <li class='shared_item shared_facebook'>
-                                <svg class='iconSvg' aria-hidden='true'>
-                                    <use xlink:href='#icon-facebook1'></use>
-                                </svg>
-                            </li>
-                            <li class='shared_item shared_twitter'>
-                                <svg class='iconSvg' aria-hidden='true'>
-                                    <use xlink:href='#icon-twitter'></use>
-                                </svg>
-                            </li>
-                            <li class='shared_item shared_erweima'>
-                                <svg class='iconSvg' aria-hidden='true'>
-                                    <use xlink:href='#icon-erweima1'></use>
-                                </svg>
-                            </li>
-                        </ul>
-                        <!-- <div class='triangle_right'></div> -->
-                    </div>
-                    <div class='like_btn_box'>
-                        <div class='like_btn'>
-                            <span class='btn_left_triangle'></span>
-                            <div class='center_btn'>
-                                <% if (article.isLike) { %>
-                                    <img class='like' src='/images/like.png' alt=''>
-                                <% } else { %>   
-                                    <img class='no_like' src='/images/no_like.png' alt=''>
-                                <% } %>
-                                <span>喜欢</span>
-                                <span class='is_like' style='display: none'><%= article.isLike %></span>
-                            </div>
-                            <span class='btn_right_triangle'></span>
-                        </div>
-                        <div class='like_count'><%= article.likeCount %> 人喜欢</div>
-                        <span class='like_num' style='display:none'><%= article.likeCount %></span>
-                    </div>
-                    <div class='collection_btn_box'>
-                        <div class='collection_btn not_collect bd-radius-5'>
-                            <% if (article.isCollect) { %>
-                                <img class='collection' src='/images/collection.png' alt=''>
-                            <% } else { %>   
-                                <img class='collection_black' src='/images/collection_black.png' alt='' >
-                            <% } %>  
-                            <span>收藏</span>
-                            <span class='is_collect' style='display: none'><%= article.isCollect %></span>
-                        </div>
-                        <div class='collection_num'><%= article.collectCount %> 人已收藏</div>
-                    </div>
-                    
-                </div>
-                <div class='write_comment_box web-display'>
-                    <p class='comment_num'>评论(<%= article.commentTotal %>)</p>
-                    <div class='textarea_box'>
-                        <textarea class='write_comment' name='writeComent' id='' cols='30' rows='10' placeholder='What do you want to say?'></textarea>
-                    </div>
-                    <div class='comment_btn_box'>
-                        <div class='comment_btn'>comment</div>
-                    </div>
-                </div>
-                <div class='comment_list' id='commentTemplate'>
-                    <div class='comment_total' style='display:none'><%= article.commentTotal %></div>
-                    <% article.comments.forEach(function(commentItem) {%>
-                        <div class='comment_item parent_comment bd-bottom'>
-                            <div class='comment_top'>
-                                <!-- <img class='commentator_img' src='/images/man1.png' alt=''> -->
-                                <% if(commentItem.hearderIcon) { %>
-                                    <img class='commentator_img' src='/<%= commentItem.hearderIcon %>'>
-                                <% } else { %> 
-                                    <span class='item-random-color commentator_user_name' article-commentUserName='<%=commentItem.commentUserName%>'>
-                                        <%= commentItem.commentUserName.substring(0, 1) %>
-                                    </span>  
-                                <% } %>
-                                <div class='commentator_name one_level'><%= commentItem.commentUserName %></div>
-                                <div class='comment_time time'><%= commentItem.commentTime %></div>
-                            </div>
-                            <div class='coment_mid'>
-                                <%= commentItem.commentContent %>
-                            </div>
-                            <div class='comment_id del_comment_id' style='display:none'><%= commentItem.commentId %></div>
-                            <div class='comment_userId' style='display:none'><%= commentItem.userId %></div>
-                            <div class='eidt_answer'>
-                                <div class='answer'>回复</div>
-                                <div class='comment_type' style='display: none'>parent</div>
-                            </div>
-                            <% if (commentItem.childrenComentList && commentItem.childrenComentList.length > 0) { %>
-                                <% commentItem.childrenComentList.forEach(function(childrenItem) {%>
-                                    <div class='children_commentator_box'>
-                                        <div class='comment_item childer_item'>
-                                            <div class='comment_top'>
-                                                <!-- <img class='commentator_img' src='/images/man1.png' alt=''> -->
-                                                <!-- <span class='geren-bg bd-radius-round dom-random-color'><%= childrenItem.commentUserName.substring(0, 1) %></span> -->
-                                                <div class='commentator_name children_commentator_name'><%= childrenItem.commentUserName %></div>
-                                                <div class='comment_time time'><%= childrenItem.commentTime %></div>
-                                            </div>
-                                            <div class='coment_mid'>
-                                                @<span class='reply_man'><%= childrenItem.commentatorName %></span>
-                                                <%= childrenItem.commentContent %>
-                                            </div>
-                                            <div class='child_comment_id del_comment_id' style='display:none'><%= childrenItem.childCommentId %></div>
-                                            <div class='comment_userId' style='display:none'><%= childrenItem.userId %></div>
-                                            <div class='eidt_answer'>
-                                                <div class='answer'>回复</div>
-                                                <div class='comment_type' style='display: none'>child</div>
-                                                <!-- <div class='delete'>删除</div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                <% }) %>  
-                            <% } %>  
-                            <div class='comment_bottmo'>
-                                <div class='answer_box' contenteditable='true' data-placeholder='What do you want to say?'></div>
-                                <div class='answer_btn_box'>
-                                    <div class='answer_btn'>comment</div>
-                                </div>
-                            </div>
-                        </div>
-                    <% }) %>  
-                </div>
-                <% if (article.comments.length > 0) { %>
-                    <ul class='ghost-pagination article_page' style='margin: 24px 0; text-align: center'></ul>
-                <% } %>
-                <input type='hidden' id='totalPages' value='<%= article.total %>' style='display: none' />
-            </div>
-            <div class='article_right web-display'>
-                <div class='personal_box'>
-                    <div class='info_top'>
+        <div>
+            <% include ../common/header %>
+            <% include ../common/appHeader %>
+            <section class='article_detail_page'>
+                <div class='app-author-info app-display'>
+                    <div class='app-author-headerIcon'>
                         <% if(article.headerIcon) { %>
                             <img class='head_portrait' src='/<%= article.headerIcon %>'>
                         <% } else { %> 
@@ -226,57 +33,303 @@
                                 <%= article.author.substring(0, 1) %>
                             </span>  
                         <% } %>
-                        <div class='my_name'><%= article.author %></div>
-                        <div class='my_autograph'><%= article.personalProfile %></div>
                     </div>
-                    <div class='info_down bd-top'>
-                        <img class='crown_icon' src='/images/crown.png' alt=''>
-                        <div class='follow down_item bd-right'>
-                            <div class='text'>喜欢</div>
-                            <div class='count'><%= article.likeCount %></div>
+                    <div class='app-author-userIfo'>
+                        <div class='author_name'><%= article.author %></div>
+                        <div class='author_autograph'><%= article.personalProfile %></div>
+                    </div>
+                </div>
+                <div class='article_left box-shadow bd-radius-5'>
+                    <div class='title_box pd-rl30'>
+                        <div class='title'><%= article.articleTitle %></div>
+                        <ul class='icon_data'>
+                            <li class='data_item'>
+                                source：<a target='_blank' href='/topic/<%= article.articleType %>'><span class='eth'><%= article.articleType %></span></a>
+                            </li>
+                            <li class='data_item web-display'>
+                                <%= article.viewCount %> 次阅读
+                            </li>
+                            <li class='data_item showTime web-display'><%= article.publishTime.substring(0, 10) %></li>
+                            <li class='data_item source-type'>
+                                <%  article.articleLabel.forEach(function(item) { %>
+                                <span class='article-source bd-radius-3'><%= item %></span>
+                                <% }) %>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class='content'>
+                        <%= article.articleContent %>
+                    </div>
+                    <div class='code-html pd-rl30'>
+                        <!-- <script src='/richText/plantuml-encoder/dist/plantuml-encoder.js'></script>
+                        <script src='/richText/raphael/raphael.js'></script>
+                        <script src='/richText/tui-chart/dist/tui-chart.js'></script>
+                        <script src='/richText/tui-editor-Editor-all.js'></script>
+                        <link rel='stylesheet' href='/richText/tui-editor.css'>
+                        <link rel='stylesheet' href='/richText/tui-editor-contents.css'>
+                        <link rel='stylesheet' href='/richText/tui-color-picker/dist/tui-color-picker.css'>
+                        <link rel='stylesheet' href='/richText/tui-chart/dist/tui-chart.css'>
+                        <div id='editSection'></div> -->
+                    </div>
+                    <div class="app-text-data app-display">
+                        <ul class="app-data-list">
+                            <li class="app-data-item"><%= article.viewCount %> 次阅读</li>
+                            <li class="app-data-item"><%= article.collectCount %> 人收藏</li>
+                            <li class="app-data-item"><%= article.likeCount %> 人喜欢</li>
+                            <li class="app-data-item showTime app-showTime"><%= article.publishTime.substring(0, 10) %></li>
+                        </ul>
+                    </div>
+                    <div class='btn_box web-display'>
+                        <div class='shared_icon_box'>
+                            <ul class='share_icon'>
+                                <li class='shared_item shared_wechart'>
+                                    <svg class='iconSvg' aria-hidden='true'>
+                                        <use xlink:href='#icon-weixin'></use>
+                                    </svg>
+                                </li>
+                                <li class='shared_item shared_weibo'>
+                                    <svg class='iconSvg' aria-hidden='true'>
+                                        <use xlink:href='#icon-weibo'></use>
+                                    </svg>
+                                </li>
+                                <li class='shared_item shared_douban'>
+                                    <svg class='iconSvg' aria-hidden='true'>
+                                        <use xlink:href='#icon-douban1'></use>
+                                    </svg>
+                                </li>
+                                <li class='shared_item shared_tieba'>
+                                    <svg class='iconSvg' aria-hidden='true'>
+                                        <use xlink:href='#icon-tieba'></use>
+                                    </svg>
+                                </li>
+                                <li class='shared_item shared_facebook'>
+                                    <svg class='iconSvg' aria-hidden='true'>
+                                        <use xlink:href='#icon-facebook1'></use>
+                                    </svg>
+                                </li>
+                                <li class='shared_item shared_twitter'>
+                                    <svg class='iconSvg' aria-hidden='true'>
+                                        <use xlink:href='#icon-twitter'></use>
+                                    </svg>
+                                </li>
+                                <li class='shared_item shared_erweima'>
+                                    <svg class='iconSvg' aria-hidden='true'>
+                                        <use xlink:href='#icon-erweima1'></use>
+                                    </svg>
+                                </li>
+                            </ul>
+                            <!-- <div class='triangle_right'></div> -->
                         </div>
-                        <div class='fans down_item'>
-                            <div class='text'>收藏</div>
-                            <div class='count'><%= article.collectCount %></div>
+                        <div class='like_btn_box'>
+                            <div class='like_btn'>
+                                <span class='btn_left_triangle'></span>
+                                <div class='center_btn'>
+                                    <% if (article.isLike) { %>
+                                        <img class='like' src='/images/like.png' alt=''>
+                                    <% } else { %>   
+                                        <img class='no_like' src='/images/no_like.png' alt=''>
+                                    <% } %>
+                                    <span>喜欢</span>
+                                    <span class='is_like' style='display: none'><%= article.isLike %></span>
+                                </div>
+                                <span class='btn_right_triangle'></span>
+                            </div>
+                            <div class='like_count'><%= article.likeCount %> 人喜欢</div>
+                            <span class='like_num' style='display:none'><%= article.likeCount %></span>
+                        </div>
+                        <div class='collection_btn_box'>
+                            <div class='collection_btn not_collect bd-radius-5'>
+                                <% if (article.isCollect) { %>
+                                    <img class='collection' src='/images/collection.png' alt=''>
+                                <% } else { %>   
+                                    <img class='collection_black' src='/images/collection_black.png' alt='' >
+                                <% } %>  
+                                <span>收藏</span>
+                                <span class='is_collect' style='display: none'><%= article.isCollect %></span>
+                            </div>
+                            <div class='collection_num'><%= article.collectCount %> 人已收藏</div>
+                        </div>
+                        
+                    </div>
+                    <div class='write_comment_box web-display'>
+                        <p class='comment_num'>评论(<%= article.commentTotal %>)</p>
+                        <div class='textarea_box'>
+                            <textarea class='write_comment' name='writeComent' id='' cols='30' rows='10' placeholder='What do you want to say?'></textarea>
+                        </div>
+                        <div class='comment_btn_box'>
+                            <div class='comment_btn'>comment</div>
+                        </div>
+                    </div>
+                    <div class='comment_list' id='commentTemplate'>
+                        <div class='comment_total' style='display:none'><%= article.commentTotal %></div>
+                        <% article.comments.forEach(function(commentItem) {%>
+                            <div class='comment_item parent_comment bd-bottom'>
+                                <div class='comment_top'>
+                                    <!-- <img class='commentator_img' src='/images/man1.png' alt=''> -->
+                                    <% if(commentItem.hearderIcon) { %>
+                                        <img class='commentator_img' src='/<%= commentItem.hearderIcon %>'>
+                                    <% } else { %> 
+                                        <span class='item-random-color commentator_user_name' article-commentUserName='<%=commentItem.commentUserName%>'>
+                                            <%= commentItem.commentUserName.substring(0, 1) %>
+                                        </span>  
+                                    <% } %>
+                                    <div class="commentator-name-box">
+                                        <div class='commentator_name one_level'><%= commentItem.commentUserName %></div>
+                                        <div class='comment_time time app-comment-time'><%= commentItem.commentTime %></div>
+                                    </div>
+                                </div>
+                                <div class='coment_mid'>
+                                    <%= commentItem.commentContent %>
+                                </div>
+                                <div class='comment_id del_comment_id' style='display:none'><%= commentItem.commentId %></div>
+                                <div class='comment_userId' style='display:none'><%= commentItem.userId %></div>
+                                <div class='eidt_answer'>
+                                    <div class='answer'>回复</div>
+                                    <div class='comment_type' style='display: none'>parent</div>
+                                </div>
+                                <% if (commentItem.childrenComentList && commentItem.childrenComentList.length > 0) { %>
+                                    <% commentItem.childrenComentList.forEach(function(childrenItem) {%>
+                                        <div class='children_commentator_box'>
+                                            <div class='comment_item childer_item'>
+                                                <div class='comment_top'>
+                                                    <!-- <img class='commentator_img' src='/images/man1.png' alt=''> -->
+                                                    <!-- <span class='geren-bg bd-radius-round dom-random-color'><%= childrenItem.commentUserName.substring(0, 1) %></span> -->
+                                                    <div class='commentator_name children_commentator_name'><%= childrenItem.commentUserName %></div>
+                                                    <div class='comment_time time'><%= childrenItem.commentTime %></div>
+                                                </div>
+                                                <div class='coment_mid'>
+                                                    @<span class='reply_man'><%= childrenItem.commentatorName %></span>
+                                                    <%= childrenItem.commentContent %>
+                                                </div>
+                                                <div class='child_comment_id del_comment_id' style='display:none'><%= childrenItem.childCommentId %></div>
+                                                <div class='comment_userId' style='display:none'><%= childrenItem.userId %></div>
+                                                <div class='eidt_answer'>
+                                                    <div class='answer'>回复</div>
+                                                    <div class='comment_type' style='display: none'>child</div>
+                                                    <!-- <div class='delete'>删除</div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <% }) %>  
+                                <% } %>  
+                                <div class='comment_bottmo web-display'>
+                                    <div class='answer_box' contenteditable='true' data-placeholder='What do you want to say?'></div>
+                                    <div class='answer_btn_box'>
+                                        <div class='answer_btn'>comment</div>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }) %>  
+                    </div>
+                    <% if (article.comments.length > 0) { %>
+                        <ul class='ghost-pagination article_page' style='margin: 24px 0; text-align: center'></ul>
+                    <% } %>
+                    <input type='hidden' id='totalPages' value='<%= article.total %>' style='display: none' />
+                </div>
+                <div class='article_right web-display'>
+                    <div class='personal_box'>
+                        <div class='info_top'>
+                            <% if(article.headerIcon) { %>
+                                <img class='head_portrait' src='/<%= article.headerIcon %>'>
+                            <% } else { %> 
+                                <span class='item-random-color' article-commentUserName='<%=article.author%>'>
+                                    <%= article.author.substring(0, 1) %>
+                                </span>  
+                            <% } %>
+                            <div class='my_name'><%= article.author %></div>
+                            <div class='my_autograph'><%= article.personalProfile %></div>
+                        </div>
+                        <div class='info_down bd-top'>
+                            <img class='crown_icon' src='/images/crown.png' alt=''>
+                            <div class='follow down_item bd-right'>
+                                <div class='text'>喜欢</div>
+                                <div class='count'><%= article.likeCount %></div>
+                            </div>
+                            <div class='fans down_item'>
+                                <div class='text'>收藏</div>
+                                <div class='count'><%= article.collectCount %></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class='float_window web-display'>
-                <div class='to_top float_box'>
-                    <div class='triangle_top'></div>
-                    <div class='icon_box'>
+                <div class='float_window web-display'>
+                    <div class='to_top float_box'>
+                        <div class='triangle_top'></div>
+                        <div class='icon_box'>
+                            <svg class='iconSvg' aria-hidden='true'>
+                                <use xlink:href='#icon-fanhuidingbu'></use>
+                            </svg>
+                            <span class='float_text'>回到<br />顶部</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class='qrcode_body'>
+                <div class='modal_box'>
+                    <div class='modal_header'>
                         <svg class='iconSvg' aria-hidden='true'>
-                            <use xlink:href='#icon-fanhuidingbu'></use>
+                            <use xlink:href='#icon-shanchu1'></use>
                         </svg>
-                        <span class='float_text'>回到<br />顶部</span>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class='ghost-loading-mask'>
+                <div class='ghost-loading-spinner'>
+                    <svg viewBox='25 25 50 50' class='circular'><circle cx='50' cy='50' r='20' fill='none' class='path'></circle></svg>
+                </div>
+            </div>
+            <div class='confirm_box'>
+                <div class='content_box'>
+                    <div class='delete_tip'>确定删除评论？</div>
+                    <div class='confirm_btn_box'>
+                        <div class='btn_item sure'>确定</div>
+                        <div class='btn_item cancel'>取消</div>
                     </div>
                 </div>
             </div>
-        </section>
-        <div class='qrcode_body'>
-            <div class='modal_box'>
-                <div class='modal_header'>
-                    <svg class='iconSvg' aria-hidden='true'>
-                        <use xlink:href='#icon-shanchu1'></use>
-                    </svg>
+            <section class="user-comment-content">
+                <textarea class="user-comment-textarea" name="" id="" cols="30" rows="10" placeholder="Publish your response..."></textarea>
+                <div class='answer_btn_box'>
+                    <div class='answer_btn'>comment</div>
                 </div>
-                
-            </div>
-        </div>
-        <div class='ghost-loading-mask'>
-            <div class='ghost-loading-spinner'>
-                <svg viewBox='25 25 50 50' class='circular'><circle cx='50' cy='50' r='20' fill='none' class='path'></circle></svg>
-            </div>
-        </div>
-        <div class='confirm_box'>
-            <div class='content_box'>
-                <div class='delete_tip'>确定删除评论？</div>
-                <div class='confirm_btn_box'>
-                    <div class='btn_item sure'>确定</div>
-                    <div class='btn_item cancel'>取消</div>
+            </section>
+            <footer class="app-article-footer app-display bd-top">
+                <div class="response-text-box">
+                    Publish your response...
                 </div>
-            </div>
+                <div class="app-user-do-icon">
+                    <ul class="app-user-do-icon-list">
+                        <li class="app-user-do-item">
+                            <% if (article.isLike) { %>
+                                <svg class='iconSvg' aria-hidden='true'>
+                                    <use xlink:href='#icon-shoucang-copy-copy'></use>
+                                </svg>
+                            <% } else { %>   
+                                <svg class='iconSvg' aria-hidden='true'>
+                                    <use xlink:href='#icon-shoucang-copy'></use>
+                                </svg>
+                            <% } %>
+                        </li>
+                        <li class="app-user-do-item">
+                            <% if (article.isCollect) { %>
+                                <svg class='iconSvg' aria-hidden='true'>
+                                    <use xlink:href='#icon-unie601-copy'></use>
+                                </svg>
+                            <% } else { %>   
+                                <svg class='iconSvg' aria-hidden='true'>
+                                    <use xlink:href='#icon-unie601'></use>
+                                </svg>
+                            <% } %>  
+                        </li>
+                        <li class="app-user-do-item">
+                            <svg class='iconSvg' aria-hidden='true'>
+                                <use xlink:href='#icon-icon_zhuanfa'></use>
+                            </svg>
+                        </li>
+                    </ul>
+                </div>
+            </footer>
         </div>
     </body>
     <script type='text/javascript'>
@@ -686,8 +739,10 @@
                 <div class='comment_item parent_comment bd-bottom'>
                     <div class='comment_top'>
                         ${ showHeaderIcon(item) }
-                        <div class='commentator_name'>${ item.commentUserName }</div>
-                        <div class='comment_time time'>${ filterTime(item.commentTime) }</div>
+                        <div class="commentator-name-box">
+                            <div class='commentator_name'>${ item.commentUserName }</div>
+                            <div class='comment_time time'>${ filterTime(item.commentTime) }</div>
+                        </div>
                     </div>
                     <div class='coment_mid'>
                         ${ item.commentContent }
@@ -712,8 +767,10 @@
             return `<div class='comment_item parent_comment'>
                         <div class='comment_top'>
                             ${ showHeaderIcon(item) }
-                            <div class='commentator_name'>${ item.commentUserName }</div>
-                            <div class='comment_time time'>${ filterTime(item.commentTime) }</div>
+                            <div class="commentator-name-box">
+                                <div class='commentator_name'>${ item.commentUserName }</div>
+                                <div class='comment_time time'>${ filterTime(item.commentTime) }</div>
+                            </div>
                         </div>
                         <div class='coment_mid'>
                             ${ item.commentContent }
