@@ -730,6 +730,16 @@
     .article_detail_page .article_left .comment_list  .comment_item .coment_mid {
         color: var(--black);
     }
+    .user-comment-content-mask {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 101;
+        background: rgba(0,0,0,.6);
+    }
     .user-comment-content {
         position: fixed;
         left: 0;
