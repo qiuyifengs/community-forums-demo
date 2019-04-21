@@ -741,6 +741,9 @@
                 $('.user-comment-content-mask').css('display', 'block')
                 $('.user-comment-textarea').focus();
             })
+            $(document).on("touchmove",function(e) {
+                e.preventDefault(); 
+            })
         })
         function renderCommentsHtml(item) {
             return `
