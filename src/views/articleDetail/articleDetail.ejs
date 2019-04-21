@@ -288,10 +288,12 @@
                     </div>
                 </div>
             </div>
-            <section class="user-comment-content">
-                <textarea class="user-comment-textarea" name="" id="" cols="30" rows="10" placeholder="Publish your response..."></textarea>
-                <div class='answer_btn_box'>
-                    <div class='answer_btn'>comment</div>
+            <section class="user-comment-content-mask">
+                <div class="user-comment-content">
+                    <textarea class="user-comment-textarea" name="" id="" cols="30" rows="10" placeholder="Publish your response..."></textarea>
+                    <div class='answer_btn_box'>
+                        <div class='answer_btn'>comment</div>
+                    </div>
                 </div>
             </section>
             <footer class="app-article-footer app-display bd-top">
@@ -732,6 +734,12 @@
             $('.to_top').click(function(){
                 $('html ,body').animate({scrollTop: 0}, 300)
                 return false
+            })
+            // --------------------------------------------app-------------------------------
+            $('.response-text-box').on('click', function(e) {
+                e.stopPropagation()
+                $('.user-comment-content-mask').css('display', 'block')
+                $('.user-comment-textarea').focus();
             })
         })
         function renderCommentsHtml(item) {
