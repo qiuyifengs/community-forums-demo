@@ -97,4 +97,8 @@
     .ghost-list .ghost-comment .reply-btn {
         color: var(--btn-col);
     }
+    .replyFormTemplate {
+        margin-bottom: 0!important;
+        height: 0;
+    }
 }
