@@ -157,7 +157,7 @@
     }
 }
 
-.ghost-components-article-list-content-index-description {
+.ghost-components-article-list-show-content {
     overflow: hidden;
     display: -webkit-box; 
     text-overflow: ellipsis;
