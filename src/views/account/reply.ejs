@@ -22,12 +22,12 @@
             <div class="ghost-pro-layouts-basic-layout-content ghost-layout-content">
                 <div class="ghost-pro-components-page-header-wrapper-grid-content-main ghost-pro-components-page-header-wrapper-grid-content-wide" style="margin-bottom: 24px">
                     <main class="ghost-pro-pages-account-settings-info-main">
-                        <aside class="ghost-pro-pages-account-settings-info-leftmenu">
+                        <aside class="ghost-pro-pages-account-settings-info-leftmenu web-display">
                             <% include ./list %>
                         </aside>
                         <div class="ghost-pro-pages-account-settings-info-right">
-                            <div class="ghost-pro-pages-account-settings-info-title">
-                                <span><%= title %> test</span>
+                            <div class="ghost-pro-pages-account-settings-info-title web-display">
+                                <span><%= title %></span>
                             </div>
                             <!-- comment components start Cooperate List loading-->
                             <article class="comment-demo">
@@ -108,7 +108,7 @@
                                                                         </button>
                                                                     </li>
                                                                 </ul>
-                                                                <div class="replyFormTemplate"></div>
+                                                                <div class="replyFormTemplate web-display"></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -156,7 +156,7 @@
                                                 <div class="ghsot-col ghost-col-21" style="padding-right: 8px">
                                                     <textarea id="textareaComment" rows="1" style="max-height: 132px; min-height: 32px;" required placeholder="文明社会，理性评论" class="ghost-input"></textarea>
                                                 </div>
-                                                <div class="ghsot-col ghost-col-2 submit-reply-parent">
+                                                <div class="ghsot-col ghost-col-2 submit-reply-parent web-display">
                                                     <button type="button" class="gutter-pd8 ghost-btn ghost-btn-primary waves-float float-button-light waves-effect waves-button waves-float waves-light submit-reply">
                                                         <span>添加回复</span>
                                                     </button>
@@ -181,6 +181,7 @@
                 $(this).parents().parents('.ghost-comment-content').find('.replyFormTemplate').append(createReplyForm);
                 $(this).parents().parents('.ghost-comment-content').find('.replyFormTemplate').css({"overflow":"hidden", "margin-bottom": "10px"})
                 autosize(document.querySelectorAll('textarea'))
+                $(this).parents().parents('.ghost-comment-content').find('.replyFormTemplate textarea').focus()
             })
             // random color
             $(".item-random-color").each(function() {

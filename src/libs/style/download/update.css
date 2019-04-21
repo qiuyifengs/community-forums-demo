@@ -1,0 +1,93 @@
+@import '../reset.css';
+#update {
+    font-family: "PingFang-SC-Medium";
+}
+.app-update-header {
+    display: none;
+}
+.app-update-header-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.app-update-comment {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("../../images/bg.png") no-repeat;
+    background-size: cover;
+}
+.app-update-comment .app-logo-icon {
+    padding: 35px 0 70%;
+    text-align: center;
+}
+.app-update-comment .app-logo-icon img {
+    overflow: hidden;
+    width: 75px;
+    height: 75px;
+}
+.app-update-comment .app-logo-icon .content-text {
+    padding-top: 12px;
+    font-size: 15px;
+    color: #333333;
+}
+.app-update-btn-box .update-btn {
+    display: flex;
+    margin: 0 auto 15px;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    width: 230px;
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    font-size: 15px;
+    color: #ffffff;
+    background: #06bfa7;
+}
+.app-update-btn-box .update-btn img {
+    overflow: hidden;
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+}
+.app-update-btn-box .app-tip-text {
+    margin-bottom: 10px;
+    font-size: 13px;
+    text-align: center;
+    color: #798388;
+}
+@media screen and (max-width: 420px) {
+    .app-update-header {
+        display: block;
+        padding: 0 15px;
+        height: 44px;
+        background: #30303a;
+    }
+    .app-update-header-box {
+        height: 100%;
+    }
+    .app-update-header-box .app-update-header-left {
+        flex-basis: 20%;
+        height: 100%;
+        line-height: 44px;
+    }
+    .app-update-header-box .app-update-header-left img {
+        overflow: hidden;
+        width: 15px;
+        height: 15px;
+    }
+    .app-update-header-box .app-update-header-mid {
+        flex-grow: 1;
+        height: 100%;
+    }
+    .app-update-header-box  .app-update-header-right {
+        flex-basis: 20%;
+        height: 100%;
+    }
+    .app-update-comment {
+        top: 44px;
+    }
+}
