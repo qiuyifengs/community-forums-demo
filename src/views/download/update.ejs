@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="/style/download/update.css">
+    </head>
+    <body>
+        <div id="update">
+            <header class="app-update-header">
+                <div class="app-update-header-box">
+                    <div class="app-update-header-left">
+                        <img src="/images/back.png" alt="">
+                    </div>
+                    <div class="app-update-header-mid"></div>
+                    <div class="app-update-header-right"></div>
+                </div>
+            </header>
+            <section class="app-update-comment">
+                <div class="app-logo-icon">
+                    <img src="/images/update_logo.png" alt="">
+                    <p class="content-text">IM即时通讯</p>
+                </div>
+                <div class="app-update-btn-box">
+                    <p class="app-version app-tip-text">版本：2.0.0</p>
+                    <p class="app-size app-tip-text">大小：24.0M</p>
+                </div>
+            </section>
+        </div>
+    </body>
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+        window.onload = function() {
+            var appendDom = $(".app-version")
+            var u = navigator.userAgent
+            $(".update-btn").remove();
+            if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
+                var btnDom = `
+                    <button class="update-btn android-update" type="button">
+                        <img src="/images/Android_logo.png" alt="">
+                        <span>Android 版下载</span>
+                    </button>
+                `
+                appendDom.before(btnDom)
+            } else if (u.indexOf('iPhone') > -1) {//苹果手机
+                var btnDom = `
+                    <button class="update-btn ios-update" type="button">
+                        <img src="/images/ios_logo.png" alt="">
+                        <span>iOS 版下载</span>
+                    </button>
+                `
+                appendDom.before(btnDom)
+            } else if (u.indexOf('Windows Phone') > -1) {//winphone手机
+                var btnDom = `
+                    <button class="update-btn android-update" type="button">
+                        <img src="/images/Android_logo.png" alt="">
+                        <span>Android 版下载</span>
+                    </button>
+                `
+                appendDom.before(btnDom)
+            }
+            
+        }
+    </script>
+</html>

@@ -62,7 +62,39 @@
 .parents_item .commentator_name {
     color: var(--btn-col);
 }
-.replyFormTemplate {
-    /* overflow: hidden; */
-    /* margin-bottom: 10px; */
+@media screen and (max-width: 420px) {
+    .ghost-pro-pages-account-settings-info-main {
+        padding: 0;
+        background-color: var(--col-f8);
+    }
+    .ghost-pro-pages-account-settings-info-main .ghost-pro-pages-account-settings-info-right {
+        padding: 0;
+    }
+    .ghost-list .ghost-comment {
+        margin-bottom: 5px;
+        padding: 15px 15px 8px;
+        background: var(--white);
+    }
+    .ghost-list .ghost-comment .ghost-comment-content-top-box {
+        align-items: unset;
+    }
+    .ghost-list .ghost-comment .ghost-comment-content-author {
+        display: block;
+    }
+    .ghost-list .ghost-comment .ghost-comment-content-author .ghost-comment-content-author-name {
+        display: block;
+    }
+    .ghost-comment-content-author>a, .ghost-comment-content-author>span {
+        font-size: var(--fs-12);
+    }
+    .ghost-list .ghost-comment-nested .ghost-comment {
+        padding: 5px 15px 0;
+        background: var(--col-f2);
+    }
+    .ghost-list .ghost-comment-nested .ghost-comment .ghost-comment-content-author-name {
+        display: unset;
+    }
+    .ghost-list .ghost-comment .reply-btn {
+        color: var(--btn-col);
+    }
 }
