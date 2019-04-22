@@ -30,12 +30,12 @@
         <% include ../common/appHeader %>
         <div class="publish_page">
             <div class="publish_left box-shadow bd-radius-5">
-                <div class="publish">发布</div>
+                <div class="publish web-display">发布</div>
                 <div class="article_type">
                     <% if (obj && obj.renderData) { %>
                     <div class="cur_type_item" style="display: none"><%= obj.renderData.articleType %></div>
                     <% } %>
-                    <div class="type_label">classification：</div>
+                    <div class="type_label app-label">classification：</div>
                     <ul class="type_list">
                         <% obj.menuList.forEach(function(menuItem) { %>
                             <li class="type_item bd-radius-5"><%= menuItem.menu %></li>
@@ -47,15 +47,21 @@
                     <div class="is_drafts" style="display:none"><%= obj.renderData.isDrafts %></div> 
                     <div class="cur_article_label" style="display:none"><%= obj.renderData.articleLabel %></div>
                     <% } %>
-                    <input class="title_input publish_input" maxlength="30" placeholder="Input topic..." onchange="saveArticle()"/>
-                    <div class="label-box mg-t20">
-                        <input class="typle_input publish_input" placeholder="请输入选择标签，如php（用逗号，分号；分割）按Enter键确认" onchange="saveArticle()"/>
+                    <div class="title-box">
+                        <div class="title-text app-label app-display">Theme</div>
+                        <input class="title_input publish_input" maxlength="30" placeholder="Input topic..." onchange="saveArticle()"/>
                     </div>
-                    <div class="label-data" style="display:none"><%= obj.getLabel %></div>
-                    <div id="tags-input"></div>
+                    <div class="label-parent">
+                            <div class="app-label app-display">Label</div>
+                            <div class="label-box mg-t20">
+                                <input class="typle_input publish_input" placeholder="请输入选择标签，如php（用逗号，分号；分割）按Enter键确认" onchange="saveArticle()"/>
+                            </div>
+                            <div class="label-data" style="display:none"><%= obj.getLabel %></div>
+                            <div id="tags-input"></div>
+                    </div>
                 </div>
                 <!-- <div class="article_content" id="divText" contenteditable="true" data-placeholder="What do you want to say?"></div> -->
-                <div class="code-html">
+                <div class="code-html web-display">
                     <!-- <script src="/richText/plantuml-encoder/dist/plantuml-encoder.js"></script>
                     <script src="/richText/raphael/raphael.js"></script>
                     <script src="/richText/tui-chart/dist/tui-chart.js"></script>
@@ -67,13 +73,20 @@
                     <!-- <div id="editSection"></div> -->
                     <div id="Editor"></div>
                 </div>
+                <div class="app-content-box app-display">
+                    <div class="app-content-label app-label">正文</div>
+                    <textarea class="app-content-text" name="" id="" cols="30" rows="10" placeholder="请输入内容"></textarea>
+                </div>
+                <div class="app-article-btn app-display">
+                    <button type="button" class="app-btn ghost-btn-primary comment_btn">发表文章</button>
+                </div>
                 <% if (obj.renderData && obj.renderData.articleContent) { %>
                     <div class="edit_article_id" style="display: none"><%= obj.renderData.articleId %></div>
                     <div class="edit_article_type" style="display:none"><%= obj.renderData.articleType %></div>
                     <div class="edit_article_title"><%= obj.renderData.articleTitle %></div>
                     <div class="edit_content"><%= obj.renderData.articleContent %></div>
                 <% } %>
-                <div class="button_box">
+                <div class="button_box web-display">
                     <div class="comment_btn_box">
                         <div class="comment_btn">publish</div>
                     </div>
@@ -142,7 +155,7 @@
             editor.init({
                 box:'#Editor',
                 debugger:true,
-                uploadUrl:'http://192.168.4.188:3002/post/articleImg',
+                uploadUrl: `${baseUrl}post/articleImg`,
                 data: content,
                 callback: val => {
                     saveArticle(val)
@@ -274,10 +287,15 @@
             });
             // filter sensitive words and comment article
             $(".comment_btn").on("click", function() {
-                
-                // saveArticle(false);
                 if (!isSubmitting) return false; 
                 isSubmitting = false;
+                if ($(this).hasClass('app-btn')) {
+                    let saveTextObj = {
+                        type: 'text',
+                        value: $('.app-content-text').val()
+                    }
+                    content = [saveTextObj];
+                }
                 let keySpans = document.getElementsByClassName('highlight');
                 if (keySpans.length) return false; // if had sensitive words return
                 let reg = new RegExp(wordsList.join('|'), 'gi'); // check sensitive words
@@ -432,9 +450,20 @@
             //         }
             //     })
             // }
+            //--------------------------------------webapp--------------------------
+            $('.app-gohost-hearder-right').empty().text('保存草稿')
+            $('.app-gohost-hearder-right').on('click', function(e) {
+                e.stopPropagation();
+                if (!$('app-content-text').val()) return;
+                let saveTextObj = {
+                    type: 'text',
+                    value: $('app-content-text').val()
+                }
+                saveArticle(JSON.stringify(saveTextObj))
+            })
         })
         function saveArticle(content) {
-            console.log(111)
+            console.log(11, content)
             let articleTitle = $(".title_input").val(); // title
             let param = {
                 userId: $.cookie("userId"),

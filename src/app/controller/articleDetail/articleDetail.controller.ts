@@ -17,7 +17,6 @@ export class ArticleDetailController {
     public async index(@Request() req, @Response() res, @Param() param): Promise<any> {
         const article = await this.postsRepository.getArticle(param);
         article.articleLabel = article.articleLabel.split(',');
-        console.log(111, article)
         res.render('articleDetail/articleDetail', { title: 'articleDetail', article });
     }
     @Get('/articleDetail/:articleId/:page')

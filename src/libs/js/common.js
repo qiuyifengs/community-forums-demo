@@ -156,10 +156,15 @@ function renderColor(id,name) {
  */
 function dealArticleContent(valArr) {
     valArr.forEach(item => {
-        if (item.type === 'text' && item.value.indexOf('[qq_') > -1) {
-            let emojiDom = `<img class="emoji-pic" src="http://s.jiajuol.com/haopinjia/pc/0100/dist/lib/jquery-emoji/dist/img/qq/`
-            let value = item.value.replace(/\[qq_/g, emojiDom)
-            item.value = `<p class="text-box" data-type="${item.type}">${value.replace(/\]/g, '.gif">')}</div>`
+        if (item.type === 'text') {
+            if (item.value.indexOf('[qq_') > -1) {
+                let emojiDom = `<img class="emoji-pic" src="http://s.jiajuol.com/haopinjia/pc/0100/dist/lib/jquery-emoji/dist/img/qq/`
+                let value = item.value.replace(/\[qq_/g, emojiDom)
+                item.value = `<p class="text-box" data-type="${item.type}">${value.replace(/\]/g, '.gif">')}</div>`
+            } else {
+                item.value = `<p class="text-box" data-type="${item.type}">${item.value}</div>`
+            }
+            
         } else if (item.type === 'link') {
             let linkVal = []
             for (const link of item.url) {
@@ -180,10 +185,14 @@ function dealArticleContent(valArr) {
  */
 function dealPostList(valArr) {
     valArr.forEach(item => {
-        if (item.type === 'text' && item.value.indexOf('[qq_') > -1) {
-            let emojiDom = `<img src="http://s.jiajuol.com/haopinjia/pc/0100/dist/lib/jquery-emoji/dist/img/qq/`
-            let value = item.value.replace(/\[qq_/g, emojiDom)
-            item.value = `${value.replace(/\]/g, '.gif">')}`
+        if (item.type === 'text') {
+            if (item.value.indexOf('[qq_') > -1) {
+                let emojiDom = `<img src="http://s.jiajuol.com/haopinjia/pc/0100/dist/lib/jquery-emoji/dist/img/qq/`
+                let value = item.value.replace(/\[qq_/g, emojiDom)
+                item.value = `${value.replace(/\]/g, '.gif">')}`
+            } else {
+                item.value = `${item.value }`
+            }
         } else if (item.type === 'link') {
             let linkVal = []
             for (const link of item.url) {

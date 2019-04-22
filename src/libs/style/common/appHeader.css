@@ -24,7 +24,7 @@
         justify-content: flex-end;
         align-items: center;
     }
-    .app-gohost-hearder-right .app-gohost-hearder-right-text {
+    .app-gohost-hearder-right {
         font-size: var(--fs-14);
     }
 }
