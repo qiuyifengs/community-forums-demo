@@ -4,21 +4,21 @@ function Editor(opt) {
 	//功能按钮配置
 	this.btns = {
 		text: `<span class="J_txtbtn"><svg class="iconSvg iconfont" aria-hidden="true">
-				<use xlink:href="#icon-bianji"></use>
+				<use xlink:href="#icon-wenzi"></use>
 			   </svg>文字</span>`,
 		pic: `<span class="J_uploadpic">
 				<svg class="iconSvg iconfont" aria-hidden="true">
-					<use xlink:href="#icon-tupian"></use>
+					<use xlink:href="#icon-tupian1"></use>
 			    </svg>图片
 			 </span>`,
 		video: `<span class="J_video">
 					<svg class="iconSvg iconfont" aria-hidden="true">
-						<use xlink:href="#icon-shipin"></use>
+						<use xlink:href="#icon-shipin-tianchong"></use>
 					</svg>视频
 				</span>`,
 		link: `<span class="J_link"> 
 					<svg class="iconSvg iconfont" aria-hidden="true">
-						<use xlink:href="#icon-link"></use>
+						<use xlink:href="#icon-lianjie-tianchong"></use>
 					</svg>连接
 				</span>`,
 		emoji: `<span class="J_emoji" style="display:none"> 
@@ -28,7 +28,7 @@ function Editor(opt) {
 				</span>`,
 		clear: `<span class="J_clear"> 
 					<svg class="iconSvg iconfont" aria-hidden="true">
-						<use xlink:href="#icon-dustbin_icon"></use>
+						<use xlink:href="#icon-qingkong"></use>
 					</svg>清空
 				</span>`
 	}
