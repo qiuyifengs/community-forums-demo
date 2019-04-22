@@ -195,6 +195,8 @@ $(document).ready(function(){
         if (routerId == 5) {
             $.cookie('nickName', '', { expires: -1, path: '/' })
             $.cookie('userId', '', { expires: -1, path: '/' })
+            localStorage.removeItem('headerIcon')
+            localStorage.removeItem('langData')
             goPage('user/login')
         } else {
             const url = routerAddressFilter($(this).attr('data-id'))
