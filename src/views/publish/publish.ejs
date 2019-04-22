@@ -2,6 +2,7 @@
 <html>
     <head>
         <title><%= title %></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
         <link rel="stylesheet" href="/style/publish/publish.css">
         <link rel="stylesheet" href="/style/common/tagsinput.css">
         <link rel="stylesheet" type="text/css" href="/style/common/editor/jquery.emoji.css">
@@ -26,6 +27,7 @@
     </head>
     <body>
         <% include ../common/header %>
+        <% include ../common/appHeader %>
         <div class="publish_page">
             <div class="publish_left box-shadow bd-radius-5">
                 <div class="publish">发布</div>
@@ -140,7 +142,7 @@
             editor.init({
                 box:'#Editor',
                 debugger:true,
-                uploadUrl:'http://127.0.0.1:3002/post/articleImg',
+                uploadUrl:'http://192.168.4.188:3002/post/articleImg',
                 data: content,
                 callback: val => {
                     saveArticle(val)
