@@ -34,7 +34,7 @@ export class ArticleDetailService {
         let commentRes;
         let commentNum = 0;
         const pageCount = param.pageCount ? param.pageCount * 1 : 10;
-        const page = param.page ? (param.page - 1) * 1 * pageCount : 0;
+        const page = param.page ? param.page * 1 * pageCount : 0;
         const totalRes = await this.commentRepository.find({articleId: param.articleId});
         const articleRes = await this.articleRepository.findOne({ articleId: param.articleId }); // article
         const userInfoRes = await this.userRepository.findOne({ userId: articleRes.userId });

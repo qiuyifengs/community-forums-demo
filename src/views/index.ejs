@@ -136,6 +136,9 @@
                 height: 60px;
                 object-fit: contain;
             }
+            .target-go {
+                color: var(--col-88)
+            }
             @media screen and (max-width: 420px) {
                 #root {
                     overflow-x: hidden;
@@ -391,7 +394,13 @@
     <script src="/js/swiper.min.js"></script>
     <script type="text/javascript">
         let activity = JSON.parse(localStorage.getItem('activity'));
+        function goPAGE() {
+            if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
+             $('.target-go').removeAttr('target')
+            }
+        }
         $(function() {
+            goPAGE();
             let pageSize = 1;
             var swiper = new Swiper('.swiper-container', {
                 spaceBetween: 30,
@@ -490,6 +499,7 @@
                                 isLoading = false
                                 $('.ghost-loading-mask').css('display', 'none')
                                 $("#artivleTemplate").append(result)
+                                goPAGE();
                             }, 1000) 
                         } else {
                             // 即使加载出错，也得重置
@@ -544,6 +554,7 @@
                 }
             })
         })
+        
         function isTop(item) {
             if (item) {
                 return `
