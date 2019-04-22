@@ -32,8 +32,10 @@
   color: green;
   display: none;
 }
-.Editor .J_function {
-  color: #485ec0;
+.Editor .J_function span{
+  padding: 4px 6px;
+  border: solid 1px #aaaaaa;
+  border-radius: 3px;
 }
 .Editor .editor_body {
   position: relative;

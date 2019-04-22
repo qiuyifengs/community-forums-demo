@@ -138,7 +138,7 @@
                             <span class='like_num' style='display:none'><%= article.likeCount %></span>
                         </div>
                         <div class='collection_btn_box'>
-                            <div class='collection_btn not_collect bd-radius-5'>
+                            <div class='collection_btn add-collect-btn not_collect bd-radius-5'>
                                 <% if (article.isCollect) { %>
                                     <img class='collection' src='/images/collection.png' alt=''>
                                 <% } else { %>   
@@ -184,7 +184,8 @@
                                 <div class='comment_id del_comment_id' style='display:none'><%= commentItem.commentId %></div>
                                 <div class='comment_userId' style='display:none'><%= commentItem.userId %></div>
                                 <div class='eidt_answer'>
-                                    <div class='answer'>回复</div>
+                                        <div class='answer web-display'>回复</div>
+                                        <div class='app-answer app-display'>回复</div>
                                     <div class='comment_type' style='display: none'>parent</div>
                                 </div>
                                 <% if (commentItem.childrenComentList && commentItem.childrenComentList.length > 0) { %>
@@ -204,7 +205,8 @@
                                                 <div class='child_comment_id del_comment_id' style='display:none'><%= childrenItem.childCommentId %></div>
                                                 <div class='comment_userId' style='display:none'><%= childrenItem.userId %></div>
                                                 <div class='eidt_answer'>
-                                                    <div class='answer'>回复</div>
+                                                    <div class='answer web-display'>回复</div>
+                                                    <div class='app-answer app-display'>回复</div>
                                                     <div class='comment_type' style='display: none'>child</div>
                                                     <!-- <div class='delete'>删除</div> -->
                                                 </div>
@@ -292,17 +294,17 @@
                 <div class="user-comment-content">
                     <textarea class="user-comment-textarea" name="" id="" cols="30" rows="10" placeholder="Publish your response..."></textarea>
                     <div class='answer_btn_box'>
-                        <div class='answer_btn'>comment</div>
+                        <div class='app-answer-btn'>comment</div>
                     </div>
                 </div>
             </section>
-            <footer class="app-article-footer app-display bd-top">
+            <footer class="app-article-footer bd-top app-display">
                 <div class="response-text-box">
                     Publish your response...
                 </div>
                 <div class="app-user-do-icon">
                     <ul class="app-user-do-icon-list">
-                        <li class="app-user-do-item">
+                        <li class="app-user-do-item like_btn">
                             <% if (article.isLike) { %>
                                 <svg class='iconSvg' aria-hidden='true'>
                                     <use xlink:href='#icon-shoucang-copy-copy'></use>
@@ -313,7 +315,7 @@
                                 </svg>
                             <% } %>
                         </li>
-                        <li class="app-user-do-item">
+                        <li class="app-user-do-item add-collect-btn">
                             <% if (article.isCollect) { %>
                                 <svg class='iconSvg' aria-hidden='true'>
                                     <use xlink:href='#icon-unie601-copy'></use>
@@ -474,7 +476,6 @@
             })
 
 
-
             //---------------------------------------------------------------
             let showContent = JSON.parse($('.content').text())
             // console.log(dealArticleContent(showContent))
@@ -483,10 +484,6 @@
             })
             // $('.code-html').html()
             //---------------------------------------------------------------
-
-
-
-
 
 
             // render content
@@ -541,6 +538,7 @@
                     if (res.code == 10000) {
                         let commentDetail = {
                             commentatorName: author,
+                            headerIcon: localStorage.getItem('headerIcon') ? localStorage.getItem('headerIcon') : '',
                             commentUserName: $.cookie('nickName'),
                             commentContent: commentText,
                             commentId: res.commentId,
@@ -558,6 +556,10 @@
             })
             // submit children comment
             $('.comment_list').on('click', '.answer_btn', function(event) {
+                if (!userId) {
+                    goPage('user/login')
+                    return false
+                }
                 let commentText = $('.answer_box').text()
                 let commentId = $(this).parents('.parent_comment').find('.comment_id').text()
                 if (!commentText) return
@@ -590,7 +592,7 @@
                 })
             })
             // add collect
-            $('.collection_btn').on('click', function() {
+            $('.add-collect-btn').on('click', function() {
                 if (!userId) {
                     goPage('user/login')
                     return false
@@ -607,13 +609,16 @@
                     articleId: articleId
                 }
                 myAjax('POST', 'post/addCollect', param).then((res) => {
-                    if (res.code == 1) {
-                        if ($('.is_collect').text() == 'true') {
+                    if (res.code == 10000) {
+                        if (!res.isCollect) {
                             $('.collection').addClass('dp-none')
                             $('.collection').after("<img class='collection_black' src='/images/collection_black.png' alt='' >")
                             $('.collection_num').text((collectionNum - 1) + ' 人已收藏')
                             collectionNum = collectionNum - 1
                             $('.is_collect').text('false')
+                            if ($(this).hasClass('app-user-do-item')) {
+                                $(this).empty().append(`<svg class='iconSvg' aria-hidden='true'><use xlink:href='#icon-unie601'></use></svg>`)
+                            }
                         } else {
                             if ($('.collection').hasClass('dp-none')) {
                                 $('.collection').removeClass('dp-none')
@@ -624,6 +629,9 @@
                             $('.collection_num').text((collectionNum + 1) + ' 人已收藏')
                             collectionNum = collectionNum + 1
                             $('.is_collect').text('true')
+                            if ($(this).hasClass('app-user-do-item')) {
+                                $(this).empty().append(`<svg class='iconSvg' aria-hidden='true'><use xlink:href='#icon-unie601-copy'></use></svg>`)
+                            }
                         }
                         $('.fans').find('.count').text(collectionNum)
                     } else {
@@ -638,7 +646,6 @@
                     return false
                 }
                 let likeCount = parseInt($('.like_num').text())
-                console.log(likeCount)
                 if(window.event){ // IE
                     event.cancelBubble  = true
                 }else{
@@ -650,14 +657,17 @@
                     articleId: articleId
                 }
                 myAjax('POST', 'post/addLike', param).then((res) => {
-                    if (res.code == 1) {
-                        if ($('.is_like').text() == 'true') {
+                    if (res.code == 10000) {
+                        if (!res.isLike) {
                             $('.like').addClass('dp-none')
                             $('.like').after("<img class='no_like' src='/images/no_like.png' alt='' >")
                             $('.like_num').text(likeCount - 1 + '人喜欢')
                             likeCount = likeCount - 1
                             $('.like_count').text(likeCount + '人喜欢')
                             $('.is_like').text('false')
+                            if ($(this).hasClass('app-user-do-item')) {
+                                $(this).empty().append(`<svg class='iconSvg' aria-hidden='true'><use xlink:href='#icon-shoucang-copy'></use></svg>`)
+                            }
                         } else {
                             if ($('.like').hasClass('dp-none')) {
                                 $('.like').removeClass('dp-none')
@@ -669,6 +679,9 @@
                             $('.like_count').text(likeCount + ' 人喜欢')
                             $('.no_like').remove()
                             $('.is_like').text('true')
+                            if ($(this).hasClass('app-user-do-item')) {
+                                $(this).empty().append(`<svg class='iconSvg' aria-hidden='true'><use xlink:href='#icon-shoucang-copy-copy'></use></svg>`)
+                            }
                         }
                         $('.follow').find('.count').text(likeCount)
                     } else {
@@ -736,21 +749,120 @@
                 return false
             })
             // --------------------------------------------app-------------------------------
+            // show user-comment-content-mask
             $('.response-text-box').on('click', function(e) {
                 e.stopPropagation()
+                $('.app-answer-btn').addClass('app-submit-comment')
+                $('.app-answer-btn').removeClass('app-answer-comment')
                 $('.user-comment-content-mask').css('display', 'block')
                 $('.user-comment-textarea').focus();
             })
+            // no touchmove
             $('.user-comment-content-mask').on("touchmove",function(e) {
                 e.preventDefault()
                 e.stopPropagation()
             })
+            // hide user-comment-content-mask
             $('.user-comment-content-mask').on('click', function(e) {
                 e.stopPropagation()
                 $('.user-comment-content-mask').css('display', 'none')
             })
+            // don't stopPropagation
             $('.user-comment-content').on('click', function(e) {
                 e.stopPropagation()
+            })
+            // submit one class comment
+            $('.user-comment-content').on('click', '.app-submit-comment', function(e) {
+                e.stopPropagation()
+                if (!userId) {
+                    goPage('user/login')
+                    return false
+                }
+                let commentText = $('.user-comment-textarea').val()
+                if (!commentText) return
+                let param = {
+                    userId: userId,
+                    commentatorName: author,
+                    nickName: $.cookie('nickName'),
+                    articleTitle: articleTitle,
+                    articleId: articleId,
+                    commentText: commentText
+                }
+                myAjax('POST', 'post/addComment', param).then((res) =>{
+                    if (res.code == 10000) {
+                        let commentDetail = {
+                            commentatorName: author,
+                            headerIcon: localStorage.getItem('headerIcon') ? localStorage.getItem('headerIcon') : '',
+                            commentUserName: $.cookie('nickName'),
+                            commentContent: commentText,
+                            commentId: res.commentId,
+                            commentTime: format('yyyy-MM-dd hh:mm:ss', new Date())
+                        }
+                        $('.comment_list').append(addCommentHtml(commentDetail))
+                        $('.user-comment-textarea').val('')
+                        let addCom = ($('.comment_total').text() * 1) + 1
+                        $('.comment_num').text(`评论(${addCom})`)
+                        $('.comment_total').text(addCom)
+                        $('.user-comment-content-mask').css('display', 'none')
+                    } else {
+                        layer.msg(res.message)
+                        console.log(res.message)
+                    }
+                })
+            })
+            // submit child comment
+            let appCommentId = ''
+            let $self = '';
+            $('.comment_list').on('click', '.app-answer', function(e) {
+                e.stopPropagation()
+                $('.app-answer-btn').removeClass('app-submit-comment')
+                $('.app-answer-btn').addClass('app-answer-comment')
+                commentatorName = ''
+                commentatorName = $(this).parent().siblings('.comment_top').find('.commentator_name').text()
+                appCommentId = ''
+                appCommentId = $(this).parents('.parent_comment').find('.comment_id').text()
+                $self = $(this)
+                $('.user-comment-content-mask').css('display', 'block')
+                $('.user-comment-textarea').focus();
+            })
+            $('.user-comment-content').on('click', '.app-answer-comment', function(event) {
+                if (!userId) {
+                    goPage('user/login')
+                    return false
+                }
+                let commentText = $('.user-comment-textarea').val()
+                
+                if (!commentText) return
+                event.stopPropagation()
+                let param = {
+                    author: author,
+                    userId: userId,
+                    commentatorName: commentatorName,
+                    nickName: $.cookie('nickName'),
+                    articleId: articleId,
+                    commentText: commentText,
+                    commentId: appCommentId
+                }
+                
+                myAjax('POST', 'post/addChildrenComment', param).then((res) => {
+                    if (res.code == 10000) {
+                        let commentDetail = {
+                            commentatorName: commentatorName,
+                            commentUserName: $.cookie('nickName'),
+                            commentContent: commentText,
+                            commentId: res.commentId,
+                            commentTime: format('yyyy-MM-dd hh:mm:ss', new Date())
+                        }
+                        $('.user-comment-textarea').val('')
+                        $self.parents('.parent_comment').append(childrenRenderComment(commentDetail))
+                        let addCom = ($('.comment_total').text() * 1) + 1
+                        $('.comment_num').text(`评论(${addCom})`)
+                        $('.comment_total').text(addCom)
+                        $('.user-comment-content-mask').css('display', 'none')
+                    } else {
+                        layer.msg(res.message)
+                    }
+                })
             })
         })
         function renderCommentsHtml(item) {
@@ -769,7 +881,8 @@
                     <div class='comment_id del_comment_id' style='display:none'>${ item.commentId }</div>
                     <div class='comment_userId' style='display:none'>${ item.userId }</div>
                     <div class='eidt_answer'>
-                        <div class='answer'>回复</div>
+                            <div class='answer web-display'>回复</div>
+                            <div class='app-answer app-display'>回复</div>
                         <div class='comment_type' style='display: none'>parent</div>
                     </div>
                     ${ forChileComment(item.childrenComentList) }
@@ -797,7 +910,8 @@
                         <div class='comment_id del_comment_id' style='display:none'>${ item.commentId }</div>
                         <div class='comment_userId' style='display:none'>${ $.cookie('userId') }</div>
                         <div class='eidt_answer'>
-                            <div class='answer'>回复</div>
+                            <div class='answer web-display'>回复</div>
+                            <div class='app-answer app-display'>回复</div>
                             <div class='comment_type' style='display: none'>parent</div>
                             <div class='delete'>删除</div>
                         </div>
@@ -814,13 +928,13 @@
             return  resTime = formatDateFilter(item)
         }
         function showHeaderIcon(item) {
-            if (item.hearderIcon != '' && item.hearderIcon != null) {
+            if (item.headerIcon != '' && item.headerIcon != null) {
                 return `
-                    <img class='commentator_img' src='/${ item.hearderIcon }'>
+                    <img class='commentator_img' src='/${ item.headerIcon }'>
                 `
             } else {
                 console.log(item)
-                return `<span class='item-random-color commentator_user_name' article-commentUserName='${item.commentUserName}'>${item.commentUserName.substring(0, 1)}</span>`;
+                return `<span class='item-random-color commentator_user_name' article-commentUserName='${item.commentUserName}' style='background: rgb(97, 99, 103);'>${item.commentUserName.substring(0, 1)}</span>`;
             }
         }
         function forChileComment(item) {
@@ -852,7 +966,8 @@
                             ${ item.commentContent }
                         </div>
                         <div class='eidt_answer'>
-                            <div class='answer'>回复</div>
+                            <div class='answer web-display'>回复</div>
+                            <div class='app-answer app-display'>回复</div>
                             <div class='comment_type' style='display: none'>child</div>
                             <div class='delete'>删除</div>
                         </div>

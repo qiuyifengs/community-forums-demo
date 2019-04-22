@@ -58,8 +58,6 @@ function Editor(opt) {
                             </div>\
                             <div class="J_editor_body editor_body">\
                                 <div class="J_text text" data-type="text">\
-                                    <span class="J_del del"> <i class="iconfont icon-del1"></i>\
-                                    </span>\
                                     <div class="J_drag drag">\
 										<span>文字</span><svg class="iconSvg iconfont" aria-hidden="true"><use xlink:href="#icon-menu2"></use></svg> <em>上下拖拽修改排序</em>\
                                     </div>\
