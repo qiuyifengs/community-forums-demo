@@ -137,6 +137,47 @@ function Editor(opt) {
 		} else {
 			$(".J_editor_body").append(htm).sortable("refresh");
 		}
+	},
+	this.videoPromptTemplate = function() {
+		var html = '';
+		html = `
+		<div class="modal_mask">
+			<div class="modal_box" >
+				<h4 class="modal_title">插入视频</h4>  
+				<ul class="modal_tab_select">
+					<li class="modal_tab_item active">本地上传</li>
+					<li class="modal_tab_item">远程地址</li>
+				</ul>
+				<div class="tab_content">
+					<div class="tab_pane sel">
+						<p class="tip_text">视频不能超过150M</p>
+						<div class="file_btn">
+							选择文件
+							<form enctype="multipart/form-data" id="videoFrom">
+								<input class="file_inp" type="file" name="file" accept="video/*">
+							</form>
+						</div>
+						<div class="modal_btn_box">
+						<button type="button" class="madal_submit madal_local_submit">插入</button>
+						<button type="button" class="madal_cancel">取消</button>
+					</div>
+					</div>
+					<div class="tab_pane">
+						<textarea class="video_url" type="text" placeholder="请输入视频url" ></textarea>
+						<div class="modal_btn_box">
+						<button type="button" class="madal_submit madal_url_submit">插入</button>
+						<button type="button" class="madal_cancel">取消</button>
+					</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+			
+			`
+		// <form enctype="multipart/form-data"><input type="file" name="file"></form>
+		// <input type="text" placeholder="请输入视频url" />
+		return html
 	}
 }
 let oldVal = null
@@ -196,11 +237,14 @@ Editor.prototype = {
 		}
 
 		_self.addText();
-		_self.addPic();
+		_self.addPic(opt);
 		_self.addVideo();
 		_self.addEmoji(opt.box);
 		_self.addLink();
 		_self.clear();
+		_self.addVideoState();
+		_self.addVideoUrl(opt);
+		_self.cancelVideo();
 		var opt = $.extend({}, this.config, opt);
         return $(opt.box).eq(0).each(function () {
 			var editor = new Editor(opt);
@@ -208,6 +252,7 @@ Editor.prototype = {
         })
 	},
 	autoSave: function(opt) {
+		console.log(opt)
 		var _self = this;
 		if ('sessionStorage' in window) {
 			time = setInterval(function() {
@@ -288,7 +333,7 @@ Editor.prototype = {
 			});
 		})
 	},
-	addPic: function() {
+	addPic: function(opt) {
 		var _self = this;
 		if (_self.config.uploadUrl == "") {
 			alert('请配置上传图片接口地址');
@@ -306,10 +351,9 @@ Editor.prototype = {
                 for(let i = 0; i < files.length; i++){
                     myForm.append("file", files[i]);                
 				}
-				console.log(myForm)
 				$this.addClass('disabled').html('<i class="iconfont icon-tupianbcc0119"></i>上传中...');
 				$.ajax({
-					url: _self.config.uploadUrl,
+					url: _self.config.uploadUrl + 'post/articleImg',
 					type: 'post',
 					data: myForm,
 					contentType: false,
@@ -325,6 +369,7 @@ Editor.prototype = {
 								icon: 2
 							});
 						}
+						_self.autoSave(opt)
 						$this.removeClass('disabled').html('<i class="iconfont icon-tupianbcc0119"></i>上传图片');
 					},
 					error: function(e) {
@@ -340,17 +385,77 @@ Editor.prototype = {
 	addVideo: function() {
 		var _self = this;
 		$('.J_video').click(function() {
-			layer.prompt({
-				formType: 2,
-				title: '请输入视频URL',
-				area: ['500px', '100px'] //自定义文本域宽高
-			}, function(value, index, elem) {
+			$('.publish_page').append(_self.videoPromptTemplate())
+			// layer.prompt({
+			// 	formType: 2,
+			// 	title: '请输入视频URL',
+			// 	area: ['500px', '100px'] //自定义文本域宽高
+			// }, function(value, index, elem) {
+				// _self.template({
+				// 	type: 'video',
+				// 	url: value
+				// });
+			// 	layer.close(index);
+			// });
+		})
+	},
+	addVideoState: function() {
+		$('.publish_page').on('click', '.modal_tab_item', function(e) {
+			e.preventDefault()
+			e.stopPropagation()
+			$(this).addClass('active')
+			$(this).siblings().removeClass('active')
+			$('.tab_pane').eq($(this).index()).addClass('sel');
+			$('.tab_pane').eq($(this).index()).siblings().removeClass('sel');
+		})
+	},
+	addVideoUrl: function(opt) {
+		var _self = this;
+		$('.publish_page').on('click', '.madal_submit', function() {
+			if ($(this).hasClass('madal_url_submit')) {
 				_self.template({
 					type: 'video',
-					url: value
+					url: $('.video_url').val()
 				});
-				layer.close(index);
-			});
+				$('.modal_mask').remove()
+			} else {
+				let videoFrom = new FormData("videoFrom");
+				let files = $('.file_inp')[0].files;
+				for(let i = 0; i < files.length; i++){
+                    videoFrom.append("file", files[i]);                
+				}
+				$.ajax({
+					url: _self.config.uploadUrl + 'post/articleVideo',
+					type: 'post',
+					data: videoFrom,
+					contentType: false,
+                    processData: false,
+					success: function(data) {
+						if(data.code=='10000'){
+							_self.template({
+								type: 'video',
+								url: data.path
+							});
+							_self.autoSave(opt)
+						} else {
+							layer.msg(data.message, {
+								icon: 2
+							});
+						}
+					},
+					error: function(e) {
+						layer.msg('接口异常', {
+							icon: 2
+						});
+					}
+				})
+				$('.modal_mask').remove()
+			}
+		})
+	},
+	cancelVideo: function() {
+		$('.publish_page').on('click', '.madal_cancel', function() {
+			$('.modal_mask').remove()
 		})
 	},
 	clear: function() {
