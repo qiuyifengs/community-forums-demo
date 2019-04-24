@@ -74,8 +74,31 @@ function Editor(opt) {
 		// 模块删除
 		$(".J_editor_body").on('click', '.J_del', function() {
 			if ($('.J_text').length > 1) {
-				$(this).parents('.J_text').remove();
-				_self.autoSave(_self)
+				let delUrl = []
+				if ($(this).attr('data-name')) {
+					delUrl.push($(this).attr('data-name'))
+				}
+				if (delUrl.length > 0) {
+					let data = {
+						urlArr: JSON.stringify(delUrl)
+					}
+					$(this).parents('.J_text').remove();
+					$.ajax({
+						data: data,
+						url: _self.config.uploadUrl + 'post/deleteUrl',
+						type: 'post',
+						success: function(res) {
+							
+							_self.autoSave(_self)
+						},
+						error: function(e) {
+							layer.msg('接口异常', {
+								icon: 2
+							});
+						}
+	
+					})
+				}
 			} else {
 				layer.msg('至少保留一个输入板块', {
 					offset: '290px'
@@ -99,7 +122,7 @@ function Editor(opt) {
                                 <div class="pic_box">\
                                     <div class="pic" data-src="'+opt.url+'" style="background-image: url('+opt.url+'); background-size:cover;"></div>\
                                     <textarea placeholder="添加描述" spellcheck="false" class="form-control" oninput="keyup(value)" onchange="change()">' + (opt.value ? opt.value : '') + '</textarea>\
-									<div class="J_bottom editor_btns"><span class="J_del del"><span class="J_delete">删除</span></span></div>\
+									<div class="J_bottom editor_btns"><span class="J_del del" data-name="' + opt.url + '"><span class="J_delete" >删除</span></span></div>\
                                 </div>\
                             </div>';
 		} else if (opt.type == 'video') {
@@ -108,7 +131,7 @@ function Editor(opt) {
                                 <div class="pic_box">\
                                     <div class="video"><iframe src="' + opt.url + '" frameborder="0" width="100%" height="100% scrolling="no" marginheight="0" marginwidth="0""></iframe></div>\
                                     <textarea placeholder="添加描述" spellcheck="false" class="form-control" oninput="keyup(value)" onchange="change()">' + (opt.value ? opt.value : '') + '</textarea>\
-									<div class="J_bottom"><span class="J_del del"><span class="J_delete">删除</span></span></div>\
+									<div class="J_bottom"><span class="J_del del" data-name="' + opt.url + '"><span class="J_delete">删除</span></span></div>\
                                 </div>\
                             </div>';
 		}else if(opt.type == 'link'){
@@ -141,42 +164,40 @@ function Editor(opt) {
 	this.videoPromptTemplate = function() {
 		var html = '';
 		html = `
-		<div class="modal_mask">
-			<div class="modal_box" >
-				<h4 class="modal_title">插入视频</h4>  
-				<ul class="modal_tab_select">
-					<li class="modal_tab_item active">本地上传</li>
-					<li class="modal_tab_item">远程地址</li>
-				</ul>
-				<div class="tab_content">
-					<div class="tab_pane sel">
-						<p class="tip_text">视频不能超过150M</p>
-						<div class="file_btn">
-							选择文件
-							<form enctype="multipart/form-data" id="videoFrom">
-								<input class="file_inp" type="file" name="file" accept="video/*">
-							</form>
+			<div class="modal_mask">
+				<div class="modal_box" >
+					<h4 class="modal_title">插入视频</h4>  
+					<ul class="modal_tab_select">
+						<li class="modal_tab_item active">本地上传</li>
+						<li class="modal_tab_item">远程地址</li>
+					</ul>
+					<div class="tab_content">
+						<div class="tab_pane sel">
+							<p class="tip_text">视频不能超过150M</p>
+							<div class="file_btn">
+								选择文件
+								<form enctype="multipart/form-data" id="videoFrom">
+									<input class="file_inp" type="file" name="file" accept="video/*">
+								</form>
+							</div>
+							<div class="modal_btn_box">
+							<button type="button" class="madal_submit madal_local_submit">插入</button>
+							<button type="button" class="madal_cancel">取消</button>
 						</div>
-						<div class="modal_btn_box">
-						<button type="button" class="madal_submit madal_local_submit">插入</button>
-						<button type="button" class="madal_cancel">取消</button>
+						</div>
+						<div class="tab_pane">
+							<textarea class="video_url" type="text" placeholder="请输入视频url" ></textarea>
+							<div class="modal_btn_box">
+							<button type="button" class="madal_submit madal_url_submit">插入</button>
+							<button type="button" class="madal_cancel">取消</button>
+						</div>
+						</div>
 					</div>
-					</div>
-					<div class="tab_pane">
-						<textarea class="video_url" type="text" placeholder="请输入视频url" ></textarea>
-						<div class="modal_btn_box">
-						<button type="button" class="madal_submit madal_url_submit">插入</button>
-						<button type="button" class="madal_cancel">取消</button>
-					</div>
-					</div>
+					
 				</div>
-				
-			</div>
-		</div>
-			
-			`
-		// <form enctype="multipart/form-data"><input type="file" name="file"></form>
-		// <input type="text" placeholder="请输入视频url" />
+			</div>		
+		`
+
 		return html
 	}
 }
@@ -241,7 +262,7 @@ Editor.prototype = {
 		_self.addVideo();
 		_self.addEmoji(opt.box);
 		_self.addLink();
-		_self.clear();
+		_self.clearAll();
 		_self.addVideoState();
 		_self.addVideoUrl(opt);
 		_self.cancelVideo();
@@ -252,13 +273,12 @@ Editor.prototype = {
         })
 	},
 	autoSave: function(opt) {
-		console.log(opt)
 		var _self = this;
 		if ('sessionStorage' in window) {
 			time = setInterval(function() {
 				let autoSave = false
 				for (let i = 0; i < _self.getData().length; i++) {
-					if (_self.getData()[i].value != '' && _self.getData()[i].value != '\n') {
+					if (_self.getData()[i].value != '' && _self.getData()[i].value != '\n' || _self.getData()[i].url != '') {
 						autoSave = true;
 					}
 				}
@@ -272,8 +292,9 @@ Editor.prototype = {
 					});
 					sessionStorage.jStorage = JSON.stringify(_self.getData());
 					typeof opt.callback === 'function' && opt.callback(sessionStorage.jStorage);
-					clearInterval(time)
+					
 				}
+				clearInterval(time)
 			}, 3000);
 		}
 	},
@@ -362,7 +383,8 @@ Editor.prototype = {
 						if(data.code=='10000'){
 							_self.template({
 								type: 'pic',
-								url: data.path
+								url: data.path,
+								filename: data.filename
 							});
 						}else{
 							layer.msg(data.msg, {
@@ -386,17 +408,6 @@ Editor.prototype = {
 		var _self = this;
 		$('.J_video').click(function() {
 			$('.publish_page').append(_self.videoPromptTemplate())
-			// layer.prompt({
-			// 	formType: 2,
-			// 	title: '请输入视频URL',
-			// 	area: ['500px', '100px'] //自定义文本域宽高
-			// }, function(value, index, elem) {
-				// _self.template({
-				// 	type: 'video',
-				// 	url: value
-				// });
-			// 	layer.close(index);
-			// });
 		})
 	},
 	addVideoState: function() {
@@ -434,7 +445,8 @@ Editor.prototype = {
 						if(data.code=='10000'){
 							_self.template({
 								type: 'video',
-								url: data.path
+								url: data.path,
+								filename: data.filename
 							});
 							_self.autoSave(opt)
 						} else {
@@ -458,19 +470,51 @@ Editor.prototype = {
 			$('.modal_mask').remove()
 		})
 	},
-	clear: function() {
+	clearAll: function() {
 		var _self = this;
 		$('.J_clear').click(function() {
+			let delUrlArr = []
 			layer.confirm('确定要清空数据？', {
 				btn: ['确定', '取消'] //按钮
 			}, function(index) {
+				for (let i = 0; i < _self.getData().length; i++) {
+					if (_self.getData()[i].url && _self.getData()[i].url != '') {
+						delUrlArr.push(_self.getData()[i].url)
+						continue;
+					}
+				}
 				_self.template({
 					type: 'clear'
 				});
 				layer.close(index);
+				if (delUrlArr.length < 1) return;
+				let data = {
+					urlArr: JSON.stringify(delUrlArr)
+				}
+				$.ajax({
+					data: data,
+					url: _self.config.uploadUrl + 'post/deleteUrl',
+					type: 'post',
+					success: function(res) {
+						sessionStorage.removeItem('jStorage')
+					},
+					error: function(e) {
+						layer.msg('接口异常', {
+							icon: 2
+						});
+					}
+
+				})
+				
 			}, function() {
 
 			});
+		})
+	},
+	clearOne: function() {
+		var _self = this;
+		$('.publish_page').on('click', '.madal_submit', function() {
+
 		})
 	},
 	getData: function() {
@@ -488,14 +532,14 @@ Editor.prototype = {
 					data.push({
 						type: 'pic',
 						url: $this.find('.pic').data('src'),
-						value: $this.find('textarea').val()
+						value: $this.find('textarea').val(),
 					});
 					break;
 				case 'video':
 					data.push({
 						type: 'video',
 						url: $this.find('iframe').attr('src'),
-						value: $this.find('textarea').val()
+						value: $this.find('textarea').val(),
 					});
 					break;
 				case 'link':
