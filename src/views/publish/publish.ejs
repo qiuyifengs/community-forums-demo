@@ -49,7 +49,9 @@
                     <% } %>
                     <div class="title-box">
                         <div class="title-text app-label app-display">Theme</div>
-                        <input class="title_input publish_input" maxlength="30" placeholder="Input topic..." onchange="saveArticle()"/>
+                        <form action="javascript:return true"></form>
+                            <input class="title_input publish_input" maxlength="30" placeholder="Input topic..." onchange="saveArticle()"/>
+                        <form action="javascript:return true"></form>
                     </div>
                     <div class="label-parent">
                             <div class="app-label app-display">Label</div>
@@ -463,7 +465,6 @@
             })
         })
         function saveArticle(content) {
-            console.log(11, content)
             let articleTitle = $(".title_input").val(); // title
             let param = {
                 userId: $.cookie("userId"),
