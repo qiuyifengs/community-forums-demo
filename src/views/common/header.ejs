@@ -12,7 +12,7 @@
                     </div>
                     <section class="ghost-pro-components-global-header-index-left">
                         <span class="ghost-input-search ghost-input-affix-wrapper" style="width: 500px">
-                            <input type="text" id="search" placeholder="Search..." style="background-color: #ccc3" class="ghost-input ghost-input-round" onK>
+                            <input type="text" id="search" placeholder="Search..." style="background-color: #ccc3" class="ghost-input ghost-input-round" >
                             <span class="ghost-input-suffix">
                                 <svg class="iconSvg" aria-hidden="true" style="color: #485ec0">
                                     <use xlink:href="#icon-sousuo"></use>
@@ -26,7 +26,7 @@
         </div>
     </div>
 </header>
-<header class="app-header comments-header app-display">
+<header class="app-header comments-header app-display bd-bottom">
     <section class="app-gohost-hearder">
         <div class="app-gohost-hearder-left ghost-avatar-image">
             <svg class="iconSvg" aria-hidden="true">
@@ -81,6 +81,23 @@
                 <!-- <li class="drop-down-item">我的积分</li> -->
                 <li class="drop-down-item account-dropdown-item logout" data-id='5'>退出登录</li>
             </ul>
+        </div>
+    </section>
+    <section class="app-search-component">
+        <div class="app-search-top bd-bottom">
+            <!-- <div class="app-gohost-hearder-left ghost-avatar-image app-search-back">
+                <svg class="iconSvg app-back-icon" aria-hidden="true">
+                    <use xlink:href="#icon-icon-arrow-left2"></use>
+                </svg>
+            </div> -->
+            <div class="app-gohost-hearder-mid">
+                <form action="javascript:return true">
+                    <input class="app-search-keyword bd" type="search"  placeholder="keyword" autofocus id="appSearch"/>
+                </form>
+            </div>
+            <div class="app-gohost-hearder-right app-search-cancel">
+                <div class="app-gohost-hearder-right-text">取消</div>
+            </div>
         </div>
     </section>
 </header>
@@ -294,7 +311,24 @@ $(document).ready(function(){
     $('.app-gohost-hearder-left').on('click', function() {
         $(".app-ghost-drop-down").css("display", "block")
     })
-
+    $('.search-icon').on('click', function(event) {
+        event.stopPropagation()
+        $('.app-search-component').css('display', 'block')
+        $('.app-search-keyword').focus();
+    })
+    $('.app-search-cancel').on('click', function(event) {
+        event.stopPropagation()
+        event.preventDefault()
+        $('.app-search-component').css('display', 'none')
+    })
+    $("#appSearch").keydown(function(event){
+        if (event.keyCode == 13) {
+            let keyword = $(this).val()
+            if (!keyword || keyword == '') return false
+            let url = 'post/search/' + keyword
+            goPage(url)
+        }
+    })
     $(".app-ghost-drop-down").on("click", function(event) {
         event.stopPropagation()
         $(".app-ghost-drop-down").css("display", "none")
@@ -304,7 +338,7 @@ $(document).ready(function(){
         $(".app-ghost-drop-down").css("display", "none")
     })
     // user sign
-    $('.user-sign').on('click', function(e) {
+    $('.user-sign').on('click', function(event) {
         event.stopPropagation()
         goPage('user/login')
     })
