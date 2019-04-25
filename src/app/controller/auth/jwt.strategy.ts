@@ -13,21 +13,21 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      passReqToCallback: true,
+     // passReqToCallback: false,
       secretOrKey: '123',
     });
   }
 
-  async validate(payload: JwtPayload, done: Function) {
+  async validate(payload: JwtPayload) {
 
     console.log('entered jwt')
     console.log(payload.userId);
     
     const user = await this.authService.validate(payload);
     if (!user) {
-      return done(new UnauthorizedException(), false);
+      throw new UnauthorizedException();
     }
-    done(null, user);
+    return user;
   }
 }
 export const callback = (err, user, info) => {
