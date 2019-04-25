@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Body, Request, Response, UseInterceptors, FileInterceptor, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Request, Response, UseInterceptors, FileInterceptor, UploadedFile, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiUseTags } from '@nestjs/swagger';
 import { PublishService } from './publish.service';
 import { AuthGuard } from '@nestjs/passport';
@@ -27,7 +27,7 @@ export class PublishController {
         }
         res.render('publish/publish', { title: 'publish',  obj});
     }
-   // @UseGuards(AuthGuard('jwt'))
+    @UseGuards(AuthGuard('jwt'))
     @Post('publish')
     @ApiOperation({ title: 'get balance from postList'})
     public async publish(@Body() params): Promise<PostList[]> {

@@ -19,11 +19,12 @@ export class AuthService {
     
 
 
-    public async validate(payload: JwtPayload): Promise<boolean> {
-        console.log(333,payload.userId);
+    public async validate(payload): Promise<boolean> {
+        console.log(333,payload);
         
 
-        const user = await this.authRepository.findOne({userId:payload.userId}); console.log(user)
+        const user = await this.authRepository.findOne({userId: payload}); 
+        console.log(user)
         //有該筆資料，回傳true
         if (user) {
             return true;
