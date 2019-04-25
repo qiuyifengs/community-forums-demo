@@ -361,9 +361,7 @@
             // init pagination config
             let isLoading = false;
             let pageSize = 1;
-            $('.dropload-up').remove()
-            $('.dropload-down').remove()
-            $('.dropload-refresh').remove()
+            
             let dropload = $('.article_detail_page').dropload({
                 loadDownFn: function(me){
                     if (isLoading) return false;
@@ -393,7 +391,9 @@
                     })
                 }
             })
-
+            $('.dropload-up').remove()
+            $('.dropload-down').remove()
+            $('.dropload-refresh').remove()
             // $('.ghost-pagination').pagination({
             //     total: document.getElementById('totalPages').value,
             //     pageSize: 10,

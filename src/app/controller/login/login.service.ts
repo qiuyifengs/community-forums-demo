@@ -10,7 +10,6 @@ import { Verification } from '../register/e-mail/send.e-mail';
 import * as jwt from 'jsonwebtoken';
 import { from } from 'rxjs';
 const config = require('../../../util/token.config');
-const user: JwtPayload = { userId: '' };
 
 @Injectable()
 export class LoginService {
@@ -21,7 +20,7 @@ export class LoginService {
     private readonly signRepository: Repository<User>,
   ) { }
   // createToken
-  public async createToken(userId: string): Promise<any> {
+  public async createToken(userId: any): Promise<any> {
     const user: JwtPayload = {userId};
     console.log(1111,user.userId);
     
@@ -40,10 +39,7 @@ export class LoginService {
   async login(data): Promise<any> {
 
     const user: JwtPayload = { userId: data.userId };
-    console.log();
-    
-
-    const res = await this.signRepository.findOne({ userId: user.userId });
+    const res = await this.signRepository.findOne({ userId: data.userId });
     const msg = {
       code: 1,
       message: '',
@@ -54,7 +50,7 @@ export class LoginService {
     if (res) {
       if (md5(data.passWord) === res.passWord) {
         // 登入成功返回ｔｏｋｅｎ
-        const token = await this.createToken(user.userId);
+        const token = await this.createToken(data.userId);
         console.log(token);
         msg.code = ApiErrorCode.USER_LOGIN_SUCCESS;
         msg.message = '登入成功';
@@ -87,10 +83,9 @@ export class LoginService {
   }
 
   async Emailverifica(param): Promise<any> {
-    const user: JwtPayload = { userId: param.userId };
-    const date = await this.signRepository.findOne({ userId: user.userId });
+    const date = await this.signRepository.findOne({ userId: param.userId });
     if (date) {
-      const result = await Verification.Everifica(user.userId, param);
+      const result = await Verification.Everifica(param.userId, param);
       console.log(result.code);
 
       if (result.code === 10008) {

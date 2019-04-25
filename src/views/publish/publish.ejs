@@ -56,7 +56,7 @@
                     <div class="label-parent">
                             <div class="app-label app-display">Label</div>
                             <div class="label-box mg-t20">
-                                <input class="typle_input publish_input" placeholder="请输入选择标签，如php（用逗号，分号；分割）按Enter键确认" onchange="saveArticle()"/>
+                                    <input class="typle_input publish_input" placeholder="请输入选择标签，如php（用逗号，分号；分割）按Enter键确认" onchange="saveArticle()"/>
                             </div>
                             <div class="label-data" style="display:none"><%= obj.getLabel %></div>
                             <div id="tags-input"></div>
@@ -77,7 +77,9 @@
                 </div>
                 <div class="app-content-box app-display">
                     <div class="app-content-label app-label">正文</div>
-                    <textarea class="app-content-text" name="" id="" cols="30" rows="10" placeholder="请输入内容"></textarea>
+                    <form action="javascript:return true">
+                        <textarea class="app-content-text" name="" id="" cols="30" rows="10" placeholder="请输入内容"></textarea>
+                    </form>
                 </div>
                 <div class="app-article-btn app-display">
                     <button type="button" class="app-btn ghost-btn-primary comment_btn">发表文章</button>
@@ -230,7 +232,6 @@
                         regCn = /[·！#￥（——）：“”‘、|《。》？、【】[\]]/im;
                     if (regEn.test(keyword) || regCn.test(keyword)) return layer.msg("标签不能含有其他特殊字符！");
                     keyword = keyword.replace(/\,|\;|\，|\；/ig, ',')
-                    console.log(111, keyword)
                     if (keyword.indexOf(',') > 0) {
                         let arr = keyword.split(',');
                         if (!arr[arr.length-1]) {
@@ -395,8 +396,6 @@
                 $('.article_content .highlight').removeClass('highlight');
             });
 
-            
-
             // save draft box
             // let time
             // function saveArticle(start) {
@@ -436,7 +435,6 @@
             //     } else {
             //         clearInterval(time);
             //     }
-                
             // }
             // autoSave();
             // function autoSave() {
@@ -452,11 +450,12 @@
             //         }
             //     })
             // }
+
             //--------------------------------------webapp--------------------------
             $('.app-gohost-hearder-right').empty().text('保存草稿')
             $('.app-gohost-hearder-right').on('click', function(e) {
                 e.stopPropagation();
-                if (!$('app-content-text').val()) return;
+                if (!$('.app-content-text').val()) return;
                 let saveTextObj = {
                     type: 'text',
                     value: $('app-content-text').val()

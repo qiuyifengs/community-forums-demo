@@ -47,6 +47,7 @@ export class PublishService {
     }
     // publish
     async publish(data): Promise<any> {
+        console.log(data)
         const userInfo = await this.userRepository.findOne({ userId: data.userId });
         data.author = userInfo.nickName;
         const msg = {
