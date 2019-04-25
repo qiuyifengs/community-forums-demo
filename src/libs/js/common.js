@@ -1,7 +1,7 @@
 
 // baseUrl
 // var baseUrl = 'http://192.168.4.188:3002/';
-var baseUrl = 'http://127.0.0.1:3002/';
+ var baseUrl = 'http://127.0.0.1:3002/';
 /**
  * checkEmail
  * @param {*} email 
@@ -18,8 +18,13 @@ function checkEmail(email) {
  * goPage
  * @param {*} pathName 
  */
-function goPage(pathName) {
-    $(window).attr('location', baseUrl + pathName);
+function goPage(pathName, newWin) {
+    if (newWin) {
+        console.log(pathName)
+        window.open(baseUrl + pathName)
+    } else {
+        $(window).attr('location', baseUrl + pathName);
+    }
 }
 /**
  * _ajax
@@ -145,3 +150,65 @@ function renderColor(id,name) {
       }
     }
 }
+/**
+ * show article content in articleDetail page
+ * @param {*} valArr 
+ */
+function dealArticleContent(valArr) {
+    valArr.forEach(item => {
+        if (item.type === 'text') {
+            if (item.value.indexOf('[qq_') > -1) {
+                let emojiDom = `<img class="emoji-pic" src="http://s.jiajuol.com/haopinjia/pc/0100/dist/lib/jquery-emoji/dist/img/qq/`
+                let value = item.value.replace(/\[qq_/g, emojiDom)
+                item.value = `<p class="text-box" data-type="${item.type}">${value.replace(/\]/g, '.gif">')}</div>`
+            } else {
+                item.value = `<p class="text-box" data-type="${item.type}">${item.value}</div>`
+            }
+            
+        } else if (item.type === 'link') {
+            let linkVal = []
+            for (const link of item.url) {
+                linkVal.push(`<p class="link-box" data-type="${item.type}"><a href="${link.link}">${link.title}</a></p>`)
+            }
+            item.value = linkVal.join('')
+        } else if (item.type === 'pic') {
+            item.value = `<p class="img-box" data-type="${item.type}"><img src="${item.url}" /><br />${item.value}</p>`
+        } else if (item.type === 'video') {
+            item.value = `<p class="video-box" data-type="${item.type}"><video controls="" autoplay="" name="media"><source src="${item.url}" type="video/mp4"></video><br />${item.value}</p>`
+        }
+    })
+    return valArr;
+}
+/**
+ * Processing List Display Format
+ * @param {*} valArr 
+ */
+function dealPostList(valArr) {
+    valArr.forEach(item => {
+        if (item.type === 'text') {
+            if (item.value.indexOf('[qq_') > -1) {
+                let emojiDom = `<img src="http://s.jiajuol.com/haopinjia/pc/0100/dist/lib/jquery-emoji/dist/img/qq/`
+                let value = item.value.replace(/\[qq_/g, emojiDom)
+                item.value = `${value.replace(/\]/g, '.gif">')}`
+            } else {
+                item.value = `${item.value }`
+            }
+        } else if (item.type === 'link') {
+            let linkVal = []
+            for (const link of item.url) {
+                linkVal.push(`${link.title}`)
+            }
+            item.value = linkVal.join('')
+        } else if (item.type === 'pic') {
+            item.value = `${item.value}`
+            item.url = `${item.url}`
+        } else if (item.type === 'video') {
+            item.value = `${item.value}`
+        }
+    })
+    return valArr
+}
+
+
+
+    

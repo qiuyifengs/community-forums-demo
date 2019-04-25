@@ -51,7 +51,9 @@
                                                             <span class="item-title"><%= item.articleTitle %></span>
                                                         </h4>
                                                     </div>
-                                                    <div class="ghost-list-item-meta-article-content"><%- item.articleContent %></div>
+                                                    <div class="item-content-flex">
+                                                        <div class="ghost-list-item-meta-article-content"><%- item.articleContent %></div>
+                                                    </div>
                                                 </div>
                                                 <ul class="ghost-list-item-action">
                                                     <li class="list-item web-display">
@@ -102,26 +104,25 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <% }) %>   
+                                        <% }) %>
                                     </div>
-                                    
-                                </div>
-                            </div>
-                            <% if (collectList.length > 0) { %>
-                                <ul class="ghost-pagination article_page" style="margin: 24px 0; text-align: center"></ul>
-                            <% } %>
-                            <input type="hidden" id="totalPages" value="<%= collectList.total %>" style="display: none" />
-                            <% if (collectList.articleList.length < 1) { %>
-                                <div class="ghost-empty">
-                                        <dvi class="ghost-empty-image">
-                                            <img src="/images/no_collect.png" alt="">
-                                        </dvi>
-                                        <p class="ghost-empty-description">暂无收藏</p>
+                                    <% if (collectList.length > 0) { %>
+                                        <ul class="ghost-pagination article_page" style="margin: 24px 0; text-align: center"></ul>
+                                    <% } %>
+                                    <input type="hidden" id="totalPages" value="<%= collectList.total %>" style="display: none" />
+                                    <% if (collectList.articleList.length < 1) { %>
+                                        <div class="ghost-empty">
+                                            <div class="ghost-empty-image">
+                                                <img src="/images/no_collect.png" alt="">
+                                            </div>
+                                            <p class="ghost-empty-description">暂无收藏</p>
+                                        </div>
+                                    <% } %>
+                                    <div class="ghost-loading-mask" style="display: none">
+                                        <div class="ghost-loading-spinner">
+                                            <svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg>
+                                        </div>
                                     </div>
-                            <% } %>
-                            <div class="ghost-loading-mask" style="display: none">
-                                <div class="ghost-loading-spinner">
-                                    <svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg>
                                 </div>
                             </div>
                         </div>
@@ -131,6 +132,7 @@
         </div>
     </body>
     <script type="text/javascript">
+
         $(function() {
             // app title
             $('.app-page-title').text('我的收藏')
@@ -160,6 +162,18 @@
                     })
                 }
             });
+            $('.ghost-list-item-meta-article-content').each(function() {
+                let showContent = ''
+                let showImg = ''
+                dealPostList(JSON.parse($(this).text())).forEach(item => {
+                    showContent += item.value
+                    if (item.type == 'pic' && item.url) {
+                        showImg = `<img class="post-pic" src="${item.url}" />`
+                    }
+                })
+                $(this).html(showContent)
+                $(this).after(showImg)
+            })
             // go to article detail
             $(".list-box").each(function() {
                 $(this).on("click", function(event) {
@@ -195,6 +209,18 @@
         function filterTime(item) {
             return  resTime = formatDateFilter(item)
         }
+        function showText(content) {
+            let showImg = ''
+            let showContent = ''
+            dealPostList(JSON.parse(content)).forEach(item => {
+                showContent += item.value
+                if (item.type == 'pic' && item.url) {
+                    showImg = `<img class="post-pic" src="${item.url}" />`
+                }
+            })
+            let result =`<div class="ghost-list-item-meta-article-content">${showContent}</div>${showImg}`
+            return result
+        }
         function renderCollectHtml(item) {
             return `
                 <div class="ghost-list-item collect-item bd-bottom">
@@ -206,7 +232,7 @@
                                         <span class="item-title">${ item.articleTitle }</span>
                                     </h4>
                                 </div>
-                                <div class="ghost-list-item-meta-article-content">${ item.articleContent }</div>
+                                <div class="item-content-flex">${ showText(item.articleContent) }</div>
                             </div>
                             <ul class="ghost-list-item-action">
                                 <li class="list-item web-display">

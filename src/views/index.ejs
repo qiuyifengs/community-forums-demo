@@ -126,6 +126,19 @@
             .ghost-tag-list {
                 font-size: 0;
             }
+            .ghost-components-article-list-content-index-description {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .ghost-components-article-list-content-index-description .post-pic {
+                width: 100px;
+                height: 60px;
+                object-fit: contain;
+            }
+            .target-go {
+                color: var(--col-88)
+            }
             @media screen and (max-width: 420px) {
                 #root {
                     overflow-x: hidden;
@@ -237,6 +250,9 @@
                     font-size: var(--fs-11);
                     transform: scale(.8) translateX(12%);
                 }
+                .ghost-list .ghost-card .ghost-card-body .from-type {
+                    transform: scale(.8) translateX(12%);
+                }
                 .ghost-empty {
                     margin: 5em auto;
                 }
@@ -285,54 +301,56 @@
                                     <div class="ghost-list ghost-list-vertical">
                                         <div class="ghost-spin-container postsList" id="artivleTemplate">
                                             <% postList.articleList.forEach(function(articleItem) {%>
-                                                <div class="ghost-card gohst-index-page" article-id="<%= articleItem.articleId%>">
-                                                    <div class="ghost-card-body">
-                                                        <a class="target-go" target="_blank" href="/post/articleDetail/<%=articleItem.articleId%>">
-                                                            <div class="ghost-list-item">
-                                                                <div class="ghost-list-item-main">
-                                                                    <div class="ghost-list-item-meta">
-                                                                        <div class="ghost-list-item-meta-content">
-                                                                            <div class="ghost-pro-components-article-list-content-index-listContent">
-                                                                                <% if(articleItem.top) { %>
-                                                                                <span class="ghost-tag ghost-tag-has-color" style="background-color: var(--col-top)">置顶</span>
-                                                                                <% } %>
-                                                                                <h4 class="ghost-list-item-meta-title fs18">
-                                                                                    <%=articleItem.articleTitle%>
-                                                                                </h4>
+                                                <a class="target-go" target="_blank" href="/post/articleDetail/<%=articleItem.articleId%>">
+                                                    <div class="ghost-card gohst-index-page" article-id="<%= articleItem.articleId%>">
+                                                        <div class="ghost-card-body">
+                                                                <div class="ghost-list-item">
+                                                                    <div class="ghost-list-item-main">
+                                                                        <div class="ghost-list-item-meta">
+                                                                            <div class="ghost-list-item-meta-content">
+                                                                                <div class="ghost-pro-components-article-list-content-index-listContent">
+                                                                                    <% if(articleItem.top) { %>
+                                                                                    <span class="ghost-tag ghost-tag-has-color" style="background-color: var(--col-top)">置顶</span>
+                                                                                    <% } %>
+                                                                                    <h4 class="ghost-list-item-meta-title fs18">
+                                                                                        <%=articleItem.articleTitle%>
+                                                                                    </h4>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="ghost-components-article-list-content-index-listContent">
+                                                                            <div class="ghost-components-article-list-content-index-description">
+                                                                                <%- articleItem.articleContent %>
+                                                                            </div>
+                                                                            <div class="ghost-components-article-list-content-index-extra">
+                                                                                <span class="ghost-avatar ghost-pro-components-global-header-index-avatar ghost-avatar-mini ghost-avatar-circle ghost-avatar-image langue-show web-display">
+                                                                                    <% if(articleItem.hearderIcon) { %>
+                                                                                        <img src="/<%= articleItem.hearderIcon %>">
+                                                                                    <% } else { %> 
+                                                                                        <span class="item-random-color" article-author="<%=articleItem.author%>">
+                                                                                            <%= articleItem.author.substring(0, 1) %>
+                                                                                        </span>  
+                                                                                    <% } %>
+                                                                                </span>
+                                                                                <a href="javascript:" class="articleAuthor web-display" style="color: var(--btn-col)">
+                                                                                    <span class="author-name"><%=articleItem.author%></span>
+                                                                                </a>
+                                                                                <em class="showTime web-display"><%= articleItem.publishTime %></em>
+                                                                                <span class="ghost-tag-list">
+                                                                                    <% articleItem.articleLabel.forEach(function(labelItem) {%>
+                                                                                    <span class="ghost-tag ghost-tag-has-color ghost-tag-color-primary"><%= labelItem %></span>
+                                                                                    <% }) %>
+                                                                                </span>
+                                                                                <span class="showTime app-display app-time"><%= articleItem.publishTime %></span>
+                                                                                <span class="from-type">来自分类：<%= articleItem.articleType %></span>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="ghost-components-article-list-content-index-listContent">
-                                                                        <div class="ghost-components-article-list-content-index-description">
-                                                                            <%- articleItem.articleContent %>
-                                                                        </div>
-                                                                        <div class="ghost-components-article-list-content-index-extra">
-                                                                            <span class="ghost-avatar ghost-pro-components-global-header-index-avatar ghost-avatar-mini ghost-avatar-circle ghost-avatar-image langue-show web-display">
-                                                                                <% if(articleItem.hearderIcon) { %>
-                                                                                    <img src="/<%= articleItem.hearderIcon %>">
-                                                                                <% } else { %> 
-                                                                                    <span class="item-random-color" article-author="<%=articleItem.author%>">
-                                                                                        <%= articleItem.author.substring(0, 1) %>
-                                                                                    </span>  
-                                                                                <% } %>
-                                                                            </span>
-                                                                            <a href="javascript:" class="articleAuthor web-display" style="color: var(--btn-col)">
-                                                                                <span class="author-name"><%=articleItem.author%></span>
-                                                                            </a>
-                                                                            <em class="showTime web-display"><%= articleItem.publishTime %></em>
-                                                                            <span class="ghost-tag-list">
-                                                                                <% articleItem.articleLabel.forEach(function(labelItem) {%>
-                                                                                <span class="ghost-tag ghost-tag-has-color ghost-tag-color-primary"><%= labelItem %></span>
-                                                                                <% }) %>
-                                                                            </span>
-                                                                            <span class="showTime app-display app-time"><%= articleItem.publishTime %></span>
-                                                                        </div>
-                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </a>
+                                                            
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </a>
                                             <% }) %>
                                         </div>
                                     </div>
@@ -350,7 +368,6 @@
                             </article>
                             <aside class="ghost-col-xs-24 ghost-col-sm-24 ghost-col-md-24 ghost-col-lg-24 ghost-col-xl-6 index-tab web-display">
                                 <h5 class="tag-title">
-                                    <span class="short-tag-border"></span>
                                     <span> TAGS </span>
                                     <span class="long-tag-border"></span>
                                 </h5>
@@ -377,7 +394,13 @@
     <script src="/js/swiper.min.js"></script>
     <script type="text/javascript">
         let activity = JSON.parse(localStorage.getItem('activity'));
+        function goPAGE() {
+            if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
+             $('.target-go').removeAttr('target')
+            }
+        }
         $(function() {
+            goPAGE();
             let pageSize = 1;
             var swiper = new Swiper('.swiper-container', {
                 spaceBetween: 30,
@@ -395,6 +418,20 @@
                     prevEl: '.swiper-button-prev',
                 },
             })
+
+            $('.ghost-components-article-list-content-index-description').each(function() {
+                let showContent = ''
+                let showImg = ''
+                dealPostList(JSON.parse($(this).text())).forEach(item => {
+                    showContent += item.value
+                    if (item.type == 'pic' && item.url) {
+                        showImg = `<img class="post-pic" src="${item.url}" />`
+                    }
+                })
+                $(this).html(`<div class="ghost-components-article-list-show-content">${showContent}</div>`)
+                $(this).append(showImg)
+            })
+
             // random color
             $(".item-random-color").each(function() {
                 const authorName = $(this).attr("article-author")
@@ -442,7 +479,6 @@
                     myAjax('GET', url).then(res => {
                         if (res.code === 10000 && res.articleList.length > 0) {
                             $('.ghost-loading-mask').css('display', 'block')
-                            console.log(123)
                             pageSize++
                             let result = ''
                             res.articleList.forEach((item, ind) => {
@@ -463,6 +499,7 @@
                                 isLoading = false
                                 $('.ghost-loading-mask').css('display', 'none')
                                 $("#artivleTemplate").append(result)
+                                goPAGE();
                             }, 1000) 
                         } else {
                             // 即使加载出错，也得重置
@@ -517,6 +554,7 @@
                 }
             })
         })
+        
         function isTop(item) {
             if (item) {
                 return `
@@ -538,27 +576,36 @@
                 return `<span class="item-random-color" article-author="${item.author}">${item.author.substring(0, 1)}</span>`
             }
         }
+        function showText(content) {
+            let showImg = ''
+            let showContent = ''
+            dealPostList(JSON.parse(content)).forEach(item => {
+                showContent += item.value
+                if (item.type == 'pic' && item.url) {
+                    showImg = `<img class="post-pic" src="${item.url}" />`
+                }
+            })
+            let result =`<div class="ghost-components-article-list-content-index-description"><div class="ghost-components-article-list-show-content">${showContent}</div>${showImg}</div>`
+            return result
+        }
         let renderArticleHtml = item => {
-            return `<div class="ghost-card gohst-index-page" article-id="${item.articleId}">
-                        <div class="ghost-card-body">
-                            <a class="target-go" target="_blank" href="/post/articleDetail/${item.articleId}">
+            return `<a class="target-go" target="_blank" href="/post/articleDetail/${item.articleId}">
+                        <div class="ghost-card gohst-index-page" article-id="${item.articleId}">
+                            <div class="ghost-card-body">
                                 <div class="ghost-list-item">
                                     <div class="ghost-list-item-main">
                                         <div class="ghost-list-item-meta">
                                             <div class="ghost-list-item-meta-content">
                                                 <div class="ghost-pro-components-article-list-content-index-listContent">
                                                     ${ isTop(item.top) }
-                                                        <h4 class="ghost-list-item-meta-title fs18">
-                                                            ${ item.articleTitle }
-                                                        </h4>
-                                                    
+                                                    <h4 class="ghost-list-item-meta-title fs18">
+                                                        ${ item.articleTitle }
+                                                    </h4>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="ghost-components-article-list-content-index-listContent">
-                                            <div class="ghost-components-article-list-content-index-description">
-                                                ${ item.articleContent }
-                                            </div>
+                                            ${ showText(item.articleContent) }
                                             <div class="ghost-components-article-list-content-index-extra">
                                                 <span class="ghost-avatar ghost-pro-components-global-header-index-avatar ghost-avatar-mini ghost-avatar-circle ghost-avatar-image langue-show web-display">
                                                     ${ showHeaderIcon(item) }
@@ -571,13 +618,14 @@
                                                     <span class="ghost-tag ghost-tag-has-color ghost-tag-color-primary">${ item.articleType }</span>
                                                 </span>
                                                 <span class="showTime app-display app-time">${ filterTime(item.publishTime) }</span>
+                                                <span class="from-type">来自分类：${ item.articleType }</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </a>
+                            </div>
                         </div>
-                    </div>`
+                    </a>`
             }
             
     </script>

@@ -37,7 +37,9 @@
                                                                     <span class="item-title"><%= item.articleTitle %></span>
                                                                 </h4>
                                                             </div>
-                                                            <div class="ghost-list-item-meta-article-content"><%- item.articleContent %></div>
+                                                            <div class="item-content-flex">
+                                                                <div class="ghost-list-item-meta-article-content"><%- item.articleContent %></div>
+                                                            </div>
                                                         </div>
 
                                                         <ul class="ghost-list-item-action">
@@ -83,7 +85,7 @@
                                                     <div class="ghost-list-item-extra">
                                                         <div class="ghost-list-item-id" style="display: none"><%= item.articleId %></div>
                                                         <ul class="ghost-list-item-action">
-                                                            <li class="edit_icon">
+                                                            <li class="edit_icon web-display">
                                                                 <a>
                                                                     <svg class="iconSvg" aria-hidden="true" style="color: #554df5; font-size: 20px">
                                                                         <use xlink:href="#icon-iconfontedit"></use>
@@ -169,6 +171,19 @@
                     })
                 }
             })
+
+            $('.ghost-list-item-meta-article-content').each(function() {
+                let showContent = ''
+                let showImg = ''
+                dealPostList(JSON.parse($(this).text())).forEach(item => {
+                    showContent += item.value
+                    if (item.type == 'pic' && item.url) {
+                        showImg = `<img class="post-pic" src="${item.url}" />`
+                    }
+                })
+                $(this).html(showContent)
+                $(this).after(showImg)
+            })
             $(".time").each(function() {
                 let resTime = formatDateFilter($(this).text())
                 $(this).text(resTime)
@@ -236,6 +251,18 @@
         function filterTime(item) {
             return  resTime = formatDateFilter(item)
         }
+        function showText(content) {
+            let showImg = ''
+            let showContent = ''
+            dealPostList(JSON.parse(content)).forEach(item => {
+                showContent += item.value
+                if (item.type == 'pic' && item.url) {
+                    showImg = `<img class="post-pic" src="${item.url}" />`
+                }
+            })
+            let result =`<div class="ghost-list-item-meta-article-content">${showContent}</div>${showImg}`
+            return result
+        }
         function renderArticleHtml(item) {
             return `<div class="ghost-list-item bd-bottom">
                         <div class="ghost-list-item-main">
@@ -246,7 +273,7 @@
                                         <span class="item-title">${ item.articleTitle }</span>
                                     </h4>
                                 </div>
-                                <div class="ghost-list-item-meta-article-content">${ item.articleContent }</div>
+                                <div class="item-content-flex">${ showText(item.articleContent) }</div>
                             </div>
                             <ul class="ghost-list-item-action">
                                 <li class="list-item web-display">
@@ -285,7 +312,7 @@
                         <div class="ghost-list-item-extra">
                             <div class="ghost-list-item-id" style="display: none">${ item.articleId }</div>
                             <ul class="ghost-list-item-action">
-                                <li class="edit_icon">
+                                <li class="edit_icon web-display">
                                     <a>
                                         <svg class="iconSvg" aria-hidden="true" style="color: #554df5; font-size: 20px">
                                             <use xlink:href="#icon-iconfontedit"></use>

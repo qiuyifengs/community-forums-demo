@@ -109,6 +109,7 @@ $(document).ready(function(){
                 if (res.headerIcon) {
                     headerDom = `<img src=/${res.headerIcon}>`
                     $(".user-headerIcon").append(headerDom)
+                    localStorage.setItem('headerIcon', res.headerIcon)
                 } else {
                     headerDom = `
                         <span class="header-random-color" article-author="${$.cookie("nickName")}">${$.cookie("nickName").substring(0, 1)}</span>
@@ -118,6 +119,9 @@ $(document).ready(function(){
                         const authorName = $(this).attr("article-author")
                         $(this).css("background",renderColor(authorName))
                     })
+                }
+                if (res.hadNews) {
+                    $('.ghost-pro-components-notice-icon-index-badge').append(`<sup class="ghost-scroll-number ghost-badge-dot"></sup>`)
                 }
             } else {
                 headerDom = `
@@ -179,13 +183,20 @@ $(document).ready(function(){
         }
 
     // select account menu page
-    $('#accountMenu .account-dropdown-item').on('click', function() {
+    $('#accountMenu .account-dropdown-item').on('click', function(e) {
+        e.stopPropagation()
+        if (!userId) {
+            goPage('user/login')
+            return false
+        }
         $(this).addClass('selected').siblings().removeClass('selected')
         $('#accountMenu').removeClass('active')
         const routerId = $(this).attr('data-id')
         if (routerId == 5) {
             $.cookie('nickName', '', { expires: -1, path: '/' })
             $.cookie('userId', '', { expires: -1, path: '/' })
+            localStorage.removeItem('headerIcon')
+            localStorage.removeItem('langData')
             goPage('user/login')
         } else {
             const url = routerAddressFilter($(this).attr('data-id'))
@@ -238,6 +249,7 @@ $(document).ready(function(){
         event.stopPropagation()
         if ($.cookie("userId")) {
             if (activity) {
+                sessionStorage.removeItem('jStorage')
                 goPage('post/publish/')
             } else {
                 if (confirm('该账户还未进行验证，请先进行验证！')) {
@@ -317,6 +329,8 @@ $(document).ready(function(){
     })
     
 })
+
+
     if (nickName) {
         $(".header-random-color").text(nickName.substring(0, 1)).css("background",renderColor(nickName))
     }
@@ -405,8 +419,6 @@ $(document).ready(function(){
                                     <svg class="iconSvg" aria-hidden="true">
                                         <use xlink:href="#icon-tongzhi"></use>
                                     </svg>
-                                    <sup class="ghost-scroll-number ghost-badge-dot"></sup>
                                 </span>
                             </li>`
-    
 </script>

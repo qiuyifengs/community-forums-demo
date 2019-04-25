@@ -8,6 +8,9 @@ export class CommentsList {
     // usreId
     @Column() userId: string;
 
+    // commentUserName
+    @Column() commentUserName: string;
+
     // commentatorId
     @Column() commentatorId: string;
 
@@ -19,9 +22,6 @@ export class CommentsList {
 
     // articleId
     @Column() articleId: string;
-
-    // commentUserName
-    @Column() commentUserName: string;
 
     // commentId
     @Column() commentId: string;

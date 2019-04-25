@@ -34,7 +34,7 @@ export class ArticleDetailService {
         let commentRes;
         let commentNum = 0;
         const pageCount = param.pageCount ? param.pageCount * 1 : 10;
-        const page = param.page ? (param.page - 1) * 1 * pageCount : 0;
+        const page = param.page ? param.page * 1 * pageCount : 0;
         const totalRes = await this.commentRepository.find({articleId: param.articleId});
         const articleRes = await this.articleRepository.findOne({ articleId: param.articleId }); // article
         const userInfoRes = await this.userRepository.findOne({ userId: articleRes.userId });
@@ -64,13 +64,16 @@ export class ArticleDetailService {
         resObj.headerIcon = userInfoRes.headerIcon;
         resObj.commentTotal = commentNum + commentRes.length;
         delete resObj.userId;
-        console.log(resObj.comments)
         return resObj;
     }
     // add comment
     async addComment(param): Promise<any> {
         const dateNum = new Date().getTime().toString().substring(-10);
         const user = await this.userRepository.findOne({nickName: param.commentatorName});
+        if (user.userId !== param.userId) {
+            user.hadNews = true;
+            this.userRepository.save(user);
+        }
         const comment = new CommentsList();
         comment.userId = param.userId;
         comment.commentatorId = user.userId;
@@ -96,12 +99,18 @@ export class ArticleDetailService {
     // add childrenComment
     async addChildrenComment(param): Promise<any> {
         const user = await this.userRepository.findOne({nickName: param.author});
+        const commentatorUserInfo = await this.userRepository.findOne({nickName: param.commentatorName});
         const dateNum = new Date().getTime().toString().substring(-11);
         const childrenCom = new ChildrenComments();
+        if (user.userId !== param.userId) {
+            user.hadNews = true;
+            this.userRepository.save(user);
+        }
         childrenCom.userId = param.userId;
         childrenCom.commentUserName = param.nickName;
         childrenCom.author = param.author;
-        childrenCom.commentatorId = user.userId;
+        childrenCom.authorId = user.userId;
+        childrenCom.commentatorId = commentatorUserInfo.userId;
         childrenCom.commentatorName = param.commentatorName;
         childrenCom.articleId = param.articleId;
         childrenCom.commentContent = param.commentText;
@@ -162,6 +171,7 @@ export class ArticleDetailService {
         const likeRes =  await this.articleRepository.findOne({articleId: param.articleId});
         const postRes =  await this.articleRepository.findOne({articleId: param.articleId});
         const collectRes = await this.myCollectRepository.findOne({articleId: param.articleId, userId: param.userId});
+        const user = await this.userRepository.findOne({nickName: param.author});
         if (!collectRes) {
             const myCollection = new MyCollectionList();
             likeRes.likeCount = likeRes.likeCount + 1;
@@ -172,10 +182,11 @@ export class ArticleDetailService {
             const paramObj = Object.assign(myCollection, likeRes);
             delete paramObj.serialNum;
             paramObj.userId = param.userId;
+            paramObj.authorId = user.userId;
             paramObj.articleContent = postRes.articleContent;
             paramObj.isLike = true;
             await this.myCollectRepository.manager.save(paramObj);
-            return { message: '已标记为喜欢！' };
+            return { code: ApiErrorCode.SUCCESS, isLike: likeRes.isLike, message: '已标记为喜欢！' };
         } else {
             if (!collectRes.isLike) {
                 likeRes.likeCount = likeRes.likeCount + 1;
@@ -185,7 +196,7 @@ export class ArticleDetailService {
                 await this.postListRepository.save(postRes);
                 collectRes.isLike = true;
                 await this.myCollectRepository.save(collectRes);
-                return { message: '已标记为喜欢！' };
+                return { code: ApiErrorCode.SUCCESS, isLike: likeRes.isLike, message: '已标记为喜欢！' };
             } else {
                 likeRes.likeCount = (likeRes.likeCount - 1) > 0 ? likeRes.likeCount - 1 : 0;
                 postRes.likeCount = likeRes.likeCount;
@@ -198,7 +209,7 @@ export class ArticleDetailService {
                 }
                 await this.articleRepository.save(likeRes);
                 await this.postListRepository.save(postRes);
-                return { message: '已移出喜欢！' };
+                return { code: ApiErrorCode.SUCCESS, isLike: likeRes.isLike, message: '已移出喜欢！' };
             }
         }
     }
@@ -208,6 +219,7 @@ export class ArticleDetailService {
         const articleRes =  await this.articleRepository.findOne({articleId: param.articleId});
         const postRes =  await this.articleRepository.findOne({articleId: param.articleId});
         const collectRes = await this.myCollectRepository.findOne({articleId: param.articleId, userId: param.userId});
+        const user = await this.userRepository.findOne({nickName: param.author});
         if (!collectRes) {
             const myCollection = new MyCollectionList();
             articleRes.collectCount = articleRes.collectCount + 1;
@@ -217,11 +229,12 @@ export class ArticleDetailService {
             await this.postListRepository.save(postRes);
             const paramObj = Object.assign(myCollection, articleRes);
             paramObj.userId = param.userId;
+            paramObj.authorId = user.userId;
             paramObj.isCollect = true;
             paramObj.articleContent = postRes.articleContent;
             delete paramObj.serialNum;
             await this.myCollectRepository.save(paramObj);
-            return { message: '收藏成功！' };
+            return { code: ApiErrorCode.SUCCESS, isCollect: paramObj.isCollect,  message: '收藏成功！' };
         } else {
             if (!collectRes.isCollect) {
                 articleRes.collectCount = articleRes.collectCount + 1;
@@ -231,7 +244,7 @@ export class ArticleDetailService {
                 await this.postListRepository.save(postRes);
                 collectRes.isCollect = true;
                 await this.myCollectRepository.save(collectRes);
-                return { message: '收藏成功！' };
+                return { code: ApiErrorCode.SUCCESS, isCollect: collectRes.isCollect,  message: '收藏成功！' };
             } else {
                 articleRes.collectCount = (articleRes.collectCount - 1) > 0 ? articleRes.collectCount - 1 : 0;
                 postRes.collectCount = articleRes.collectCount;
@@ -244,7 +257,7 @@ export class ArticleDetailService {
                 }
                 await this.articleRepository.save(articleRes);
                 await this.postListRepository.save(postRes);
-                return { message: '取消成功！' };
+                return { code: ApiErrorCode.SUCCESS, isCollect: collectRes.isCollect,  message: '取消成功！' };
             }
         }
     }

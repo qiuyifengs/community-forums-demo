@@ -137,6 +137,10 @@
 .app-display {
     display: none!important;
 }
+.from-type {
+    float: right;
+    font-size: var(--fs-12);
+}
 @media screen and (max-width: 420px) {
     #web-header {
         display: none;
@@ -153,7 +157,7 @@
     }
 }
 
-.ghost-components-article-list-content-index-description {
+.ghost-components-article-list-show-content {
     overflow: hidden;
     display: -webkit-box; 
     text-overflow: ellipsis;
@@ -185,7 +189,7 @@
     width: 250px;
     justify-content: space-between;
     align-items: center;
-    text-indent: 2px
+    text-indent: 12px
 }
 .short-tag-border {
     display: inline-block;
@@ -266,4 +270,15 @@
     display: inline-block;
     width: 100%;
     height: 100%;
+}
+
+.router-page {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    opacity: 0;
+    z-index: 1;
+}
+
+.router-page.js_show {
+    opacity: 1;
 }

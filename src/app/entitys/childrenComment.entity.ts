@@ -9,8 +9,6 @@ export class ChildrenComments {
     // commentUserName
     @Column() commentUserName: string;
 
-    @Column() author: string;
-
     // commentatorId
     @Column() commentatorId: string;
 
@@ -22,6 +20,11 @@ export class ChildrenComments {
 
     // childCommentId
     @Column() childCommentId: string;
+
+    @Column() author: string;
+
+    // authorId
+    @Column() authorId: string;
 
     // articleId
     @Column() articleId: string;

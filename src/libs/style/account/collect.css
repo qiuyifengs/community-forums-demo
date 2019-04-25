@@ -48,6 +48,16 @@
     justify-content: center;
     align-items: center;
 }
+.item-content-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.item-content-flex .post-pic {
+    width: 100px;
+    height: 60px;
+    object-fit: contain;
+}
 @media screen and (max-width: 420px) {
     .ghost-pro-components-page-header-wrapper-grid-content-wide {
         margin: 0;

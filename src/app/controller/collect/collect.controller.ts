@@ -14,7 +14,6 @@ export class ReplyController {
         collectList.articleList.forEach((postItem, ind) => {
             collectList.articleList[ind].articleLabel = postItem.articleLabel.split(',');
         });
-        console.log(66, collectList)
         res.render('account/collect', { title: '我的收藏', collectList });
     }
     @Get('/collect/:nickName/:page')

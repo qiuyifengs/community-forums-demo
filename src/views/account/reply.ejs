@@ -2,7 +2,14 @@
 <html>
     <head>
         <title><%= title %></title>
+        <!-- set `maximum-scale` for some compatibility issues -->
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+        <!-- Delete the default Apple toolbar and menu bar -->
+        <meta content="yes" name="apple-mobile-web-app-capable"/>
+        <!-- Control status bar display style -->
+        <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+        <!-- Will not recognize the mailbox, tell the device to ignore the number in the page as a phone number -->
+        <meta content="telephone=no" name="format-detection"/>
         <link rel="stylesheet" href="/style/account/reply.css">
         <% include ../common/script %>
         <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
@@ -13,13 +20,13 @@
             <% include ../common/header %>
             <% include ../common/appHeader %>
             <div class="ghost-pro-layouts-basic-layout-content ghost-layout-content">
-                <div class="ghost-pro-components-page-header-wrapper-grid-content-main ghost-pro-components-page-header-wrapper-grid-content-wide" style="margin-bottom: 24px">
+                <div class="ghost-pro-components-page-header-wrapper-grid-content-main ghost-pro-components-page-header-wrapper-grid-content-wide">
                     <main class="ghost-pro-pages-account-settings-info-main">
-                        <aside class="ghost-pro-pages-account-settings-info-leftmenu">
+                        <aside class="ghost-pro-pages-account-settings-info-leftmenu web-display">
                             <% include ./list %>
                         </aside>
                         <div class="ghost-pro-pages-account-settings-info-right">
-                            <div class="ghost-pro-pages-account-settings-info-title">
+                            <div class="ghost-pro-pages-account-settings-info-title web-display">
                                 <span><%= title %></span>
                             </div>
                             <!-- comment components start Cooperate List loading-->
@@ -62,7 +69,10 @@
                                                         
                                                         <ul class="ghost-comment-actions">
                                                             <li>
-                                                                <button class="ghost-btn ghost-btn-text ghost-btn-text-default reply-btn">
+                                                                <button class="ghost-btn ghost-btn-text ghost-btn-text-default reply-btn web-display">
+                                                                    <span>回复</span>
+                                                                </button>
+                                                                <button type="button" class="ghost-btn ghost-btn-text ghost-btn-text-default app-reply-btn app-display">
                                                                     <span>回复</span>
                                                                 </button>
                                                             </li>
@@ -96,7 +106,10 @@
                                                                 </div>
                                                                 <ul class="ghost-comment-actions">
                                                                     <li>
-                                                                        <button type="button" class="ghost-btn ghost-btn-text ghost-btn-text-default reply-btn">
+                                                                        <button type="button" class="ghost-btn ghost-btn-text ghost-btn-text-default reply-btn web-display">
+                                                                            <span>回复</span>
+                                                                        </button>
+                                                                        <button type="button" class="ghost-btn ghost-btn-text ghost-btn-text-default app-reply-btn app-display">
                                                                             <span>回复</span>
                                                                         </button>
                                                                     </li>
@@ -139,6 +152,14 @@
                     </main>
                 </div>
             </div>
+            <section class="user-comment-content-mask">
+                <div class="user-comment-content">
+                    <textarea class="user-comment-textarea" name="" id="" cols="30" rows="10" placeholder="Publish your response..."></textarea>
+                    <div class='answer_btn_box'>
+                        <div class='app-answer-btn'>comment</div>
+                    </div>
+                </div>
+            </section>
         </div>
     </body>
     <script type="text/javascript">
@@ -149,7 +170,7 @@
                                                 <div class="ghsot-col ghost-col-21" style="padding-right: 8px">
                                                     <textarea id="textareaComment" rows="1" style="max-height: 132px; min-height: 32px;" required placeholder="文明社会，理性评论" class="ghost-input"></textarea>
                                                 </div>
-                                                <div class="ghsot-col ghost-col-2 submit-reply-parent">
+                                                <div class="ghsot-col ghost-col-2 submit-reply-parent web-display">
                                                     <button type="button" class="gutter-pd8 ghost-btn ghost-btn-primary waves-float float-button-light waves-effect waves-button waves-float waves-light submit-reply">
                                                         <span>添加回复</span>
                                                     </button>
@@ -174,6 +195,7 @@
                 $(this).parents().parents('.ghost-comment-content').find('.replyFormTemplate').append(createReplyForm);
                 $(this).parents().parents('.ghost-comment-content').find('.replyFormTemplate').css({"overflow":"hidden", "margin-bottom": "10px"})
                 autosize(document.querySelectorAll('textarea'))
+                $(this).parents().parents('.ghost-comment-content').find('.replyFormTemplate textarea').focus()
             })
             // random color
             $(".item-random-color").each(function() {
@@ -237,6 +259,52 @@
                     }
                 })
             });
+            //--------------------------------------webapp-------------------------------
+            // no touchmove
+            $('.user-comment-content-mask').on("touchmove",function(e) {
+                e.preventDefault()
+                e.stopPropagation()
+            })
+            // hide user-comment-content-mask
+            $('.user-comment-content-mask').on('click', function(e) {
+                e.stopPropagation()
+                $('.user-comment-content-mask').css('display', 'none')
+            })
+            // don't stopPropagation
+            $('.user-comment-content').on('click', function(e) {
+                e.stopPropagation()
+            })
+            let appCommentId, appArticleId
+            $('.ghost-spin-container').on('click', '.app-reply-btn', function() {
+                $('.user-comment-content-mask').css('display', 'block')
+                $('.user-comment-textarea').focus();
+                commentatorName = $(this).parents(".ghost-comment-actions").siblings(".ghost-comment-content-top-box").find(".ghost-comment-content-author-name a").text()
+                appCommentId = $(this).parents(".ghost-comment").find(".ghost-comment-parent").attr("data-comment-id");
+                appArticleId = $(this).parents(".ghost-comment").find(".ghost-comment-parent").attr("data-article-id");
+            })
+            $('.user-comment-content').on('click', '.app-answer-btn', function(event) {
+                if (!userId) {
+                    goPage('user/login')
+                    return false
+                }
+                let commentText = $('.user-comment-textarea').val()
+                if (!commentText) return;
+                let param = {
+                    author: $.cookie("nickName"),
+                    userId: userId,
+                    nickName: $.cookie('nickName'),
+                    commentatorName: commentatorName,
+                    articleId: appArticleId,
+                    commentText: commentText,
+                    commentId: appCommentId
+                }
+                myAjax("POST", "post/addChildrenComment", param).then((res) => {
+                    layer.msg(res.message)
+                    if (res.code == 10000) {
+                        $('.user-comment-content-mask').css('display', 'none')
+                    }
+                })
+            })
         })
         function showHeaderIcon(item) {
             if (item.hearderIcon != '' && item.hearderIcon != null) {
@@ -272,7 +340,10 @@
                             </div>
                             <ul class="ghost-comment-actions">
                                 <li>
-                                    <button type="button" class="ghost-btn ghost-btn-text ghost-btn-text-default reply-btn">
+                                    <button type="button" class="ghost-btn ghost-btn-text ghost-btn-text-default reply-btn web-display">
+                                        <span>回复</span>
+                                    </button>
+                                    <button type="button" class="ghost-btn ghost-btn-text ghost-btn-text-default app-reply-btn app-display">
                                         <span>回复</span>
                                     </button>
                                 </li>
@@ -320,7 +391,10 @@
                             
                             <ul class="ghost-comment-actions">
                                 <li>
-                                    <button class="ghost-btn ghost-btn-text ghost-btn-text-default reply-btn">
+                                    <button class="ghost-btn ghost-btn-text ghost-btn-text-default reply-btn web-display">
+                                        <span>回复</span>
+                                    </button>
+                                    <button type="button" class="ghost-btn ghost-btn-text ghost-btn-text-default app-reply-btn app-display">
                                         <span>回复</span>
                                     </button>
                                 </li>
