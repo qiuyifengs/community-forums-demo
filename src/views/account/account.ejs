@@ -24,7 +24,7 @@
                         </aside>
                         <div class="ghost-pro-pages-account-settings-info-right">
                             <div class="ghost-pro-pages-account-settings-info-title web-display">
-                                <span>个人中心</span>
+                                <span lang="center">个人中心</span>
                             </div>
                             <div class="ghost-pro-pages-account-settings-base-view-left">
                                 <div class="ghost-row">
@@ -32,7 +32,7 @@
                                         <form class="ghost-row ghost-form ghost-form-horizontal" enctype = "multipart/form-data">
                                             <div class="ghost-row ghost-form-item">
                                                 <div class="ghost-form-item-label web-display">
-                                                    <label for="account_name" class="new－ghost-form-item-required" title="header-icon">头像</label>
+                                                    <label for="account_name" class="new－ghost-form-item-required" title="header-icon" lang="headerIcon">头像</label>
                                                 </div>
                                                 <div class="ghost-form-item-control-wrapper">
                                                     <div class="ghost-form-item-control">
@@ -58,7 +58,7 @@
                             
                                             <div class="ghost-row ghost-form-item">
                                                 <div class="ghost-form-item-label">
-                                                    <label for="account_name" class="new－ghost-form-item-required" title="E-mail">昵称</label>
+                                                    <label for="account_name" class="new－ghost-form-item-required" title="nickName" lang="nickName">昵称</label>
                                                 </div>
                                                 <div class="ghost-form-item-control-wrapper">
                                                     <div class="ghost-form-item-control">
@@ -71,7 +71,7 @@
                             
                                             <div class="ghost-row ghost-form-item">
                                                 <div class="ghost-form-item-label">
-                                                    <label for="account_name" class='ac' title="E-mail">简介</label>
+                                                    <label for="account_name" class='ac' title="profile" lang="profile">简介</label>
                                                 </div>
                                                 <div class="ghost-form-item-control-wrapper">
                                                     <div class="ghost-form-item-control">
@@ -84,14 +84,14 @@
                                             </div>
                                             <div class="ghost-row ghost-form-item app-from-style">
                                                 <div class="ghost-form-item-label">
-                                                    <label for="account_name" class='ac' title="password">登录密码</label>
+                                                    <label for="account_name" class='ac' title="password" lang="password">登录密码</label>
                                                 </div>
                                                 <div class="ghost-form-item-control-wrapper">
                                                     <div class="ghost-form-item-control">
                                                         <div class="ghost-form-item-children setting-password">
                                                             <h4>••••••</h4>
                                                             <button type="button" data-toggle="ghostModel" data-target="openUpdatePasswordModel" class="ghost-btn ghost-btn-text reset-user-password web-display">
-                                                                <span>修改密码</span>
+                                                                <span lang="changePassword">修改密码</span>
                                                             </button>
                                                             <a class="app-right-icon app-display" href="/account/user/changePassWord">
                                                                 <svg class="iconSvg app-back-icon" aria-hidden="true">
@@ -104,7 +104,7 @@
                                             </div>
                                             <div class="ghost-row ghost-form-item app-from-style">
                                                 <div class="ghost-form-item-label">
-                                                    <label for="account_name" class='ac' title="password">邮箱验证</label>
+                                                    <label for="account_name" class='ac' title="E-mail" lang="email">邮箱验证</label>
                                                 </div>
                                                 <div class="ghost-form-item-control-wrapper">
                                                     <div class="ghost-form-item-control">
@@ -112,7 +112,7 @@
                                                             <h4>已绑定邮箱<%= result.email %></h4>
                                                             <% if(result.activity) { %>
                                                                 <button type="button" class="ghost-btn ghost-btn-text web-display" data-toggle="ghostModel" data-target="openUpdateEmailModel">
-                                                                    <span>修改邮箱</span>
+                                                                    <span lang="changeEmail">修改邮箱</span>
                                                                 </button>
                                                                 <a class="app-right-icon app-display" href="/account/user/changeEmail">
                                                                     <svg class="iconSvg app-back-icon" aria-hidden="true">
@@ -140,7 +140,7 @@
                                                     <div class="ghost-form-item-control">
                                                         <button type="button" id="btn_submit" style="width:100px"
                                                             class="ghost-btn ghost-btn-primary ghost-btn-lg ghost-btn-round submit-info">
-                                                            <span>保存</span>
+                                                            <span lang="save">保存</span>
                                                         </button>
                                                     </div>
                                                 </div>
@@ -156,11 +156,11 @@
                     <!-- start update password model -->
                     <section class="ghost-model fade-in" id="openUpdatePasswordModel">
                         <div class="ghost-model-content">
-                            <h3 class="pd-24">修改密码</h3>
+                            <h3 class="pd-24" lang="changePassword">修改密码</h3>
                             <form class="ghost-row ghost-form ghost-form-horizontal pd-24" id="resetPasswordForm">
                                 <div class="ghost-row ghost-form-item">
                                     <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-4">
-                                        <label for="oldPassword" class="new－ghost-form-item-required" title="E-mail">旧密码</label>
+                                        <label for="oldPassword" class="new－ghost-form-item-required" title="E-mail" lang="oldPassword">旧密码</label>
                                     </div>
                                     <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-sm-20">
                                         <div class="ghost-form-item-control">
@@ -172,7 +172,7 @@
                                 </div>
                                 <div class="ghost-row ghost-form-item">
                                     <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-4">
-                                        <label for="newPassword" class="new－ghost-form-item-required" title="New Password">新密码</label>
+                                        <label for="newPassword" class="new－ghost-form-item-required" title="New Password" lang="newPassword">新密码</label>
                                     </div>
                                     <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-sm-20">
                                         <div class="ghost-form-item-control">
@@ -184,7 +184,7 @@
                                 </div>
                                 <div class="ghost-row ghost-form-item">
                                     <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-4">
-                                        <label for="confirmPassword" class="new－ghost-form-item-required" title="Confirm Password">确认密码</label>
+                                        <label for="confirmPassword" class="new－ghost-form-item-required" title="Confirm Password" lang="confirmPassword">确认密码</label>
                                     </div>
                                     <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-sm-20">
                                         <div class="ghost-form-item-control">
@@ -201,10 +201,10 @@
                                     <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-xs-offset-0 ghost-col-sm-16 ghost-col-sm-offset-4">
                                         <div class="ghost-form-item-control">
                                             <button class="ghost-btn ghost-btn-primary ghost-btn-lg waves-float float-button-light waves-effect waves-button waves-float waves-light" name="password-submit" id="submit" style="margin-right: 70px">
-                                                <span>确认</span>
+                                                <span lang="confirm">确认</span>
                                             </button>
                                             <button type="button" data-dismiss="ghostModel" name="password-cancel" class="ghost-btn ghost-btn-default ghost-btn-lg">
-                                                <span>取消</span>    
+                                                <span lang="cancel">取消</span>    
                                             </button>
                                         </div>
                                     </div>
@@ -215,11 +215,11 @@
                     <!-- end update password model -->
                     <section class="ghost-model fade-in" id="openUpdateEmailModel">
                         <div class="ghost-model-content">
-                            <h3 class="pd-24">修改邮箱</h3>
+                            <h3 class="pd-24" lang="changeEmail">修改邮箱</h3>
                             <form class="ghost-row ghost-form ghost-form-horizontal pd-24" id="resetEmail">
                                 <div class="ghost-row ghost-form-item">
                                     <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-4">
-                                        <label for="oldEmail" class="new－ghost-form-item-required" title="Old email">旧邮箱</label>
+                                        <label for="oldEmail" class="new－ghost-form-item-required" title="Old email" lang="oldEmail">旧邮箱</label>
                                     </div>
                                     <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-sm-20">
                                         <div class="ghost-form-item-control">
@@ -231,7 +231,7 @@
                                 </div>
                                 <div class="ghost-row ghost-form-item">
                                     <div class="ghost-form-item-label ghost-col-xs-24 ghost-col-sm-4">
-                                        <label for="newEmail" class="new－ghost-form-item-required" title="New eamil">新邮箱</label>
+                                        <label for="newEmail" class="new－ghost-form-item-required" title="New eamil" lang="newEmail">新邮箱</label>
                                     </div>
                                     <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-sm-20">
                                         <div class="ghost-form-item-control">
@@ -248,10 +248,10 @@
                                     <div class="ghost-form-item-control-wrapper ghost-col-xs-24 ghost-col-xs-offset-0 ghost-col-sm-16 ghost-col-sm-offset-4">
                                         <div class="ghost-form-item-control">
                                             <button class="ghost-btn ghost-btn-primary ghost-btn-lg " name="emial-submit" id="email-submit" style="margin-right: 70px">
-                                                <span>确认</span>
+                                                <span lang="confirm">确认</span>
                                             </button>
                                             <button type="button" data-dismiss="ghostModel" name="email-cancel" class="ghost-btn ghost-btn-default ghost-btn-lg">
-                                                <span>取消</span>    
+                                                <span lang="cancel">取消</span>    
                                             </button>
                                         </div>
                                     </div>
@@ -263,7 +263,7 @@
                 </div>
             </div>
             <footer class="app-footer app-display">
-                <button type="button" class="app-btn ghost-btn-primary btn_submit submit-info">保存</button>
+                <button type="button" class="app-btn ghost-btn-primary btn_submit submit-info" lang="save">保存</button>
             </footer>
         </div>
     </body>
@@ -279,7 +279,11 @@
         }
         $(function() {
             // app title
-            $('.app-page-title').text('个人中心')
+            if (localStorage.getItem('langData') && JSON.parse(localStorage.getItem('langData')).lang == 'en') {
+                $('.app-page-title').text('Personal Center')
+            } else {
+                $('.app-page-title').text('个人中心')
+            }
             // save
             $('.submit-info').click(function(){
                 let nickName = document.querySelector('.nick-name').value;

@@ -33,15 +33,15 @@
                 <use xlink:href="#icon-fenlei"></use>
             </svg>
         </div>
-        <div class="app-gohost-hearder-mid">首页</div>
+        <div class="app-gohost-hearder-mid" lang="home">首页</div>
         <div class="app-gohost-hearder-right">
             <div class="lang-icon app-lang-dropdown">
                 <ul class="app-lang-dropdown-list lang-menu">
-                    <li class="app-lang-dropdown-item" data-value="cn">
+                    <li class="app-lang-dropdown-item selected" data-value="cn">
                         <img src="https://image.flaticon.com/icons/svg/299/299914.svg">
                         <span class="app-ghost-dropDown-text">中文</span>   
                     </li>
-                    <li class="app-lang-dropdown-item selected" data-value="en">
+                    <li class="app-lang-dropdown-item" data-value="en">
                         <img src="https://image.flaticon.com/icons/svg/299/299722.svg">
                         <span class="app-ghost-dropDown-text">En</span>      
                     </li>
@@ -72,14 +72,14 @@
                 
             </div>
             <ul class="drop-down-list" id="accountMenu">
-                <li class="drop-down-item account-dropdown-item" data-id='1'>个人中心</li>
+                <li class="drop-down-item account-dropdown-item" data-id='1' lang="center">个人中心</li>
                 <!-- <li class="drop-down-item">安全设置</li> -->
-                <li class="drop-down-item account-dropdown-item" data-id='2'>我的帖子</li>
-                <li class="drop-down-item account-dropdown-item" data-id='3'>我的回复</li>
+                <li class="drop-down-item account-dropdown-item" data-id='2' lang="posts">我的帖子</li>
+                <li class="drop-down-item account-dropdown-item" data-id='3' lang="myReply">我的回复</li>
                 <!-- <li class="drop-down-item">我的关注</li> -->
-                <li class="drop-down-item account-dropdown-item" data-id='4'>我的收藏</li>
+                <li class="drop-down-item account-dropdown-item" data-id='4' lang="favory">我的收藏</li>
                 <!-- <li class="drop-down-item">我的积分</li> -->
-                <li class="drop-down-item account-dropdown-item logout" data-id='5'>退出登录</li>
+                <li class="drop-down-item account-dropdown-item logout" data-id='5' lang="logout">退出登录</li>
             </ul>
         </div>
     </section>
@@ -101,6 +101,8 @@
         </div>
     </section>
 </header>
+<script type="text/javascript" src="/js/lang/zh.js"></script>
+<script type="text/javascript" src="/js/lang/en.js"></script>
 <script type="text/javascript">
 const userId = $.cookie("userId")
 const nickName = $.cookie("nickName")
@@ -237,6 +239,7 @@ $(document).ready(function(){
             lang: LANG
         }
         localStorage.setItem('langData', JSON.stringify(langData))
+        translateFun(LANG)
     })
 
     $('#loginBtn').on('click', function(e) {
@@ -304,7 +307,7 @@ $(document).ready(function(){
             }
         })
     } else {
-        $('.app-lang-dropdown-list').before(`<img src="https://image.flaticon.com/icons/svg/299/299722.svg" data-value="en">`)
+        $('.app-lang-dropdown-list').before(`<img src="https://image.flaticon.com/icons/svg/299/299914.svg" data-value="cn">`)
     }
     // ------------------------webApp------------------------
     // show left menu
@@ -360,8 +363,9 @@ $(document).ready(function(){
             lang: LANG
         }
         localStorage.setItem('langData', JSON.stringify(langData))
+        translateFun(LANG)
     })
-    
+    translateFun()
 })
 
 
@@ -369,8 +373,8 @@ $(document).ready(function(){
         $(".header-random-color").text(nickName.substring(0, 1)).css("background",renderColor(nickName))
     }
 
-    let publishModule = `<button style="margin-left: 16px" class="ghost-btn ghost-btn-primary" id="enterPublish">
-                            <span>写文章</span>
+    let publishModule = `<button style="margin-left: 16px; width:72px; " class="ghost-btn ghost-btn-primary" id="enterPublish">
+                            <span lang="writing">写文章</span>
                         </button>`
 
     let registerAndLoginModule = `
@@ -388,17 +392,17 @@ $(document).ready(function(){
                         <div class="ghost-dropDown lang-dropdown">
                             <div class="ghost-current-value lang-current-value">
                                 <div class="ghost-dropDown-item">
-                                    <img src="https://image.flaticon.com/icons/svg/299/299722.svg">
-                                    <span class="ghost-dropDown-text">EN</span> 
+                                    <img src="https://image.flaticon.com/icons/svg/299/299914.svg">
+                                    <span class="ghost-dropDown-text">CN</span> 
                                 </div>
                             </div>
-                            <ul class="ghost-dropdown-menu lang-menu" id="langMenu">
+                            <ul class="ghost-dropdown-menu lang-menu selected" id="langMenu">
                                 <li class="ghost-dropDown-item lang-item gutter-pd16" data-value='cn'>
                                     <img src="https://image.flaticon.com/icons/svg/299/299914.svg">
                                     <span class="ghost-dropDown-text">简体中文</span>      
                                 </li>
                                 
-                                <li class="ghost-dropDown-item lang-item gutter-pd16 selected" data-value='en'>
+                                <li class="ghost-dropDown-item lang-item gutter-pd16" data-value='en'>
                                     <img src="https://image.flaticon.com/icons/svg/299/299722.svg">
                                     <span class="ghost-dropDown-text">English<span> (US)</span></span>      
                                 </li>
@@ -418,31 +422,31 @@ $(document).ready(function(){
                                     <svg class="iconSvg primary" aria-hidden="true">
                                         <use xlink:href="#icon-gerenziliao"></use>
                                     </svg>
-                                    <span class="ghost-dropDown-text">个人资料</span>      
+                                    <span class="ghost-dropDown-text" lang="center">个人中心</span>      
                                 </li>
                                 <li class="ghost-dropDown-item account-dropdown-item gutter-pd16" data-id='2'>
                                     <svg class="iconSvg primary" aria-hidden="true">
                                         <use xlink:href="#icon-tiezi"></use>
                                     </svg>
-                                    <span class="ghost-dropDown-text">我的帖子</span>
+                                    <span class="ghost-dropDown-text" lang="posts">我的帖子</span>
                                 </li>
                                 <li class="ghost-dropDown-item account-dropdown-item gutter-pd16" data-id='3'>
                                     <svg class="iconSvg primary" aria-hidden="true">
                                         <use xlink:href="#icon-huifu"></use>
                                     </svg>
-                                    <span class="ghost-dropDown-text">我的回复</span>      
+                                    <span class="ghost-dropDown-text" lang="myReply">我的回复</span>      
                                 </li>
                                 <li class="ghost-dropDown-item account-dropdown-item gutter-pd16" data-id='4'>
                                     <svg class="iconSvg primary" aria-hidden="true">
                                         <use xlink:href="#icon-unie601"></use>
                                     </svg>
-                                    <span class="ghost-dropDown-text">我的收藏</span>      
+                                    <span class="ghost-dropDown-text" lang="favory">我的收藏</span>      
                                 </li>
                                 <li class="ghost-dropDown-item account-dropdown-item gutter-pd16" data-id='5'>
                                     <svg class="iconSvg primary" aria-hidden="true">
                                         <use xlink:href="#icon-abort"></use>
                                     </svg>
-                                    <span class="ghost-dropDown-text">退出登录</span>      
+                                    <span class="ghost-dropDown-text" lang="logout">退出登录</span>      
                                 </li>
                                 
                             </ul>

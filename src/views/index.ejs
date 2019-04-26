@@ -386,7 +386,7 @@
                 </div>
             </div>
             <footer class="app-footer app-display">
-                <button type="button" class="app-btn ghost-btn-primary">发表文章</button>
+                <button type="button" class="app-btn ghost-btn-primary" lang="writing">发表文章</button>
             </footer>
         </div>
     </body>
@@ -438,7 +438,7 @@
             })
             $(".showTime").each(function() {
                 let resTime = formatDateFilter($(this).text())
-                $(this).text(resTime)
+                $(this).html(resTime)
             })
 
             const userId = $.cookie("userId")
@@ -498,6 +498,7 @@
                                 isLoading = false
                                 $('.ghost-loading-mask').css('display', 'none')
                                 $("#artivleTemplate").append(result)
+                                translateFun()
                                 goPAGE();
                             }, 1000) 
                         } else {
@@ -552,6 +553,7 @@
                     goPage('user/login')
                 }
             })
+            translateFun()
         })
         
         function isTop(item) {

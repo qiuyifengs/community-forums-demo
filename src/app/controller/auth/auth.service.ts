@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { JwtPayload } from './jwt-payload.interface'
+import { JwtPayload } from './jwt-payload.interface';
 import * as curUserId from '../../global';
 import * as jwt from 'jsonwebtoken';
 import { InjectRepository } from '@nestjs/typeorm';
-import{LoginService} from '../login/login.service';
+import { LoginService } from '../login/login.service';
 import { User } from '../../entitys/user.entity';
 
 @Injectable()
@@ -16,21 +16,12 @@ export class AuthService {
         private readonly authRepository: Repository<User>,
       ) { }
 
-    
-
-
     public async validate(payload): Promise<boolean> {
-        console.log(333,payload);
-        
-
-        const user = await this.authRepository.findOne({userId: payload}); 
-        console.log(user)
-        //有該筆資料，回傳true
+        const user = await this.authRepository.findOne({userId: payload});
+        // 有該筆資料，回傳true
         if (user) {
             return true;
-        }
-        //沒該筆資料回傳false
-        else {
+        } else {
             return false;
         }
     }

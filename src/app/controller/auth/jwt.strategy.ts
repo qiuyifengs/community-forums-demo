@@ -21,9 +21,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   async validate(payload: JwtPayload) {
     const objStr = JSON.stringify(payload);
     const userId = JSON.parse(objStr).user.userId;
-    console.log('entered jwt')
-    console.log(1112222, userId);
-    
     const user = await this.authService.validate(userId);
     if (!user) {
       throw new UnauthorizedException();
@@ -34,7 +31,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 export const callback = (err, user, info) => {
     let message;
     if (err) {
-        //return (err || new UnauthorizedException(info.message));
+        // return (err || new UnauthorizedException(info.message));
         throw err;
     } else if (typeof info !== 'undefined' || !user) {
         switch (info.message) {

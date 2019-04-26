@@ -47,7 +47,7 @@
                                 source：<a target='_blank' href='/topic/<%= article.articleType %>'><span class='eth'><%= article.articleType %></span></a>
                             </li>
                             <li class='data_item web-display'>
-                                <%= article.viewCount %> 次阅读
+                                <%= article.viewCount %> <span lang="view">次阅读</span>
                             </li>
                             <li class='data_item showTime web-display'><%= article.publishTime.substring(0, 10) %></li>
                             <li class='data_item source-type'>
@@ -73,9 +73,9 @@
                     </div>
                     <div class="app-text-data app-display">
                         <ul class="app-data-list">
-                            <li class="app-data-item"><%= article.viewCount %> 次阅读</li>
-                            <li class="app-data-item"><%= article.collectCount %> 人收藏</li>
-                            <li class="app-data-item"><%= article.likeCount %> 人喜欢</li>
+                            <li class="app-data-item"><%= article.viewCount %> <span lang="view">次阅读</span></li>
+                            <li class="app-data-item"><%= article.collectCount %> <span lang="collects">人收藏</span></li>
+                            <li class="app-data-item"><%= article.likeCount %>  <span lang="likes">人喜欢</span></li>
                             <li class="app-data-item showTime app-showTime"><%= article.publishTime.substring(0, 10) %></li>
                         </ul>
                     </div>
@@ -129,12 +129,12 @@
                                     <% } else { %>   
                                         <img class='no_like' src='/images/no_like.png' alt=''>
                                     <% } %>
-                                    <span>喜欢</span>
+                                    <span lang="like">喜欢</span>
                                     <span class='is_like' style='display: none'><%= article.isLike %></span>
                                 </div>
                                 <span class='btn_right_triangle'></span>
                             </div>
-                            <div class='like_count'><%= article.likeCount %> 人喜欢</div>
+                            <div class='like_count'><%= article.likeCount %> <span lang="likes">人喜欢</span></div>
                             <span class='like_num' style='display:none'><%= article.likeCount %></span>
                         </div>
                         <div class='collection_btn_box'>
@@ -144,20 +144,20 @@
                                 <% } else { %>   
                                     <img class='collection_black' src='/images/collection_black.png' alt='' >
                                 <% } %>  
-                                <span>收藏</span>
+                                <span lang="collect">收藏</span>
                                 <span class='is_collect' style='display: none'><%= article.isCollect %></span>
                             </div>
-                            <div class='collection_num'><%= article.collectCount %> 人已收藏</div>
+                            <div class='collection_num'><%= article.collectCount %> <span lang="collects">人已收藏</span></div>
                         </div>
                         
                     </div>
                     <div class='write_comment_box web-display'>
-                        <p class='comment_num'>评论(<%= article.commentTotal %>)</p>
+                        <p class='comment_num'><span lang="comments">评论</span>(<%= article.commentTotal %>)</p>
                         <div class='textarea_box'>
                             <textarea class='write_comment' name='writeComent' id='' cols='30' rows='10' placeholder='What do you want to say?'></textarea>
                         </div>
                         <div class='comment_btn_box'>
-                            <div class='comment_btn'>comment</div>
+                            <div class='comment_btn' lang="comment">评论</div>
                         </div>
                     </div>
                     <div class='comment_list' id='commentTemplate'>
@@ -184,8 +184,8 @@
                                 <div class='comment_id del_comment_id' style='display:none'><%= commentItem.commentId %></div>
                                 <div class='comment_userId' style='display:none'><%= commentItem.userId %></div>
                                 <div class='eidt_answer'>
-                                        <div class='answer web-display'>回复</div>
-                                        <div class='app-answer app-display'>回复</div>
+                                        <div class='answer web-display' lang="answer">回复</div>
+                                        <div class='app-answer app-display' lang="answer">回复</div>
                                     <div class='comment_type' style='display: none'>parent</div>
                                 </div>
                                 <% if (commentItem.childrenComentList && commentItem.childrenComentList.length > 0) { %>
@@ -205,10 +205,10 @@
                                                 <div class='child_comment_id del_comment_id' style='display:none'><%= childrenItem.childCommentId %></div>
                                                 <div class='comment_userId' style='display:none'><%= childrenItem.userId %></div>
                                                 <div class='eidt_answer'>
-                                                    <div class='answer web-display'>回复</div>
-                                                    <div class='app-answer app-display'>回复</div>
+                                                    <div class='answer web-display' lang="answer">回复</div>
+                                                    <div class='app-answer app-display' lang="answer">回复</div>
                                                     <div class='comment_type' style='display: none'>child</div>
-                                                    <!-- <div class='delete'>删除</div> -->
+                                                    <!-- <div class='delete' lang="delete">删除</div> -->
                                                 </div>
                                             </div>
                                         </div>
@@ -217,7 +217,7 @@
                                 <div class='comment_bottmo web-display'>
                                     <div class='answer_box' contenteditable='true' data-placeholder='What do you want to say?'></div>
                                     <div class='answer_btn_box'>
-                                        <div class='answer_btn'>comment</div>
+                                        <div class='answer_btn' lang="comment">评论</div>
                                     </div>
                                 </div>
                             </div>
@@ -244,11 +244,11 @@
                         <div class='info_down bd-top'>
                             <img class='crown_icon' src='/images/crown.png' alt=''>
                             <div class='follow down_item bd-right'>
-                                <div class='text'>喜欢</div>
+                                <div class='text' lang="like">喜欢</div>
                                 <div class='count'><%= article.likeCount %></div>
                             </div>
                             <div class='fans down_item'>
-                                <div class='text'>收藏</div>
+                                <div class='text' lang="collect">收藏</div>
                                 <div class='count'><%= article.collectCount %></div>
                             </div>
                         </div>
@@ -283,10 +283,10 @@
             </div>
             <div class='confirm_box'>
                 <div class='content_box'>
-                    <div class='delete_tip'>确定删除评论？</div>
+                    <div class='delete_tip' lang="isDelete">确定删除评论？</div>
                     <div class='confirm_btn_box'>
-                        <div class='btn_item sure'>确定</div>
-                        <div class='btn_item cancel'>取消</div>
+                        <div class='btn_item sure' lang="sure">确定</div>
+                        <div class='btn_item cancel' lang="cancel">取消</div>
                     </div>
                 </div>
             </div>
@@ -294,7 +294,7 @@
                 <div class="user-comment-content">
                     <textarea class="user-comment-textarea" name="" id="" cols="30" rows="10" placeholder="Publish your response..."></textarea>
                     <div class='answer_btn_box'>
-                        <div class='app-answer-btn'>comment</div>
+                        <div class='app-answer-btn' lang="comment">评论</div>
                     </div>
                 </div>
             </section>
@@ -344,13 +344,18 @@
         $(function(){
             let author = $('.my_name').text()
             let userId =  $.cookie('userId');
+            if (localStorage.getItem('langData') && JSON.parse(localStorage.getItem('langData')).lang == 'en') {
+                $('.app-page-title').text('Article Detail')
+            } else {
+                $('.app-page-title').text('文章详情')
+            }
             // Get article from the URL
             (function () {
                 articleId = this.location.pathname.split('/')[3]
                 articleTitle = $('.title').text()
                 $('.time').each(function() {
                     let resTime = formatDateFilter($(this).text())
-                    $(this).text(resTime)
+                    $(this).html(resTime)
                 })
                 $('.item-random-color').each(function() {
                     const authorName = $(this).attr('article-commentUserName')
@@ -386,6 +391,7 @@
                             setTimeout(function() {
                                 $('.ghost-loading-mask').css('display', 'none')
                                 $("#commentTemplate").append(result)
+                                translateFun()
                             }, 500) 
                         }
                     })
@@ -424,7 +430,7 @@
             // })
             $('.showTime').each(function() {
                 let resTime = formatDateFilter($(this).text())
-                $(this).text(resTime)
+                $(this).html(resTime)
             })
             
             // share article
@@ -584,6 +590,7 @@
                         let addCom = ($('.comment_total').text() * 1) + 1
                         $('.comment_num').text(`评论(${addCom})`)
                         $('.comment_total').text(addCom)
+                        translateFun()
                     } else {
                         console.log(res.message)
                     }
@@ -623,6 +630,7 @@
                         let addCom = ($('.comment_total').text() * 1) + 1
                         $('.comment_num').text(`评论(${addCom})`)
                         $('.comment_total').text(addCom)
+                        translateFun()
                     }
                 })
             })
@@ -648,7 +656,7 @@
                         if (!res.isCollect) {
                             $('.collection').addClass('dp-none')
                             $('.collection').after("<img class='collection_black' src='/images/collection_black.png' alt='' >")
-                            $('.collection_num').text((collectionNum - 1) + ' 人已收藏')
+                            $('.collection_num').html((collectionNum - 1) + ' <span lang="collects"> 人已收藏</span>')
                             collectionNum = collectionNum - 1
                             $('.is_collect').text('false')
                             if ($(this).hasClass('app-user-do-item')) {
@@ -661,7 +669,7 @@
                                 $('.collection_black').before("<img class='collection' src='/images/collection.png' alt='' >")
                             }
                             $('.collection_black').remove()
-                            $('.collection_num').text((collectionNum + 1) + ' 人已收藏')
+                            $('.collection_num').html((collectionNum + 1) + ' <span lang="collects"> 人已收藏</span>')
                             collectionNum = collectionNum + 1
                             $('.is_collect').text('true')
                             if ($(this).hasClass('app-user-do-item')) {
@@ -669,6 +677,7 @@
                             }
                         }
                         $('.fans').find('.count').text(collectionNum)
+                        translateFun()
                     } else {
                         console.log('请求失败！')
                     }
@@ -696,9 +705,9 @@
                         if (!res.isLike) {
                             $('.like').addClass('dp-none')
                             $('.like').after("<img class='no_like' src='/images/no_like.png' alt='' >")
-                            $('.like_num').text(likeCount - 1 + '人喜欢')
+                            $('.like_num').html(likeCount - 1 + '<span lang="likes"> 人喜欢</span>')
                             likeCount = likeCount - 1
-                            $('.like_count').text(likeCount + '人喜欢')
+                            $('.like_count').html(likeCount + '<span lang="likes"> 人喜欢</span>')
                             $('.is_like').text('false')
                             if ($(this).hasClass('app-user-do-item')) {
                                 $(this).empty().append(`<svg class='iconSvg' aria-hidden='true'><use xlink:href='#icon-shoucang-copy'></use></svg>`)
@@ -709,9 +718,9 @@
                             } else {
                                 $('.no_like').before("<img class='like' src='/images/like.png' alt='' >")
                             }
-                            $('.like_num').text(likeCount + 1 + ' 人喜欢')
+                            $('.like_num').html(likeCount + 1 + ' <span lang="likes"> 人喜欢</span>')
                             likeCount = likeCount + 1
-                            $('.like_count').text(likeCount + ' 人喜欢')
+                            $('.like_count').html(likeCount + ' <span lang="likes"> 人喜欢</span>')
                             $('.no_like').remove()
                             $('.is_like').text('true')
                             if ($(this).hasClass('app-user-do-item')) {
@@ -719,6 +728,7 @@
                             }
                         }
                         $('.follow').find('.count').text(likeCount)
+                        translateFun()
                     } else {
                         console.log('请求失败！')
                     }
@@ -727,7 +737,7 @@
             // add delete dom
             $('.comment_item').each(function() {
                 if ($(this).children('.comment_userId').text() == $.cookie('userId')) {
-                    $(this).children('.eidt_answer').append(`<div class='delete'>删除</div>`)
+                    $(this).children('.eidt_answer').append(`<div class='delete' lang="delete">删除</div>`)
                 }
             })
             // delete myself comment
@@ -899,6 +909,7 @@
                     }
                 })
             })
+            translateFun()
         })
         function renderCommentsHtml(item) {
             return `
@@ -916,15 +927,15 @@
                     <div class='comment_id del_comment_id' style='display:none'>${ item.commentId }</div>
                     <div class='comment_userId' style='display:none'>${ item.userId }</div>
                     <div class='eidt_answer'>
-                            <div class='answer web-display'>回复</div>
-                            <div class='app-answer app-display'>回复</div>
+                            <div class='answer web-display' lang="answer">回复</div>
+                            <div class='app-answer app-display' lang="answer">回复</div>
                         <div class='comment_type' style='display: none'>parent</div>
                     </div>
                     ${ forChileComment(item.childrenComentList) }
                     <div class='comment_bottmo'>
                         <div class='answer_box' contenteditable='true' data-placeholder='What do you want to say?'></div>
                         <div class='answer_btn_box'>
-                            <div class='answer_btn'>comment</div>
+                            <div class='answer_btn' lang="comment">评论</div>
                         </div>
                     </div>
                 </div>
@@ -945,15 +956,15 @@
                         <div class='comment_id del_comment_id' style='display:none'>${ item.commentId }</div>
                         <div class='comment_userId' style='display:none'>${ $.cookie('userId') }</div>
                         <div class='eidt_answer'>
-                            <div class='answer web-display'>回复</div>
-                            <div class='app-answer app-display'>回复</div>
+                            <div class='answer web-display' lang="answer">回复</div>
+                            <div class='app-answer app-display' lang="answer">回复</div>
                             <div class='comment_type' style='display: none'>parent</div>
-                            <div class='delete'>删除</div>
+                            <div class='delete' lang="delete">删除</div>
                         </div>
                         <div class='comment_bottmo'>
                             <div class='answer_box' contenteditable='true' data-placeholder='What do you want to say?'></div>
                             <div class='answer_btn_box'>
-                                <div class='answer_btn'>comment</div>
+                                <div class='answer_btn' lang="comment">评论</div>
                             </div>
                         </div>
                     </div>
@@ -1001,10 +1012,10 @@
                             ${ item.commentContent }
                         </div>
                         <div class='eidt_answer'>
-                            <div class='answer web-display'>回复</div>
-                            <div class='app-answer app-display'>回复</div>
+                            <div class='answer web-display' lang="answer">回复</div>
+                            <div class='app-answer app-display' lang="answer">回复</div>
                             <div class='comment_type' style='display: none'>child</div>
-                            <div class='delete'>删除</div>
+                            <div class='delete' lang="delete">删除</div>
                         </div>
                     </div>
                 </div>

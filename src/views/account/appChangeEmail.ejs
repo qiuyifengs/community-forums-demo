@@ -6,6 +6,8 @@
         <link rel="stylesheet" href="/style/account/account.css">
         <link rel="stylesheet" href="/style/common/avatar.css">
         <link rel="stylesheet" href="/style/account/appChangeUserInfo.css">
+        <script type="text/javascript" src="/js/lang/zh.js"></script>
+        <script type="text/javascript" src="/js/lang/en.js"></script>
         <% include ../common/script %>
         <script src="/js/jquery.imgareaselect.min.js"></script>
         <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
@@ -21,7 +23,7 @@
                 <form class="ghost-form ghost-form-horizontal" id="appChangeEmail">
                     <div class="ghost-form-item">
                         <div class="ghost-form-item-label">
-                                <label for="oldEmail" class="new－ghost-form-item-required" title="Old email">旧邮箱</label>
+                                <label for="oldEmail" class="new－ghost-form-item-required" title="Old email" lang="oldEmail">旧邮箱</label>
                         </div>
                         <div class="ghost-form-item-control-wrapper">
                             <div class="ghost-form-item-control">
@@ -33,7 +35,7 @@
                     </div>
                     <div class="ghost-row ghost-form-item">
                         <div class="ghost-form-item-label">
-                            <label for="newEmail" class="new－ghost-form-item-required" title="New eamil">新邮箱</label>
+                            <label for="newEmail" class="new－ghost-form-item-required" title="New eamil" lang="newEmail">新邮箱</label>
                         </div>
                         <div class="ghost-form-item-control-wrapper">
                             <div class="ghost-form-item-control">
@@ -44,7 +46,7 @@
                         </div>
                     </div>
                     <footer class="app-footer app-display">
-                        <button class="app-btn ghost-btn-primary btn_submit">确认修改</button>
+                        <button class="app-btn ghost-btn-primary btn_submit" lang="confirmChange">确认修改</button>
                     </footer>
                 </form>
             </section>
@@ -53,7 +55,11 @@
     <script type="text/javascript">
         $(function() {
             // app title
-            $('.app-page-title').text('修改邮箱')
+            if (localStorage.getItem('langData') && JSON.parse(localStorage.getItem('langData')).lang == 'en') {
+                $('.app-page-title').text('Change E-mail')
+            } else {
+                $('.app-page-title').text('修改邮箱')
+            }
             $("#appChangeEmail").validate({
                 onfocusin: function(element) { $(element).valid() },
                 onfocusout: function(element) { $(element).valid() },
@@ -106,6 +112,7 @@
                     newEmail:  "请输入新邮箱",
                 }
             });
+            translateFun()
         })
     </script>
 </html>

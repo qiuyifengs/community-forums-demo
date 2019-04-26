@@ -16,7 +16,7 @@
                             source：<a target='_blank' href='/topic/<%= article.articleType %>'><span class='eth'><%= article.articleType %></span></a>
                         </li>
                         <li class='data_item'>
-                            <%= article.viewCount %> 次阅读
+                            <%= article.viewCount %> <span lang="view">次阅读</span>
                         </li>
                         <li class='data_item showTime'><%= article.publishTime.substring(0, 10) %></li>
                         <li class='data_item source-type'>
@@ -47,11 +47,11 @@
                     <div class='info_down bd-top'>
                         <img class='crown_icon' src='/images/crown.png' alt=''>
                         <div class='follow down_item bd-right'>
-                            <div class='text'>喜欢</div>
+                            <div class='text' lang="like">喜欢</div>
                             <div class='count'><%= article.likeCount %></div>
                         </div>
                         <div class='fans down_item'>
-                            <div class='text'>收藏</div>
+                            <div class='text' lang="collect">收藏</div>
                             <div class='count'><%= article.collectCount %></div>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
             let author = $('.my_name').text()
             $('.showTime').each(function() {
                 let resTime = formatDateFilter($(this).text())
-                $(this).text(resTime)
+                $(this).html(resTime)
             })
                 $('.item-random-color').each(function() {
                     const authorName = $(this).attr('article-commentUserName')
