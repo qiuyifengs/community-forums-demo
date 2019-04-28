@@ -37,7 +37,7 @@
                         </aside>
                         <div class="ghost-pro-pages-account-settings-info-right">
                             <div class="ghost-pro-pages-account-settings-info-title web-display">
-                                <span>我的收藏</span>
+                                <span lang="favory">我的收藏</span>
                             </div>
                             <div class="ghost-card-body">
                                 <div class="ghost-list ghost-list-vertical ghost-list-split">
@@ -135,7 +135,11 @@
 
         $(function() {
             // app title
-            $('.app-page-title').text('我的收藏')
+            if (localStorage.getItem('langData') && JSON.parse(localStorage.getItem('langData')).lang == 'en') {
+                $('.app-page-title').text('My Favorites')
+            } else {
+                $('.app-page-title').text('我的收藏')
+            }
             // init pagination config
             $('.ghost-pagination').pagination({
                 total: document.getElementById('totalPages').value,
@@ -157,6 +161,7 @@
                             })
                             setTimeout(function() {
                                 $('.ghost-loading-mask').css('display', 'none')
+                                translateFun()
                             }, 500) 
                         }
                     })
@@ -186,7 +191,7 @@
             });
             $(".time").each(function() {
                 let resTime = formatDateFilter($(this).text())
-                $(this).text(resTime)
+                $(this).html(resTime)
             });
             $(".ghost-btn").each(function(event) {
                 $(this).on("click", function(event) {
@@ -205,6 +210,7 @@
                     })
                 })
             })
+            translateFun()
         })
         function filterTime(item) {
             return  resTime = formatDateFilter(item)

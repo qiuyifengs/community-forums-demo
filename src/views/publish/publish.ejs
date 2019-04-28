@@ -30,12 +30,12 @@
         <% include ../common/appHeader %>
         <div class="publish_page">
             <div class="publish_left box-shadow bd-radius-5">
-                <div class="publish web-display">发布</div>
+                <div class="publish web-display" lang="post">发布</div>
                 <div class="article_type">
                     <% if (obj && obj.renderData) { %>
                     <div class="cur_type_item" style="display: none"><%= obj.renderData.articleType %></div>
                     <% } %>
-                    <div class="type_label app-label">classification：</div>
+                    <div class="type_label app-label" lang="category">分类:</div>
                     <ul class="type_list">
                         <% obj.menuList.forEach(function(menuItem) { %>
                             <li class="type_item bd-radius-5"><%= menuItem.menu %></li>
@@ -48,15 +48,15 @@
                     <div class="cur_article_label" style="display:none"><%= obj.renderData.articleLabel %></div>
                     <% } %>
                     <div class="title-box">
-                        <div class="title-text app-label app-display">Theme</div>
+                        <div class="title-text app-label app-display" lang="theme">标题</div>
                         <form action="javascript:return true">
                             <input class="title_input publish_input" maxlength="30" placeholder="Input topic..." onchange="saveArticle()"/>
                         </form>
                     </div>
                     <div class="label-parent">
-                            <div class="app-label app-display">Label</div>
+                            <div class="app-label app-display" lang="label">标签</div>
                             <div class="label-box mg-t20">
-                                <input class="typle_input publish_input" placeholder="请输入选择标签，如php（用逗号，分号；分割）按Enter键确认" onchange="saveArticle()"/>
+                                    <input class="typle_input publish_input" placeholder="请输入选择标签，如php（用逗号，分号；分割）按Enter键确认" onchange="saveArticle()"/>
                             </div>
                             <div class="label-data" style="display:none"><%= obj.getLabel %></div>
                             <div id="tags-input"></div>
@@ -76,11 +76,13 @@
                     <div id="Editor"></div>
                 </div>
                 <div class="app-content-box app-display">
-                    <div class="app-content-label app-label">正文</div>
-                    <textarea class="app-content-text" name="" id="" cols="30" rows="10" placeholder="请输入内容"></textarea>
+                    <div class="app-content-label app-label" lang="content">正文</div>
+                    <form action="javascript:return true">
+                        <textarea class="app-content-text" name="" id="" cols="30" rows="10" placeholder="请输入内容"></textarea>
+                    </form>
                 </div>
                 <div class="app-article-btn app-display">
-                    <button type="button" class="app-btn ghost-btn-primary comment_btn">发表文章</button>
+                    <button type="button" class="app-btn ghost-btn-primary comment_btn" lang="report">发表文章</button>
                 </div>
                 <% if (obj.renderData && obj.renderData.articleContent) { %>
                     <div class="edit_article_id" style="display: none"><%= obj.renderData.articleId %></div>
@@ -90,10 +92,10 @@
                 <% } %>
                 <div class="button_box web-display">
                     <div class="comment_btn_box">
-                        <div class="comment_btn">publish</div>
+                        <div class="comment_btn" lang="report">发表</div>
                     </div>
                     <div class="save_btn_box">
-                        <div class="save_btn">preview</div>
+                        <div class="save_btn" lang="preview">预览</div>
                     </div>
                     <!-- <div class="saving mg-l10">保存中...</div> -->
                 </div>
@@ -114,7 +116,16 @@
         let labelArr = [];
         let curLabelArr = $(".cur_article_label").text();
         let labelData = JSON.parse($(".label-data").text());
-        $(function(){      
+        $(function(){   
+            if (localStorage.getItem('langData') && JSON.parse(localStorage.getItem('langData')).lang == 'en') {
+                $('.app-page-title').text('Writing')
+                $('.typle_input').attr('placeholder', 'Please input the topic,such as php(separating by”,”or “;”), and confirm by clicking ENTER.')
+                $('.app-content-text').attr('placeholder', 'Please write something in here')
+            } else {
+                $('.app-page-title').text('写文章')
+                $('.typle_input').attr('placeholder', '请输入选择标签，如php（用逗号，分号；分割）按Enter键确认')
+                $('.app-content-text').attr('placeholder', '请输入内容')
+            }   
             if (curLabelArr !== "") {
                 curLabelArr.split(",").forEach(item => {
                     let labelDiv = `<div class="show-label bd-radius-3">
@@ -230,7 +241,6 @@
                         regCn = /[·！#￥（——）：“”‘、|《。》？、【】[\]]/im;
                     if (regEn.test(keyword) || regCn.test(keyword)) return layer.msg("标签不能含有其他特殊字符！");
                     keyword = keyword.replace(/\,|\;|\，|\；/ig, ',')
-                    console.log(111, keyword)
                     if (keyword.indexOf(',') > 0) {
                         let arr = keyword.split(',');
                         if (!arr[arr.length-1]) {
@@ -395,8 +405,6 @@
                 $('.article_content .highlight').removeClass('highlight');
             });
 
-            
-
             // save draft box
             // let time
             // function saveArticle(start) {
@@ -436,7 +444,6 @@
             //     } else {
             //         clearInterval(time);
             //     }
-                
             // }
             // autoSave();
             // function autoSave() {
@@ -452,17 +459,24 @@
             //         }
             //     })
             // }
+
             //--------------------------------------webapp--------------------------
-            $('.app-gohost-hearder-right').empty().text('保存草稿')
+            
+            if (localStorage.getItem('langData') && JSON.parse(localStorage.getItem('langData')).lang == 'en') {
+                $('.app-gohost-hearder-right').empty().text('save')
+            } else {
+                $('.app-gohost-hearder-right').empty().text('保存草稿')
+            }
             $('.app-gohost-hearder-right').on('click', function(e) {
                 e.stopPropagation();
-                if (!$('app-content-text').val()) return;
+                if (!$('.app-content-text').val()) return;
                 let saveTextObj = {
                     type: 'text',
                     value: $('app-content-text').val()
                 }
                 saveArticle(JSON.stringify(saveTextObj))
             })
+            translateFun()
         })
         function saveArticle(content) {
             let articleTitle = $(".title_input").val(); // title

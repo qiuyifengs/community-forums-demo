@@ -27,7 +27,7 @@
                         </aside>
                         <div class="ghost-pro-pages-account-settings-info-right">
                             <div class="ghost-pro-pages-account-settings-info-title web-display">
-                                <span><%= title %></span>
+                                <span lang="myReply">我的回复</span>
                             </div>
                             <!-- comment components start Cooperate List loading-->
                             <article class="comment-demo">
@@ -70,10 +70,10 @@
                                                         <ul class="ghost-comment-actions">
                                                             <li>
                                                                 <button class="ghost-btn ghost-btn-text ghost-btn-text-default reply-btn web-display">
-                                                                    <span>回复</span>
+                                                                    <span lang="answer">回复</span>
                                                                 </button>
                                                                 <button type="button" class="ghost-btn ghost-btn-text ghost-btn-text-default app-reply-btn app-display">
-                                                                    <span>回复</span>
+                                                                    <span lang="answer">回复</span>
                                                                 </button>
                                                             </li>
                                                         </ul>
@@ -107,10 +107,10 @@
                                                                 <ul class="ghost-comment-actions">
                                                                     <li>
                                                                         <button type="button" class="ghost-btn ghost-btn-text ghost-btn-text-default reply-btn web-display">
-                                                                            <span>回复</span>
+                                                                            <span lang="answer">回复</span>
                                                                         </button>
                                                                         <button type="button" class="ghost-btn ghost-btn-text ghost-btn-text-default app-reply-btn app-display">
-                                                                            <span>回复</span>
+                                                                            <span lang="answer">回复</span>
                                                                         </button>
                                                                     </li>
                                                                 </ul>
@@ -181,7 +181,11 @@
                                 </form>`
         $(function() {
             // app title
-            $('.app-page-title').text('我的回复')
+            if (localStorage.getItem('langData') && JSON.parse(localStorage.getItem('langData')).lang == 'en') {
+                $('.app-page-title').text('My Replies')
+            } else {
+                $('.app-page-title').text('我的回复')
+            }
             // init Google Design button click effect 
             Waves.attach('.float-button-light', ['waves-button', 'waves-float', 'waves-light'])
             // Init Waves
@@ -227,6 +231,7 @@
                             })
                             setTimeout(function() {
                                 $('.ghost-loading-mask').css('display', 'none')
+                                translateFun()
                             }, 500) 
                         }
                     })
@@ -234,7 +239,7 @@
             })
             $(".time").each(function() {
                 let resTime = formatDateFilter($(this).text())
-                $(this).text(resTime)
+                $(this).html(resTime)
             });
             // reply comment
             $("#replyTemplate").on("click", ".submit-reply", function(event) {
@@ -305,6 +310,7 @@
                     }
                 })
             })
+            translateFun()
         })
         function showHeaderIcon(item) {
             if (item.hearderIcon != '' && item.hearderIcon != null) {
@@ -341,10 +347,10 @@
                             <ul class="ghost-comment-actions">
                                 <li>
                                     <button type="button" class="ghost-btn ghost-btn-text ghost-btn-text-default reply-btn web-display">
-                                        <span>回复</span>
+                                        <span lang="answer">回复</span>
                                     </button>
                                     <button type="button" class="ghost-btn ghost-btn-text ghost-btn-text-default app-reply-btn app-display">
-                                        <span>回复</span>
+                                        <span lang="answer">回复</span>
                                     </button>
                                 </li>
                             </ul>
@@ -362,6 +368,9 @@
             })
             return `<div class="ghost-comment-nested">${childComment}</div>`;
         }
+        function filterTime(item) {
+            return  resTime = formatDateFilter(item)
+        }
         function renderCommentsHtml(item) {
             return `
                 <article class="ghost-comment ghost-comment-has-color">
@@ -378,7 +387,7 @@
                                         <a style="color: #475ec0; font-weight: bold">${ item.commentUserName }</a>
                                     </span>
                                     <span class="ghost-comment-content-author-time time">
-                                        <span>${ item.commentTime }</span>
+                                        <span>${ filterTime(item.commentTime) }</span>
                                     </span>
                                 </div>
                                 <div class="ghost-pro-components-article-origin-title fs12">
@@ -392,10 +401,10 @@
                             <ul class="ghost-comment-actions">
                                 <li>
                                     <button class="ghost-btn ghost-btn-text ghost-btn-text-default reply-btn web-display">
-                                        <span>回复</span>
+                                        <span lang="answer">回复</span>
                                     </button>
                                     <button type="button" class="ghost-btn ghost-btn-text ghost-btn-text-default app-reply-btn app-display">
-                                        <span>回复</span>
+                                        <span lang="answer">回复</span>
                                     </button>
                                 </li>
                             </ul>

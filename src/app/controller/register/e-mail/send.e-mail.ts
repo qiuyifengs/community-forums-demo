@@ -7,6 +7,7 @@ import { ApiException } from '../../../../bing/common/enums/api.exception';
 import { ApiErrorCode } from '../..//../../bing/common/enums/api-error-code.enum';
 import { HttpStatus } from '@nestjs/common';
 
+
 const config = {
     host: 'smtp.163.com',
     port: 25,
@@ -17,7 +18,7 @@ const config = {
 };
 const transporter = nodemailer.createTransport(config);
 const name = 'Ghost';
-const host = 'http://192.168.4.188:3002';
+const host = 'http://127.0.0.1:3002';
 
 // E-mail verification
 export class Verification {
@@ -26,12 +27,14 @@ export class Verification {
 
             from: 'wuzhanfly@163.com',
 
-            subject: name + '社区帐号激活',
+            subject: name + '社区',
 
             to: email,
-            html: await this.PW(type, userId, token),
+            html: await this.PW(type, userId, token, email),
 
         };
+        console.log(333,mail);
+        
         // send e-mail
         transporter.sendMail(mail, (error, info) => {
 
@@ -90,7 +93,7 @@ export class Verification {
 
     }
 
-    static async PW(type: number, userId: string, token: string): Promise<any> {
+    static async PW(type: number, userId: string, token: string, email: string): Promise<any> {
         // 1 => verisica 0 => forget PW
         if ((type * 1) === 1) {
             return '<p>您好：' + userId + '</p>' +
@@ -100,12 +103,20 @@ export class Verification {
                 '<p>' + name + '社区 谨上,　此链接有效期为15min!!!</p>';
 
         } else {
+            let info: {
+                code: string,
+                time: Date,
+                msg: string,
+            }
+            
+            info.time = new Date();
             const No = Math.random().toString().slice(-6);
-            return '<p>您好：' + userId + '</p>' +
-                '<p>我们收到您在' + name + '社区的重置密码信息，请点击下面的链接来重置密码：</p>' +
-                '<a href="' + host + '/user/verifica/' + userId + '/' + No + '/' + token + '">激活链接</a>' +
+            return '<p>您好：' + email + '</p>' +
+                '<p>我们收到您在' + name + '社区的找寻密码信息，请将验证码填入：</p>' +
+                '<p>验证码：' + No + '</p>' +
                 '<p>若您没有在' + name + '社区填写过注册信息，说明有人滥用了您的电子邮箱，请删除此邮件，我们对给您造成的打扰感到抱歉。</p>' +
-                '<p>' + name + '社区 谨上,　此链接有效期为10min!!!</p>';
+                '<p>' + name + '社区 谨上,　验证码有效期为10min!!!</p>';
+             
         }
 
     }

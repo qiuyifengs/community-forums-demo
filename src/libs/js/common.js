@@ -72,19 +72,19 @@ function formatDateFilter(value) {
     if (time < 0) {
         return ''
     } else if ((time / 1000 < 30)) {
-        return '刚刚'
+        return '<span lang="just"> 刚刚</span>'
     } else if (time / 1000 < 60) {
-        return parseInt((time / 1000), 10) + '秒前'
+        return parseInt((time / 1000), 10) + '<span lang="seconds"> 秒前</span>'
     } else if ((time / 60000) < 60) {
-        return parseInt((time / 60000), 10) + '分钟前'
+        return parseInt((time / 60000), 10) + '<span lang="minutes"> 分钟前</span>'
     } else if ((time / 3600000) < 24) {
-        return parseInt((time / 3600000), 10) + '小时前'
+        return parseInt((time / 3600000), 10) + '<span lang="hours"> 小时前</span>'
     } else if ((time / 86400000) < 31) {
-        return parseInt((time / 86400000), 10) + '天前'
+        return parseInt((time / 86400000), 10) + '<span lang="days"> 天前</span>'
     } else if ((time / 2592000000) < 12) {
-        return parseInt((time / 2592000000), 10) + '月前'
+        return parseInt((time / 2592000000), 10) + '<span lang="months"> 月前</span>'
     } else {
-        return parseInt((time / 31536000000), 10) + '年前'
+        return parseInt((time / 31536000000), 10) + '<span lang="years"> 年前</span>'
     }
 }
 
@@ -209,6 +209,19 @@ function dealPostList(valArr) {
     return valArr
 }
 
-
+// translate
+function translateFun(lang) {
+    let lan = lang ? lang : localStorage.getItem('langData') ? JSON.parse(localStorage.getItem('langData')).lang : 'cn'
+    console.log(lan)
+    $('[lang]').each(function(e){
+        let key = $(this).attr('lang')
+        
+        if (lan == 'cn') {
+            $(this).text(zh[key])
+        } else {
+            $(this).text(en[key])
+        }
+    })
+}
 
     

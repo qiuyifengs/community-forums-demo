@@ -276,6 +276,39 @@
         height: 18px;
         border-radius: 50px;
     }
+    .app-search-component {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+        background: var(--col-f8);
+    }
+    .app-search-component .app-search-top {
+        display: flex;
+        padding: 0 15px 0 10px;
+        height: 44px;
+        justify-content: space-between;
+        align-items: center;
+        background: var(--white);
+    }
+    .app-search-component .app-search-top .app-gohost-hearder-left, .app-search-component .app-search-top .app-gohost-hearder-right {
+        flex-basis: 15%;
+    }
+    .app-search-component .app-search-top .app-gohost-hearder-mid {
+        flex-grow: 1;
+    }
+    .app-search-component .app-search-top .app-search-keyword {
+        width: 100%;
+        border-radius: 5px;
+        font-size: var(--fs-14);
+        line-height: 26px;
+        text-indent: 10px;
+        outline: none;
+        -webkit-appearance: none;
+    }
     .app-lang-dropdown .app-lang-dropdown-list {
         display: none;
         position: absolute;

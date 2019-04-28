@@ -3,34 +3,35 @@ import { AuthService } from './auth.service';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtPayload } from './jwt-payload.interface';
+import { LoginService } from '../login/login.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-    constructor(private readonly authService: AuthService) {
-        super({
-            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-            // passReqToCallback: true,
-            secretOrKey: '123',
-        });
-    }
+  constructor(
+    private readonly authService: AuthService,
+    private readonly usersServices: LoginService,
+    ) {
+    super({
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+     // passReqToCallback: false,
+      secretOrKey: '123',
+    });
+  }
 
-    async validate(payload: JwtPayload, done: Function) {
-        console.log ('entered jwt');
-        const user = await this.authService.validateUser(payload);
-        if (!user) {
-            console.log( done(new UnauthorizedException(), false));
-            
-            return done(111,new UnauthorizedException(), false);
-        }
-        console.log(2222,null, user);
-        
-        done(null, user);
+  async validate(payload: JwtPayload) {
+    const objStr = JSON.stringify(payload);
+    const userId = JSON.parse(objStr).user.userId;
+    const user = await this.authService.validate(userId);
+    if (!user) {
+      throw new UnauthorizedException();
     }
+    return user;
+  }
 }
 export const callback = (err, user, info) => {
     let message;
     if (err) {
-        //return (err || new UnauthorizedException(info.message));
+        // return (err || new UnauthorizedException(info.message));
         throw err;
     } else if (typeof info !== 'undefined' || !user) {
         switch (info.message) {

@@ -22,11 +22,13 @@ export class SettingService {
     return await this.settingRepository.findOne({ userId: param.userId });
 
   }
-  // reset password
+  // resetPassword
   async resetPassword(param): Promise<any> {
       if (param.passWordOne !== param.passWordTwo) {
           return { message: '两次密码不一致！!'};
       }
+      console.log(222,param);
+      
       const res = await this.settingRepository.findOne({ userId: param.userId });
       const msg = {
         code: 1,
@@ -41,6 +43,7 @@ export class SettingService {
         return msg;
       } else {
         // do validate Code
+
       }
       const authToken = jwt.sign({ userId: param.userId, exp: (Date.now() / 1000) + (60 * 2) }, config.session.secrets);
       res.passWord = md5(param.passWordOne);
@@ -55,6 +58,8 @@ export class SettingService {
   }
   // reset email
   async resetEmail(param): Promise<any> {
+    console.log(222,param);
+    
     const res = await this.settingRepository.findOne({ userId: param.userId });
     const msg = {
       code: 1,
@@ -78,8 +83,10 @@ export class SettingService {
   }
   // validate email
   async validateEmail(param): Promise<any> {
+    console.log(111,param);
+    
     let email;
-    const res = await this.settingRepository.findOne({ userId: param.userId });
+    const res = await this.settingRepository.findOne({ email: param.email });
     const msg = {
       code: 1,
       message: '',

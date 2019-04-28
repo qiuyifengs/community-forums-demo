@@ -6,6 +6,8 @@
         <link rel="stylesheet" href="/style/account/account.css">
         <link rel="stylesheet" href="/style/common/avatar.css">
         <link rel="stylesheet" href="/style/account/appChangeUserInfo.css">
+        <script type="text/javascript" src="/js/lang/zh.js"></script>
+        <script type="text/javascript" src="/js/lang/en.js"></script>
         <% include ../common/script %>
         <script src="/js/jquery.imgareaselect.min.js"></script>
         <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
@@ -14,14 +16,13 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.0.0-beta.12/Rx.min.js"></script>
     </head>
     <body>
-
         <div class="app-change-userInfo-page">
             <% include ../common/appHeader %>
             <section class="">
                 <form class="ghost-form ghost-form-horizontal" id="appChangePw">
                     <div class="ghost-form-item">
                         <div class="ghost-form-item-label">
-                            <label for="oldPassword" class="new－ghost-form-item-required" title="E-mail">旧密码</label>
+                            <label for="oldPassword" class="new－ghost-form-item-required" title="old-password" lang="oldPassword">旧密码</label>
                         </div>
                         <div class="ghost-form-item-control-wrapper">
                             <div class="ghost-form-item-control">
@@ -33,7 +34,7 @@
                     </div>
                     <div class="ghost-row ghost-form-item">
                         <div class="ghost-form-item-label">
-                            <label for="newPassword" class="new－ghost-form-item-required" title="New Password">新密码</label>
+                            <label for="newPassword" class="new－ghost-form-item-required" title="New Password" lang="newPassword">新密码</label>
                         </div>
                         <div class="ghost-form-item-control-wrapper">
                             <div class="ghost-form-item-control">
@@ -45,7 +46,7 @@
                     </div>
                     <div class="ghost-row ghost-form-item">
                         <div class="ghost-form-item-label">
-                            <label for="confirmPassword" class="new－ghost-form-item-required" title="Confirm Password">确认密码</label>
+                            <label for="confirmPassword" class="new－ghost-form-item-required" title="Confirm Password" lang="confirmPassword">确认密码</label>
                         </div>
                         <div class="ghost-form-item-control-wrapper">
                             <div class="ghost-form-item-control">
@@ -56,7 +57,7 @@
                         </div>
                     </div>
                     <footer class="app-footer app-display">
-                        <button type="submit" class="app-btn ghost-btn-primary btn_submit">确认修改</button>
+                        <button type="submit" class="app-btn ghost-btn-primary btn_submit" lang="confirmChange">确认修改</button>
                     </footer>
                 </form>
             </section>
@@ -66,7 +67,11 @@
     <script type="text/javascript">
         $(function() {
             // app title
-            $('.app-page-title').text('修改密码')
+            if (localStorage.getItem('langData') && JSON.parse(localStorage.getItem('langData')).lang == 'en') {
+                $('.app-page-title').text('Change PassWord')
+            } else {
+                $('.app-page-title').text('修改密码')
+            }
             $("#appChangePw").validate({
                 debug: true,
                 submitHandler: function(form) {
@@ -132,7 +137,7 @@
                     }
                 }
             }) 
-
+            translateFun()
         })
     </script>
 </html>
