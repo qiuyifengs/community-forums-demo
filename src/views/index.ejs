@@ -5,335 +5,231 @@
         <link rel="icon" href="/images/collection.png" type="img/x-ico" />
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
         <meta name="viewport" content="initial-scale=1, user-scalable=0, minimal-ui" charset="UTF-8">
-        <link rel='stylesheet' href='/style/index.css' />
-        <link rel="stylesheet" href="/style/forum/forum.css">
-        <link rel="stylesheet" href="/style/common/swiper.min.css">
+        
+        <link rel='stylesheet' href='/style/mobile.css'/>
         <% include ./common/script %>
+
+        <!-- <script src="/js/mobile/iscroll.js"></script> -->
+        
         <style>
-            .menu-title {
-                margin-bottom: 20px;
-                text-indent: 12px;
-                font-size: 12px;
-                color: #000000;
-            }
-            .tab-nav {
-                position: relative;
-                box-sizing: border-box;
-                padding-left: 0;
-                list-style: none;
-                min-height: 48px;
-                font-size: 16px;
-                white-space: nowrap;
-                width: 100%;
-            }
-                
-            .tab-nav-item {
-                position: relative;
-                box-sizing: border-box;
-                height: 100%;
-                padding: 11px 0;
-                text-indent: 12px;
-                text-decoration: none;
-                font-family:  "PingFangSC-Light","-apple-system","Helvetica Neue",Helvetica,Arial,"PingFang SC","Hiragino Sans GB","WenQuanYi Micro Hei","Microsoft Yahei",sans-serif;
-                cursor: pointer;
-                color: var(--col-61);
-                font-size: var(--fs-14);
-                transition: color .3s cubic-bezier(.645,.045,.355,1);
-            }
-            .tab-nav-item:nth-of-type(1).tab-active:active {
-                background-color: #FFF;
-                color: var(--col-014);
-            }
-            .tab-nav-item.tab-active {
-                -webkit-box-shadow: -5px 0 10px 0 rgba(217, 224, 252, .3);
-                box-shadow: -5px 0 10px 0 rgba(217, 224, 252, .3);
-                background-color: #FFF;
-                color: var(--col-014);
-            }
-                
-            .tab-nav-item.tab-active:active {
-                background-color: #ffffff;
-                -webkit-box-shadow: -5px 0 10px 0 rgba(217, 224, 252, .3);
-                box-shadow: -5px 0 10px 0 rgba(217, 224, 252, .3);
-            }
-                
-            .tab-nav-item:active {
-                background-color: transparent;
-            }
-                
-            .tab-nav-item a {
-                display: inherit;
-                color: inherit;
-            }
-            
-            .tab-nav-item:hover {
-                background-color: rgba(72, 94, 192, .1);
-            }
-            .tab-nav-item.tab-active {
-                color: var(--col-014);
-            }
-            .tab-panel {
-                position: relative;
-            }
-                
-            .tab-panel .tab-panel-item {
-                width: 100%;
-                position: absolute;
-                top: 0;
-                -webkit-transform: translateX(-100%);
-                transform: translateX(-100%);
-            }
-            .menu-item-val {
-                margin-left: 5px;
-            }
-            .index-tab {
-                /* position: fixed
-                right: 0 */
-                margin-left: 50px;
-            }
-            .tab-panel .tab-panel-item.tab-active {
-                position: relative;
-                -webkit-transition: -webkit-transform .15s;
-                transition: -webkit-transform .15s;
-                transition: transform .15s;
-                transition: transform .15s, -webkit-transform .15s;
-                -webkit-transform: translateX(0);
-                transform: translateX(0);
-            }
-                
-            .tab-panel .tab-panel-item.tab-active ~ .tab-panel-item {
-                -webkit-transform: translateX(100%);
-                transform: translateX(100%);
-            }
-            .ghost-list-vertical {
-                position: relative;
-            }
-            
-            .ghost-row {
-                height: 100%;
-            }
-            .ghost-layout {
-                position: absolute;
-                top: 0px;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                overflow-y: scroll;
-            }
-            .ghost-card-body {
-                padding: 10px 20px;
-            }
-            .ghost-tag-list {
-                font-size: 0;
-            }
-            @media screen and (max-width: 420px) {
-                #root {
-                    overflow-x: hidden;
-                }
-                .ghost-layout {
-                    bottom: 50px;
-                }
-                .ghost-row {
-                    display: block!important;
-                }
-                .ghost-pro-layouts-basic-layout-content {
-                    width: 100%;
-                    padding-top: 80px;
-                    /* overflow-x: hidden; */
-                }
-                .ghost-components-menu-vertical-index {
-                    position: fixed;
-                    top: 44px;
-                    left: 0;
-                    right: 0;
-                    padding: 0 10px;
-                    width: 100%;
-                    background: var(--bg);
-                    z-index: 11;
-                }
-                .ghost-components-menu-vertical-index .app-index-menu-list {
-                    display: flex;
-                    overflow-y: scroll;
-                    line-height: 36px;
-                    
-                }
-                .app-index-menu-list .app-index-menu-item {
-                    position: relative;
-                    margin: 0 15px;
-                }
-                .app-index-menu-list .app-index-menu-item .ghost-ment-item-title {
-                    width: auto;
-                    white-space: nowrap;
-                }
-                
-                .app-index-menu-list .is-active {
-                    color: var(--btn-col);
-                }
-                .app-index-menu-item .app-menu-item-border {
-                    display: none;
-                    position: absolute;
-                    left: 50%;
-                    bottom: 0;
-                    height: 1px;
-                    width: 50px;
-                    transform: translateX(-50%);
-                    background: var(--btn-col);
-                }
-                .app-index-menu-item .app-menu-item-border-show {
-                    display: block;
-                }
-                .swiper-container {
-                    height: 140px;
-                    border-radius: 0;
-                }
-                .swiper-container .swiper-wrapper img {
-                    overflow: hidden;
-                    width: 100%;
-                    height: 100%;
-                }
-                .ghost-list {
-                    background: var(--white);
-                }
-                .ghost-list .ghost-card {
-                    border-radius: 0;
-                }
-                .ghost-list .ghost-card .ghost-card-body {
-                    margin: 0 15px;
-                    padding: 0 0 10px 0;
-                    border-bottom: .5px solid var(--col-e9);
-                }
-                .ghost-list .ghost-card .ghost-card-body .ghost-list-item-meta-title {
-                    overflow: hidden;
-                    width: 300px;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    line-height: 18px;
-                }
-                .ghost-list .ghost-card .ghost-card-body .ghost-components-article-list-content-index-description {
-                    padding-top: 5px;
-                    line-height: 18px;
-                    font-size: var(--fs-11);
-                }
-                .ghost-components-article-list-content-index-listContent {
-                    position: relative;
-                }
-                .ghost-components-article-list-content-index-listContent .ghost-components-article-list-content-index-extra {
-                    margin-top: 10px;
-                    font-size: 0;
-                }
-                .ghost-list .ghost-card .ghost-card-body .ghost-tag-list {
-                    overflow: hidden;
-                    display: flex;
-                    align-items: center;
-                    transform: scale(.8) translateX(-12%);
-                }
-                .ghost-list .ghost-card .ghost-card-body .ghost-tag {
-                    font-size: var(--fs-11);
-                }
-                .ghost-list .ghost-card .ghost-card-body .app-time {
-                    position: absolute;
-                    right: 0;
-                    bottom: 0;
-                    font-size: var(--fs-11);
-                    transform: scale(.8) translateX(12%);
-                }
-                .ghost-empty {
-                    margin: 5em auto;
-                }
-                
+            .swiper-wrapper img {
+                width: 100%
             }
         </style>
     </head>
     <body>
-        <div id="root">
-            <div class="ghost-layout">
-                <% include ./common/header %>
-                <div class="ghost-pro-layouts-basic-layout-content ghost-layout-content">
-                    <main  class="ghost-pro-components-page-header-wrapper-grid-content-main ghost-pro-components-page-header-wrapper-grid-content-wide">
-                        <div class="ghost-row" style="display: flex">
-                            <article class="ghost-col-xs-24 ghost-col-sm-24 ghost-col-md-24 ghost-col-lg-18 ghost-col-xl-18 ghost-left-box">
-                                <div class="ghost-components-menu-vertical-index app-display">
-                                    <ul class="app-index-menu-list">
+    <section id="app" class="gm-flexview">
+        
+        <aside id="menu" class="gm-drawer gm-drawer-left gm-drawer-light menu">
+
+            <div class="gm-drawer-sidebar">
+                <div class="gm-list-header gm-components-global-header .gm-components-global-header-action">
+                    <span class="ghost-avatar ghost-pro-components-global-header-index-avatar ghost-avatar-lg ghost-avatar-circle ant-avatar-image">
+                        <img src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png" alt="avatar">
+                    </span>
+                    <span class="gm-components-sidebar-name">
+                        登录/注册
+                    </span>
+                </div>
+                
+
+                <!-- <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <ul class="gm-list swiper-slide" style="padding-top: 48px">
+                            <li class="gm-list-item gm-list-item-middle">
+                                <div class="gm-list-thumb"></div>
+                                <div class="gm-list-line gm-list-line-multiple" data-id='1'>
+                                    <a role="button" class="gm-button gm-button-inline gm-button-icon">
+                                        <svg class="gm-button-icon gm-icon gm-icon-check-circle-o gm-icon-sm" aria-hidden="true">
+                                            <use xlink:href="#icon-gerenziliao"></use>
+                                        </svg>
+                                        <span>个人中心</span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="gm-list-item gm-list-item-middle">
+                                <div class="gm-list-thumb"></div>
+                                <div class="gm-list-line gm-list-line-multiple" data-id='2'>
+                                    <a role="button" class="gm-button gm-button-inline gm-button-icon">
+                                        <svg class="gm-button-icon gm-icon gm-icon-check-circle-o gm-icon-sm" aria-hidden="true">
+                                            <use xlink:href="#icon-tiezi"></use>
+                                        </svg>
+                                        <span>我的帖子</span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="gm-list-item gm-list-item-middle">
+                                <div class="gm-list-thumb"></div>
+                                <div class="gm-list-line gm-list-line-multiple" data-id='3'>
+                                    <a role="button" class="gm-button gm-button-inline gm-button-icon">
+                                        <svg class="gm-button-icon gm-icon gm-icon-check-circle-o gm-icon-sm" aria-hidden="true">
+                                            <use xlink:href="#icon-huifu"></use>
+                                        </svg>
+                                        <span>我的回复</span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="gm-list-item gm-list-item-middle">
+                                <div class="gm-list-thumb"></div>
+                                <div class="gm-list-line gm-list-line-multiple" data-id='5'>
+                                    <a role="button" class="gm-button gm-button-inline gm-button-icon">
+                                        <svg class="gm-button-icon gm-icon gm-icon-check-circle-o gm-icon-sm" aria-hidden="true">
+                                            <use xlink:href="#icon-unie601"></use>
+                                        </svg>
+                                        <span>我的收藏</span>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div> -->
+        
+                <div class="gm-list-footer">
+                    <a role="button" class="gm-button gm-button-inline gm-button-icon">
+                        <svg class="gm-button-icon gm-icon gm-icon-check-circle-o gm-icon-sm" aria-hidden="true">
+                            <use xlink:href="#icon-abort"></use>
+                        </svg>
+                        <span>退出登录</span>
+                    </a>
+                </div>
+            </div>
+            
+        </aside>
+
+        <main id="main" class="gm-drawer-outpanel" >
+            <div class="gm-drawer-overlay" id="gm-drawer-overlay"></div>
+            <header class="gm-navbar gm-navbar-light auto-hide-header">
+                <div class="gm-navbar-left">
+                    <svg class="gm-icon gm-icon-drawer-handle gm-icon-md js-slideout-toggle" aria-hidden="true" style="z-index: 999">
+                        <use xlink:href="#icon-fenlei"></use>
+                    </svg>
+                </div>
+                <div class="gm-navbar-title">FORUM</div>
+                <div class="gm-navbar-right">
+                    <svg class="gm-icon gm-icon-search gm-icon-md" aria-hidden="true">
+                        <use xlink:href="#icon-sousuo1"></use>
+                    </svg>
+                </div>
+            </header>
+            <!-- <form class="gm-search gm-search-start">
+                <div class="gm-search-input">
+                    <div class="gm-search-synthetic-ph" style="width: 110px">
+                        <span class="gm-search-synthetic-ph-container"></span>
+                    </div>
+                    <input type="search" class="gm-search-valye" placeholder="请输入关键字查询..." />
+                    <a class="gm-search-clear"></a>
+                </div>
+                <div class="gm-search-cancel gm-search-cancel-show gm-search-cancel-anim">取消</div>
+            </form> -->
+
+            
+            
+            <!-- <nav class="gm-tabs gm-tabs-horizontal gm-tabs-top secondary-nav" style="background-color: #fff; box-shadow: 0 2px 8px #485ec036; z-index: 2">
+                <div class="gm-tabs-tab-bar-wrap">
+                    <div class="gm-tabs-default-bar gm-tabs-default-bar-animated gm-tabs-default-bar-top swiper-container" id="menuWrapper">
+                        
+                        <ul role="tablist" class="gm-tabs-default-bar-content tablist swiper-wrapper">
+                            <% postList.menuList.forEach(function(menuItem) { %>
+                                <li role="tab" class="gm-tabs-default-bar-tab swiper-slide"><%= menuItem.menu %></li>
+                            <% }) %>
+                            
+                        </ul>
+                        <div class="bar"></div>
+                    </div>
+                </div>
+            </nav> -->
+
+            <div id="container-top">
+
+                <nav class="gm2-tabs gm2-tabs-top gm2-tabs-line secondary-nav">
+                    <div class="gm2-tabs-bar gm2-tabs-top-bar">
+                        <div class="gm2-tabs-nav-container">
+                            <div class="gm2-tabs-nav-wrap">
+                                <div class="gm2-tabs-nav-scroll swiper-container" id="secondary-nav">
+                                    
+                                    <div class="gm2-tabs-nav gm2-tabs-nav-animated swiper-wrapper">
                                         <% postList.menuList.forEach(function(menuItem) { %>
-                                        <li class="index-menu-item app-index-menu-item">
-                                            <span class="ghost-ment-item-title"><%= menuItem.menu %></span>
-                                            <span class="app-menu-item-border"></span>
-                                        </li>
+                                            <div class="gm2-tabs-tab swiper-slide">
+                                                <span><%= menuItem.menu %></span>
+                                            </div>
                                         <% }) %>
-                                    </ul>
-                                </div>
-                                <div class="swiper-container bd-radius-5">
-                                    <div class="swiper-wrapper">
-                                        <div class="swiper-slide"><img src="/images/1.png" alt=""></div>
-                                        <div class="swiper-slide"><img src="/images/2.png" alt=""></div>
-                                        <div class="swiper-slide"><img src="/images/3.png" alt=""></div>
-                                        <div class="swiper-slide"><img src="/images/4.png" alt=""></div>
+                                        
+                                        <div class="gm2-tabs-ink-bar gm2-tabs-ink-animated"></div>
                                     </div>
-                                    <!-- 如果需要分页器 -->
-                                    <div class="swiper-pagination"></div>
-                                    <!-- 如果需要导航按钮 -->
-                                    <!-- <div class="swiper-button-prev"></div>
-                                    <div class="swiper-button-next"></div> -->
                                 </div>
-                                <div class="ghost-card-box" style="background-color: transparent; box-shadow: none">
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+
+                <section>
+                    <div class="carouselMap swiper-container">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide"><img src="/images/1.png" alt=""></div>
+                            <div class="swiper-slide"><img src="/images/2.png" alt=""></div>
+                            <div class="swiper-slide"><img src="/images/3.png" alt=""></div>
+                            <div class="swiper-slide"><img src="/images/4.png" alt=""></div>
+                        </div>
+                        
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </section>
+
+                <div id="page" class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <article class="gm-tabs-content-wrap gm-tabs-content-wrap-animated sub-nav-hero">
+                                <div role="tabpanel" class="gm-tabs-pane-wrap gm-tabs-pane-wrap-active">
                                     <div class="ghost-loading-mask" style="display: none">
                                         <div class="ghost-loading-spinner">
                                             <svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg>
                                         </div>
                                     </div>
+
                                     <% if (postList.articleList && (postList.articleList.length > 0)) { %>
-                                    <div class="ghost-list ghost-list-vertical">
-                                        <div class="ghost-spin-container postsList" id="artivleTemplate">
+                                    <div class="gm-list gm-push-to-refresh-content-wrapper swiper-container scroll">
+                                        <div class="gm-list-body gm-push-to-refresh-content gm-push-to-refresh-down gm-push-to-refresh-transition swiper-wrapper">
+                                            <div class="gm-push-to-refresh-indicator">下拉可以刷新</div>
                                             <% postList.articleList.forEach(function(articleItem) {%>
-                                                <div class="ghost-card gohst-index-page" article-id="<%= articleItem.articleId%>">
-                                                    <div class="ghost-card-body">
-                                                        <a class="target-go" target="_blank" href="/post/articleDetail/<%=articleItem.articleId%>">
-                                                            <div class="ghost-list-item">
-                                                                <div class="ghost-list-item-main">
-                                                                    <div class="ghost-list-item-meta">
-                                                                        <div class="ghost-list-item-meta-content">
-                                                                            <div class="ghost-pro-components-article-list-content-index-listContent">
-                                                                                <% if(articleItem.top) { %>
-                                                                                <span class="ghost-tag ghost-tag-has-color" style="background-color: var(--col-top)">置顶</span>
-                                                                                <% } %>
-                                                                                <h4 class="ghost-list-item-meta-title fs18">
-                                                                                    <%=articleItem.articleTitle%>
-                                                                                </h4>
-                                                                            </div>
-                                                                        </div>
+                                            <div class="gm-list-item gm-list-item-middle minHeight swiper-slide">
+                                                <div class="gm-list-line am-list-line-multiple">
+                                                    <div class="gm-list-content">
+                                                        <div class="gm-card">
+                                                            <div class="gm-card-header">
+                                                                <div class="gm-card-header-content">
+                                                                    <% if(articleItem.top) { %>
+                                                                    <span class="ghost-tag ghost-tag-has-color" style="background-color: var(--col-top)">置顶</span>
+                                                                    <% } %>
+                                                                    <span class="gm-card-header-title fs18">
+                                                                        <%=articleItem.articleTitle%>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="gm-card-body">
+                                                                <div class="gm-card-body-content"><%- articleItem.articleContent %></div>
+                                                                <div class="gm-card-body-extra">
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                            <div class="gm-card-footer">
+                                                                <span class="ghost-tag-list">
+                                                                    <% articleItem.articleLabel.forEach(function(labelItem) {%>
+                                                                    <span class="ghost-tag ghost-tag-has-color ghost-tag-color-primary"><%= labelItem %></span>
+                                                                    <% }) %>
+                                                                </span>
+                                                                <div class="gm-card-footer-meta">
+                                                                    <div class="gm-card-footer-content">
+                                                                        <em class="format-time"><%= articleItem.publishTime %></em>
                                                                     </div>
-                                                                    <div class="ghost-components-article-list-content-index-listContent">
-                                                                        <div class="ghost-components-article-list-content-index-description">
-                                                                            <%- articleItem.articleContent %>
-                                                                        </div>
-                                                                        <div class="ghost-components-article-list-content-index-extra">
-                                                                            <span class="ghost-avatar ghost-pro-components-global-header-index-avatar ghost-avatar-mini ghost-avatar-circle ghost-avatar-image langue-show web-display">
-                                                                                <% if(articleItem.hearderIcon) { %>
-                                                                                    <img src="/<%= articleItem.hearderIcon %>">
-                                                                                <% } else { %> 
-                                                                                    <span class="item-random-color" article-author="<%=articleItem.author%>">
-                                                                                        <%= articleItem.author.substring(0, 1) %>
-                                                                                    </span>  
-                                                                                <% } %>
-                                                                            </span>
-                                                                            <a href="javascript:" class="articleAuthor web-display" style="color: var(--btn-col)">
-                                                                                <span class="author-name"><%=articleItem.author%></span>
-                                                                            </a>
-                                                                            <em class="showTime web-display"><%= articleItem.publishTime %></em>
-                                                                            <span class="ghost-tag-list">
-                                                                                <% articleItem.articleLabel.forEach(function(labelItem) {%>
-                                                                                <span class="ghost-tag ghost-tag-has-color ghost-tag-color-primary"><%= labelItem %></span>
-                                                                                <% }) %>
-                                                                            </span>
-                                                                            <span class="showTime app-display app-time"><%= articleItem.publishTime %></span>
-                                                                            <span class="from-type">来自分类：<%= articleItem.articleType %></span>
-                                                                        </div>
+                                                                    <div class="gm-card-footer-extra">
+                                                                        <span class="from-type">来自分类：<%= articleItem.articleType %></span>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </a>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                            </div>
                                             <% }) %>
                                         </div>
                                     </div>
@@ -346,240 +242,326 @@
                                             <p class="ghost-empty-description">暂无相关文章</p>
                                         </div>
                                     <% } %>
-                                        <!-- <input type="hidden" id="totalPages" value="<%= postList.total %>" style="display: none" /> -->
                                 </div>
                             </article>
-                            <aside class="ghost-col-xs-24 ghost-col-sm-24 ghost-col-md-24 ghost-col-lg-24 ghost-col-xl-6 index-tab web-display">
-                                <h5 class="tag-title">
-                                    <span> TAGS </span>
-                                    <span class="long-tag-border"></span>
-                                </h5>
-                                <ul class="ghost-components-menu-vertical-index index-menu-list">
-                                    <% postList.menuList.forEach(function(menuItem) { %>
-                                    <li class="ghost-components-menu-item index-menu-item">
-                                        <svg class="iconSvg" aria-hidden="true">
-                                            <use xlink:href="#icon-<%= menuItem.menuId %>"></use>
-                                        </svg>
-                                        <span class="ghost-ment-item-title"><%= menuItem.menu %></span>
-                                    </li>
-                                    <% }) %>
-                                </ul>
-                            </aside>
                         </div>
-                    </main>
+
+                        <div class="swiper-slide">
+                            <div class="swiper-container scroll">
+                                    slide2
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+                            <div class="swiper-container scroll">
+                                    slide3
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+                            <div class="swiper-container scroll">
+                                    slide4
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+                            <div class="swiper-container scroll">
+                                    slide5
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+                            <div class="swiper-container scroll">
+                                    slide6
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+                            <div class="swiper-container scroll">
+                                    slide7
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+                            <div class="swiper-container scroll">
+                                    slide8
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+                            <div class="swiper-container scroll">
+                                    slide9
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
                 </div>
             </div>
-            <footer class="app-footer app-display">
-                <button type="button" class="app-btn ghost-btn-primary">发表文章</button>
-            </footer>
-        </div>
-    </body>
-    <script src="/js/swiper.min.js"></script>
-    <script type="text/javascript">
-        let activity = JSON.parse(localStorage.getItem('activity'));
-        $(function() {
-            let pageSize = 1;
-            var swiper = new Swiper('.swiper-container', {
-                spaceBetween: 30,
-                centeredSlides: true,
-                autoplay: {
-                    delay: 2500,
-                    disableOnInteraction: false,
-                },
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                },
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
-            })
-            // random color
-            $(".item-random-color").each(function() {
-                const authorName = $(this).attr("article-author")
-                $(this).css("background",renderColor(authorName))
-            })
-            $(".showTime").each(function() {
-                let resTime = formatDateFilter($(this).text())
-                $(this).text(resTime)
-            })
 
-            const userId = $.cookie("userId")
-            const articleType = this.location.pathname.split('/')[2] ? decodeURI(this.location.pathname.split('/')[2]) : 'ALL'
-
-
-            $('.ghost-components-menu-vertical-index .index-menu-item').on('click', function (e) {
-                e.preventDefault()
-                pageSize = 0;
-                $(this).addClass('is-active')
-                $(this).siblings().removeClass('is-active')
-                $(this).find('.app-menu-item-border').addClass('app-menu-item-border-show')
-                $(this).siblings().find('.app-menu-item-border').removeClass('app-menu-item-border-show')
-                goPage(`topic/${$(this).find('.ghost-ment-item-title').text()}`)
-            })
-
-            $('.index-menu-list .index-menu-item').each(function() {
-                if (articleType === $(this).find('.ghost-ment-item-title').text()) {
-                    $(this).addClass('is-active')
-                    $(this).siblings().removeClass('is-active')
-                    $(this).siblings().find('.app-menu-item-border').removeClass('app-menu-item-border-show')
-                    return false
-                }
-            })
-
-            // init dropload config
-            let isLoading = false;
+            <!-- <div class="gm-list-view-scrollview">
+                <div class="gm-push-to-refresh-content-wrapper">
+                    <div class="gm-push-to-refresh-content gm-push-to-refresh-down gm-push-to-refresh-transition swiper-wrapper">
+                        <div class="gm-push-to-refresh-indicator">
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="ghost-loading-spinner">
+                                <svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">Slide 2</div>
+                    </div>
+                </div>
+            </div> -->
             
-            let dropload = $('.ghost-layout').dropload({
-                loadDownFn: function(me){
-                    if (isLoading) return false;
-                    isLoading = true
-                    $('.dropload-up').remove()
-                    $('.dropload-down').remove()
-                    $('.dropload-refresh').remove()
-                    const url = articleType ? `topic/${articleType}/${pageSize}` : `topic/ALL${pageSize}`
-                    myAjax('GET', url).then(res => {
-                        if (res.code === 10000 && res.articleList.length > 0) {
-                            $('.ghost-loading-mask').css('display', 'block')
-                            console.log(123)
-                            pageSize++
-                            let result = ''
-                            res.articleList.forEach((item, ind) => {
-                                result += renderArticleHtml(item)
-                                // if(ind == res.articleList.length - 1) {
-                                //     dropload.noData()
-                                // }
-                            });
-                            
-                            $(".item-random-color").each(function() {
-                                const authorName = $(this).attr("article-author")
-                                $(this).css("background",renderColor(authorName))
-                                
-                            })
-                            setTimeout(function() {
-                                // 每次数据加载完，必须重置
-                                dropload.resetload()
-                                isLoading = false
-                                $('.ghost-loading-mask').css('display', 'none')
-                                $("#artivleTemplate").append(result)
-                            }, 1000) 
-                        } else {
-                            // 即使加载出错，也得重置
-                            // dropload.noData();
-                            dropload.resetload()
-                            setTimeout(function() {
-                                isLoading = false
-                            }, 1000) 
-                        }
-                    })
-                }
-            })
-            $('.dropload-up').remove()
-            $('.dropload-down').remove()
-            $('.dropload-refresh').remove()
-            $('.tab-nav .tab-nav-item').on('click', function (e) {
-                e.preventDefault()
-                $(this).addClass('tab-active')
-                $(this).siblings().removeClass('tab-active')
-                goPage(`topic/${$(this).find(".menu-item-val").text()}`)
-            })
+           <!-- <article class="gm-tabs-content-wrap gm-tabs-content-wrap-animated sub-nav-hero">
+                <div role="tabpanel" class="gm-tabs-pane-wrap gm-tabs-pane-wrap-active">
+                    <div class="ghost-loading-mask" style="display: none">
+                        <div class="ghost-loading-spinner">
+                            <svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg>
+                        </div>
+                    </div>
 
-            // Click on the list item to enter the article details
-            $('#artivleTemplate').on('click', '.ghost-list-item', function(event) {
-                event.stopPropagation()
-                const articleId = $(this).parents(".gohst-index-page").attr("article-id")
-                myAjax("POST", "post/addView", { articleId: articleId, userId: $.cookie("userId") })
-            })
-            // ------------------------------webApp--------------------------------------
-            $('.app-index-menu-list .index-menu-item').each(function() {
-                if (articleType === $(this).find('.ghost-ment-item-title').text()) {
-                    $(this).addClass('is-active')
-                    $(this).siblings().removeClass('is-active')
-                    $(this).find('.app-menu-item-border').addClass('app-menu-item-border-show')
-                    $(this).siblings().find('.app-menu-item-border').removeClass('app-menu-item-border-show')
-                    return false
-                }
-            })
-            $('.app-btn').on('click', function(e) {
-                e.stopPropagation()
-                if ($.cookie("userId")) {
-                    if (activity) {
-                        goPage('post/publish/')
-                    } else {
-                        if (confirm('该账户还未进行验证，请先进行验证！')) {
-                            let url = 'account/account/' + nickName
-                            goPage(url)
-                        }
-                    }
-                } else {
-                    goPage('user/login')
-                }
-            })
-        })
-        function isTop(item) {
-            if (item) {
-                return `
-                    <span class="ghost-tag ghost-tag-has-color" style="background-color: var(--col-top)">置顶</span>
-                `
-            } else {
-                return ''
-            }
-        }
-        function filterTime(item) {
-            return  resTime = formatDateFilter(item)
-        }
-        function showHeaderIcon(item) {
-            if (item.hearderIcon != '' && item.hearderIcon != null) {
-                return `
-                    <img src="/${ item.hearderIcon }">
-                `
-            } else {
-                return `<span class="item-random-color" article-author="${item.author}">${item.author.substring(0, 1)}</span>`
-            }
-        }
-        let renderArticleHtml = item => {
-            return `<div class="ghost-card gohst-index-page" article-id="${item.articleId}">
-                        <div class="ghost-card-body">
-                            <a class="target-go" target="_blank" href="/post/articleDetail/${item.articleId}">
-                                <div class="ghost-list-item">
-                                    <div class="ghost-list-item-main">
-                                        <div class="ghost-list-item-meta">
-                                            <div class="ghost-list-item-meta-content">
-                                                <div class="ghost-pro-components-article-list-content-index-listContent">
-                                                    ${ isTop(item.top) }
-                                                        <h4 class="ghost-list-item-meta-title fs18">
-                                                            ${ item.articleTitle }
-                                                        </h4>
-                                                    
+                    <% if (postList.articleList && (postList.articleList.length > 0)) { %>
+                    <div class="gm-list gm-push-to-refresh-content-wrapper">
+                        <div class="gm-list-body gm-push-to-refresh-content gm-push-to-refresh-down gm-push-to-refresh-transition">
+                            <div class="gm-push-to-refresh-indicator">下拉可以刷新</div>
+                            <% postList.articleList.forEach(function(articleItem) {%>
+                            <div class="gm-list-item gm-list-item-middle minHeight">
+                                <div class="gm-list-line am-list-line-multiple">
+                                    <div class="gm-list-content">
+
+                                        <div class="gm-card">
+                                            <div class="gm-card-header">
+                                                <div class="gm-card-header-content">
+                                                    <% if(articleItem.top) { %>
+                                                    <span class="ghost-tag ghost-tag-has-color" style="background-color: var(--col-top)">置顶</span>
+                                                    <% } %>
+                                                    <span class="gm-card-header-title fs18">
+                                                        <%=articleItem.articleTitle%>
+                                                    </span>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="ghost-components-article-list-content-index-listContent">
-                                            <div class="ghost-components-article-list-content-index-description">
-                                                ${ item.articleContent }
+                                            <div class="gm-card-body">
+                                                <div class="gm-card-body-content"><%- articleItem.articleContent %></div>
+                                                <div class="gm-card-body-extra">
+                                                    <img src="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png">
+                                                </div>
                                             </div>
-                                            <div class="ghost-components-article-list-content-index-extra">
-                                                <span class="ghost-avatar ghost-pro-components-global-header-index-avatar ghost-avatar-mini ghost-avatar-circle ghost-avatar-image langue-show web-display">
-                                                    ${ showHeaderIcon(item) }
-                                                </span>
-                                                <a href="javascript:" class="articleAuthor web-display" style="color: var(--btn-col)">
-                                                    <span class="author-name">${ item.author }</span>
-                                                </a>
-                                                <em class="showTime web-display">${ filterTime(item.publishTime) }</em>
+                                            <div class="gm-card-footer">
                                                 <span class="ghost-tag-list">
-                                                    <span class="ghost-tag ghost-tag-has-color ghost-tag-color-primary">${ item.articleType }</span>
+                                                    <% articleItem.articleLabel.forEach(function(labelItem) {%>
+                                                    <span class="ghost-tag ghost-tag-has-color ghost-tag-color-primary"><%= labelItem %></span>
+                                                    <% }) %>
                                                 </span>
-                                                <span class="showTime app-display app-time">${ filterTime(item.publishTime) }</span>
-                                                <span class="from-type">来自分类：${ item.articleType }</span>
+                                                <div class="gm-card-footer-meta">
+                                                    <div class="gm-card-footer-content">
+                                                        <em class="format-time"><%= articleItem.publishTime %></em>
+                                                    </div>
+                                                    <div class="gm-card-footer-extra">
+                                                        <span class="from-type">来自分类：<%= articleItem.articleType %></span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </a>
+                            </div>
+                            <% }) %>
                         </div>
-                    </div>`
-            }
+                    </div>
+                    <% } %>
+                    <% if ((postList.total * 1) < 1) { %>
+                        <div class="ghost-empty">
+                            <dvi class="ghost-empty-image">
+                                <img src="/images/no_data.png" alt="">
+                            </dvi>
+                            <p class="ghost-empty-description">暂无相关文章</p>
+                        </div>
+                    <% } %>
+                </div>
+            </article> -->
+
+        </main>
+        
+    </section>
+    </body>
+    <% include ./common/mobile-script %>
+    <script src="/js/mobile/index.js"></script>
+    <script>
             
-    </script>
+            tSpeed = 300 //切换速度300ms
+            var navSwiper = new Swiper('#secondary-nav', {
+                slidesPerView: 'auto',
+                
+                freeMode: true,
+                grabCursor: true,
+                on: {
+                    init: function() {
+                        navSlideWidth = this.slides.eq(0).css('width');
+                        bar = this.$el.find('.gm2-tabs-ink-bar')
+                        bar.css('width', navSlideWidth)
+                        bar.transition(tSpeed)
+                        navSum = this.slides[this.slides.length - 1].offsetLeft //最后一个slide的位置
+          
+                        clientWidth = parseInt(this.$wrapperEl.css('width')) //Nav的可视宽度
+                        navWidth = 0
+                        for (i = 0; i < this.slides.length; i++) {
+                            navWidth += parseInt(this.slides.eq(i).css('width'))
+                        }
+                        console.log('navWidth', navWidth)
+          
+                        topBar = this.$el.parents('body').find('#container-top') //页头
+                    },
+          
+                },
+            });
+            
+            var pageSwiper = new Swiper('#page', {
+                watchSlidesProgress: true,
+                resistanceRatio: 0,
+                on: {
+                    touchMove: function() {
+                        console.log
+                        progress = this.progress
+                        bar.transition(0)
+                        bar.transform('translateX(' + navSum * progress + 'px)')
+                        // for (i = 0; i < this.slides.length; i++) {
+                        //     slideProgress = this.slides[i].progress
+                        //     if (Math.abs(slideProgress) < 1) {
+                        //         r = Math.floor((255 - 51) * (1 - Math.pow(Math.abs(slideProgress), 2)) + 51)
+                        //         g = Math.floor((72 - 51) * (1 - Math.pow(Math.abs(slideProgress), 2)) + 51)
+                        //         b = Math.floor((145 - 51) * (1 - Math.pow(Math.abs(slideProgress), 2)) + 51)
+                        //         navSwiper.slides.eq(i).find('span').css('color', 'rgba(' + r + ',' + g + ',' + b + ',1)')
+                        //     }
+                        // }
+                    },
+                    transitionStart: function() {
+                        activeIndex = this.activeIndex
+                        activeSlidePosition = navSwiper.slides[activeIndex].offsetLeft
+                        bar.css('width', navSwiper.slides.eq(activeIndex).css('width'))
+                        //释放时导航 bar条移动过渡
+                        bar.transition(tSpeed)
+                        bar.transform('translateX(' + activeSlidePosition + 'px)')
+                        //释放时文字变色过渡
+                        navSwiper.slides.eq(activeIndex).find('span').transition(tSpeed)
+                        navSwiper.slides.eq(activeIndex).find('span').css('color', '#485ec0')
+                        // if (activeIndex > 0) {
+                        //     navSwiper.slides.eq(activeIndex - 1).find('span').transition(tSpeed)
+                        //     navSwiper.slides.eq(activeIndex - 1).find('span').css('color', 'rgba(51,51,51,1)')
+                        // }
+                        // if (activeIndex < this.slides.length) {
+                        //     navSwiper.slides.eq(activeIndex + 1).find('span').transition(tSpeed)
+                        //     navSwiper.slides.eq(activeIndex + 1).find('span').css('color', 'rgba(51,51,51,1)')
+                        // }
+                        //导航居中
+                        navActiveSlideLeft = navSwiper.slides[activeIndex].offsetLeft //activeSlide距左边的距离
+          
+                        navSwiper.setTransition(tSpeed)
+                        if (navActiveSlideLeft < (clientWidth - parseInt(navSlideWidth)) / 2) {
+                            navSwiper.setTranslate(0)
+                        } else if (navActiveSlideLeft > navWidth - (parseInt(navSlideWidth) + clientWidth) / 2) {
+                            navSwiper.setTranslate(clientWidth - navWidth)
+                        } else {
+                            navSwiper.setTranslate((clientWidth - parseInt(navSlideWidth)) / 2 - navActiveSlideLeft)
+                        }
+          
+                    },
+                }
+            });
+          
+            navSwiper.$el.on('touchstart', function(e) {
+                e.preventDefault() //去掉按压阴影
+            })
+            navSwiper.on('tap', function(e) {
+                clickIndex = this.clickedIndex
+                clickSlide = this.slides.eq(clickIndex)
+                pageSwiper.slideTo(clickIndex, 0);
+                bar.css('width', this.slides.eq(clickIndex).css('width'))
+                // this.slides.find('span').css('color', 'rgb(51, 51, 51)');
+                // clickSlide.find('span').css('color', '#485ec0');
+            })
+          
+            // navSwiper.slideTo(4, 1000, false);
+            // pageSwiper.slideTo(4, 0);
+
+            //内容滚动			
+            // var scrollSwiper = new Swiper('.scroll', {
+          
+            //     slidesOffsetBefore: 72,
+            //     direction: 'vertical',
+            //     freeMode: true,
+            //     slidesPerView: 'auto',
+          
+            //     mousewheel: {
+            //         releaseOnEdges: true,
+            //     },
+            //     on: {
+            //         touchMove: function() {
+          
+            //             if (this.translate > 72 - 36 && this.translate < 72) {
+            //                 topBar.transform('translateY(' + (this.translate - 72) + 'px)');
+            //             }
+          
+            //         },
+            //         touchStart: function() {
+            //             startPosition = this.translate
+            //         },
+            //         touchEnd: function() {
+            //             topBar.transition(tSpeed)
+            //             if (this.translate > 36 && this.translate < 72 && this.translate < startPosition) {
+            //                 topBar.transform('translateY(-36px)');
+            //                 for (sc = 0; sc < scrollSwiper.length; sc++) {
+            //                     if (scrollSwiper[sc].translate > 36) {
+            //                         scrollSwiper[sc].setTransition(tSpeed);
+            //                         scrollSwiper[sc].setTranslate(36)
+            //                     }
+            //                 }
+            //             }
+            //             if (this.translate > 36 && this.translate < 72 && this.translate > startPosition) {
+            //                 topBar.transform('translateY(0px)');
+            //                 for (sc = 0; sc < scrollSwiper.length; sc++) {
+            //                     if (scrollSwiper[sc].translate < 72 && scrollSwiper[sc].translate > 0) {
+            //                         scrollSwiper[sc].setTransition(tSpeed);
+            //                         scrollSwiper[sc].setTranslate(72)
+            //                     }
+            //                 }
+          
+            //             }
+          
+            //         },
+          
+            //         transitionStart: function() {
+          
+            //             topBar.transition(tSpeed)
+            //             if (this.translate < 72 - 36) {
+            //                 topBar.transform('translateY(-36px)');
+            //                 if (scrollSwiper) {
+            //                     for (sc = 0; sc < scrollSwiper.length; sc++) {
+            //                         if (scrollSwiper[sc].translate > 36) {
+            //                             scrollSwiper[sc].setTransition(tSpeed);
+            //                             scrollSwiper[sc].setTranslate(36)
+            //                         }
+            //                     }
+            //                 }
+          
+            //             } else {
+            //                 topBar.transform('translateY(0px)');
+          
+            //                 if (scrollSwiper) {
+            //                     for (sc = 0; sc < scrollSwiper.length; sc++) {
+            //                         if (scrollSwiper[sc].translate < 72 && scrollSwiper[sc].translate > 0) {
+            //                             scrollSwiper[sc].setTransition(tSpeed);
+            //                             scrollSwiper[sc].setTranslate(72)
+            //                         }
+            //                     }
+            //                 }
+            //             }
+            //         },
+            //     }
+          
+            // })
+          
+        
+            </script>
 </html>

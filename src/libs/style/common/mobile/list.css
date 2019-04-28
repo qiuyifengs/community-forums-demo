@@ -1,0 +1,329 @@
+.gm-list-header {
+	padding: 15px 15px 9px;
+	font-size: 14px;
+	color: #888;
+	width: 100%;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box
+}
+
+.gm-list-footer {
+    padding: 9px 15px 15px;
+    font-size: 14px;
+    color: #888;
+    position: fixed;
+    bottom: 24px;
+}
+
+.gm-list-body {
+	position: relative;
+	background-color: #fff;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd
+}
+
+@media (-webkit-min-device-pixel-ratio:2),(min-resolution:2dppx) {
+	html:not([data-scale]) .gm-list-body {
+		border-top: none
+	}
+
+	html:not([data-scale]) .gm-list-body:before {
+		content: "";
+		position: absolute;
+		background-color: #ddd;
+		display: block;
+		z-index: 1;
+		top: 0;
+		right: auto;
+		bottom: auto;
+		left: 0;
+		width: 100%;
+		height: 1px;
+		-webkit-transform-origin: 50% 50%;
+		-ms-transform-origin: 50% 50%;
+		transform-origin: 50% 50%;
+		-webkit-transform: scaleY(.5);
+		-ms-transform: scaleY(.5);
+		transform: scaleY(.5)
+	}
+}
+
+@media (-webkit-min-device-pixel-ratio:2) and (-webkit-min-device-pixel-ratio:3),(min-resolution:2dppx) and (min-resolution:3dppx) {
+	html:not([data-scale]) .gm-list-body:before {
+		-webkit-transform: scaleY(.33);
+		-ms-transform: scaleY(.33);
+		transform: scaleY(.33)
+	}
+}
+
+@media (-webkit-min-device-pixel-ratio:2),(min-resolution:2dppx) {
+	html:not([data-scale]) .gm-list-body {
+		border-bottom: none
+	}
+
+	html:not([data-scale]) .gm-list-body:after {
+		content: "";
+		position: absolute;
+		background-color: #ddd;
+		display: block;
+		z-index: 1;
+		top: auto;
+		right: auto;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 1px;
+		-webkit-transform-origin: 50% 100%;
+		-ms-transform-origin: 50% 100%;
+		transform-origin: 50% 100%;
+		-webkit-transform: scaleY(.5);
+		-ms-transform: scaleY(.5);
+		transform: scaleY(.5)
+	}
+}
+
+@media (-webkit-min-device-pixel-ratio:2) and (-webkit-min-device-pixel-ratio:3),(min-resolution:2dppx) and (min-resolution:3dppx) {
+	html:not([data-scale]) .gm-list-body:after {
+		-webkit-transform: scaleY(.33);
+		-ms-transform: scaleY(.33);
+		transform: scaleY(.33)
+	}
+}
+
+.gm-list-body div:not(:last-child) .gm-list-line {
+	border-bottom: 1px solid #ddd
+}
+
+@media (-webkit-min-device-pixel-ratio:2),(min-resolution:2dppx) {
+	html:not([data-scale]) .gm-list-body div:not(:last-child) .gm-list-line {
+		border-bottom: none
+	}
+
+	html:not([data-scale]) .gm-list-body div:not(:last-child) .gm-list-line:after {
+		content: "";
+		position: absolute;
+		background-color: #ddd;
+		display: block;
+		z-index: 1;
+		top: auto;
+		right: auto;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 1px;
+		-webkit-transform-origin: 50% 100%;
+		-ms-transform-origin: 50% 100%;
+		transform-origin: 50% 100%;
+		-webkit-transform: scaleY(.5);
+		-ms-transform: scaleY(.5);
+		transform: scaleY(.5)
+	}
+}
+
+@media (-webkit-min-device-pixel-ratio:2) and (-webkit-min-device-pixel-ratio:3),(min-resolution:2dppx) and (min-resolution:3dppx) {
+	html:not([data-scale]) .gm-list-body div:not(:last-child) .gm-list-line:after {
+		-webkit-transform: scaleY(.33);
+		-ms-transform: scaleY(.33);
+		transform: scaleY(.33)
+	}
+}
+
+.gm-list-item {
+	position: relative;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	padding: 0;
+	min-height: 44px;
+	background-color: #fff;
+	vertical-align: middle;
+	overflow: hidden;
+	-webkit-transition: background-color .2s;
+	transition: background-color .2s;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+    align-items: center;
+    height: auto !important
+}
+.gm-list-item.minHeight {
+    min-height: 135px;
+}
+
+.gm-list-item .gm-list-ripple {
+	position: absolute;
+	background: transparent;
+	display: inline-block;
+	overflow: hidden;
+	will-change: box-shadow,transform;
+	-webkit-transition: background-color .2s cubic-bezier(.4,0,.2,1),color .2s cubic-bezier(.4,0,.2,1),-webkit-box-shadow .2s cubic-bezier(.4,0,1,1);
+	transition: background-color .2s cubic-bezier(.4,0,.2,1),color .2s cubic-bezier(.4,0,.2,1),-webkit-box-shadow .2s cubic-bezier(.4,0,1,1);
+	transition: box-shadow .2s cubic-bezier(.4,0,1,1),background-color .2s cubic-bezier(.4,0,.2,1),color .2s cubic-bezier(.4,0,.2,1);
+	transition: box-shadow .2s cubic-bezier(.4,0,1,1),background-color .2s cubic-bezier(.4,0,.2,1),color .2s cubic-bezier(.4,0,.2,1),-webkit-box-shadow .2s cubic-bezier(.4,0,1,1);
+	outline: none;
+	cursor: pointer;
+	border-radius: 100%;
+	-webkit-transform: scale(0);
+	-ms-transform: scale(0);
+	transform: scale(0)
+}
+
+.gm-list-item .gm-list-ripple.gm-list-ripple-animate {
+	background-color: hsla(0,0%,62%,.2);
+	-webkit-animation: ripple 1s linear;
+	animation: ripple 1s linear
+}
+
+.gm-list-item.gm-list-item-top .gm-list-line {
+	-webkit-box-align: start;
+	-webkit-align-items: flex-start;
+	-ms-flex-align: start;
+	align-items: flex-start
+}
+
+.gm-list-item.gm-list-item-top .gm-list-line .gm-list-arrow {
+	margin-top: 2px
+}
+
+.gm-list-item.gm-list-item-middle .gm-list-line {
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center
+}
+
+.gm-list-item.gm-list-item-bottom .gm-list-line {
+	-webkit-box-align: end;
+	-webkit-align-items: flex-end;
+	-ms-flex-align: end;
+	align-items: flex-end
+}
+
+.gm-list-item.gm-list-item-error .gm-list-line .gm-list-extra,.gm-list-item.gm-list-item-error .gm-list-line .gm-list-extra .gm-list-brief {
+	color: #f50
+}
+
+.gm-list-item.gm-list-item-active {
+	background-color: #ddd
+}
+
+.gm-list-item.gm-list-item-disabled .gm-list-line .gm-list-content,.gm-list-item.gm-list-item-disabled .gm-list-line .gm-list-extra {
+	color: #bbb
+}
+
+.gm-list-item img {
+	width: 22px;
+	height: 22px;
+	vertical-align: middle
+}
+
+.gm-list-item .gm-list-thumb:first-child {
+	margin-right: 15px
+}
+
+.gm-list-item .gm-list-thumb:last-child {
+	margin-left: 8px
+}
+
+.gm-list-item .gm-list-line {
+	position: relative;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
+	-webkit-align-self: stretch;
+	-ms-flex-item-align: stretch;
+	align-self: stretch;
+	padding-right: 15px;
+	overflow: hidden
+}
+
+.gm-list-item .gm-list-line .gm-list-content {
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
+	color: #000;
+	font-size: 17px;
+	text-align: left
+}
+
+.gm-list-item .gm-list-line .gm-list-content,.gm-list-item .gm-list-line .gm-list-extra {
+	line-height: 1.5;
+	width: auto;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding-top: 7px;
+	padding-bottom: 7px
+}
+
+.gm-list-item .gm-list-line .gm-list-extra {
+	-webkit-flex-basis: 36%;
+	-ms-flex-preferred-size: 36%;
+	flex-basis: 36%;
+	color: #888;
+	font-size: 16px;
+	text-align: right
+}
+
+.gm-list-item .gm-list-line .gm-list-brief,.gm-list-item .gm-list-line .gm-list-title {
+	width: auto;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap
+}
+
+.gm-list-item .gm-list-line .gm-list-brief {
+	color: #888;
+	font-size: 15px;
+	line-height: 1.5;
+	margin-top: 6px
+}
+
+.gm-list-item .gm-list-line .gm-list-arrow {
+	display: block;
+	width: 15px;
+	height: 15px;
+	margin-left: 8px;
+	background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='26' viewBox='0 0 16 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 0L0 2l11.5 11L0 24l2 2 14-13z' fill='%23C7C7CC' fill-rule='evenodd'/%3E%3C/svg%3E");
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	visibility: hidden
+}
+
+.gm-list-item .gm-list-line .gm-list-arrow-horizontal {
+	visibility: visible
+}
+
+.gm-list-item .gm-list-line .gm-list-arrow-vertical {
+	visibility: visible;
+	-webkit-transform: rotate(90deg);
+	-ms-transform: rotate(90deg);
+	transform: rotate(90deg)
+}
+
+.gm-list-item .gm-list-line .gm-list-arrow-vertical-up {
+	visibility: visible;
+	-webkit-transform: rotate(270deg);
+	-ms-transform: rotate(270deg);
+	transform: rotate(270deg)
+}
+
+.gm-list-item .gm-list-line-multiple {
+	padding: 12.5px 15px 12.5px 0
+}
+
+.gm-list-item .gm-list-line-multiple .gm-list-content,.gm-list-item .gm-list-line-multiple .gm-list-extra {
+	padding-top: 0;
+	padding-bottom: 0
+}
+
+.gm-list-item .gm-list-line-wrap .gm-list-content,.gm-list-item .gm-list-line-wrap .gm-list-extra {
+	white-space: normal
+}

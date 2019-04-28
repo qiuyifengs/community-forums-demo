@@ -1,0 +1,113 @@
+.gm-drawer {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 256px;
+    min-height: 100vh;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    z-index: 0;
+    display: none;
+}
+
+.gm-drawer-sidebar {
+    overflow: auto;
+    z-index: 1;
+    position: relative;
+    height: 100%;
+    padding: 40px 0;
+    text-align: center
+}
+
+.gm-drawer-left {
+    left: 0;
+}
+
+.gm-drawer-right {
+    right: 0;
+}
+
+.gm-drawer-light {
+    background-color: #fff;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.gm-drawer-content, .gm-drawer-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.gm-drawer-overlay {
+    z-index: 24;
+    opacity: 0;
+    visibility: hidden;
+    background-color:#000;
+    width: 100%;
+    height: 100%;
+    -webkit-transition: opacity 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86), width 0s ease 0.3s, height 0s ease 0.3s;
+    transition: opacity 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86), width 0s ease 0.3s, height 0s ease 0.3s;
+
+    /* -webkit-animation: rcDrawerFadeIn 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+    animation: rcDrawerFadeIn 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+    -webkit-transition: none;
+    transition: none; */
+}
+
+@-webkit-keyframes rcDrawerFadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0.3;
+    }
+  }
+  @keyframes rcDrawerFadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0.3;
+    }
+  }
+
+.gm-drawer-open .gm-drawer-overlay {
+    opacity: .3;
+    visibility: visible;
+    width: 100%;
+    height: 100%;
+    -webkit-animation: rcDrawerFadeIn 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+    animation: rcDrawerFadeIn 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+    -webkit-transition: none;
+    transition: none;
+}
+
+.gm-drawer-open .gm-drawer-sidebar {
+    -webkit-box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+}
+
+.gm-drawer-outpanel {
+    position: relative;
+    z-index: 1;
+    /* will-change: transform; */
+    min-height: 100vh;
+}
+
+.gm-drawer-open,
+.gm-drawer-open body,
+.gm-drawer-open .gm-drawer-outpanel {
+    overflow: hidden;
+    height: 100%;
+    -webkit-transition: -webkit-transform .3s cubic-bezier(.78, .14, .15, .86);
+    transition: -webkit-transform .3s cubic-bezier(.78, .14, .15, .86);
+    transition: transform .3s cubic-bezier(.78, .14, .15, .86);
+    transition: transform .3s cubic-bezier(.78, .14, .15, .86), -webkit-transform .3s cubic-bezier(.78, .14, .15, .86);
+}
+
+.gm-drawer-open .gm-drawer {
+    display: block;
+}

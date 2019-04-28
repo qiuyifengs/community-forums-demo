@@ -1,0 +1,315 @@
+
+const articleType = this.location.pathname.split('/')[2] ? decodeURI(this.location.pathname.split('/')[2]) : 'ALL'
+const refreshLoading = `<div class="ghost-loading-spinner">
+                                <svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg>
+                            </div>`
+const DIRECTION_H = 'horizontal'
+const DIRECTION_V = 'vertical'
+
+new SelfVue({
+    el: '#app',
+    data: {
+        activity: JSON.parse(localStorage.getItem('activity')),
+        userId: $.cookie("userId"),
+        articleType: articleType,
+        pageSize: 1,
+        pullUpTxt: 'load more',
+        refreshTxt: 'Refresh success',
+        refreshText: refreshLoading,
+        refreshEnd: false,
+    },
+    mounted: function() {
+        const self = this.methods
+        // self.initTablist(this.articleType)
+        // self.initHomePageRefresh()
+        // self.onTabClick()
+        // self.initCarouselMap()
+        // self.formatTimeChange()
+        self.getArticleByType(this.articleType, this, this.methods)
+       
+    },
+    methods: {
+        getArticleByType: function(articleType, vm, method) {
+            let refreshEnd = false
+            let swiper = new Swiper('.scroll',{
+                speed: 300,
+                slidesPerView: 'auto',
+                freeMode: true,
+                direction: 'vertical',
+                setWrapperSize: true,
+                scrollbar: {
+                    el: '.swiper-scrollbar',
+                },
+                on:{
+                    //下拉释放刷新
+                    touchEnd: function(){
+                        swiper = this
+                        refreshText = swiper.$el.find('.gm-push-to-refresh-indicator')
+                        if(this.translate > 50){
+                            swiper.setTransition(this.params.speed);
+                            swiper.setTranslate(50);
+                            swiper.touchEventsData.isTouched=false; //跳过touchEnd事件后面的跳转(4.0.5)
+                            refreshText.html(vm.refreshText)
+
+                            // requestAnimationFrame 与浏览器刷新频率一致 执行DOM html操作 
+                            
+                            swiper.allowTouchMove = false;
+                            swiper.removeAllSlides()
+                            const url = articleType ? `topic/${ articleType }/${ vm.pageSize }` : `topic/ALL${ vm.pageSize }`
+                            myAjax('GET', url).then(res => {
+                                if (res.code === 10000 && res.articleList.length > 0) {
+                                    $('.ghost-loading-mask').css('display', 'block')
+                                    vm.pageSize++;
+                                    let articleHtml = ''
+                                    res.articleList.forEach(item => {
+                                        articleHtml += method.renderArticleHtml(item, method)
+                                    });
+                                    swiper.appendSlide(articleHtml);
+                                    
+                                    $(".item-random-color").each(function() {
+                                        const authorName = $(this).attr("article-author")
+                                        $(this).css("background",renderColor(authorName))
+                                    })
+                                    
+                                    refreshText.html('刷新完成');
+                                    refreshEnd = true;
+                                    swiper.allowTouchMove = true;
+                                    
+                                    $('.ghost-loading-mask').css('display', 'none')
+                                }
+                            })
+                        } 
+                    },
+                    touchStart: function(){
+                        if(refreshEnd==true){
+                            this.$el.find('.gm-push-to-refresh-indicator').html('松开立即刷新');
+                            refreshEnd = false;
+                        }
+                    },
+                    
+                    //加载更多
+                    momentumBounce: function(){//非正式反弹回调函数，上拉释放加载更多可参考上例
+                        swiper=this
+                        //slidesheight=0;
+                        //for(h=0;h<swiper.slides.length;h++){
+                        //	slidesheight+=swiper.slides[h].offsetHeight;
+                        //}
+                        //endTranslate=this.height-slidesheight-20
+                        //if(this.translate < endTranslate){}
+                        if(swiper.translate <- 100){
+                
+                            swiper.allowTouchMove = false; //禁止触摸
+                            swiper.params.virtualTranslate = true; //定住不给回弹
+                            // setTimeout(function(){//模仿AJAX
+                            //     for(m=0;m<20;m++){
+                            //         swiper.appendSlide('<div class="swiper-slide">moreSlide'+(times*20+m+1)+'</div>');	
+                            //     }
+                            //     swiper.params.virtualTranslate = false;
+                            //     swiper.allowTouchMove= true;
+                            //     times++
+                            // },1000)
+
+                            
+                            
+                        }
+                    },
+                }
+            });
+        },
+
+        renderArticleHtml: (item, vm) => {
+            return `<div class="gm-list-item gm-list-item-middle minHeight swiper-slide" article-id="${ item.articleId }">
+                        <div class="gm-list-line am-list-line-multiple">
+                            <div class="gm-list-content">
+                                <a class="target-go" target="_blank" href="/post/articleDetail/${item.articleId}"
+                                    <div class="gm-card">
+                                        <div class="gm-card-header">
+                                            <div class="gm-card-header-content">
+                                                ${ vm.isTop(item.top) }
+                                                <span class="gm-card-header-title fs18">
+                                                    ${ item.articleTitle }
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="gm-card-body">
+                                            <div class="gm-card-body-content">${ item.articleContent }</div>
+                                            <div class="gm-card-body-extra">
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="gm-card-footer">
+                                            <span class="ghost-tag-list">
+                                                <span class="ghost-tag ghost-tag-has-color ghost-tag-color-primary">${ item.articleType }</span>
+                                            </span>
+                                            <div class="gm-card-footer-meta">
+                                                <div class="gm-card-footer-content">
+                                                    <em class="format-time">${ item.publishTime }</em>
+                                                </div>
+                                                <div class="gm-card-footer-extra">
+                                                    <span class="from-type">来自分类：${ item.articleType }</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>`
+            },
+
+        avatarColorChange: function() {
+            $('.ghost-avatar-string').each(function() {
+                const authorName = $(this).attr('article-author')
+                $(this).parent().css('background', renderColor(authorName))
+            })
+        },
+
+        formatTimeChange: function() {
+            $('.format-time').each(function() {
+                const resTime = formatDateFilter($(this).text())
+                $(this).text(resTime)
+            })
+        },
+
+        adjustTabPosition: function(tabId) {
+            const viewportWidth = $('.gm-tabs-tab-bar-wrap').clientWidth
+            const tabListWidth = $('.tablist').clientWidth
+            const minTranslate = Math.min(0, viewportWidth - tabListWidth)
+            const middleTranslate = viewportWidth / 2
+            const items = $('.tablist').children('li')
+            const navList = this.getNavList()
+            let width = 0
+            navList.every((item, index) => {
+                if (item.id === tabId) {
+                    return false
+                }
+                width +=  items[index].clientWidth
+                return true
+            })
+            let translate = middleTranslate - width
+            translate = Math.max(minTranslate, Math.min(0, translate))
+        },
+
+        getNavList: function() {
+            let navList = []
+            $('.tablist li').each(function(index) {
+                navList.push({ id: index, name: $(this).text()})
+            })
+            return navList
+        },
+        // tab 被点击的回调
+        onTabClick: function() {
+            $('.tablist li').on('click', function (e) {
+                e.preventDefault()
+                pageSize = 0;
+                $(this).addClass('gm-tabs-default-bar-tab-active')
+                $(this).siblings().removeClass('gm-tabs-default-bar-tab-active')
+                goPage(`topic/${$(this).text()}`)
+            })
+        },
+
+        onArticleClick: function() {
+            // Click on the list item to enter the article details
+            $('#artivleTemplate').on('click', '.ghost-list-item', function(event) {
+                event.stopPropagation()
+                const articleId = $(this).parents(".gohst-index-page").attr("article-id")
+                myAjax("POST", "post/addView", { articleId: articleId, userId: $.cookie("userId") })
+            })
+        },
+
+        showHeaderIcon: function(item) {
+            if (item.hearderIcon != '' && item.hearderIcon != null) {
+                return `<img src="/${ item.hearderIcon }">`
+            } else {
+                return `<span class="item-random-color" article-author="${item.author}">${item.author.substring(0, 1)}</span>`
+            }
+        },
+        // 文章置顶
+        isTop: function(item) {
+            if (item) {
+                return `<span class="ghost-tag ghost-tag-has-color" style="background-color: var(--col-top)">置顶</span>`
+            } else {
+                return ''
+            }
+        },
+        // 发表文章
+        publishAnArticle: function() {
+            $('.app-btn').on('click', function(e) {
+                e.stopPropagation()
+                if ($.cookie("userId")) {
+                    if (activity) {
+                        goPage('post/publish/')
+                    } else {
+                        if (confirm('该账户还未进行验证，请先进行验证！')) {
+                            let url = 'account/account/' + nickName
+                            goPage(url)
+                        }
+                    }
+                } else {
+                    goPage('user/login')
+                }
+            })
+        },
+
+        initHomePageRefresh: function() {
+            new iScroll
+
+            let minRefresh = new MiniRefresh({
+                container: '#minirefresh',
+                down: {
+                    callback: function() {
+                        console.log(1)
+                        minRefresh.endDownLoading(true)
+                    }
+                },
+                up: {
+                    callback: function() {
+                        console.log(2)
+                        minRefresh.endUpLoading(true)
+                    }
+                }
+            })
+        },
+
+        initSrollMenu: function() {
+            new Swiper('.menuWrapper', {
+                direction: 'vertical',
+                slidesPerView: 'auto',
+                freeMode: true,
+                mousewheel: true,
+              });
+        },
+
+        // 初始化 图片轮播
+        initCarouselMap: function() {
+            new Swiper('.carouselMap', {
+                spaceBetween: 30,
+                centeredSlides: true,
+                autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                }
+            })
+        },
+        
+        initTablist: function(articleType) {
+            $('.tablist li').each(function(tagId) {
+                if (articleType === $(this).text()) {
+                    $(this).addClass('gm-tabs-default-bar-tab-active')
+                    $(this).siblings().removeClass('gm-tabs-default-bar-tab-active')
+                    // adjustTabPosition(tagId)
+                    return false
+                }
+            })
+        }
+    }
+})
+    

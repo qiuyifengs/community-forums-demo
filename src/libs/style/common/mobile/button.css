@@ -1,0 +1,261 @@
+.gm-button {
+	display: block;
+	outline: 0 none;
+	-webkit-appearance: none;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 0;
+	text-align: center;
+	font-size: 18px;
+	height: 47px;
+	line-height: 47px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-break: break-word;
+	white-space: nowrap;
+	color: #000;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 5px
+}
+
+@media (-webkit-min-device-pixel-ratio:2),(min-resolution:2dppx) {
+	html:not([data-scale]) .gm-button {
+		position: relative;
+		border: none
+	}
+
+	html:not([data-scale]) .gm-button:before {
+		content: "";
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 200%;
+		height: 200%;
+		/* border: 1px solid #ddd; */
+		border-radius: 10px;
+		-webkit-transform-origin: 0 0;
+		-ms-transform-origin: 0 0;
+		transform-origin: 0 0;
+		-webkit-transform: scale(.5);
+		-ms-transform: scale(.5);
+		transform: scale(.5);
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+		pointer-events: none
+	}
+}
+
+.gm-button-borderfix:before {
+	-webkit-transform: scale(.49)!important;
+	-ms-transform: scale(.49)!important;
+	transform: scale(.49)!important
+}
+
+.gm-button.gm-button-active {
+	background-color: #ddd
+}
+
+.gm-button.gm-button-disabled {
+	color: rgba(0,0,0,.3);
+	opacity: .6
+}
+
+.gm-button-primary {
+	color: #fff;
+	background-color: #108ee9;
+	border: 1px solid #108ee9;
+	border-radius: 5px
+}
+
+@media (-webkit-min-device-pixel-ratio:2),(min-resolution:2dppx) {
+	html:not([data-scale]) .gm-button-primary {
+		position: relative;
+		border: none
+	}
+
+	html:not([data-scale]) .gm-button-primary:before {
+		content: "";
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 200%;
+		height: 200%;
+		border: 1px solid #108ee9;
+		border-radius: 10px;
+		-webkit-transform-origin: 0 0;
+		-ms-transform-origin: 0 0;
+		transform-origin: 0 0;
+		-webkit-transform: scale(.5);
+		-ms-transform: scale(.5);
+		transform: scale(.5);
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+		pointer-events: none
+	}
+}
+
+.gm-button-primary.gm-button-active {
+	color: hsla(0,0%,100%,.3);
+	background-color: #0e80d2
+}
+
+.gm-button-primary.gm-button-disabled {
+	color: hsla(0,0%,100%,.6);
+	opacity: .4
+}
+
+.gm-button-ghost {
+	color: #108ee9;
+	background-color: transparent;
+	border: 1px solid #108ee9;
+	border-radius: 5px
+}
+
+@media (-webkit-min-device-pixel-ratio:2),(min-resolution:2dppx) {
+	html:not([data-scale]) .gm-button-ghost {
+		position: relative;
+		border: none
+	}
+
+	html:not([data-scale]) .gm-button-ghost:before {
+		content: "";
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 200%;
+		height: 200%;
+		border: 1px solid #108ee9;
+		border-radius: 10px;
+		-webkit-transform-origin: 0 0;
+		-ms-transform-origin: 0 0;
+		transform-origin: 0 0;
+		-webkit-transform: scale(.5);
+		-ms-transform: scale(.5);
+		transform: scale(.5);
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+		pointer-events: none
+	}
+}
+
+.gm-button-ghost.gm-button-active {
+	color: rgba(16,142,233,.6);
+	background-color: transparent;
+	border: 1px solid rgba(16,142,233,.6);
+	border-radius: 5px
+}
+
+@media (-webkit-min-device-pixel-ratio:2),(min-resolution:2dppx) {
+	html:not([data-scale]) .gm-button-ghost.gm-button-active {
+		position: relative;
+		border: none
+	}
+
+	html:not([data-scale]) .gm-button-ghost.gm-button-active:before {
+		content: "";
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 200%;
+		height: 200%;
+		border: 1px solid rgba(16,142,233,.6);
+		border-radius: 10px;
+		-webkit-transform-origin: 0 0;
+		-ms-transform-origin: 0 0;
+		transform-origin: 0 0;
+		-webkit-transform: scale(.5);
+		-ms-transform: scale(.5);
+		transform: scale(.5);
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+		pointer-events: none
+	}
+}
+
+.gm-button-ghost.gm-button-disabled {
+	color: rgba(0,0,0,.1);
+	border: 1px solid rgba(0,0,0,.1);
+	border-radius: 5px;
+	opacity: 1
+}
+
+@media (-webkit-min-device-pixel-ratio:2),(min-resolution:2dppx) {
+	html:not([data-scale]) .gm-button-ghost.gm-button-disabled {
+		position: relative;
+		border: none
+	}
+
+	html:not([data-scale]) .gm-button-ghost.gm-button-disabled:before {
+		content: "";
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 200%;
+		height: 200%;
+		border: 1px solid rgba(0,0,0,.1);
+		border-radius: 10px;
+		-webkit-transform-origin: 0 0;
+		-ms-transform-origin: 0 0;
+		transform-origin: 0 0;
+		-webkit-transform: scale(.5);
+		-ms-transform: scale(.5);
+		transform: scale(.5);
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+		pointer-events: none
+	}
+}
+
+.gm-button-warning {
+	color: #fff;
+	background-color: #e94f4f
+}
+
+.gm-button-warning.gm-button-active {
+	color: hsla(0,0%,100%,.3);
+	background-color: #d24747
+}
+
+.gm-button-warning.gm-button-disabled {
+	color: hsla(0,0%,100%,.6);
+	opacity: .4
+}
+
+.gm-button-inline {
+	display: inline-block;
+	padding: 0 15px
+}
+
+.gm-button-inline.gm-button-icon {
+	display: -webkit-inline-box;
+	display: -webkit-inline-flex;
+	display: -ms-inline-flexbox;
+	display: inline-flex
+}
+
+.gm-button-small {
+	font-size: 13px;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 15px
+}
+
+.gm-button-icon {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center
+}
+
+.gm-button>.gm-button-icon {
+	margin-right: .5em
+}
