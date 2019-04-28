@@ -38,7 +38,7 @@
                     <div class="type_label app-label" lang="category">分类:</div>
                     <ul class="type_list">
                         <% obj.menuList.forEach(function(menuItem) { %>
-                            <li class="type_item bd-radius-5"><%= menuItem.menu %></li>
+                            <li class="type_item bd-radius-5" menu-id="<%= menuItem.menuId %>" menu-en="<%= menuItem.menuEn %>" menu-cn="<%= menuItem.menuCn %>" lang="<%= menuItem.menuId %>"><%= menuItem.menuCn %></li>
                         <% }) %>
                     </ul>
                 </div>
@@ -291,6 +291,8 @@
             });
             // change classification
             $(".type_list").find(".type_item").each(function() {
+                zh[$(this).attr('menu-id')] = $(this).attr('menu-cn')
+                en[$(this).attr('menu-id')] = $(this).attr('menu-en')
                 $(this).click(function() {
                     articleSource = $(this).text();
                     $(this).addClass("actived");

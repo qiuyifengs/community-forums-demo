@@ -372,11 +372,11 @@
                                 </h5>
                                 <ul class="ghost-components-menu-vertical-index index-menu-list">
                                     <% postList.menuList.forEach(function(menuItem) { %>
-                                    <li class="ghost-components-menu-item index-menu-item">
+                                    <li class="ghost-components-menu-item index-menu-item" menu-id="<%= menuItem.menuId %>" menu-en="<%= menuItem.menuEn %>" menu-cn="<%= menuItem.menuCn %>">
                                         <svg class="iconSvg" aria-hidden="true">
                                             <use xlink:href="#icon-<%= menuItem.menuId %>"></use>
                                         </svg>
-                                        <span class="ghost-ment-item-title"><%= menuItem.menuEn %></span>
+                                        <span class="ghost-ment-item-title" lang="<%= menuItem.menuId %>"><%= menuItem.menuEn %></span>
                                     </li>
                                     <% }) %>
                                 </ul>
@@ -417,7 +417,6 @@
                     prevEl: '.swiper-button-prev',
                 },
             })
-
             $('.ghost-components-article-list-content-index-description').each(function() {
                 let showContent = ''
                 let showImg = ''
@@ -452,15 +451,17 @@
                 $(this).siblings().removeClass('is-active')
                 $(this).find('.app-menu-item-border').addClass('app-menu-item-border-show')
                 $(this).siblings().find('.app-menu-item-border').removeClass('app-menu-item-border-show')
-                goPage(`topic/${$(this).find('.ghost-ment-item-title').text()}`)
+                goPage(`topic/${$(this).attr('menu-id')}`)
             })
 
             $('.index-menu-list .index-menu-item').each(function() {
-                if (articleType === $(this).find('.ghost-ment-item-title').text()) {
+                zh[ $(this).attr('menu-id')] =  $(this).attr('menu-cn')
+                en[ $(this).attr('menu-id')] =  $(this).attr('menu-en')
+                if (articleType === $(this).attr('menu-id')) {
                     $(this).addClass('is-active')
                     $(this).siblings().removeClass('is-active')
                     $(this).siblings().find('.app-menu-item-border').removeClass('app-menu-item-border-show')
-                    return false
+                    // return false
                 }
             })
 
