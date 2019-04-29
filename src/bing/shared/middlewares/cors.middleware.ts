@@ -3,7 +3,7 @@ import { NestMiddleware, Injectable, MiddlewareFunction } from '@nestjs/common';
 /**
  * 允许跨域来源
  */
-const allowedOrigins = ['http://localhost:3000']
+const allowedOrigins = ['http://localhost:3002']
 
 /**
  * Cors中间件

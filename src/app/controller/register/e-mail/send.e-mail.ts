@@ -18,7 +18,7 @@ const config = {
 };
 const transporter = nodemailer.createTransport(config);
 const name = 'Ghost';
-const host = 'http://127.0.0.1:3002';
+const host = 'http://192.168.4.188:3002';
 
 // E-mail verification
 export class Verification {

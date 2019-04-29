@@ -1,58 +1,44 @@
+const webpack = require('webpack');
 const path = require('path');
-module.exports = {
-    entry: "./src/main.ts",
-    output: {
-        path: path.resolve(__dirname, './dist'),
-        filename: 'build.js'
-    },
-    target: 'node',
-    node: {
-        console: true,
-        global: true,
-        process: true,
-        Buffer: true,
-        __filename: true,
-        __dirname: true,
-        setImmediate: true
-    },    
-    resolve: {
-        extensions: ['.ts', '.tsx', '.js'],
-        alias: {
-            "@/bing": path.resolve(__dirname, "./src/bing/"),
-            "swarm-js": path.resolve(__dirname, './node_modules/swarm-js/lib/api-node.js')
-        }
-    },
-    externals: [
-        (function () {
-          var IGNORES = [
-            'electron'
-          ];
-          return function (context, request, callback) {
-            if (IGNORES.indexOf(request) >= 0) {
-              return callback(null, "require('" + request + "')");
-            }
-            return callback();
-          };
-        })()
-    ],    
-    module: {
-        rules: [
-            {
-                test: /\.tsx?$/,
-                loader: 'ts-loader',
-                exclude: /node_modules/
-            },
-            {
-                test: /\.node$/,
-                loader: 'native-ext-loader',
-                options: {
-                  rewritePath:  "./node_modules/scrypt/build/Release/"
-                }
-            },
-            {
-              test: /\.less$/,
-              loader: "style-loader!css-loader!less-loader",
-            }             
-        ]
-    }
+const nodeExternals = require('webpack-node-externals');
+/**
+ * 根目录
+ * @param {*} subdir 子目录
+ */
+function srcPath(subdir) {
+  return path.join(__dirname, 'src', subdir);
 }
+
+module.exports = {
+  entry: ['webpack/hot/poll?1000', './src/main.ts'],
+  watch: true,
+  target: 'node',
+  externals: [
+    nodeExternals({
+      whitelist: ['webpack/hot/poll?1000'],
+    }),
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+    ],
+  },
+  mode: "development",
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
+    alias: {
+      '@': path.resolve(__dirname, 'src')
+    }
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+  ],
+  output: {
+    path: path.join(__dirname, 'dist'),
+    filename: 'build.js',
+  },
+};
