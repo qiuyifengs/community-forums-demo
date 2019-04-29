@@ -10,25 +10,122 @@ new SelfVue({
     el: '#app',
     data: {
         activity: JSON.parse(localStorage.getItem('activity')),
-        userId: $.cookie("userId"),
+        userId: $.cookie('userId'),
         articleType: articleType,
         pageSize: 1,
         pullUpTxt: 'load more',
         refreshTxt: 'Refresh success',
         refreshText: refreshLoading,
         refreshEnd: false,
+        
+        config: {
+            tSpeed: 300,
+            bar: null,
+            navSlideWidth: '',
+            clientWidth: '',
+            navSum: '',
+            navWidth: '',
+            topBar: '',
+        },
+        navSwiper: null,
+        pageSwiper: null
     },
     mounted: function() {
         const self = this.methods
         // self.initTablist(this.articleType)
         // self.initHomePageRefresh()
-        // self.onTabClick()
         // self.initCarouselMap()
         // self.formatTimeChange()
-        self.getArticleByType(this.articleType, this, this.methods)
-       
+        self.initNavSwiper(this, self)
+        self.initPageSwiper(this, self)
+        self.getArticleByType(this.articleType, this, self)
+        
+        self.scrollTo(this)
     },
     methods: {
+
+        scrollTo: function (vm) {
+            vm.navSwiper.slideTo(3, 1000, false)
+            vm.pageSwiper.slideTo(3, 0)
+        },
+
+        initNavSwiper: function(vm, self) {
+
+            vm.navSwiper = new Swiper('#secondary-nav', {
+                slidesPerView: 'auto',
+                freeMode: true,
+                grabCursor: true,
+                on: {
+                    init: function() {
+                        vm.config.navSlideWidth = this.slides.eq(0).css('width')
+                        vm.config.bar = this.$el.find('.gm2-tabs-ink-bar')
+                        vm.config.bar.css('width', vm.navSlideWidth)
+                        vm.config.bar.transition(vm.tSpeed)
+                        vm.config.navSum = this.slides[this.slides.length - 1].offsetLeft // 最后一个slide的位置
+          
+                        vm.config.clientWidth = parseInt(this.$wrapperEl.css('width')) // Nav的可视宽度
+                        vm.config.navWidth = 0
+                        for (i = 0; i < this.slides.length; i++) {
+                            vm.config.navWidth += parseInt(this.slides.eq(i).css('width'))
+                        }
+          
+                        vm.config.topBar = this.$el.parents('body').find('#container-top') //页头
+                    }
+                },
+            })
+          
+            vm.navSwiper.$el.on('touchstart', function(e) {
+                e.preventDefault()
+            })
+
+            vm.navSwiper.on('tap', function() {
+                const clickIndex = this.clickedIndex
+                const clickSlide = this.slides.eq(clickIndex)
+                vm.pageSwiper.slideTo(clickIndex, 0)
+                vm.config.bar.css('width', this.slides.eq(clickIndex).css('width'))
+                this.slides.find('span').css('color', 'rgb(51, 51, 51)')
+                clickSlide.find('span').css('color', '#485ec0')
+                self.onTabClick()
+            })
+        },
+
+        initPageSwiper: function(vm, self) {
+            vm.pageSwiper = new Swiper('#page', {
+                watchSlidesProgress: true,
+                resistanceRatio: 0,
+                on: {
+                    touchMove: function() {
+                        const progress = this.progress
+                        vm.config.bar.transition(0)
+                        vm.config.bar.transform('translateX(' + vm.config.navSum * progress + 'px)')
+                    },
+                    transitionStart: function() {
+                        self.onTabClick()
+                        const activeIndex = this.activeIndex
+                        const activeSlidePosition = vm.navSwiper.slides[activeIndex].offsetLeft
+                        vm.config.bar.css('width', vm.navSwiper.slides.eq(activeIndex).css('width'))
+                        // 释放时导航 bar条移动过渡
+                        vm.config.bar.transition(vm.config.tSpeed)
+                        vm.config.bar.transform('translateX(' + activeSlidePosition + 'px)')
+                        // 释放时文字变色过渡
+                        vm.navSwiper.slides.eq(activeIndex).find('span').transition(vm.config.tSpeed)
+                        vm.navSwiper.slides.eq(activeIndex).find('span').css('color', '#000')
+                        // 导航居中
+                        const navActiveSlideLeft = vm.navSwiper.slides[activeIndex].offsetLeft //activeSlide距左边的距离
+          
+                        vm.navSwiper.setTransition(vm.config.tSpeed)
+                        if (navActiveSlideLeft < (vm.config.clientWidth - parseInt(vm.config.navSlideWidth)) / 2) {
+                            vm.navSwiper.setTranslate(0)
+                        } else if (navActiveSlideLeft > vm.config.navWidth - (parseInt(vm.config.navSlideWidth) + vm.config.clientWidth) / 2) {
+                            vm.navSwiper.setTranslate(vm.config.clientWidth - vm.config.navWidth)
+                        } else {
+                            vm.navSwiper.setTranslate((vm.config.clientWidth - parseInt(vm.config.navSlideWidth)) / 2 - navActiveSlideLeft)
+                        }
+                    }
+                }
+            });
+        },
+
         getArticleByType: function(articleType, vm, method) {
             let refreshEnd = false
             let swiper = new Swiper('.scroll',{
@@ -192,20 +289,21 @@ new SelfVue({
 
         getNavList: function() {
             let navList = []
-            $('.tablist li').each(function(index) {
+            $('.tablist .gm2-tabs-tab').each(function(index) {
                 navList.push({ id: index, name: $(this).text()})
             })
             return navList
         },
         // tab 被点击的回调
         onTabClick: function() {
-            $('.tablist li').on('click', function (e) {
-                e.preventDefault()
-                pageSize = 0;
-                $(this).addClass('gm-tabs-default-bar-tab-active')
-                $(this).siblings().removeClass('gm-tabs-default-bar-tab-active')
-                goPage(`topic/${$(this).text()}`)
-            })
+            console.log(111)
+            // $('.tablist li').on('click', function (e) {
+            //     e.preventDefault()
+            //     pageSize = 0
+            //     $(this).addClass('gm-tabs-default-bar-tab-active')
+            //     $(this).siblings().removeClass('gm-tabs-default-bar-tab-active')
+            //     goPage(`topic/${$(this).text()}`)
+            // })
         },
 
         onArticleClick: function() {

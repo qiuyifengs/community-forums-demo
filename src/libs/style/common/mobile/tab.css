@@ -377,6 +377,10 @@
     transform-origin: 0 0;
 }
 
+/* .gm2-tabs-ink-bar-overlay {
+    
+} */
+
 .gm2-tabs-top .gm2-tabs-ink-bar-animated, .gm2-tabs-bottom .gm2-tabs-ink-bar-animated {
     -webkit-transition: width .3s cubic-bezier(.645, .045, .355, 1),left .3s cubic-bezier(.645, .045, .355, 1),-webkit-transform .3s cubic-bezier(.645, .045, .355, 1);
     transition: width .3s cubic-bezier(.645, .045, .355, 1),left .3s cubic-bezier(.645, .045, .355, 1),-webkit-transform .3s cubic-bezier(.645, .045, .355, 1);
