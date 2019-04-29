@@ -1,6 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne, OneToMany, OneToOne } from 'typeorm';
 import { ArticleDetail } from './articleDetail.entity';
-import { CommentsList } from './commentList.entity';
 @Entity()
 export class PostList {
     @PrimaryGeneratedColumn() serialNum: number;
