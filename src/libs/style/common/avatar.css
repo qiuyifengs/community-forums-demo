@@ -24,6 +24,14 @@
     border-radius: 50%;
 }
 
+.ghost-avatar-string {
+    position: absolute;
+    left: 50%;
+    -webkit-transform-origin: 0 center;
+    -ms-transform-origin: 0 center;
+    transform-origin: 0 center;
+}
+
 .ghost-avatar>img {
     display: block;
     width: 100%;

@@ -1,0 +1,66 @@
+.gm-toast {
+	position: fixed;
+	width: 100%;
+	z-index: 1999;
+	font-size: 14px;
+	text-align: center
+}
+
+.gm-toast>span {
+	max-width: 50%
+}
+
+.gm-toast.gm-toast-mask {
+	height: 100%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	left: 0;
+	top: 0
+}
+
+.gm-toast.gm-toast-mask,.gm-toast.gm-toast-nomask {
+	-webkit-transform: translateZ(1px);
+	transform: translateZ(1px)
+}
+
+.gm-toast.gm-toast-nomask {
+	position: fixed;
+	max-width: 50%;
+	width: auto;
+	left: 50%;
+	top: 50%
+}
+
+.gm-toast.gm-toast-nomask .gm-toast-notice {
+	-webkit-transform: translateX(-50%) translateY(-50%);
+	-ms-transform: translateX(-50%) translateY(-50%);
+	transform: translateX(-50%) translateY(-50%)
+}
+
+.gm-toast-notice-content .gm-toast-text {
+	min-width: 60px;
+	border-radius: 3px;
+	color: #fff;
+	background-color: rgba(58,58,58,.9);
+	line-height: 1.5;
+	padding: 9px 15px
+}
+
+.gm-toast-notice-content .gm-toast-text.gm-toast-text-icon {
+	border-radius: 5px;
+	padding: 15px
+}
+
+.gm-toast-notice-content .gm-toast-text.gm-toast-text-icon .gm-toast-text-info {
+	margin-top: 6px
+}
