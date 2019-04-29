@@ -25,4 +25,8 @@
 .ghost-empty-footer {
     margin-top: 16px;
 }
-
+@media screen and (max-width: 420px) {
+    .ghost-empty {
+        margin: 10em auto;
+    }
+}

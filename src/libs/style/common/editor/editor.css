@@ -1,0 +1,324 @@
+.emoji_content img, .emoji_preview img {
+  display: inline !important;
+}
+
+.Editor .form-control {
+  margin-top: 0;
+  box-sizing: border-box;
+  outline: 0;
+}
+.Editor .editor_btns {
+  /* margin: 10px 0; */
+  font-size: 14px;
+  color: #666;
+  line-height: 30px;
+  position: relative;
+}
+.Editor .iconfont {
+  margin-right: 3px;
+  font-size: 15px;
+}
+.Editor .editor_btns span {
+  margin-right: 10px;
+  cursor: pointer;
+}
+.Editor .editor_btns span.disabled {
+  opacity: .5;
+}
+.Editor .editor_btns .tip {
+  position: absolute;
+  right: 10px;
+  top: 0;
+  color: green;
+  display: none;
+}
+.Editor .J_function span{
+  padding: 4px 6px;
+  border: solid 1px #aaaaaa;
+  border-radius: 3px;
+}
+.Editor .editor_body {
+  position: relative;
+}
+.Editor .editor_body .text {
+  padding: 8px 0;
+  background: #ffffff;
+  /* position: relative; */
+  /* overflow: hidden; */
+  border-bottom: .5px solid #e9e9e9;
+}
+
+.Editor .editor_body .text:last-of-type {
+  border: none;
+}
+.Editor .editor_body .J_bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #666666;
+}
+.Editor .editor_body .J_bottom .J_del {
+  margin-right: 0;
+}
+.Editor .editor_body .J_delete {
+  margin-right: 0;
+  color: #ef2828;
+}
+.Editor .editor_body .pic_box .J_bottom {
+  margin-top: 10px;
+  justify-content: flex-end;
+  font-size: 14px;
+}
+.Editor .editor_body .text .del {
+  cursor: pointer;
+}
+
+.Editor .editor_body .text .del .iconfont:hover {
+  color: #666;
+}
+.Editor .editor_body .text .drag {
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  cursor: move;
+}
+.Editor .editor_body .text .drag em {
+  display: none;
+  color: #999;
+}
+.Editor .editor_body .text .drag:hover .iconfont {
+  display: none;
+}
+.Editor .editor_body .text .drag:hover em {
+  display: block;
+}
+.Editor .editor_body .text .drag .iconfont {
+  font-size: 15px;
+  color: #666;
+}
+.Editor .editor_body .text textarea {
+  padding: 10px;
+  width: 100%;
+  height: 100px;
+  resize: none;
+  display: block;
+  font-size: 14px;
+  line-height: 20px;
+  border: solid 1px #d5d8de;
+  border-radius: 5px;
+  color: #000;
+}
+.Editor .editor_body .J_drag {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #a8a8a8;
+}
+
+.Editor .editor_body .text textarea:focus {
+  border: solid 1px #445dc3;
+  box-shadow: 0px 0px 10px 0px 
+		rgba(68, 93, 195, 0.5);
+} 
+.Editor .editor_body .text .emoji {
+  cursor: pointer;
+  float: left;
+  padding-top: 5px;
+  color: #666;
+  font-size: 12px;
+}
+.Editor .editor_body .text .emoji:before {
+  color: #feb83e;
+  font-size: 16px;
+  position: relative;
+  top: 1px;
+  margin-right: 2px;
+}
+.Editor .editor_body .pic_box {
+  padding-left: 310px;
+}
+.Editor .editor_body .pic_box .pic {
+  float: left;
+  margin-left: -310px;
+  width: 300px;
+  height: 200px;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: solid 1px #d5d8de;
+  background-color: #fff;
+  background-size: contain;
+}
+.Editor .editor_body .pic_box .video {
+  float: left;
+  margin-left: -310px;
+  width: 300px;
+  height: 200px;
+  border: solid 1px #ddd;
+  background-color: #fff;
+}
+.Editor .editor_body .pic_box textarea {
+  height: 200px;
+}
+.Editor .editor_body .link .J_addLink {
+  font-size: 14px;
+  color: #666666;
+}
+.Editor .editor_body .link li {
+  position: relative;
+  margin-bottom: 15px;
+  align-content: center;
+  font-size: 14px;
+  color: #333333;
+}
+.Editor .editor_body .link input {
+  width: 45%;
+  margin-right: 4%;
+  border: .5px solid #e9e9e9;
+  line-height: 30px;
+  border-radius: 5px;
+  text-indent: 10px;
+}
+.Editor .editor_body .link input:focus {
+  border: solid .5px #445dc3;
+  box-shadow: 0px 0px 10px 0px 
+		rgba(68, 93, 195, 0.5);
+}
+.Editor .editor_body .text .error {
+  border: solid .5px #ff0000;
+  box-shadow: 0px 0px 10px 0px 
+		rgba(255, 0, 0, 0.5);
+}
+.Editor .editor_body .link .btn {
+  display: block;
+  margin: 0 auto;
+}
+.Editor .editor_body .link li span {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.modal_mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,.3)
+}
+.modal_mask .modal_box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 500px;
+  height: 240px;
+  font-family: -apple-system,"Helvetica Neue",Helvetica,Arial,"PingFang SC","Hiragino Sans GB","WenQuanYi Micro Hei","Microsoft Yahei",sans-serif;
+  background: #ffffff;
+  border-radius: 3px;
+  color: #333;
+}
+.modal_mask .modal_box .modal_title {
+  padding: 15px;
+  font-size: 18px;
+  background: #f8f8f8;
+}
+.modal_mask .modal_box .modal_tab_select {
+  /* overflow: hidden; */
+  display: flex;
+  margin: 0 15px;
+  padding-top: 10px;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+}
+/* .modal_tab_select:before, .modal_tab_select:after {
+  content: " ";
+  display: table;
+} */
+.modal_mask .modal_box .modal_tab_select .modal_tab_item {
+  margin-right: 2px;
+  padding: 10px 15px;
+  border: 1px solid transparent;
+  border-radius: 4px 4px 0 0;
+  cursor: pointer;
+  background: #ffffff;
+  color: #485ec0;
+}
+.modal_mask .modal_box .modal_tab_select .active {
+  position: relative;
+  border: 1px solid #ddd;
+  border-bottom: 0;
+  margin-bottom: -1px;
+  color: #333333;
+}
+.modal_mask .modal_box .tab_content {
+  padding: 0 15px;
+  font-size: 12px;
+}
+.modal_mask .modal_box .tab_content .file_btn {
+  overflow: hidden;
+  position: relative;
+  top: 10px;
+  width: 80px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+.modal_mask .modal_box .tab_content .file_btn .file_inp {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+.modal_mask .modal_box .tab_content .tab_pane {
+  display: none;
+}
+.modal_mask .modal_box .tab_content .tip_text {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #333333;
+}
+.modal_mask .modal_box .tab_content .sel {
+  display: block;
+}
+.modal_mask .modal_box .tab_content .video_url {
+  margin-top: 20px;
+  width: 470px;
+  height: 80px;
+  line-height: 20px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  outline: none;
+  resize: none;
+}
+.modal_mask .modal_box .modal_btn_box {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  padding: 8px 15px;
+  justify-content: flex-end;
+}
+.modal_mask .modal_box .modal_btn_box button {
+  width: 60px;
+  height: 30px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  background-color: #fff;
+  outline: none;
+}
+.modal_mask .modal_box .modal_btn_box .madal_submit {
+  margin-right: 10px;
+  background: #485ec0;
+  color: #fff;
+}
+
+

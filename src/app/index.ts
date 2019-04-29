@@ -13,8 +13,8 @@ import { ArticlesModule } from './controller/articles/articles.module';
 import { ArticleDetailModule } from './controller/articleDetail/articleDetail.module';
 import { CollectModule } from './controller/collect/collect.module';
 import { SearchPageModule } from './controller/searchPage/searchPage.module';
-import { AuthModule } from './controller/login/auth/auth.module';
-import { DownloadModule } from './controller/download/download.module';
+import { AuthModule } from './controller/auth/auth.module';
+import { UpdateModule } from './controller/download/update.module';
 
 const modules = [
     EJSModule,
@@ -33,7 +33,7 @@ const modules = [
     CollectModule,
     SearchPageModule,
     AuthModule,
-    DownloadModule,
+    UpdateModule,
 ];
 
 export default modules;

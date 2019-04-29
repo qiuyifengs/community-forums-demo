@@ -16,8 +16,10 @@
         $obj = $(el);
         this.renderType = function(opts) {
             var typeHtml = '';
-            for (let element in opts.labelTypeArr) {   
-                typeHtml += `<div class="${opts.typeCls}" id="${opts.labelTypeArr[element].typeId}">${opts.labelTypeArr[element].typeName}</div>` ;
+            for (let element in opts.labelTypeArr) {
+                zh[opts.labelTypeArr[element].typeId] = opts.labelTypeArr[element].typeNameCn;
+                en[opts.labelTypeArr[element].typeId] = opts.labelTypeArr[element].typeNameEn;
+                typeHtml += `<div class="${opts.typeCls}" id="${opts.labelTypeArr[element].typeId}" lang="${opts.labelTypeArr[element].typeId}">${opts.labelTypeArr[element].typeNameCn}</div>` ;
             };
             var typeParent = `<div class="type-list">${typeHtml}</div>`
             $obj.empty().html(typeParent);

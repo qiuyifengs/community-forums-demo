@@ -21,7 +21,7 @@ export class SearchPageService {
         let res;
         let totalRes;
         const pageCount = param.pageCount ? param.pageCount * 1 : 10;
-        const page = param.page ? (param.page - 1) * 1 * pageCount : 0;
+        const page = param.page ? param.page * 1 * pageCount : 0;
         totalRes = await this.postListRepository
                     .createQueryBuilder('posts')
                     .where('posts.author LIKE :param')
@@ -42,11 +42,14 @@ export class SearchPageService {
                     .skip(page)
                     .take(pageCount)
                     .getMany();
-        for (const item of res) {
-            const user = await this.userRepository.findOne({ userId: item.userId });
-            item.articleContent = item.articleContent.substr(2).substring(0, item.articleContent.length - 4).replace('","', '\n');
-            item.hearderIcon = user.headerIcon;
-            item.author = user.nickName;
+
+        if (res.length > 0) {
+            for (const item of res) {
+                const user = await this.userRepository.findOne({ userId: item.userId });
+                // item.articleContent = item.articleContent.substr(2).substring(0, item.articleContent.length - 4).replace('","', '\n');
+                item.hearderIcon = user.headerIcon;
+                item.author = user.nickName;
+            }
         }
         const msg = {
             code: 1,

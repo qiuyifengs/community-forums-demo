@@ -18,8 +18,13 @@ function checkEmail(email) {
  * goPage
  * @param {*} pathName 
  */
-function goPage(pathName) {
-    $(window).attr('location', baseUrl + pathName);
+function goPage(pathName, newWin) {
+    if (newWin) {
+        console.log(pathName)
+        window.open(baseUrl + pathName)
+    } else {
+        $(window).attr('location', baseUrl + pathName);
+    }
 }
 /**
  * _ajax
@@ -67,19 +72,19 @@ function formatDateFilter(value) {
     if (time < 0) {
         return ''
     } else if ((time / 1000 < 30)) {
-        return '刚刚'
+        return '<span lang="just"> 刚刚</span>'
     } else if (time / 1000 < 60) {
-        return parseInt((time / 1000), 10) + '秒前'
+        return parseInt((time / 1000), 10) + '<span lang="seconds"> 秒前</span>'
     } else if ((time / 60000) < 60) {
-        return parseInt((time / 60000), 10) + '分钟前'
+        return parseInt((time / 60000), 10) + '<span lang="minutes"> 分钟前</span>'
     } else if ((time / 3600000) < 24) {
-        return parseInt((time / 3600000), 10) + '小时前'
+        return parseInt((time / 3600000), 10) + '<span lang="hours"> 小时前</span>'
     } else if ((time / 86400000) < 31) {
-        return parseInt((time / 86400000), 10) + '天前'
+        return parseInt((time / 86400000), 10) + '<span lang="days"> 天前</span>'
     } else if ((time / 2592000000) < 12) {
-        return parseInt((time / 2592000000), 10) + '月前'
+        return parseInt((time / 2592000000), 10) + '<span lang="months"> 月前</span>'
     } else {
-        return parseInt((time / 31536000000), 10) + '年前'
+        return parseInt((time / 31536000000), 10) + '<span lang="years"> 年前</span>'
     }
 }
 
@@ -145,7 +150,78 @@ function renderColor(id,name) {
       }
     }
 }
+/**
+ * show article content in articleDetail page
+ * @param {*} valArr 
+ */
+function dealArticleContent(valArr) {
+    valArr.forEach(item => {
+        if (item.type === 'text') {
+            if (item.value.indexOf('[qq_') > -1) {
+                let emojiDom = `<img class="emoji-pic" src="http://s.jiajuol.com/haopinjia/pc/0100/dist/lib/jquery-emoji/dist/img/qq/`
+                let value = item.value.replace(/\[qq_/g, emojiDom)
+                item.value = `<p class="text-box" data-type="${item.type}">${value.replace(/\]/g, '.gif">')}</div>`
+            } else {
+                item.value = `<p class="text-box" data-type="${item.type}">${item.value}</div>`
+            }
+            
+        } else if (item.type === 'link') {
+            let linkVal = []
+            for (const link of item.url) {
+                linkVal.push(`<p class="link-box" data-type="${item.type}"><a href="${link.link}">${link.title}</a></p>`)
+            }
+            item.value = linkVal.join('')
+        } else if (item.type === 'pic') {
+            item.value = `<p class="img-box" data-type="${item.type}"><img src="${item.url}" /><br />${item.value}</p>`
+        } else if (item.type === 'video') {
+            item.value = `<p class="video-box" data-type="${item.type}"><video controls="" autoplay="" name="media"><source src="${item.url}" type="video/mp4"></video><br />${item.value}</p>`
+        }
+    })
+    return valArr;
+}
+/**
+ * Processing List Display Format
+ * @param {*} valArr 
+ */
+function dealPostList(valArr) {
+    valArr.forEach(item => {
+        if (item.type === 'text') {
+            if (item.value.indexOf('[qq_') > -1) {
+                let emojiDom = `<img src="http://s.jiajuol.com/haopinjia/pc/0100/dist/lib/jquery-emoji/dist/img/qq/`
+                let value = item.value.replace(/\[qq_/g, emojiDom)
+                item.value = `${value.replace(/\]/g, '.gif">')}`
+            } else {
+                item.value = `${item.value }`
+            }
+        } else if (item.type === 'link') {
+            let linkVal = []
+            for (const link of item.url) {
+                linkVal.push(`${link.title}`)
+            }
+            item.value = linkVal.join('')
+        } else if (item.type === 'pic') {
+            item.value = `${item.value}`
+            item.url = `${item.url}`
+        } else if (item.type === 'video') {
+            item.value = `${item.value}`
+        }
+    })
+    return valArr
+}
 
-
+// translate
+function translateFun(lang) {
+    let lan = lang ? lang : localStorage.getItem('langData') ? JSON.parse(localStorage.getItem('langData')).lang : 'cn'
+    console.log(lan)
+    $('[lang]').each(function(e){
+        let key = $(this).attr('lang')
+        
+        if (lan == 'cn') {
+            $(this).text(zh[key])
+        } else {
+            $(this).text(en[key])
+        }
+    })
+}
 
     
