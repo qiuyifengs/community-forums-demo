@@ -43,28 +43,28 @@
                                                             <% if(item.hearderIcon) { %>
                                                                 <img src="/<%= item.hearderIcon %>">
                                                             <% } else { %> 
-                                                                <span class="item-random-color" comment-user-name="<%= item.commentUserName %>">
-                                                                    <%= item.commentUserName.substring(0, 1) %>
+                                                                <span class="item-random-color" comment-user-name="<%= item.COMMENT_USER_NAME %>">
+                                                                    <%= item.COMMENT_USER_NAME.substring(0, 1) %>
                                                                 </span>  
                                                             <% } %>
                                                         </span>
                                                     </div>
-                                                    <div class="ghost-comment-content ghost-comment-parent" data-article-id="<%= item.articleId %>" data-comment-id="<%= item.commentId %>">
+                                                    <div class="ghost-comment-content ghost-comment-parent" data-article-id="<%= item.ARTICLE_ID %>" data-comment-id="<%= item.COMMENT_ID %>">
                                                         <div class="ghost-comment-content-top-box">
                                                             <div class="ghost-comment-content-author">
                                                                 <span class="ghost-comment-content-author-name">
-                                                                    <a style="color: #475ec0; font-weight: bold"><%= item.commentUserName %></a>
+                                                                    <a style="color: #475ec0; font-weight: bold"><%= item.COMMENT_USER_NAME %></a>
                                                                 </span>
                                                                 <span class="ghost-comment-content-author-time time">
-                                                                    <span><%= item.commentTime %></span>
+                                                                    <span><%= item.CREATED %></span>
                                                                 </span>
                                                             </div>
                                                             <div class="ghost-pro-components-article-origin-title fs12">
-                                                                From: <a href="/post/articleDetail/<%=item.articleId%>"><%= item.articleTitle %></a>
+                                                                From: <a href="/post/articleDetail/<%=item.ARTICLE_ID%>"><%= item.ARTICLE_TITLE %></a>
                                                             </div>
                                                         </div>
                                                         <div class="ghost-comment-content-detail">
-                                                            <p><%= item.commentContent %></p>
+                                                            <p><%= item.COMMENT_CONTENT %></p>
                                                         </div>
                                                         
                                                         <ul class="ghost-comment-actions">
@@ -90,19 +90,19 @@
                                                                     <img src="/images/header_icon.png">
                                                                 </span>
                                                             </div> -->
-                                                            <div class="ghost-comment-content" data-comment-id="<%= nested.childCommentId %>">
+                                                            <div class="ghost-comment-content" data-comment-id="<%= nested.CHILD_COMMENT_ID %>">
                                                                 <div class="ghost-comment-content-top-box">
                                                                     <div class="ghost-comment-content-author">
                                                                         <span class="ghost-comment-content-author-name">
-                                                                            <a style="color: #475ec0; font-weight: bold"><%= nested.commentUserName %></a>
+                                                                            <a style="color: #475ec0; font-weight: bold"><%= nested.COMMENT_USER_NAME %></a>
                                                                         </span>
                                                                         <span class="ghost-comment-content-author-time time">
-                                                                            <span><%= nested.commentTime %></span>
+                                                                            <span><%= nested.CREATED %></span>
                                                                         </span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="ghost-comment-content-detail">
-                                                                    <p>@<span class="ghost-comment-content-commentatorName"><%= nested.commentatorName%> </span> <%= nested.commentContent %></p>
+                                                                    <p>@<span class="ghost-comment-content-commentatorName"><%= nested.COMMENTATOR_NAME%> </span> <%= nested.COMMENT_CONTENT %></p>
                                                                 </div>
                                                                 <ul class="ghost-comment-actions">
                                                                     <li>
@@ -238,7 +238,7 @@
                 }
             })
             $(".time").each(function() {
-                let resTime = formatDateFilter($(this).text())
+                let resTime = formatDateFilter2($(this).text())
                 $(this).html(resTime)
             });
             // reply comment
@@ -247,6 +247,7 @@
                 let commentText = $(this).parent(".submit-reply-parent").prev(".ghsot-col").find(".ghost-input").val();
                 let commentId = $(this).parents(".ghost-comment").find(".ghost-comment-parent").attr("data-comment-id");
                 let articleId = $(this).parents(".ghost-comment").find(".ghost-comment-parent").attr("data-article-id");
+                console.log($(this).parents(".ghost-comment").find(".ghost-comment-parent").attr("data-article-id"))
                 if (!commentText) return;
                 let param = {
                     author: $.cookie("nickName"),
@@ -330,19 +331,19 @@
                                 <img src="/images/header_icon.png">
                             </span>
                         </div> -->
-                        <div class="ghost-comment-content" data-comment-id="${ nested.childCommentId }">
+                        <div class="ghost-comment-content" data-comment-id="${ nested.CHILD_COMMENT_ID }">
                             <div class="ghost-comment-content-top-box">
                                 <div class="ghost-comment-content-author">
                                     <span class="ghost-comment-content-author-name">
-                                        <a style="color: #475ec0; font-weight: bold">${ nested.commentUserName }</a>
+                                        <a style="color: #475ec0; font-weight: bold">${ nested.COMMENT_USER_NAME }</a>
                                     </span>
                                     <span class="ghost-comment-content-author-time time">
-                                        <span>${ nested.commentTime }</span>
+                                        <span>${ nested.CREATED }</span>
                                     </span>
                                 </div>
                             </div>
                             <div class="ghost-comment-content-detail">
-                                <p>@<span class="ghost-comment-content-commentatorName">${ nested.commentatorName } </span> ${ nested.commentContent }</p>
+                                <p>@<span class="ghost-comment-content-commentatorName">${ nested.COMMENTATOR_NAME } </span> ${ nested.COMMENT_CONTENT }</p>
                             </div>
                             <ul class="ghost-comment-actions">
                                 <li>
@@ -369,7 +370,7 @@
             return `<div class="ghost-comment-nested">${childComment}</div>`;
         }
         function filterTime(item) {
-            return  resTime = formatDateFilter(item)
+            return  resTime = formatDateFilter2(item)
         }
         function renderCommentsHtml(item) {
             return `
@@ -380,22 +381,22 @@
                                 ${ showHeaderIcon(item) }
                             </span>
                         </div>
-                        <div class="ghost-comment-content ghost-comment-parent" data-article-id="${ item.articleId }" data-comment-id="${ item.commentId }">
+                        <div class="ghost-comment-content ghost-comment-parent" data-article-id="${ item.ARTICLE_ID }" data-comment-id="${ item.COMMENT_ID }">
                             <div class="ghost-comment-content-top-box">
                                 <div class="ghost-comment-content-author">
                                     <span class="ghost-comment-content-author-name">
-                                        <a style="color: #475ec0; font-weight: bold">${ item.commentUserName }</a>
+                                        <a style="color: #475ec0; font-weight: bold">${ item.COMMENT_USER_NAME }</a>
                                     </span>
                                     <span class="ghost-comment-content-author-time time">
-                                        <span>${ filterTime(item.commentTime) }</span>
+                                        <span>${ filterTime(item.CREATED) }</span>
                                     </span>
                                 </div>
                                 <div class="ghost-pro-components-article-origin-title fs12">
-                                    From: <a href="/post/articleDetail/${item.articleId}">${ item.articleTitle }</a>
+                                    From: <a href="/post/articleDetail/${item.articleId}">${ item.ARTICLE_TITLE }</a>
                                 </div>
                             </div>
                             <div class="ghost-comment-content-detail">
-                                <p>${ item.commentContent }</p>
+                                <p>${ item.COMMENT_CONTENT }</p>
                             </div>
                             
                             <ul class="ghost-comment-actions">

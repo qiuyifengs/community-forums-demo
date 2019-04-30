@@ -38,7 +38,7 @@
                     <div class="type_label app-label" lang="category">分类:</div>
                     <ul class="type_list">
                         <% obj.menuList.forEach(function(menuItem) { %>
-                            <li class="type_item bd-radius-5" menu-id="<%= menuItem.menuId %>" menu-en="<%= menuItem.menuEn %>" menu-cn="<%= menuItem.menuCn %>" lang="<%= menuItem.menuId %>"><%= menuItem.menuCn %></li>
+                            <li class="type_item bd-radius-5" menu-id="<%= menuItem.MENU_ID %>" menu-en="<%= menuItem.MENU_EN %>" menu-cn="<%= menuItem.MENU_CN %>" lang="<%= menuItem.MENU_ID %>"><%= menuItem.MENU_CN %></li>
                         <% }) %>
                     </ul>
                 </div>
@@ -50,13 +50,13 @@
                     <div class="title-box">
                         <div class="title-text app-label app-display" lang="theme">标题</div>
                         <form action="javascript:return true">
-                            <input class="title_input publish_input" maxlength="30" placeholder="Input topic..." onchange="saveArticle()"/>
+                            <input class="title_input publish_input" maxlength="30" placeholder="Input topic..."/>
                         </form>
                     </div>
                     <div class="label-parent">
                             <div class="app-label app-display" lang="label">标签</div>
                             <div class="label-box mg-t20">
-                                    <input class="typle_input publish_input" placeholder="请输入选择标签，如php（用逗号，分号；分割）按Enter键确认" onchange="saveArticle()"/>
+                                    <input class="typle_input publish_input" placeholder="请输入选择标签，如php（用逗号，分号；分割）按Enter键确认"/>
                             </div>
                             <div class="label-data" style="display:none"><%= obj.getLabel %></div>
                             <div id="tags-input"></div>

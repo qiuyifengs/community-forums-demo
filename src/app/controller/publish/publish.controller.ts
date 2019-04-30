@@ -27,12 +27,12 @@ export class PublishController {
         }
         res.render('publish/publish', { title: 'publish',  obj});
     }
-    @UseGuards(AuthGuard('jwt'))
+    // @UseGuards(AuthGuard('jwt'))
     @Post('publish')
     @ApiOperation({ title: 'get balance from postList'})
     public async publish(@Body() params): Promise<PostList[]> {
         if (params.isEdit === 'false' || !params.isEdit) {
-            params.publishTime = await util.dateType.toSecond();
+            params.publishTime = await util.dateType.getTime();
         }
         if (!params.articleId) {
             params.articleId = util.ramdom.random(6) +  util.dateType.getTime();
@@ -54,6 +54,7 @@ export class PublishController {
         },
     ))
     async uploadFile(@UploadedFile() file, @Body() data) {
+        console.log(file)
         const msg = {
             code: 10000,
             message: '上传成功！',

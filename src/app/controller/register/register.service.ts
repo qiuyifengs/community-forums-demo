@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ApiException } from '../../../bing/common/enums/api.exception';
 import { ApiErrorCode } from '../../../bing/common/enums/api-error-code.enum';
 import { Repository } from 'typeorm';
-import { User } from '../../entitys/user.entity';
+import { BbsUser } from '../../entitys/user.entity';
 import { md5 } from '@/bing/common/encrypt';
 import { configure } from 'log4js';
 import { Verification } from './e-mail/send.e-mail';
@@ -14,8 +14,8 @@ const config = require('../../../util/token.config');
 @Injectable()
 export class RegisterService {
   constructor(
-    @InjectRepository(User)
-    private readonly registerRepository: Repository<User>,
+    @InjectRepository(BbsUser)
+    private readonly registerRepository: Repository<BbsUser>,
   ) { }
 
   // Register
@@ -23,9 +23,17 @@ export class RegisterService {
     if (param.passWordOne !== param.passWordTwo) {
       return '两次密码不一致！';
     }
+    const paramObj = {
+      USER_ID: '',
+      PASSWORD: '',
+      NICK_NAME: '',
+      DATE: '',
+      TOKEN: '',
+      EMAIL: '',
+    };
     const date = new Date().getTime();
-    const res = await this.registerRepository.findOne({ userId: param.userId });
-    const resNickName = await this.registerRepository.findOne({ nickName: param.nickName });
+    const res = await this.registerRepository.findOne({ USER_ID: param.userId });
+    const resNickName = await this.registerRepository.findOne({ NICK_NAME: param.nickName });
     const msg = {
       code: 0,
       message: '',
@@ -42,9 +50,8 @@ export class RegisterService {
       // msg.data = res;
       return msg;
     }
-
-    param.passWord = md5(param.passWordOne);
-    param.nickName = param.nickName;
+    paramObj.PASSWORD = md5(param.passWordOne);
+    paramObj.NICK_NAME = param.nickName;
     // e-mail token
     const Etoken = jwt.sign({
       userId: param.userId,
@@ -59,11 +66,11 @@ export class RegisterService {
       , {
         expiresIn: '3d',
       });
-    param.time = date + '';
-    param.token = token;
-    param.email = param.userId;
-
-    await this.registerRepository.save(param);
+    paramObj.USER_ID = param.userId;
+    paramObj.DATE = date + '';
+    paramObj.TOKEN = token;
+    paramObj.EMAIL = param.userId;
+    await this.registerRepository.save(paramObj);
     msg.code = ApiErrorCode.USER_REGISTER_SUCCESS;
     msg.message = '注册成功';
 

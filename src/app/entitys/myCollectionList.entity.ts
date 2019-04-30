@@ -1,49 +1,53 @@
 import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne, OneToMany, OneToOne } from 'typeorm';
 @Entity()
-export class MyCollectionList {
-    @PrimaryGeneratedColumn() serialNum: number;
+export class BbsMyCollectionList {
+    @PrimaryGeneratedColumn() ID: number;
     // userId
-    @Column() userId: string;
+    @Column() USER_ID: string;
 
     // author
-    @Column() author: string;
+    @Column() AUTHOR: string;
 
     // authorId
-    @Column() authorId: string;
+    @Column() AUTHOR_ID: string;
 
     // articleId
-    @Column() articleId: string;
+    @Column() ARTICLE_ID: string;
 
     // title
-    @Column() articleTitle: string;
+    @Column() ARTICLE_TITLE: string;
 
     // articleContent
-    @Column({ length: 12000 }) articleContent: string;
+    @Column({ length: 12000 }) ARTICLE_CONTENT: string;
 
     // articleLabel
-    @Column() articleLabel: string;
+    @Column() ARTICLE_LABEL: string;
 
-    // articleSource
-    @Column() articleType: string;
+    // articleType
+    @Column() ARTICLE_TYPE: string;
 
     // viewCount
-    @Column({ default: 0 }) viewCount: number;
+    @Column({ default: 0 }) VIEW_COUNT: number;
 
     // collectCount
-    @Column({ default: 0 }) collectCount: number;
+    @Column({ default: 0 }) COLLECT_COUNT: number;
 
     // likeCount
-    @Column({ default: 0 }) likeCount: number;
+    @Column({ default: 0 }) LIKE_COUNT: number;
 
     // commentCoun
-    @Column({ default: 0 }) commentCount: number;
+    @Column({ default: 0 }) COMMENT_COIUNT: number;
 
     // isLike
-    @Column({ default: false }) isLike: boolean;
+    @Column({ default: false }) IS_LIKE: boolean;
     // isCollect
-    @Column({ default: false }) isCollect: boolean;
+    @Column({ default: false }) IS_COLLECT: boolean;
+
+    @Column({ default: 1 }) STATE: number;
+
+    @Column() CREATED: string;
 
     // publishTime
-    @Column() publishTime: string;
+    @Column() PUBLISH_TIME: string;
 
 }

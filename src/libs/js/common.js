@@ -89,16 +89,16 @@ function formatDateFilter(value) {
 }
 
 function formatDateFilter2(value) {
-    var mistiming = Math.round(new Date() / 1000) - value;
+    var mistiming = Math.round(new Date() / 1000) - (value / 1000);
     var postfix = mistiming > 0 ? '前' : '后'
     mistiming = Math.abs(mistiming)
-    var arrr = ['年', '个月', '星期', '天', '小时', '分钟', '秒']
+    var arrr = ['<span lang="years"> 年前</span>', '<span lang="months"> 月前</span>', '星期前', '<span lang="days"> 天前</span>', '<span lang="hours"> 小时前</span>', '<span lang="minutes"> 分钟前</span>', '<span lang="seconds"> 秒前</span>', '<span lang="just"> 刚刚</span>']
     var arrn = [31536000, 2592000, 604800, 86400, 3600, 60, 1]
 
     for (var i = 0; i < 7; i++) {
         var inm = Math.floor(mistiming / arrn[i])
         if (inm != 0) {
-            return inm + arrr[i] + postfix
+            return inm + arrr[i]
         }
     }
 }
@@ -212,10 +212,8 @@ function dealPostList(valArr) {
 // translate
 function translateFun(lang) {
     let lan = lang ? lang : localStorage.getItem('langData') ? JSON.parse(localStorage.getItem('langData')).lang : 'cn'
-    console.log(lan)
     $('[lang]').each(function(e){
         let key = $(this).attr('lang')
-        
         if (lan == 'cn') {
             $(this).text(zh[key])
         } else {

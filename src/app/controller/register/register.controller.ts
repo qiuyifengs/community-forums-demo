@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Post, Body, Request, Response } from '@nestjs/common';
 import { ApiOperation, ApiUseTags } from '@nestjs/swagger';
 import { RegisterService } from './register.service';
-import { User } from '../../entitys/user.entity';
+import { BbsUser } from '../../entitys/user.entity';
 
 @ApiUseTags('user')
 @Controller('user')
@@ -16,7 +16,7 @@ export class RegisterController {
 
     @Post('register')
     @ApiOperation({ title: 'get balance from user' })
-    register(@Body() params): Promise<User[]> {
+    register(@Body() params): Promise<BbsUser[]> {
         return this.registerService.register(params);
     }
   

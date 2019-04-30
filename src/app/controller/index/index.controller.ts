@@ -1,7 +1,6 @@
 import { Controller, Get, Param, Post, Body, Request, Response } from '@nestjs/common';
 import { ApiOperation, ApiUseTags } from '@nestjs/swagger';
 import { IndexService } from './index.service';
-import { PostList } from '../../entitys/postList.entity';
 
 @ApiUseTags('/')
 @Controller()
@@ -12,7 +11,7 @@ export class IndexController {
     public async index(@Request() req, @Response() res, @Param() data): Promise<any> {
         const postList = await this.indexRepository.getPostList(data);
         postList.articleList.forEach((postItem, ind) => {
-            postList.articleList[ind].articleLabel = postItem.articleLabel.split(',');
+            postList.articleList[ind].ARTICLE_LABEL = postItem.ARTICLE_LABEL.split(',');
         });
         res.render('index', { title: 'index', postList });
     }
@@ -22,7 +21,7 @@ export class IndexController {
     public async getPostList(@Request() req, @Response() res, @Param() param): Promise<any> {
         const postList = await this.indexRepository.getPostList(param);
         postList.articleList.forEach((postItem, ind) => {
-            postList.articleList[ind].articleLabel = postItem.articleLabel.split(',');
+            postList.articleList[ind].ARTICLE_LABEL = postItem.ARTICLE_LABEL.split(',');
         });
         res.render('index', { title: 'index', postList });
     }

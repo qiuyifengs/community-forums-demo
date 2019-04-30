@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { CorsMiddleware } from '@/bing';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import modules from './app';
-import { ArticleDetail, ChildrenComments, CommentsList, Focus, Forum, LabelList, LabelType, Menu, MyCollectionList, PostList, User } from './app/entitys';
+import { BbsArticleDetail, BbsChildrenComments, BbsCommentsList, BbsLabelList, BbsLabelType, BbsMenu, BbsMyCollectionList, BbsPostList, BbsUser } from './app/entitys';
 // const ormconfig = require('../ormconfig.json');
 
 @Module({
@@ -15,17 +15,15 @@ import { ArticleDetail, ChildrenComments, CommentsList, Focus, Forum, LabelList,
             password: '123456',
             database: 'db_data',
             entities: [
-                ArticleDetail,
-                ChildrenComments,
-                CommentsList,
-                Focus,
-                Forum,
-                LabelList,
-                LabelType,
-                Menu,
-                MyCollectionList,
-                PostList,
-                User
+                BbsArticleDetail,
+                BbsChildrenComments,
+                BbsCommentsList,
+                BbsLabelList,
+                BbsLabelType,
+                BbsMenu,
+                BbsMyCollectionList,
+                BbsPostList,
+                BbsUser,
             ],
             synchronize: true,
 

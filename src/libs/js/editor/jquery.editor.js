@@ -205,6 +205,7 @@ let oldVal = null
 let time
 function keyup(val) {
 	if (oldVal != val) {
+		console.log(oldVal, val)
 		oldVal = val
 		clearInterval(time)
 	}
