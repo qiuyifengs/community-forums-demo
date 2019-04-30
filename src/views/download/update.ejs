@@ -41,7 +41,6 @@
                     theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);  
                 }  
             }  
-            console.log(theRequest)
             return theRequest;  
         } 
         window.onload = function() {
@@ -70,7 +69,6 @@
                 `
                 appendDom.before(btnDom)
             }
-            console.log(u)
             $('.app-update-btn-box').on('click', '.update-btn', function(e) {
                 e.preventDefault(); 
                 var param = {

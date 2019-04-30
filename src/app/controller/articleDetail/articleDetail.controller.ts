@@ -28,7 +28,8 @@ export class ArticleDetailController {
     @ApiOperation({ title: 'get balance from postList'})
     public async preview(@Request() req, @Response() res, @Param() param): Promise<any> {
         const article = await this.postsRepository.getArticle(param);
-        article.articleLabel = article.articleLabel.split(',');
+        article.ARTICLE_LABEL = article.ARTICLE_LABEL.split(',');
+        console.log(article)
         res.render('publish/preview', { title: 'preview', article });
     }
 

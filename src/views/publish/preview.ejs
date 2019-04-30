@@ -18,7 +18,7 @@
                         <li class='data_item'>
                             <%= article.VIEW_COUNT %> <span lang="view">次阅读</span>
                         </li>
-                        <li class='data_item showTime'><%= article.PUBLISH_TIME.substring(0, 10) %></li>
+                        <li class='data_item showTime'><%= article.CREATED.substring(0, 10) %></li>
                         <li class='data_item source-type'>
                             <%  article.ARTICLE_LABEL.forEach(function(item) { %>
                             <span class='article-source bd-radius-3'><%= item %></span>
@@ -67,7 +67,7 @@
         $(function(){
             let author = $('.my_name').text()
             $('.showTime').each(function() {
-                let resTime = formatDateFilter22($(this).text())
+                let resTime = formatDateFilter2($(this).text())
                 $(this).html(resTime)
             })
                 $('.item-random-color').each(function() {
@@ -76,7 +76,6 @@
 
                 })
             let showContent = JSON.parse($('.content').text())
-            console.log(111, showContent)
             // console.log(dealArticleContent(showContent))
             dealArticleContent(showContent).forEach(item => {
                 $('.code-html').append(item.value)

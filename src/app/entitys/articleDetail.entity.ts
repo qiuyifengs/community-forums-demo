@@ -35,7 +35,7 @@ export class BbsArticleDetail {
      // isDrafts
     @Column({ default: false }) ID_DRAFTS: boolean;
     // publishTime
-    @Column() PUBLISH_TIME: string;
+    @Column() CREATED: string;
     // STATE
     @Column({ default: 1}) STATE: number;
 

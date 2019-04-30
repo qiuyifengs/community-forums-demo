@@ -30,7 +30,7 @@ export class BbsPostList {
     // top
     @Column({default: false }) TOP: boolean;
     // publishTime
-    @Column() PUBLISH_TIME: string;
+    @Column() CREATED: string;
     // editTime
     @Column() EDIT_TIME: string;
     // editPerson

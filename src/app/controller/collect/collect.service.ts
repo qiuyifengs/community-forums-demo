@@ -24,9 +24,7 @@ export class CollectService {
     let totalRes;
     const pageCount = param.pageCount ? param.pageCount * 1 : 10;
     const page = param.page ? (param.page - 1) * 1 * pageCount : 0;
-    console.log(11, param)
     const user = await this.userCommentRepository.findOne({NICK_NAME: param.nickName});
-    console.log(user)
     totalRes = await this.collectRepository.find({USER_ID: user.USER_ID});
     res = await this.collectRepository
           .createQueryBuilder('collectList')

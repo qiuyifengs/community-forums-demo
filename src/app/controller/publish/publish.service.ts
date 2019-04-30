@@ -80,7 +80,7 @@ export class PublishService {
                 ARTICLE_CONTENT: data.articleContent,
                 ARTICLE_TYPE: data.articleType,
                 ARTICLE_LABEL: data.articleLabel,
-                PUBLISH_TIME: data.publishTime,
+                CREATED: data.publishTime,
                 AUTHOR: data.author,
                 EDIT_TIME: data.editTime,
                 EDIT_PERSON: data.editPerson,

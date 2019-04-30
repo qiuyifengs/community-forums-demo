@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
 import { CorsMiddleware } from '@/bing';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import modules from './app';
@@ -30,4 +30,15 @@ import { BbsArticleDetail, BbsChildrenComments, BbsCommentsList, BbsLabelList, B
         }), ...modules,
     ],
 })
-export class ApplicationModule {}
+export class ApplicationModule implements NestModule {
+    /**
+	 * 配置中间件
+	 * @param consumer 中间件
+	*/
+  	configure(consumer: MiddlewareConsumer): void {
+        consumer.apply(CorsMiddleware).forRoutes({
+          path: '*',
+          method: RequestMethod.ALL,
+        });
+    }
+}

@@ -27,7 +27,7 @@ export class RegisterService {
       USER_ID: '',
       PASSWORD: '',
       NICK_NAME: '',
-      DATE: '',
+      CREATED: '',
       TOKEN: '',
       EMAIL: '',
     };
@@ -67,7 +67,7 @@ export class RegisterService {
         expiresIn: '3d',
       });
     paramObj.USER_ID = param.userId;
-    paramObj.DATE = date + '';
+    paramObj.CREATED = date + '';
     paramObj.TOKEN = token;
     paramObj.EMAIL = param.userId;
     await this.registerRepository.save(paramObj);

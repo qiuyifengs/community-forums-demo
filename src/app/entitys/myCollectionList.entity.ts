@@ -45,9 +45,7 @@ export class BbsMyCollectionList {
 
     @Column({ default: 1 }) STATE: number;
 
-    @Column() CREATED: string;
-
     // publishTime
-    @Column() PUBLISH_TIME: string;
+    @Column() CREATED: string;
 
 }

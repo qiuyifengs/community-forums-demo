@@ -65,7 +65,7 @@
                                                             </li>
                                                             <li class="list-item web-display">
                                                                 <span class="time">
-                                                                    <%= item.PUBLISH_TIME %>
+                                                                    <%= item.CREATED %>
                                                                 </span>
                                                             </li>
                                                             <% if (item.ARTICLE_LABEL && item.ARTICLE_LABEL != '' ) { %>
@@ -77,7 +77,7 @@
                                                             <% } %>
                                                             <li class="app-time app-display">
                                                                 <span class="time">
-                                                                    <%= item.PUBLISH_TIME %>
+                                                                    <%= item.CREATED %>
                                                                 </span>
                                                             </li>
                                                         </ul>
@@ -304,13 +304,13 @@
                                 </li>
                                 <li class="list-item web-display">
                                     <span class="time">
-                                        ${ filterTime(item.PUBLISH_TIME) }
+                                        ${ filterTime(item.CREATED) }
                                     </span>
                                 </li>
                                 ${ renderArticleLabel(item.ARTICLE_LABEL) }
                                 <li class="app-time app-display">
                                     <span class="time">
-                                        ${ filterTime(item.PUBLISH_TIME) }
+                                        ${ filterTime(item.CREATED) }
                                     </span>
                                 </li>
                             </ul>

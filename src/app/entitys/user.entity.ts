@@ -28,7 +28,7 @@ export class BbsUser {
     // hadNews
     @Column({ default: false }) HAD_NEWS: boolean;
     // registerdate
-    @Column() DATE: string;
+    @Column() CREATED: string;
     // STATE
     @Column({ default: 1 }) STATE: number;
     // activity
