@@ -1,7 +1,6 @@
 import { Controller, Get, Param, Post, Body, UseGuards, Request, Response, HttpStatus, HttpCode } from '@nestjs/common';
 import { ApiOperation, ApiUseTags } from '@nestjs/swagger';
 import { UpdateService } from './update.service';
-import { User } from '../../entitys/user.entity';
 
 @ApiUseTags()
 @Controller()
