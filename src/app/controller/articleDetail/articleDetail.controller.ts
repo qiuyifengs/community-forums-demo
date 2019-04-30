@@ -2,7 +2,7 @@ import { Controller, Get, Param, Post, Body, Request, Response } from '@nestjs/c
 import { ApiOperation, ApiUseTags } from '@nestjs/swagger';
 import { ArticleDetailService } from './articleDetail.service';
 import { ArticleDetail } from '../../entitys/articleDetail.entity';
-import { CommentsList } from '../../entitys/commentList.entity';
+import { BbsCommentsList } from '../../entitys/commentList.entity';
 import { PostList } from '../../entitys/postList.entity';
 import * as curUserId from '../../global';
 
@@ -21,7 +21,7 @@ export class ArticleDetailController {
     }
     @Get('/articleDetail/:articleId/:page')
     @ApiOperation({ title: 'get balance from commentList' })
-    public async getComment(@Param() param): Promise<CommentsList[]> {
+    public async getComment(@Param() param): Promise<BbsCommentsList[]> {
         return this.postsRepository.getArticle(param);
     }
 
@@ -36,19 +36,19 @@ export class ArticleDetailController {
 
     @Post('addComment')
     @ApiOperation({ title: 'get balance from commentList' })
-    public async addComment(@Body() param): Promise<CommentsList[]> {
+    public async addComment(@Body() param): Promise<BbsCommentsList[]> {
         return this.postsRepository.addComment(param);
     }
 
     @Post('addChildrenComment')
     @ApiOperation({ title: 'get balance from childrenCommentList' })
-    public async addChildrenComment(@Body() param): Promise<CommentsList[]> {
+    public async addChildrenComment(@Body() param): Promise<BbsCommentsList[]> {
         return this.postsRepository.addChildrenComment(param);
     }
 
     @Post('deleteComment')
     @ApiOperation({ title: 'get balance from childrenCommentList' })
-    public async deleteComment(@Body() param): Promise<CommentsList[]> {
+    public async deleteComment(@Body() param): Promise<BbsCommentsList[]> {
         return this.postsRepository.deleteComment(param);
     }
 

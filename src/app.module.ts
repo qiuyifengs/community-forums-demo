@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { CorsMiddleware } from '@/bing';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import modules from './app';
-import { ArticleDetail, ChildrenComments, CommentsList, LabelList, LabelType, Menu, MyCollectionList, PostList, BbsUser } from './app/entitys';
+import { ArticleDetail, BbsChildrenComments, BbsCommentsList, BbsLabelList, LabelType, Menu, MyCollectionList, PostList, BbsUser } from './app/entitys';
 // const ormconfig = require('../ormconfig.json');
 
 @Module({
@@ -16,9 +16,9 @@ import { ArticleDetail, ChildrenComments, CommentsList, LabelList, LabelType, Me
             database: 'db_data',
             entities: [
                 ArticleDetail,
-                ChildrenComments,
-                CommentsList,
-                LabelList,
+                BbsChildrenComments,
+                BbsCommentsList,
+                BbsLabelList,
                 LabelType,
                 Menu,
                 MyCollectionList,

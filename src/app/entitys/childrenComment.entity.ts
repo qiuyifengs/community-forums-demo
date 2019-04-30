@@ -1,41 +1,44 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn, ManyToMany, ManyToOne } from 'typeorm';
-import { CommentsList } from './commentList.entity';
+import { BbsCommentsList } from './commentList.entity';
 @Entity()
-export class ChildrenComments {
-    @PrimaryGeneratedColumn() serialNum: number;
+export class BbsChildrenComments {
+    @PrimaryGeneratedColumn() ID: number;
     // usreId
-    @Column() userId: string;
+    @Column() USER_ID: string;
 
     // commentUserName
-    @Column() commentUserName: string;
+    @Column() COMMENT_USER_NAME: string;
 
     // commentatorId
-    @Column() commentatorId: string;
+    @Column() COMMENTATOR_ID: string;
 
     // commentatorName
-    @Column() commentatorName: string;
+    @Column() COMMENTATOR_NAME: string;
 
     // commentId
-    @Column() commentId: string;
+    @Column() COMMENT_ID: string;
 
     // childCommentId
-    @Column() childCommentId: string;
+    @Column() CHILD_COMMENT_ID: string;
 
-    @Column() author: string;
+    @Column() AUTHOR: string;
 
     // authorId
-    @Column() authorId: string;
+    @Column() AUTHOR_ID: string;
 
     // articleId
-    @Column() articleId: string;
+    @Column() ARTICLE_ID: string;
 
     // commentContent
-    @Column() commentContent: string;
+    @Column() COMMENT_CONTENT: string;
 
     // commentTime
-    @Column() commentTime: string;
+    @Column() CREATED: string;
 
-    @ManyToOne(type => CommentsList, parent => parent.childrenComentList)
-    childrens: CommentsList;
+    // state
+    @Column({default: 1}) STATE: number;
+
+    @ManyToOne(type => BbsCommentsList, parent => parent.childrenComentList)
+    childrens: BbsCommentsList;
 
 }

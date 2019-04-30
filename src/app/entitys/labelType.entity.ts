@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { LabelList } from './labelList.entity';
+import { BbsLabelList } from './labelList.entity';
 
 @Entity()
 export class LabelType {
@@ -13,6 +13,6 @@ export class LabelType {
 
   @Column({ default: 'zh_CN' }) LANGUE: string;
 
-  @OneToMany(type => LabelList, children => children.labelList)
-    labelArr: LabelList[];
+  @OneToMany(type => BbsLabelList, children => children.labelList)
+    labelArr: BbsLabelList[];
 }

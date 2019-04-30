@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { LabelType } from './labelType.entity';
 
 @Entity()
-export class LabelList {
+export class BbsLabelList {
   @PrimaryGeneratedColumn() ID: number;
 
   @Column({ length: 20 }) LABEL_NAME: string;

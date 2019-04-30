@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne } from 'typeorm';
 import { PostList } from './postList.entity';
-import { CommentsList } from './commentList.entity';
+import { BbsCommentsList } from './commentList.entity';
 @Entity()
 export class ArticleDetail {
     @PrimaryGeneratedColumn() ID: number;
@@ -40,6 +40,6 @@ export class ArticleDetail {
     @OneToOne(type => PostList, post => post.acticles)
     post: PostList[];
 
-    @OneToMany(type => CommentsList, comment => comment.posts)
-    comments: CommentsList[];
+    @OneToMany(type => BbsCommentsList, comment => comment.posts)
+    comments: BbsCommentsList[];
 }

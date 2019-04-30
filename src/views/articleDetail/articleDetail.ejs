@@ -169,20 +169,20 @@
                                     <% if(commentItem.hearderIcon) { %>
                                         <img class='commentator_img' src='/<%= commentItem.hearderIcon %>'>
                                     <% } else { %> 
-                                        <span class='item-random-color commentator_user_name' article-commentUserName='<%=commentItem.commentUserName%>'>
-                                            <%= commentItem.commentUserName.substring(0, 1) %>
+                                        <span class='item-random-color commentator_user_name' article-commentUserName='<%=commentItem.COMMENT_USER_NAME%>'>
+                                            <%= commentItem.COMMENT_USER_NAME.substring(0, 1) %>
                                         </span>  
                                     <% } %>
                                     <div class="commentator-name-box">
-                                        <div class='commentator_name one_level'><%= commentItem.commentUserName %></div>
-                                        <div class='comment_time time app-comment-time'><%= commentItem.commentTime %></div>
+                                        <div class='commentator_name one_level'><%= commentItem.COMMENT_USER_NAME %></div>
+                                        <div class='comment_time time app-comment-time'><%= commentItem.CREATED %></div>
                                     </div>
                                 </div>
                                 <div class='coment_mid'>
-                                    <%= commentItem.commentContent %>
+                                    <%= commentItem.COMMENT_CONTENT %>
                                 </div>
-                                <div class='comment_id del_comment_id' style='display:none'><%= commentItem.commentId %></div>
-                                <div class='comment_userId' style='display:none'><%= commentItem.userId %></div>
+                                <div class='comment_id del_comment_id' style='display:none'><%= commentItem.COMMENT_ID %></div>
+                                <div class='comment_userId' style='display:none'><%= commentItem.USER_ID %></div>
                                 <div class='eidt_answer'>
                                         <div class='answer web-display' lang="answer">回复</div>
                                         <div class='app-answer app-display' lang="answer">回复</div>
@@ -194,16 +194,16 @@
                                             <div class='comment_item childer_item'>
                                                 <div class='comment_top'>
                                                     <!-- <img class='commentator_img' src='/images/man1.png' alt=''> -->
-                                                    <!-- <span class='geren-bg bd-radius-round dom-random-color'><%= childrenItem.commentUserName.substring(0, 1) %></span> -->
-                                                    <div class='commentator_name children_commentator_name'><%= childrenItem.commentUserName %></div>
-                                                    <div class='comment_time time'><%= childrenItem.commentTime %></div>
+                                                    <!-- <span class='geren-bg bd-radius-round dom-random-color'><%= childrenItem.COMMENT_USER_NAME.substring(0, 1) %></span> -->
+                                                    <div class='commentator_name children_commentator_name'><%= childrenItem.COMMENT_USER_NAME %></div>
+                                                    <div class='comment_time time'><%= childrenItem.CREATED %></div>
                                                 </div>
                                                 <div class='coment_mid'>
-                                                    @<span class='reply_man'><%= childrenItem.commentatorName %></span>
-                                                    <%= childrenItem.commentContent %>
+                                                    @<span class='reply_man'><%= childrenItem.COMMENTATOR_NAME %></span>
+                                                    <%= childrenItem.COMMENT_CONTENT %>
                                                 </div>
-                                                <div class='child_comment_id del_comment_id' style='display:none'><%= childrenItem.childCommentId %></div>
-                                                <div class='comment_userId' style='display:none'><%= childrenItem.userId %></div>
+                                                <div class='child_comment_id del_comment_id' style='display:none'><%= childrenItem.CHILD_COMMENT_ID %></div>
+                                                <div class='comment_userId' style='display:none'><%= childrenItem.USER_ID %></div>
                                                 <div class='eidt_answer'>
                                                     <div class='answer web-display' lang="answer">回复</div>
                                                     <div class='app-answer app-display' lang="answer">回复</div>
@@ -578,12 +578,12 @@
                 myAjax('POST', 'post/addComment', param).then((res) =>{
                     if (res.code == 10000) {
                         let commentDetail = {
-                            commentatorName: author,
+                            COMMENTATOR_NAME: author,
                             headerIcon: localStorage.getItem('headerIcon') ? localStorage.getItem('headerIcon') : '',
-                            commentUserName: $.cookie('nickName'),
-                            commentContent: commentText,
-                            commentId: res.commentId,
-                            commentTime: format('yyyy-MM-dd hh:mm:ss', new Date())
+                            COMMENT_USER_NAME: $.cookie('nickName'),
+                            COMMENT_CONTENT: commentText,
+                            COMMENT_ID: res.commentId,
+                            CREATED: format('yyyy-MM-dd hh:mm:ss', new Date())
                         }
                         $('.comment_list').append(addCommentHtml(commentDetail))
                         $('.write_comment').val('')
@@ -618,11 +618,11 @@
                 myAjax('POST', 'post/addChildrenComment', param).then((res) => {
                     if (res.code == 10000) {
                         let commentDetail = {
-                            commentatorName: commentatorName,
-                            commentUserName: $.cookie('nickName'),
-                            commentContent: commentText,
-                            commentId: res.commentId,
-                            commentTime: format('yyyy-MM-dd hh:mm:ss', new Date())
+                            COMMENTATOR_NAME: commentatorName,
+                            COMMENT_USER_NAME: $.cookie('nickName'),
+                            COMMENT_CONTENT: commentText,
+                            COMMENT_ID: res.commentId,
+                            CREATED: format('yyyy-MM-dd hh:mm:ss', new Date())
                         }
                         $('.answer_box').text('')
                         $(this).parents('.comment_bottmo').before(childrenRenderComment(commentDetail))
@@ -917,15 +917,15 @@
                     <div class='comment_top'>
                         ${ showHeaderIcon(item) }
                         <div class="commentator-name-box">
-                            <div class='commentator_name'>${ item.commentUserName }</div>
-                            <div class='comment_time time'>${ filterTime(item.commentTime) }</div>
+                            <div class='commentator_name'>${ item.COMMENT_USER_NAME }</div>
+                            <div class='comment_time time'>${ filterTime(item.CREATED) }</div>
                         </div>
                     </div>
                     <div class='coment_mid'>
-                        ${ item.commentContent }
+                        ${ item.COMMENT_CONTENT }
                     </div>
-                    <div class='comment_id del_comment_id' style='display:none'>${ item.commentId }</div>
-                    <div class='comment_userId' style='display:none'>${ item.userId }</div>
+                    <div class='comment_id del_comment_id' style='display:none'>${ item.COMMENT_ID }</div>
+                    <div class='comment_userId' style='display:none'>${ item.USER_ID }</div>
                     <div class='eidt_answer'>
                             <div class='answer web-display' lang="answer">回复</div>
                             <div class='app-answer app-display' lang="answer">回复</div>
@@ -946,14 +946,14 @@
                         <div class='comment_top'>
                             ${ showHeaderIcon(item) }
                             <div class="commentator-name-box">
-                                <div class='commentator_name'>${ item.commentUserName }</div>
-                                <div class='comment_time time'>${ filterTime(item.commentTime) }</div>
+                                <div class='commentator_name'>${ item.COMMENT_USER_NAME }</div>
+                                <div class='comment_time time'>${ filterTime(item.CREATED) }</div>
                             </div>
                         </div>
                         <div class='coment_mid'>
-                            ${ item.commentContent }
+                            ${ item.COMMENT_CONTENT }
                         </div>
-                        <div class='comment_id del_comment_id' style='display:none'>${ item.commentId }</div>
+                        <div class='comment_id del_comment_id' style='display:none'>${ item.COMMENT_ID }</div>
                         <div class='comment_userId' style='display:none'>${ $.cookie('userId') }</div>
                         <div class='eidt_answer'>
                             <div class='answer web-display' lang="answer">回复</div>
@@ -980,7 +980,7 @@
                 `
             } else {
                 console.log(item)
-                return `<span class='item-random-color commentator_user_name' article-commentUserName='${item.commentUserName}' style='background: rgb(97, 99, 103);'>${item.commentUserName.substring(0, 1)}</span>`;
+                return `<span class='item-random-color commentator_user_name' article-commentUserName='${item.COMMENT_USER_NAME}' style='background: rgb(97, 99, 103);'>${item.COMMENT_USER_NAME.substring(0, 1)}</span>`;
             }
         }
         function forChileComment(item) {
@@ -994,7 +994,7 @@
         function isNewComment(item) {
             console.log(item)
             return `
-                <div class='child_comment_id del_comment_id' style='display:none'>${ item.commentId }</div>
+                <div class='child_comment_id del_comment_id' style='display:none'>${ item.COMMENT_ID }</div>
                 <div class='comment_userId' style='display:none'>${ $.cookie('userId') }</div>
             `
         }
@@ -1003,13 +1003,13 @@
                 <div class='children_commentator_box'>
                     <div class='comment_item childer_item'>
                         <div class='comment_top'>
-                            <div class='commentator_name children_commentator_name'>${ item.commentUserName }</div>
-                            <div class='comment_time time''>${ filterTime(item.commentTime) }</div>
+                            <div class='commentator_name children_commentator_name'>${ item.COMMENT_USER_NAME }</div>
+                            <div class='comment_time time''>${ filterTime(item.CREATED) }</div>
                         </div>
                         ${ isNewComment(item) }
                         <div class='coment_mid'>
-                            @<span class='reply_man'>${ item.commentatorName }</span>
-                            ${ item.commentContent }
+                            @<span class='reply_man'>${ item.COMMENTATOR_NAME }</span>
+                            ${ item.COMMENT_CONTENT }
                         </div>
                         <div class='eidt_answer'>
                             <div class='answer web-display' lang="answer">回复</div>

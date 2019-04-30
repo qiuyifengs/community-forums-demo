@@ -1,7 +1,7 @@
 export { ArticleDetail } from './articleDetail.entity';
-export { ChildrenComments } from './childrenComment.entity';
-export { CommentsList } from './commentList.entity';
-export { LabelList } from './labelList.entity';
+export { BbsChildrenComments } from './childrenComment.entity';
+export { BbsCommentsList } from './commentList.entity';
+export { BbsLabelList } from './labelList.entity';
 export { LabelType } from './labelType.entity';
 export { Menu } from './menuList.entity';
 export { MyCollectionList } from './myCollectionList.entity';

@@ -4,8 +4,8 @@ import { ApiException } from '../../../bing/common/enums/api.exception';
 import { ApiErrorCode } from '../../../bing/common/enums/api-error-code.enum';
 import { Repository } from 'typeorm';
 import { ArticleDetail } from '../../entitys/articleDetail.entity';
-import { CommentsList } from '../../entitys/commentList.entity';
-import { ChildrenComments } from '../../entitys/childrenComment.entity';
+import { BbsCommentsList } from '../../entitys/commentList.entity';
+import { BbsChildrenComments } from '../../entitys/childrenComment.entity';
 import { MyCollectionList } from '../../entitys/myCollectionList.entity';
 import { PostList } from '../../entitys/postList.entity';
 import { BbsUser } from '../../entitys/user.entity';
@@ -21,10 +21,10 @@ export class ArticleDetailService {
         private readonly articleRepository: Repository<ArticleDetail>,
         @InjectRepository(MyCollectionList)
         private readonly myCollectRepository: Repository<MyCollectionList>,
-        @InjectRepository(CommentsList)
-        private readonly commentRepository: Repository<CommentsList>,
-        @InjectRepository(ChildrenComments)
-        private readonly childrenCommentRepository: Repository<ChildrenComments>,
+        @InjectRepository(BbsCommentsList)
+        private readonly commentRepository: Repository<BbsCommentsList>,
+        @InjectRepository(BbsChildrenComments)
+        private readonly childrenCommentRepository: Repository<BbsChildrenComments>,
         @InjectRepository(BbsUser)
         private readonly userRepository: Repository<BbsUser>,
     ) { }
@@ -35,22 +35,22 @@ export class ArticleDetailService {
         let commentNum = 0;
         const pageCount = param.pageCount ? param.pageCount * 1 : 10;
         const page = param.page ? param.page * 1 * pageCount : 0;
-        const totalRes = await this.commentRepository.find({articleId: param.articleId});
+        const totalRes = await this.commentRepository.find({ARTICLE_ID: param.articleId});
         const articleRes = await this.articleRepository.findOne({ ARTICLE_ID: param.articleId }); // article
         const userInfoRes = await this.userRepository.findOne({ USER_ID: articleRes.USER_ID });
         // commentRes = await this.commentRepository.find({ articleId: param.articleId });
         commentRes = await this.commentRepository
                 .createQueryBuilder('commentleList')
-                .where('commentleList.articleId = :articleId', { articleId: param.articleId })
+                .where('commentleList.ARTICLE_ID = :ARTICLE_ID', { ARTICLE_ID: param.articleId })
                 .skip(page)
                 .take(pageCount)
                 .getMany();
         const collectRes = await this.myCollectRepository.findOne({ARTICLE_ID: param.articleId, USER_ID: curUserId.default.userId});
         if (commentRes.length > 0) {
             for (const item of commentRes) {
-                const user = await this.userRepository.findOne({ USER_ID: item.userId });
+                const user = await this.userRepository.findOne({ USER_ID: item.USER_ID });
                 item.hearderIcon = user.HEADER_ICON;
-                const childrenComRes = await this.childrenCommentRepository.find({ articleId: param.articleId, commentId: item.commentId });
+                const childrenComRes = await this.childrenCommentRepository.find({ ARTICLE_ID: param.articleId, COMMENT_ID: item.COMMENT_ID });
                 item.childrenComentList = childrenComRes;
                 commentNum += childrenComRes.length * 1;
             }
@@ -74,24 +74,24 @@ export class ArticleDetailService {
             user.HAD_NEWS = true;
             this.userRepository.save(user);
         }
-        const comment = new CommentsList();
-        comment.userId = param.userId;
-        comment.commentatorId = user.USER_ID;
-        comment.commentatorName = param.commentatorName;
-        comment.articleTitle = param.articleTitle;
-        comment.articleId = param.articleId;
-        comment.commentContent = param.commentText;
-        comment.commentTime = await util.dateType.toSecond();
-        comment.commentId = dateNum + util.ramdom.random(6);
-        comment.commentUserName = param.nickName;
+        const comment = new BbsCommentsList();
+        comment.USER_ID = param.userId;
+        comment.COMMENTATOR_ID = user.USER_ID;
+        comment.COMMENTATOR_NAME = param.commentatorName;
+        comment.ARTICLE_TITLE = param.articleTitle;
+        comment.ARTICLE_ID = param.articleId;
+        comment.COMMENT_CONTENT = param.commentText;
+        comment.CREATED = await util.dateType.getTime() + '';
+        comment.COMMENT_ID = dateNum + util.ramdom.random(6);
+        comment.COMMENT_USER_NAME = param.nickName;
         const updateArticle = await this.articleRepository.findOne({ ARTICLE_ID: param.articleId });
-        updateArticle.COMMENT_ID = comment.commentId;
+        updateArticle.COMMENT_ID = comment.COMMENT_ID;
         updateArticle.COMMENT_COUNT += 1;
         await this.articleRepository.save(updateArticle);
         await this.articleRepository.manager.save(comment);
         const msg = {
             code: ApiErrorCode.SUCCESS,
-            commentId: comment.commentId,
+            commentId: comment.COMMENT_ID,
             message: '评论成功！',
         };
         return msg;
@@ -101,29 +101,31 @@ export class ArticleDetailService {
         const user = await this.userRepository.findOne({NICK_NAME: param.author});
         const commentatorUserInfo = await this.userRepository.findOne({NICK_NAME: param.commentatorName});
         const dateNum = new Date().getTime().toString().substring(-11);
-        const childrenCom = new ChildrenComments();
+        const childrenCom = new BbsChildrenComments();
         if (user.USER_ID !== param.userId) {
             user.HAD_NEWS = true;
             this.userRepository.save(user);
         }
-        childrenCom.userId = param.userId;
-        childrenCom.commentUserName = param.nickName;
-        childrenCom.author = param.author;
-        childrenCom.authorId = user.USER_ID;
-        childrenCom.commentatorId = commentatorUserInfo.USER_ID;
-        childrenCom.commentatorName = param.commentatorName;
-        childrenCom.articleId = param.articleId;
-        childrenCom.commentContent = param.commentText;
-        childrenCom.commentTime = await util.dateType.toSecond();
-        childrenCom.childCommentId = dateNum + util.ramdom.random(6);
-        childrenCom.commentId = param.commentId;
+        childrenCom.USER_ID = param.userId;
+        childrenCom.COMMENT_USER_NAME = param.nickName;
+        childrenCom.AUTHOR = param.author;
+        childrenCom.AUTHOR_ID = user.USER_ID;
+        childrenCom.COMMENTATOR_ID = commentatorUserInfo.USER_ID;
+        childrenCom.COMMENTATOR_NAME = param.commentatorName;
+        childrenCom.ARTICLE_ID = param.articleId;
+        childrenCom.COMMENT_CONTENT = param.commentText;
+        childrenCom.CREATED = await util.dateType.getTime() + '';
+        childrenCom.CHILD_COMMENT_ID = dateNum + util.ramdom.random(6);
+        childrenCom.COMMENT_ID = param.commentId;
+        console.log(param)
         const updateArticle = await this.articleRepository.findOne({ ARTICLE_ID: param.articleId });
+        console.log(updateArticle)
         updateArticle.COMMENT_COUNT += 1;
         await this.articleRepository.save(updateArticle);
         await this.articleRepository.manager.save(childrenCom);
         const msg = {
             code: ApiErrorCode.SUCCESS,
-            commentId: childrenCom.childCommentId,
+            commentId: childrenCom.CHILD_COMMENT_ID,
             message: '回复成功！',
         };
         return msg;
@@ -137,8 +139,8 @@ export class ArticleDetailService {
             message: '',
         };
         if (param.commentType.toLowerCase() === 'parent') {
-            const parComment = await this.commentRepository.findOne({ articleId: param.articleId, commentId: param.commentId });
-            const childComment = await this.childrenCommentRepository.find({ articleId: param.articleId, commentId: param.commentId });
+            const parComment = await this.commentRepository.findOne({ ARTICLE_ID: param.articleId, COMMENT_ID: param.commentId });
+            const childComment = await this.childrenCommentRepository.find({ ARTICLE_ID: param.articleId, COMMENT_ID: param.commentId });
             if (parComment) {
                 await this.commentRepository.remove(parComment);
                 if (childComment.length > 0) {
@@ -152,7 +154,7 @@ export class ArticleDetailService {
                 msg.message = '删除失败！';
             }
         } else {
-            const delChild = await this.childrenCommentRepository.findOne({ articleId: param.articleId, childCommentId: param.commentId });
+            const delChild = await this.childrenCommentRepository.findOne({ ARTICLE_ID: param.articleId, CHILD_COMMENT_ID: param.commentId });
             if (delChild) {
                 await this.childrenCommentRepository.remove(delChild);
                 msg.code = ApiErrorCode.DELETE_SUCCESS;

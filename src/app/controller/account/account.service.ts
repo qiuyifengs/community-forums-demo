@@ -5,8 +5,8 @@ import { Repository } from 'typeorm';
 import { BbsUser } from '../../entitys/user.entity';
 import { PostList } from '../../entitys/postList.entity';
 import { ArticleDetail } from '../../entitys/articleDetail.entity';
-import { CommentsList } from '../../entitys/commentList.entity';
-import { ChildrenComments } from '../../entitys/childrenComment.entity';
+import { BbsCommentsList } from '../../entitys/commentList.entity';
+import { BbsChildrenComments } from '../../entitys/childrenComment.entity';
 import { MyCollectionList } from '../../entitys/myCollectionList.entity';
 import * as fs from 'fs';
 
@@ -19,10 +19,10 @@ export class AccountService {
     private readonly postRepository: Repository<PostList>,
     @InjectRepository(ArticleDetail)
     private readonly articleRepository: Repository<ArticleDetail>,
-    @InjectRepository(CommentsList)
-    private readonly commentRepository: Repository<CommentsList>,
-    @InjectRepository(ChildrenComments)
-    private readonly childCommentRepository: Repository<ChildrenComments>,
+    @InjectRepository(BbsCommentsList)
+    private readonly commentRepository: Repository<BbsCommentsList>,
+    @InjectRepository(BbsChildrenComments)
+    private readonly childCommentRepository: Repository<BbsChildrenComments>,
     @InjectRepository(MyCollectionList)
     private readonly collectRepository: Repository<MyCollectionList>,
   ) {}
@@ -71,14 +71,14 @@ export class AccountService {
       await this.commentRepository // comment db --- commentatorName
       .createQueryBuilder()
       .update()
-      .set({commentatorName: res.NICK_NAME})
+      .set({COMMENTATOR_NAME: res.NICK_NAME})
       .where('commentatorId = :commentatorId', {commentatorId: res.USER_ID})
       .execute();
 
       await this.commentRepository // comment db --- commentUserName
       .createQueryBuilder()
       .update()
-      .set({commentUserName: res.NICK_NAME})
+      .set({COMMENTATOR_NAME: res.NICK_NAME})
       .where('userId = :userId', {userId: res.USER_ID})
       .execute();
 
@@ -86,7 +86,7 @@ export class AccountService {
       .createQueryBuilder()
       .update()
       .set({
-        commentatorName: res.NICK_NAME,
+        COMMENTATOR_NAME: res.NICK_NAME,
       })
       .where('commentatorId = :commentatorId', {commentatorId: res.USER_ID})
       .execute();
@@ -94,14 +94,14 @@ export class AccountService {
       await this.childCommentRepository // childComment db --- commentUserName
       .createQueryBuilder()
       .update()
-      .set({commentUserName: res.NICK_NAME})
+      .set({COMMENTATOR_NAME: res.NICK_NAME})
       .where('userId = :userId', {userId: res.USER_ID})
       .execute();
 
       await this.childCommentRepository // childComment db --- author
       .createQueryBuilder()
       .update()
-      .set({author: res.NICK_NAME})
+      .set({AUTHOR: res.NICK_NAME})
       .where('authorId = :authorId', {authorId: res.USER_ID})
       .execute();
 

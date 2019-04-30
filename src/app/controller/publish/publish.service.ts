@@ -8,7 +8,7 @@ import { ArticleDetail } from '../../entitys/articleDetail.entity';
 import { Menu } from '../../entitys/menuList.entity';
 import { BbsUser } from '../../entitys/user.entity';
 import { LabelType } from '../../entitys/labelType.entity';
-import { LabelList } from '../../entitys/labelList.entity';
+import { BbsLabelList } from '../../entitys/labelList.entity';
 
 @Injectable()
 export class PublishService {
@@ -23,8 +23,8 @@ export class PublishService {
         private readonly userRepository: Repository<BbsUser>,
         @InjectRepository(LabelType)
         private readonly labelTypeRepository: Repository<LabelType>,
-        @InjectRepository(LabelList)
-        private readonly labelListRepository: Repository<LabelList>,
+        @InjectRepository(BbsLabelList)
+        private readonly labelListRepository: Repository<BbsLabelList>,
     ) {}
     // render html
     async getMenu(): Promise<any> {

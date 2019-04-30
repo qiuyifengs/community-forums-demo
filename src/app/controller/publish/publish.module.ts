@@ -7,10 +7,10 @@ import { ArticleDetail } from '../../entitys/articleDetail.entity';
 import { Menu } from '../../entitys/menuList.entity';
 import { BbsUser } from '../../entitys/user.entity';
 import { LabelType } from '../../entitys/labelType.entity';
-import { LabelList } from '../../entitys/labelList.entity';
+import { BbsLabelList } from '../../entitys/labelList.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([PostList, ArticleDetail, Menu, BbsUser, LabelType, LabelList])],
+  imports: [TypeOrmModule.forFeature([PostList, ArticleDetail, Menu, BbsUser, LabelType, BbsLabelList])],
   providers: [PublishService],
   controllers: [PublishController],
 })
