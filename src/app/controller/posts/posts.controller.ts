@@ -1,7 +1,6 @@
 import { Controller, Get, Param, Post, Body, Request, Response } from '@nestjs/common';
 import { ApiOperation, ApiUseTags } from '@nestjs/swagger';
 import { PostsService } from './posts.service';
-import { BbsPostList } from '../../entitys/postList.entity';
 
 @ApiUseTags('account')
 @Controller('account')
@@ -12,7 +11,6 @@ export class PostsController {
     @ApiOperation({ title: 'get balance from postList'})
     public async index(@Request() req, @Response() res, @Param() data): Promise<any> {
         const myArticleList = await this.postsService.myArticleList(data);
-        console.log(myArticleList)
         myArticleList.articleList.forEach((postItem, ind) => {
             myArticleList.articleList[ind].ARTICLE_LABEL = postItem.ARTICLE_LABEL.split(',');
         });

@@ -2,7 +2,7 @@ import { Controller, Get, Param, Post, Body, Request, Response, UseInterceptors,
 import { ApiOperation, ApiUseTags } from '@nestjs/swagger';
 import { PublishService } from './publish.service';
 import { AuthGuard } from '@nestjs/passport';
-import { PostList } from '../../entitys/postList.entity';
+import { BbsPostList } from '../../entitys/postList.entity';
 import { util } from '../../../bing';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
@@ -30,7 +30,7 @@ export class PublishController {
     // @UseGuards(AuthGuard('jwt'))
     @Post('publish')
     @ApiOperation({ title: 'get balance from postList'})
-    public async publish(@Body() params): Promise<PostList[]> {
+    public async publish(@Body() params): Promise<BbsPostList[]> {
         if (params.isEdit === 'false' || !params.isEdit) {
             params.publishTime = await util.dateType.getTime();
         }
