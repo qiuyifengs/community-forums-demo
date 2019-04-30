@@ -238,7 +238,7 @@
                 }
             })
             $(".time").each(function() {
-                let resTime = formatDateFilter($(this).text())
+                let resTime = formatDateFilter2($(this).text())
                 $(this).html(resTime)
             });
             // reply comment
@@ -369,7 +369,7 @@
             return `<div class="ghost-comment-nested">${childComment}</div>`;
         }
         function filterTime(item) {
-            return  resTime = formatDateFilter(item)
+            return  resTime = formatDateFilter2(item)
         }
         function renderCommentsHtml(item) {
             return `

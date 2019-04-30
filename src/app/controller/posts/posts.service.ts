@@ -5,7 +5,7 @@ import { ApiErrorCode } from '../../../bing/common/enums/api-error-code.enum';
 import { Repository } from 'typeorm';
 import { PostList } from '../../entitys/postList.entity';
 import { ArticleDetail } from '../../entitys/articleDetail.entity';
-import { User } from '../../entitys/user.entity';
+import { BbsUser } from '../../entitys/user.entity';
 
 @Injectable()
 export class PostsService {
@@ -14,8 +14,8 @@ export class PostsService {
     private readonly postsRepository: Repository<PostList>,
     @InjectRepository(ArticleDetail)
     private readonly articleRepository: Repository<ArticleDetail>,
-    @InjectRepository(User)
-    private readonly usereRepository: Repository<User>,
+    @InjectRepository(BbsUser)
+    private readonly usereRepository: Repository<BbsUser>,
   ) {}
 
   // myArticleList
@@ -24,18 +24,18 @@ export class PostsService {
     let totalRes;
     const pageCount = data.pageCount ? data.pageCount * 1 : 10;
     const page = data.page ? (data.page - 1) * 1 * pageCount : 0;
-    const user = await this.usereRepository.findOne({ nickName: data.nickName });
-    totalRes = await this.postsRepository.find({userId: user.userId});
+    const user = await this.usereRepository.findOne({ NICK_NAME: data.nickName });
+    totalRes = await this.postsRepository.find({USER_ID: user.USER_ID});
     res = await this.postsRepository
           .createQueryBuilder('articleList')
-          .where('articleList.userId = :userId', { userId: user.userId })
-          .orderBy('articleList.serialNum', 'DESC')
+          .where('articleList.USER_ID = :USER_ID', { USER_ID: user.USER_ID })
+          .orderBy('articleList.ID', 'DESC')
           .skip(page)
           .take(pageCount)
           .getMany();
-    res.forEach((item, ind) => {
-        // res[ind].articleContent = item.articleContent.substr(2).substring(0, item.articleContent.length - 4).replace('","', '\n');
-    });
+    // res.forEach((item, ind) => {
+    //     // res[ind].articleContent = item.articleContent.substr(2).substring(0, item.articleContent.length - 4).replace('","', '\n');
+    // });
     const articleData = {
         articleList: res,
         total: totalRes.length,
@@ -45,10 +45,10 @@ export class PostsService {
 
   // deleteArticle
   async deleteArticle(data): Promise<any> {
-    const res =  await this.postsRepository.find({articleId: data.articleId});
+    const res =  await this.postsRepository.find({ARTICLE_ID: data.articleId});
     const result = await this.postsRepository.remove(res);
     if (result.length > 0) {
-      const articlkeRes =  await this.articleRepository.find({articleId: data.articleId});
+      const articlkeRes =  await this.articleRepository.find({ARTICLE_ID: data.articleId});
       await this.articleRepository.remove(articlkeRes);
       return {message: '删除成功！'};
     } else {

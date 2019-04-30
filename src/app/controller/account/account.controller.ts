@@ -2,7 +2,6 @@ import { Controller, Get, Param, Post, Body, Request, Response, FileInterceptor,
 import { ApiOperation, ApiUseTags } from '@nestjs/swagger';
 import { AccountService } from './account.service';
 // import { FileInterceptor } from '@nestjs/platform-express';
-import { User } from '../../entitys/user.entity';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 
@@ -14,11 +13,11 @@ export class AccountController {
     @ApiOperation({ title: 'get balance from user' })
     public async index(@Request() req, @Response() res, @Param() param): Promise<any> {
         const data = await this.accountService.getUserInfo(param);
-        const tel = data.tel ? data.tel.substr(0, 2) + '****' + data.tel.substr(8, data.tel.split('').length) : '';
-        const email = data.email.substr(0, 2) + '****' + data.email.substr(-7);
-        const headerIcon = data.headerIcon;
-        const nickName = data.nickName;
-        const personalProfile = data.personalProfile;
+        const tel = data.TEL ? data.TEL.substr(0, 2) + '****' + data.TEL.substr(8, data.TEL.split('').length) : '';
+        const email = data.EMAIL.substr(0, 2) + '****' + data.EMAIL.substr(-7);
+        const headerIcon = data.HEADER_ICON;
+        const nickName = data.NICK_NAME;
+        const personalProfile = data.PERSONAL_PROFILE;
         const result = {
             email,
             tel,
@@ -68,9 +67,9 @@ export class AccountController {
         if (data) {
             msg = {
                 code: 10000,
-                headerIcon: data.headerIcon,
-                hadNews: data.hadNews,
-                activity: data.activity,
+                headerIcon: data.HEADER_ICON,
+                hadNews: data.HAD_NEW,
+                activity: data.ACTIVITY,
             };
         } else {
             msg = {

@@ -8,7 +8,7 @@ import { CommentsList } from '../../entitys/commentList.entity';
 import { ChildrenComments } from '../../entitys/childrenComment.entity';
 import { MyCollectionList } from '../../entitys/myCollectionList.entity';
 import { PostList } from '../../entitys/postList.entity';
-import { User } from '../../entitys/user.entity';
+import { BbsUser } from '../../entitys/user.entity';
 import { util } from '../../../bing';
 import * as curUserId from '../../global';
 
@@ -25,8 +25,8 @@ export class ArticleDetailService {
         private readonly commentRepository: Repository<CommentsList>,
         @InjectRepository(ChildrenComments)
         private readonly childrenCommentRepository: Repository<ChildrenComments>,
-        @InjectRepository(User)
-        private readonly userRepository: Repository<User>,
+        @InjectRepository(BbsUser)
+        private readonly userRepository: Repository<BbsUser>,
     ) { }
 
     // getArticle
@@ -36,8 +36,8 @@ export class ArticleDetailService {
         const pageCount = param.pageCount ? param.pageCount * 1 : 10;
         const page = param.page ? param.page * 1 * pageCount : 0;
         const totalRes = await this.commentRepository.find({articleId: param.articleId});
-        const articleRes = await this.articleRepository.findOne({ articleId: param.articleId }); // article
-        const userInfoRes = await this.userRepository.findOne({ userId: articleRes.userId });
+        const articleRes = await this.articleRepository.findOne({ ARTICLE_ID: param.articleId }); // article
+        const userInfoRes = await this.userRepository.findOne({ USER_ID: articleRes.USER_ID });
         // commentRes = await this.commentRepository.find({ articleId: param.articleId });
         commentRes = await this.commentRepository
                 .createQueryBuilder('commentleList')
@@ -45,23 +45,23 @@ export class ArticleDetailService {
                 .skip(page)
                 .take(pageCount)
                 .getMany();
-        const collectRes = await this.myCollectRepository.findOne({articleId: param.articleId, userId: curUserId.default.userId});
+        const collectRes = await this.myCollectRepository.findOne({ARTICLE_ID: param.articleId, USER_ID: curUserId.default.userId});
         if (commentRes.length > 0) {
             for (const item of commentRes) {
-                const user = await this.userRepository.findOne({ userId: item.userId });
-                item.hearderIcon = user.headerIcon;
+                const user = await this.userRepository.findOne({ USER_ID: item.userId });
+                item.hearderIcon = user.HEADER_ICON;
                 const childrenComRes = await this.childrenCommentRepository.find({ articleId: param.articleId, commentId: item.commentId });
                 item.childrenComentList = childrenComRes;
                 commentNum += childrenComRes.length * 1;
             }
         }
         articleRes.comments = commentRes;
-        articleRes.isLike = collectRes ? collectRes.isLike : false;
-        articleRes.isCollect = collectRes ? collectRes.isCollect : false;
+        articleRes.IS_LIKE = collectRes ? collectRes.IS_LIKE : false;
+        articleRes.IS_COLLECT = collectRes ? collectRes.IS_COLLECT : false;
         const resObj = Object.assign(articleRes);
-        resObj.personalProfile = userInfoRes.personalProfile;
+        resObj.personalProfile = userInfoRes.PERSONAL_PROFILE;
         resObj.total = totalRes.length;
-        resObj.headerIcon = userInfoRes.headerIcon;
+        resObj.headerIcon = userInfoRes.HEADER_ICON;
         resObj.commentTotal = commentNum + commentRes.length;
         delete resObj.userId;
         return resObj;
@@ -69,14 +69,14 @@ export class ArticleDetailService {
     // add comment
     async addComment(param): Promise<any> {
         const dateNum = new Date().getTime().toString().substring(-10);
-        const user = await this.userRepository.findOne({nickName: param.commentatorName});
-        if (user.userId !== param.userId) {
-            user.hadNews = true;
+        const user = await this.userRepository.findOne({NICK_NAME: param.commentatorName});
+        if (user.USER_ID !== param.userId) {
+            user.HAD_NEWS = true;
             this.userRepository.save(user);
         }
         const comment = new CommentsList();
         comment.userId = param.userId;
-        comment.commentatorId = user.userId;
+        comment.commentatorId = user.USER_ID;
         comment.commentatorName = param.commentatorName;
         comment.articleTitle = param.articleTitle;
         comment.articleId = param.articleId;
@@ -84,9 +84,9 @@ export class ArticleDetailService {
         comment.commentTime = await util.dateType.toSecond();
         comment.commentId = dateNum + util.ramdom.random(6);
         comment.commentUserName = param.nickName;
-        const updateArticle = await this.articleRepository.findOne({ articleId: param.articleId });
-        updateArticle.commentId = comment.commentId;
-        updateArticle.commentCount += 1;
+        const updateArticle = await this.articleRepository.findOne({ ARTICLE_ID: param.articleId });
+        updateArticle.COMMENT_ID = comment.commentId;
+        updateArticle.COMMENT_COUNT += 1;
         await this.articleRepository.save(updateArticle);
         await this.articleRepository.manager.save(comment);
         const msg = {
@@ -98,27 +98,27 @@ export class ArticleDetailService {
     }
     // add childrenComment
     async addChildrenComment(param): Promise<any> {
-        const user = await this.userRepository.findOne({nickName: param.author});
-        const commentatorUserInfo = await this.userRepository.findOne({nickName: param.commentatorName});
+        const user = await this.userRepository.findOne({NICK_NAME: param.author});
+        const commentatorUserInfo = await this.userRepository.findOne({NICK_NAME: param.commentatorName});
         const dateNum = new Date().getTime().toString().substring(-11);
         const childrenCom = new ChildrenComments();
-        if (user.userId !== param.userId) {
-            user.hadNews = true;
+        if (user.USER_ID !== param.userId) {
+            user.HAD_NEWS = true;
             this.userRepository.save(user);
         }
         childrenCom.userId = param.userId;
         childrenCom.commentUserName = param.nickName;
         childrenCom.author = param.author;
-        childrenCom.authorId = user.userId;
-        childrenCom.commentatorId = commentatorUserInfo.userId;
+        childrenCom.authorId = user.USER_ID;
+        childrenCom.commentatorId = commentatorUserInfo.USER_ID;
         childrenCom.commentatorName = param.commentatorName;
         childrenCom.articleId = param.articleId;
         childrenCom.commentContent = param.commentText;
         childrenCom.commentTime = await util.dateType.toSecond();
         childrenCom.childCommentId = dateNum + util.ramdom.random(6);
         childrenCom.commentId = param.commentId;
-        const updateArticle = await this.articleRepository.findOne({ articleId: param.articleId });
-        updateArticle.commentCount += 1;
+        const updateArticle = await this.articleRepository.findOne({ ARTICLE_ID: param.articleId });
+        updateArticle.COMMENT_COUNT += 1;
         await this.articleRepository.save(updateArticle);
         await this.articleRepository.manager.save(childrenCom);
         const msg = {
@@ -168,106 +168,106 @@ export class ArticleDetailService {
 
     // add like
     async addLike(param): Promise<any> {
-        const likeRes =  await this.articleRepository.findOne({articleId: param.articleId});
-        const postRes =  await this.articleRepository.findOne({articleId: param.articleId});
-        const collectRes = await this.myCollectRepository.findOne({articleId: param.articleId, userId: param.userId});
-        const user = await this.userRepository.findOne({nickName: param.author});
+        const likeRes =  await this.articleRepository.findOne({ARTICLE_ID: param.articleId});
+        const postRes =  await this.articleRepository.findOne({ARTICLE_ID: param.articleId});
+        const collectRes = await this.myCollectRepository.findOne({ARTICLE_ID: param.articleId, USER_ID: param.userId});
+        const user = await this.userRepository.findOne({NICK_NAME: param.author});
         if (!collectRes) {
             const myCollection = new MyCollectionList();
-            likeRes.likeCount = likeRes.likeCount + 1;
-            postRes.likeCount = likeRes.likeCount;
-            likeRes.isLike = true;
+            likeRes.LIKE_COUNT = likeRes.LIKE_COUNT + 1;
+            postRes.LIKE_COUNT = likeRes.LIKE_COUNT;
+            likeRes.IS_LIKE = true;
             await this.articleRepository.save(likeRes);
             await this.postListRepository.save(postRes);
             const paramObj = Object.assign(myCollection, likeRes);
-            delete paramObj.serialNum;
-            paramObj.userId = param.userId;
-            paramObj.authorId = user.userId;
-            paramObj.articleContent = postRes.articleContent;
-            paramObj.isLike = true;
+            delete paramObj.ID;
+            paramObj.USER_ID = param.userId;
+            paramObj.AUTHOR_ID = user.USER_ID;
+            paramObj.ARTICLE_CONTENT = postRes.ARTICLE_CONTENT;
+            paramObj.IS_LIKE = true;
             await this.myCollectRepository.manager.save(paramObj);
-            return { code: ApiErrorCode.SUCCESS, isLike: likeRes.isLike, message: '已标记为喜欢！' };
+            return { code: ApiErrorCode.SUCCESS, isLike: likeRes.IS_LIKE, message: '已标记为喜欢！' };
         } else {
-            if (!collectRes.isLike) {
-                likeRes.likeCount = likeRes.likeCount + 1;
-                postRes.likeCount = likeRes.likeCount;
-                likeRes.isLike = true;
+            if (!collectRes.IS_LIKE) {
+                likeRes.LIKE_COUNT = likeRes.LIKE_COUNT + 1;
+                postRes.LIKE_COUNT = likeRes.LIKE_COUNT;
+                likeRes.IS_LIKE = true;
                 await this.articleRepository.save(likeRes);
                 await this.postListRepository.save(postRes);
-                collectRes.isLike = true;
+                collectRes.IS_LIKE = true;
                 await this.myCollectRepository.save(collectRes);
-                return { code: ApiErrorCode.SUCCESS, isLike: likeRes.isLike, message: '已标记为喜欢！' };
+                return { code: ApiErrorCode.SUCCESS, isLike: likeRes.IS_LIKE, message: '已标记为喜欢！' };
             } else {
-                likeRes.likeCount = (likeRes.likeCount - 1) > 0 ? likeRes.likeCount - 1 : 0;
-                postRes.likeCount = likeRes.likeCount;
-                likeRes.isLike = false;
-                if (!collectRes.isCollect) {
-                    await this.myCollectRepository.delete({articleId: param.articleId, userId: param.userId});
+                likeRes.LIKE_COUNT = (likeRes.LIKE_COUNT - 1) > 0 ? likeRes.LIKE_COUNT - 1 : 0;
+                postRes.LIKE_COUNT = likeRes.LIKE_COUNT;
+                likeRes.IS_COLLECT = false;
+                if (!collectRes.IS_COLLECT) {
+                    await this.myCollectRepository.delete({ARTICLE_ID: param.articleId, USER_ID: param.userId});
                 } else {
-                    collectRes.isLike = false;
+                    collectRes.IS_LIKE = false;
                     await this.myCollectRepository.save(collectRes);
                 }
                 await this.articleRepository.save(likeRes);
                 await this.postListRepository.save(postRes);
-                return { code: ApiErrorCode.SUCCESS, isLike: likeRes.isLike, message: '已移出喜欢！' };
+                return { code: ApiErrorCode.SUCCESS, isLike: likeRes.IS_LIKE, message: '已移出喜欢！' };
             }
         }
     }
 
     // add collect
     async addCollect(param): Promise<any> {
-        const articleRes =  await this.articleRepository.findOne({articleId: param.articleId});
-        const postRes =  await this.articleRepository.findOne({articleId: param.articleId});
-        const collectRes = await this.myCollectRepository.findOne({articleId: param.articleId, userId: param.userId});
-        const user = await this.userRepository.findOne({nickName: param.author});
+        const articleRes =  await this.articleRepository.findOne({ARTICLE_ID: param.articleId});
+        const postRes =  await this.articleRepository.findOne({ARTICLE_ID: param.articleId});
+        const collectRes = await this.myCollectRepository.findOne({ARTICLE_ID: param.articleId, USER_ID: param.userId});
+        const user = await this.userRepository.findOne({NICK_NAME: param.author});
         if (!collectRes) {
             const myCollection = new MyCollectionList();
-            articleRes.collectCount = articleRes.collectCount + 1;
-            postRes.collectCount = articleRes.collectCount;
-            articleRes.isLike = true;
+            articleRes.COLLECT_COUNT = articleRes.COLLECT_COUNT + 1;
+            postRes.COLLECT_COUNT = articleRes.COLLECT_COUNT;
+            articleRes.IS_LIKE = true;
             await this.articleRepository.save(articleRes);
             await this.postListRepository.save(postRes);
             const paramObj = Object.assign(myCollection, articleRes);
-            paramObj.userId = param.userId;
-            paramObj.authorId = user.userId;
-            paramObj.isCollect = true;
-            paramObj.articleContent = postRes.articleContent;
-            delete paramObj.serialNum;
+            paramObj.USER_ID = param.userId;
+            paramObj.AUTHOR_ID = user.USER_ID;
+            paramObj.IS_COLLECT = true;
+            paramObj.ARTICLE_CONTENT = postRes.ARTICLE_CONTENT;
+            delete paramObj.ID;
             await this.myCollectRepository.save(paramObj);
-            return { code: ApiErrorCode.SUCCESS, isCollect: paramObj.isCollect,  message: '收藏成功！' };
+            return { code: ApiErrorCode.SUCCESS, isCollect: paramObj.IS_COLLECT,  message: '收藏成功！' };
         } else {
-            if (!collectRes.isCollect) {
-                articleRes.collectCount = articleRes.collectCount + 1;
-                postRes.collectCount = articleRes.collectCount;
-                articleRes.isLike = true;
+            if (!collectRes.IS_COLLECT) {
+                articleRes.COLLECT_COUNT = articleRes.COLLECT_COUNT + 1;
+                postRes.COLLECT_COUNT = articleRes.COLLECT_COUNT;
+                articleRes.IS_LIKE = true;
                 await this.articleRepository.save(articleRes);
                 await this.postListRepository.save(postRes);
-                collectRes.isCollect = true;
+                collectRes.IS_COLLECT = true;
                 await this.myCollectRepository.save(collectRes);
-                return { code: ApiErrorCode.SUCCESS, isCollect: collectRes.isCollect,  message: '收藏成功！' };
+                return { code: ApiErrorCode.SUCCESS, isCollect: collectRes.IS_COLLECT,  message: '收藏成功！' };
             } else {
-                articleRes.collectCount = (articleRes.collectCount - 1) > 0 ? articleRes.collectCount - 1 : 0;
-                postRes.collectCount = articleRes.collectCount;
-                articleRes.isLike = false;
-                if (!collectRes.isLike) {
-                    await this.myCollectRepository.delete({articleId: param.articleId, userId: param.userId});
+                articleRes.COLLECT_COUNT = (articleRes.COLLECT_COUNT - 1) > 0 ? articleRes.COLLECT_COUNT - 1 : 0;
+                postRes.COLLECT_COUNT = articleRes.COLLECT_COUNT;
+                articleRes.IS_LIKE = false;
+                if (!collectRes.IS_LIKE) {
+                    await this.myCollectRepository.delete({ARTICLE_ID: param.articleId, USER_ID: param.userId});
                 } else {
-                    collectRes.isCollect = false;
+                    collectRes.IS_COLLECT = false;
                     await this.myCollectRepository.save(collectRes);
                 }
                 await this.articleRepository.save(articleRes);
                 await this.postListRepository.save(postRes);
-                return { code: ApiErrorCode.SUCCESS, isCollect: collectRes.isCollect,  message: '取消成功！' };
+                return { code: ApiErrorCode.SUCCESS, isCollect: collectRes.IS_COLLECT,  message: '取消成功！' };
             }
         }
     }
 
     // add view
     async addView(param): Promise<any> {
-        const res =  await this.articleRepository.findOne({articleId: param.articleId});
-        const postRes =  await this.articleRepository.findOne({articleId: param.articleId});
-        res.viewCount = res.viewCount + 1;
-        postRes.viewCount = res.viewCount;
+        const res =  await this.articleRepository.findOne({ARTICLE_ID: param.articleId});
+        const postRes =  await this.articleRepository.findOne({ARTICLE_ID: param.articleId});
+        res.VIEW_COUNT = res.VIEW_COUNT + 1;
+        postRes.VIEW_COUNT = res.VIEW_COUNT;
         await this.articleRepository.save(res);
         await this.postListRepository.save(postRes);
         return res;

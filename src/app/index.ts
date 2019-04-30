@@ -1,10 +1,8 @@
 import { EJSModule } from './controller/demo/ejs.module';
 import { IndexModule } from './controller/index/index.module';
 import { LoginModule } from './controller/login/login.module';
-import { ForumModule } from './controller/forum/forum.module';
 import { RegisterModule } from './controller/register/register.module';
 import { PostsModule } from './controller/posts/posts.module';
-import { FocusModule } from './controller/focus/focus.module';
 import { PublishModule } from './controller/publish/publish.module';
 import { AccountModule } from './controller/account/account.module';
 import { SettingModule } from './controller/setting/setting.module';
@@ -20,10 +18,8 @@ const modules = [
     EJSModule,
     IndexModule,
     LoginModule,
-    ForumModule,
     RegisterModule,
     PostsModule,
-    FocusModule,
     AccountModule,
     PublishModule,
     SettingModule,

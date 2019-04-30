@@ -2,7 +2,7 @@ import { Injectable, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ApiErrorCode } from '../../../bing/common/enums/api-error-code.enum';
 import { Repository } from 'typeorm';
-import { User } from '../../entitys/user.entity';
+import { BbsUser } from '../../entitys/user.entity';
 import { PostList } from '../../entitys/postList.entity';
 import { ArticleDetail } from '../../entitys/articleDetail.entity';
 import { CommentsList } from '../../entitys/commentList.entity';
@@ -13,8 +13,8 @@ import * as fs from 'fs';
 @Injectable()
 export class AccountService {
   constructor(
-    @InjectRepository(User)
-    private readonly accountRepository: Repository<User>,
+    @InjectRepository(BbsUser)
+    private readonly accountRepository: Repository<BbsUser>,
     @InjectRepository(PostList)
     private readonly postRepository: Repository<PostList>,
     @InjectRepository(ArticleDetail)
@@ -27,7 +27,7 @@ export class AccountService {
     private readonly collectRepository: Repository<MyCollectionList>,
   ) {}
   async getUserInfo(param): Promise<any> {
-    return await this.accountRepository.findOne({ nickName: param.nickName });
+    return await this.accountRepository.findOne({ NICK_NAME: param.nickName });
 
   }
   // change user INFO
@@ -36,80 +36,80 @@ export class AccountService {
       code: 200,
       message: '',
     };
-    const hadNickName = await this.accountRepository.findOne({nickName: param.nickName});
-    if (hadNickName && hadNickName.userId !== param.userId) {
+    const hadNickName = await this.accountRepository.findOne({NICK_NAME: param.nickName});
+    if (hadNickName && hadNickName.USER_ID !== param.userId) {
       msg.code = ApiErrorCode.CHANGE_USERINFO_FERROR;
       msg.message = '昵称已被占用，请换另一个！';
       return msg;
     }
-    const res = await this.accountRepository.findOne({userId: param.userId});
+    const res = await this.accountRepository.findOne({USER_ID: param.userId});
     if (res) {
-      res.nickName = param.nickName ? param.nickName : res.nickName;
-      res.personalProfile = param.personalProfile ? param.personalProfile : res.personalProfile;
+      res.NICK_NAME = param.nickName ? param.nickName : res.NICK_NAME;
+      res.PERSONAL_PROFILE = param.personalProfile ? param.personalProfile : res.PERSONAL_PROFILE;
       if (param.headerIcon) {
-        if (res.headerIcon) {
-          fs.unlinkSync(`./src/libs/${res.headerIcon}`);
+        if (res.HEADER_ICON) {
+          fs.unlinkSync(`./src/libs/${res.HEADER_ICON}`);
         }
-        res.headerIcon = param.headerIcon.replace('src/libs/', '');
+        res.HEADER_ICON = param.headerIcon.replace('src/libs/', '');
       }
       // update dataBase
       await this.accountRepository.save(res);
       await this.postRepository // post db
       .createQueryBuilder()
       .update()
-      .set({author: res.nickName})
-      .where('userId = :userId', {userId: res.userId})
+      .set({AUTHOR: res.NICK_NAME})
+      .where('userId = :userId', {userId: res.USER_ID})
       .execute();
 
       await this.articleRepository // articleDetail db
       .createQueryBuilder()
       .update()
-      .set({author: res.nickName})
-      .where('userId = :userId', {userId: res.userId})
+      .set({AUTHOR: res.NICK_NAME})
+      .where('userId = :userId', {userId: res.USER_ID})
       .execute();
 
       await this.commentRepository // comment db --- commentatorName
       .createQueryBuilder()
       .update()
-      .set({commentatorName: res.nickName})
-      .where('commentatorId = :commentatorId', {commentatorId: res.userId})
+      .set({commentatorName: res.NICK_NAME})
+      .where('commentatorId = :commentatorId', {commentatorId: res.USER_ID})
       .execute();
 
       await this.commentRepository // comment db --- commentUserName
       .createQueryBuilder()
       .update()
-      .set({commentUserName: res.nickName})
-      .where('userId = :userId', {userId: res.userId})
+      .set({commentUserName: res.NICK_NAME})
+      .where('userId = :userId', {userId: res.USER_ID})
       .execute();
 
       await this.childCommentRepository // childComment db --- commentatorName
       .createQueryBuilder()
       .update()
       .set({
-        commentatorName: res.nickName,
+        commentatorName: res.NICK_NAME,
       })
-      .where('commentatorId = :commentatorId', {commentatorId: res.userId})
+      .where('commentatorId = :commentatorId', {commentatorId: res.USER_ID})
       .execute();
 
       await this.childCommentRepository // childComment db --- commentUserName
       .createQueryBuilder()
       .update()
-      .set({commentUserName: res.nickName})
-      .where('userId = :userId', {userId: res.userId})
+      .set({commentUserName: res.NICK_NAME})
+      .where('userId = :userId', {userId: res.USER_ID})
       .execute();
 
       await this.childCommentRepository // childComment db --- author
       .createQueryBuilder()
       .update()
-      .set({author: res.nickName})
-      .where('authorId = :authorId', {authorId: res.userId})
+      .set({author: res.NICK_NAME})
+      .where('authorId = :authorId', {authorId: res.USER_ID})
       .execute();
 
       await this.collectRepository // collect db
       .createQueryBuilder()
       .update()
-      .set({author: res.nickName})
-      .where('authorId = :authorId', {authorId: res.userId})
+      .set({AUTHOR: res.NICK_NAME})
+      .where('authorId = :authorId', {authorId: res.USER_ID})
       .execute();
 
       msg.code = ApiErrorCode.SUCCESS;

@@ -4,7 +4,7 @@ import { ApiException } from '../../../bing/common/enums/api.exception';
 import { ApiErrorCode } from '../../../bing/common/enums/api-error-code.enum';
 import { Repository } from 'typeorm';
 import { PostList } from '../../entitys/postList.entity';
-import { User } from '../../entitys/user.entity';
+import { BbsUser } from '../../entitys/user.entity';
 import { util } from '../../../bing';
 
 @Injectable()
@@ -12,8 +12,8 @@ export class SearchPageService {
     constructor(
         @InjectRepository(PostList)
         private readonly postListRepository: Repository<PostList>,
-        @InjectRepository(User)
-        private readonly userRepository: Repository<User>,
+        @InjectRepository(BbsUser)
+        private readonly userRepository: Repository<BbsUser>,
     ) {}
 
     // searche article
@@ -45,10 +45,10 @@ export class SearchPageService {
 
         if (res.length > 0) {
             for (const item of res) {
-                const user = await this.userRepository.findOne({ userId: item.userId });
+                const user = await this.userRepository.findOne({ USER_ID: item.userId });
                 // item.articleContent = item.articleContent.substr(2).substring(0, item.articleContent.length - 4).replace('","', '\n');
-                item.hearderIcon = user.headerIcon;
-                item.author = user.nickName;
+                item.hearderIcon = user.HEADER_ICON;
+                item.author = user.NICK_NAME;
             }
         }
         const msg = {

@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Post, Body, Request, Response, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiUseTags } from '@nestjs/swagger';
 import { SettingService } from './setting.service';
-import { User } from '../../entitys/user.entity';
+import { BbsUser } from '../../entitys/user.entity';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('account')

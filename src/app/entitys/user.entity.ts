@@ -1,38 +1,34 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class User {
-    @PrimaryGeneratedColumn() serialNum: number;
+export class BbsUser {
+    @PrimaryGeneratedColumn() ID: number;
     // token
-    @Column({ default: null }) token: string;
+    @Column({ default: null }) TOKEN: string;
     // autotoken
     // @Column({default: 500}) autotoken: string;
     // userId
-    @Column({ length: 20 }) userId: string;
+    @Column({ length: 20 }) USER_ID: string;
     // passWord
-    @Column() passWord: string;
+    @Column() PASSWORD: string;
     // nickName
-    @Column() nickName: string;
+    @Column() NICK_NAME: string;
     // eamil
-    @Column() email: string;
+    @Column() EMAIL: string;
     // headerIcon
-    @Column({ default: null }) headerIcon: string;
+    @Column({ default: null }) HEADER_ICON: string;
     // personalProfile
-    @Column({ default: '这个人很懒！' }) personalProfile: string;
+    @Column({ default: '这个人很懒！' }) PERSONAL_PROFILE: string;
     // tel
-    @Column({ default: null }) tel: string;
+    @Column({ default: '0' }) TEL: string;
     // focusCount
-    @Column({ default: 0 }) focusCount: number;
+    @Column({ default: 0 }) FOCUS_COUNT: number;
     // articleCount
-    @Column({ default: 0 }) articleCount: number;
+    @Column({ default: 0 }) ARTICLE_COUNT: number;
     // hadNews
-    @Column({ default: false }) hadNews: boolean;
+    @Column({ default: false }) HAD_NEWS: boolean;
     // registerdate
-    @Column() time: string;
-    // Permission
-    @Column({ default: false }) activity: boolean;
-    // activeToken
-    @Column({ default: null }) activeToken: string;
-    // activeExpires
-    @Column({ default: null }) activeExpires: string;
+    @Column() DATE: string;
+    // activity
+    @Column({ default: false }) ACTIVITY: boolean;
 }

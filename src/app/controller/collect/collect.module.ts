@@ -3,10 +3,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CollectService } from './collect.service';
 import { ReplyController } from './collect.controller';
 import { MyCollectionList } from '../../entitys/myCollectionList.entity';
-import { User } from '../../entitys/user.entity';
+import { BbsUser } from '../../entitys/user.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([MyCollectionList, User])],
+  imports: [TypeOrmModule.forFeature([MyCollectionList, BbsUser])],
   providers: [CollectService],
   controllers: [ReplyController],
 })

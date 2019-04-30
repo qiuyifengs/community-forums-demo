@@ -6,8 +6,7 @@ import { Repository } from 'typeorm';
 import { PostList } from '../../entitys/postList.entity';
 import { ArticleDetail } from '../../entitys/articleDetail.entity';
 import { Menu } from '../../entitys/menuList.entity';
-import { User } from '../../entitys/user.entity';
-import { async } from 'rxjs/internal/scheduler/async';
+import { BbsUser } from '../../entitys/user.entity';
 
 @Injectable()
 export class IndexService {
@@ -18,8 +17,8 @@ export class IndexService {
         private readonly articleRepository: Repository<ArticleDetail>,
         @InjectRepository(Menu)
         private readonly menuRepository: Repository<Menu>,
-        @InjectRepository(User)
-        private readonly userRepository: Repository<User>,
+        @InjectRepository(BbsUser)
+        private readonly userRepository: Repository<BbsUser>,
     ) {}
 
     // getPostList
@@ -30,27 +29,27 @@ export class IndexService {
         const page = data.page ? data.page * 1 * pageCount : 0;
         const menuList = await this.menuRepository.find();
         if (data.articleType && data.articleType !== 'ALL' && data.articleType !== 'HOT') {
-            totalRes = await this.indexRepository.find({ articleType: data.articleType, isDrafts: false });
+            totalRes = await this.indexRepository.find({ ARTICLE_TYPE: data.articleType, IS_DRAFTS: false });
             res = await this.indexRepository
               .createQueryBuilder('postList')
-              .where('postList.articleType = :articleType', { articleType: data.articleType })
-              .andWhere('postList.isDrafts = :isDrafts', { isDrafts: false })
+              .where('postList.ARTICLE_TYPE = :ARTICLE_TYPE', { ARTICLE_TYPE: data.articleType })
+              .andWhere('postList.IS_DRAFTS = :IS_DRAFTS', { IS_DRAFTS: false })
               .orderBy({
-                'postList.top': 'DESC',
-                'postList.serialNum': 'DESC',
+                'postList.TOP': 'DESC',
+                'postList.ID': 'DESC',
               })
               .skip(page)
               .take(pageCount)
               .getMany();
         } else {
-            totalRes = await this.indexRepository.find({ isDrafts: false });
+            totalRes = await this.indexRepository.find({ IS_DRAFTS: false });
             if (data.articleType !== 'HOT') {
               res = await this.indexRepository
                 .createQueryBuilder('postList')
-                .where('postList.isDrafts = :isDrafts', { isDrafts: false })
+                .where('postList.IS_DRAFTS = :IS_DRAFTS', { IS_DRAFTS: false })
                 .orderBy({
-                  'postList.top': 'DESC',
-                  'postList.serialNum': 'DESC',
+                  'postList.TOP': 'DESC',
+                  'postList.ID': 'DESC',
                 })
                 .skip(page)
                 .take(pageCount)
@@ -58,10 +57,10 @@ export class IndexService {
             } else {
               res = await this.indexRepository
                 .createQueryBuilder('postList')
-                .where('postList.isDrafts = :isDrafts', { isDrafts: false })
+                .where('postList.IS_DRAFTS = :IS_DRAFTS', { IS_DRAFTS: false })
                 .orderBy({
-                  'postList.top': 'DESC',
-                  'postList.serialNum': 'DESC',
+                  'postList.TOP': 'DESC',
+                  'postList.ID': 'DESC',
                 })
                 .skip(page)
                 .take(pageCount)
@@ -69,10 +68,10 @@ export class IndexService {
             }
         }
         for (const item of res) {
-          const user = await this.userRepository.findOne({ userId: item.userId });
+          const user = await this.userRepository.findOne({ USER_ID: item.USER_ID });
           // item.articleContent = item.articleContent.substr(2).substring(0, item.articleContent.length - 4).replace('","', '\n');
-          item.hearderIcon = user.headerIcon;
-          item.author = user.nickName;
+          item.hearderIcon = user.HEADER_ICON ? user.HEADER_ICON : null;
+          item.author = user.NICK_NAME;
         }
         const articleData = {
           code: ApiErrorCode.SUCCESS,
@@ -84,10 +83,10 @@ export class IndexService {
     }
     // add viewCount
     async viewCount(data): Promise<any> {
-        const res = await this.indexRepository.findOne({ articleId: data.articleId});
-        const upRes = await this.articleRepository.findOne({ articleId: data.articleId });
-        res.viewCount += 1;
-        upRes.viewCount = res.viewCount;
+        const res = await this.indexRepository.findOne({ ARTICLE_ID: data.articleId});
+        const upRes = await this.articleRepository.findOne({ ARTICLE_ID: data.articleId });
+        res.VIEW_COUNT += 1;
+        upRes.VIEW_COUNT = res.VIEW_COUNT;
         await this.indexRepository.save(res);
         await this.articleRepository.save(upRes);
     }

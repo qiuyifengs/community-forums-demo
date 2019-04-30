@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Post, Body, Request, Response } from '@nestjs/common';
 import { ApiOperation, ApiUseTags } from '@nestjs/swagger';
 import { ArticlesService } from './articles.service';
-import { User } from '../../entitys/user.entity';
+import { BbsUser } from '../../entitys/user.entity';
 
 @Controller('articles')
 export class ArticlesController {
@@ -15,7 +15,7 @@ export class ArticlesController {
 
     @Post('articles')
     @ApiOperation({ title: 'get balance from address'})
-    register(@Body() params): Promise<User[]> {
+    register(@Body() params): Promise<BbsUser[]> {
         return this.focusService.focus(params);
     }
 }

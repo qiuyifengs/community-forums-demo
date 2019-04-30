@@ -4,15 +4,15 @@ import { ApiException } from '../../../bing/common/enums/api.exception';
 import { ApiErrorCode } from '../../../bing/common/enums/api-error-code.enum';
 import { Repository } from 'typeorm';
 import { MyCollectionList } from '../../entitys/myCollectionList.entity';
-import { User } from '../../entitys/user.entity';
+import { BbsUser } from '../../entitys/user.entity';
 
 @Injectable()
 export class CollectService {
   constructor(
     @InjectRepository(MyCollectionList)
     private readonly collectRepository: Repository<MyCollectionList>,
-    @InjectRepository(User)
-    private readonly userCommentRepository: Repository<User>,
+    @InjectRepository(BbsUser)
+    private readonly userCommentRepository: Repository<BbsUser>,
   ) { }
 
   async account(data): Promise<any> {
@@ -24,18 +24,18 @@ export class CollectService {
     let totalRes;
     const pageCount = param.pageCount ? param.pageCount * 1 : 10;
     const page = param.page ? (param.page - 1) * 1 * pageCount : 0;
-    const user = await this.userCommentRepository.findOne({nickName: param.nickName});
-    totalRes = await this.collectRepository.find({userId: user.userId});
+    const user = await this.userCommentRepository.findOne({NICK_NAME: param.nickName});
+    totalRes = await this.collectRepository.find({USER_ID: user.USER_ID});
     res = await this.collectRepository
           .createQueryBuilder('collectList')
-          .where('collectList.userId = :userId', { userId: user.userId })
-          .orderBy('collectList.serialNum', 'DESC')
+          .where('collectList.USER_ID = :USER_ID', { USER_ID: user.USER_ID })
+          .orderBy('collectList.ID', 'DESC')
           .skip(page)
           .take(pageCount)
           .getMany();
-    res.forEach((item, ind) => {
-        // res[ind].articleContent = item.articleContent.substr(2).substring(0, item.articleContent.length - 4).replace('","', '\n');
-    });
+    // res.forEach((item, ind) => {
+    //     // res[ind].articleContent = item.articleContent.substr(2).substring(0, item.articleContent.length - 4).replace('","', '\n');
+    // });
     const articleData = {
       articleList: res,
       total: totalRes.length,
@@ -44,7 +44,7 @@ export class CollectService {
   }
   // remove collect article
   async removeCollect(data): Promise<any> {
-    const res = await this.collectRepository.find({ articleId: data.articleId });
+    const res = await this.collectRepository.find({ ARTICLE_ID: data.articleId });
     const result = await this.collectRepository.remove(res);
     if (result.length > 0) {
       return {message: '取消成功！'};

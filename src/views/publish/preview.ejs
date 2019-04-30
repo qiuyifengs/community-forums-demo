@@ -10,24 +10,24 @@
         <section class='article_detail_page'>
             <div class='article_left box-shadow bd-radius-5'>
                 <div class='title_box pd-rl30'>
-                    <div class='title'><%= article.articleTitle %></div>
+                    <div class='title'><%= article.ARTICLE_TITLE %></div>
                     <ul class='icon_data'>
                         <li class='data_item'>
-                            source：<a target='_blank' href='/topic/<%= article.articleType %>'><span class='eth'><%= article.articleType %></span></a>
+                            source：<a target='_blank' href='/topic/<%= article.ARTICLE_TYPE %>'><span class='eth'><%= article.ARTICLE_TYPE %></span></a>
                         </li>
                         <li class='data_item'>
-                            <%= article.viewCount %> <span lang="view">次阅读</span>
+                            <%= article.VIEW_COUNT %> <span lang="view">次阅读</span>
                         </li>
-                        <li class='data_item showTime'><%= article.publishTime.substring(0, 10) %></li>
+                        <li class='data_item showTime'><%= article.PUBLISH_TIME.substring(0, 10) %></li>
                         <li class='data_item source-type'>
-                            <%  article.articleLabel.forEach(function(item) { %>
+                            <%  article.ARTICLE_LABEL.forEach(function(item) { %>
                             <span class='article-source bd-radius-3'><%= item %></span>
                             <% }) %>
                         </li>
                     </ul>
                 </div>
                 <div class='content'>
-                        <%= article.articleContent %>
+                        <%= article.ARTICLE_CONTENT %>
                 </div>
                 <div class='code-html pd-rl30'></div>
             </div>
@@ -37,22 +37,22 @@
                         <% if(article.headerIcon) { %>
                             <img class='head_portrait' src='/<%= article.headerIcon %>'>
                         <% } else { %> 
-                            <span class='item-random-color' article-commentUserName='<%=article.author%>'>
-                                <%= article.author.substring(0, 1) %>
+                            <span class='item-random-color' article-commentUserName='<%=article.AUTHOR%>'>
+                                <%= article.AUTHOR.substring(0, 1) %>
                             </span>  
                         <% } %>
-                        <div class='my_name'><%= article.author %></div>
+                        <div class='my_name'><%= article.AUTHOR %></div>
                         <div class='my_autograph'><%= article.personalProfile %></div>
                     </div>
                     <div class='info_down bd-top'>
                         <img class='crown_icon' src='/images/crown.png' alt=''>
                         <div class='follow down_item bd-right'>
                             <div class='text' lang="like">喜欢</div>
-                            <div class='count'><%= article.likeCount %></div>
+                            <div class='count'><%= article.LIKE_COUNT %></div>
                         </div>
                         <div class='fans down_item'>
                             <div class='text' lang="collect">收藏</div>
-                            <div class='count'><%= article.collectCount %></div>
+                            <div class='count'><%= article.COLLECT_COUNT %></div>
                         </div>
                     </div>
                 </div>
@@ -62,12 +62,12 @@
     <script type='text/javascript'>
         let articleId, articleTitle
         function filterTime(item) {
-            return  resTime = formatDateFilter(item)
+            return  resTime = formatDateFilter22(item)
         }
         $(function(){
             let author = $('.my_name').text()
             $('.showTime').each(function() {
-                let resTime = formatDateFilter($(this).text())
+                let resTime = formatDateFilter22($(this).text())
                 $(this).html(resTime)
             })
                 $('.item-random-color').each(function() {

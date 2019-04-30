@@ -30,60 +30,60 @@
                                                         <div class="ghost-list-item-meta-content">
                                                             <div class="ghost-list-item-meta-content item-title-box">
                                                                 <h4 class="ghost-list-item-meta-title article_title">
-                                                                    <% if(item.isDrafts) { %>
+                                                                    <% if(item.IS_DRAFTS) { %>
                                                                         <span style="margin-right: 4px" class="ghost-tag ghost-tag-has-color ghost-tag-color-warning app-isDrafts">草稿</span>
-                                                                        <span class="isDrafts" style="display:none"><%= item.isDrafts %></span>
+                                                                        <span class="isDrafts" style="display:none"><%= item.IS_DRAFTS %></span>
                                                                     <% } %>
-                                                                    <span class="item-title"><%= item.articleTitle %></span>
+                                                                    <span class="item-title"><%= item.ARTICLE_TITLE %></span>
                                                                 </h4>
                                                             </div>
                                                             <div class="item-content-flex">
-                                                                <div class="ghost-list-item-meta-article-content"><%- item.articleContent %></div>
+                                                                <div class="ghost-list-item-meta-article-content"><%- item.ARTICLE_CONTENT %></div>
                                                             </div>
                                                         </div>
 
                                                         <ul class="ghost-list-item-action">
                                                             <li class="list-item web-display">
                                                                 <a>
-                                                                    <%= item.viewCount %> 阅读
+                                                                    <%= item.VIEW_COUNT %> 阅读
                                                                 </a>
                                                             </li>
                                                             <li class="list-item web-display">
                                                                 <span>
-                                                                    <%= item.commentCount %> 评论
+                                                                    <%= item.COMMENT_COUNT %> 评论
                                                                 </span>
                                                             </li>
                                                             <li class="list-item web-display">
                                                                 <span>
-                                                                    <%= item.collectCount %> 收藏
+                                                                    <%= item.COLLECT_COUNT %> 收藏
                                                                 </span>
                                                             </li>
                                                             <li class="list-item web-display">
                                                                 <span>
-                                                                    <%= item.likeCount %> 喜欢
+                                                                    <%= item.LIKE_COUNT %> 喜欢
                                                                 </span>
                                                             </li>
                                                             <li class="list-item web-display">
                                                                 <span class="time">
-                                                                    <%= item.publishTime %>
+                                                                    <%= item.PUBLISH_TIME %>
                                                                 </span>
                                                             </li>
-                                                            <% if (item.articleLabel && item.articleLabel != '' ) { %>
+                                                            <% if (item.ARTICLE_LABEL && item.ARTICLE_LABEL != '' ) { %>
                                                             <li class="list-item">
-                                                                <% item.articleLabel.forEach(function(labelItem) {%>
+                                                                <% item.ARTICLE_LABEL.forEach(function(labelItem) {%>
                                                                     <span class="ghost-tag ghost-tag-has-color" style="background-color: var(--col-type)"><%= labelItem %></span>
                                                                 <% }) %>
                                                             </li>
                                                             <% } %>
                                                             <li class="app-time app-display">
                                                                 <span class="time">
-                                                                    <%= item.publishTime %>
+                                                                    <%= item.PUBLISH_TIME %>
                                                                 </span>
                                                             </li>
                                                         </ul>
                                                     </div>
                                                     <div class="ghost-list-item-extra">
-                                                        <div class="ghost-list-item-id" style="display: none"><%= item.articleId %></div>
+                                                        <div class="ghost-list-item-id" style="display: none"><%= item.ARTICLE_ID %></div>
                                                         <ul class="ghost-list-item-action">
                                                             <li class="edit_icon web-display">
                                                                 <a>
@@ -190,7 +190,7 @@
                 $(this).after(showImg)
             })
             $(".time").each(function() {
-                let resTime = formatDateFilter($(this).text())
+                let resTime = formatDateFilter2($(this).text())
                 $(this).html(resTime)
             });
             // go to article detail
@@ -245,17 +245,17 @@
             translateFun()
         })
         function isDrafts(item) {
-            if (item.isDrafts) {
+            if (item.IS_DRAFTS) {
                 return `
                     <span style="margin-right: 4px" class="ghost-tag ghost-tag-has-color ghost-tag-color-warning app-isDrafts">草稿</span>
-                    <span class="isDrafts" style="display:none">${ item.isDrafts }</span>
+                    <span class="isDrafts" style="display:none">${ item.IS_DRAFTS }</span>
                 `
             } else {
                 return '';
             }
         }
         function filterTime(item) {
-            return  resTime = formatDateFilter(item)
+            return  resTime = formatDateFilter2(item)
         }
         function showText(content) {
             let showImg = ''
@@ -276,47 +276,47 @@
                                 <div class="ghost-list-item-meta-content item-title-box">
                                     <h4 class="ghost-list-item-meta-title">
                                         ${isDrafts(item)}
-                                        <span class="item-title">${ item.articleTitle }</span>
+                                        <span class="item-title">${ item.ARTICLE_TITLE }</span>
                                     </h4>
                                 </div>
-                                <div class="item-content-flex">${ showText(item.articleContent) }</div>
+                                <div class="item-content-flex">${ showText(item.ARTICLE_CONTENT) }</div>
                             </div>
                             <ul class="ghost-list-item-action">
                                 <li class="list-item web-display">
                                     <a>
-                                        ${ item.viewCount } 阅读
+                                        ${ item.VIEW_COUNT } 阅读
                                     </a>
                                 </li>
                                 <li class="list-item web-display">
                                     <span>
-                                        ${ item.commentCount } 评论
+                                        ${ item.COMMENT_COUNT } 评论
                                     </span>
                                 </li>
                                 <li class="list-item web-display">
                                     <span>
-                                        ${ item.collectCount } 收藏
+                                        ${ item.COLLECT_COUNT } 收藏
                                     </span>
                                 </li>
                                 <li class="list-item web-display">
                                     <span>
-                                        ${ item.likeCount } 喜欢
+                                        ${ item.LIKE_COUNT } 喜欢
                                     </span>
                                 </li>
                                 <li class="list-item web-display">
                                     <span class="time">
-                                        ${ filterTime(item.publishTime) }
+                                        ${ filterTime(item.PUBLISH_TIME) }
                                     </span>
                                 </li>
-                                ${ renderArticleLabel(item.articleLabel) }
+                                ${ renderArticleLabel(item.ARTICLE_LABEL) }
                                 <li class="app-time app-display">
                                     <span class="time">
-                                        ${ filterTime(item.publishTime) }
+                                        ${ filterTime(item.PUBLISH_TIME) }
                                     </span>
                                 </li>
                             </ul>
                         </div>
                         <div class="ghost-list-item-extra">
-                            <div class="ghost-list-item-id" style="display: none">${ item.articleId }</div>
+                            <div class="ghost-list-item-id" style="display: none">${ item.ARTICLE_ID }</div>
                             <ul class="ghost-list-item-action">
                                 <li class="edit_icon web-display">
                                     <a>

@@ -1,7 +1,7 @@
 
 // baseUrl
-var baseUrl = 'http://192.168.4.188:3002/';
-// var baseUrl = 'http://127.0.0.1:3002/';
+// var baseUrl = 'http://192.168.4.188:3002/';
+var baseUrl = 'http://127.0.0.1:3002/';
 /**
  * checkEmail
  * @param {*} email 
@@ -89,7 +89,7 @@ function formatDateFilter(value) {
 }
 
 function formatDateFilter2(value) {
-    var mistiming = Math.round(new Date() / 1000) - value;
+    var mistiming = Math.round(new Date() / 1000) - value / 1000;
     var postfix = mistiming > 0 ? '前' : '后'
     mistiming = Math.abs(mistiming)
     var arrr = ['年', '个月', '星期', '天', '小时', '分钟', '秒']
@@ -212,10 +212,8 @@ function dealPostList(valArr) {
 // translate
 function translateFun(lang) {
     let lan = lang ? lang : localStorage.getItem('langData') ? JSON.parse(localStorage.getItem('langData')).lang : 'cn'
-    console.log(lan)
     $('[lang]').each(function(e){
         let key = $(this).attr('lang')
-        
         if (lan == 'cn') {
             $(this).text(zh[key])
         } else {

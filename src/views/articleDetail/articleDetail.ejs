@@ -29,36 +29,36 @@
                         <% if(article.headerIcon) { %>
                             <img class='head_portrait' src='/<%= article.headerIcon %>'>
                         <% } else { %> 
-                            <span class='item-random-color' article-commentUserName='<%=article.author%>'>
-                                <%= article.author.substring(0, 1) %>
+                            <span class='item-random-color' article-commentUserName='<%=article.AUTHOR%>'>
+                                <%= article.AUTHOR.substring(0, 1) %>
                             </span>  
                         <% } %>
                     </div>
                     <div class='app-author-userIfo'>
-                        <div class='author_name'><%= article.author %></div>
+                        <div class='author_name'><%= article.AUTHOR %></div>
                         <div class='author_autograph'><%= article.personalProfile %></div>
                     </div>
                 </div>
                 <div class='article_left box-shadow bd-radius-5'>
                     <div class='title_box pd-rl30'>
-                        <div class='title'><%= article.articleTitle %></div>
+                        <div class='title'><%= article.ARTICLE_TITLE %></div>
                         <ul class='icon_data'>
                             <li class='data_item'>
-                                source：<a target='_blank' href='/topic/<%= article.articleType %>'><span class='eth'><%= article.articleType %></span></a>
+                                source：<a target='_blank' href='/topic/<%= article.ARTICLE_TYPE %>'><span class='eth'><%= article.ARTICLE_TYPE %></span></a>
                             </li>
                             <li class='data_item web-display'>
-                                <%= article.viewCount %> <span lang="view">次阅读</span>
+                                <%= article.VIEW_COUNT %> <span lang="view">次阅读</span>
                             </li>
-                            <li class='data_item showTime web-display'><%= article.publishTime.substring(0, 10) %></li>
+                            <li class='data_item showTime web-display'><%= article.PUBLISH_TIME.substring(0, 10) %></li>
                             <li class='data_item source-type'>
-                                <%  article.articleLabel.forEach(function(item) { %>
+                                <%  article.ARTICLE_LABEL.forEach(function(item) { %>
                                 <span class='article-source bd-radius-3'><%= item %></span>
                                 <% }) %>
                             </li>
                         </ul>
                     </div>
                     <div class='content'>
-                        <%= article.articleContent %>
+                        <%= article.ARTICLE_CONTENT %>
                     </div>
                     <div class='code-html pd-rl30'>
                         <!-- <script src='/richText/plantuml-encoder/dist/plantuml-encoder.js'></script>
@@ -73,10 +73,10 @@
                     </div>
                     <div class="app-text-data app-display">
                         <ul class="app-data-list">
-                            <li class="app-data-item"><%= article.viewCount %> <span lang="view">次阅读</span></li>
-                            <li class="app-data-item"><%= article.collectCount %> <span lang="collects">人收藏</span></li>
-                            <li class="app-data-item"><%= article.likeCount %>  <span lang="likes">人喜欢</span></li>
-                            <li class="app-data-item showTime app-showTime"><%= article.publishTime.substring(0, 10) %></li>
+                            <li class="app-data-item"><%= article.VIEW_COIUNT %> <span lang="view">次阅读</span></li>
+                            <li class="app-data-item"><%= article.COLLECT_COUNT %> <span lang="collects">人收藏</span></li>
+                            <li class="app-data-item"><%= article.LIKE_COUNT %>  <span lang="likes">人喜欢</span></li>
+                            <li class="app-data-item showTime app-showTime"><%= article.PUBLISH_TIME.substring(0, 10) %></li>
                         </ul>
                     </div>
                     <div class='btn_box web-display'>
@@ -124,30 +124,30 @@
                             <div class='like_btn'>
                                 <span class='btn_left_triangle'></span>
                                 <div class='center_btn'>
-                                    <% if (article.isLike) { %>
+                                    <% if (article.IS_LIKE) { %>
                                         <img class='like' src='/images/like.png' alt=''>
                                     <% } else { %>   
                                         <img class='no_like' src='/images/no_like.png' alt=''>
                                     <% } %>
                                     <span lang="like">喜欢</span>
-                                    <span class='is_like' style='display: none'><%= article.isLike %></span>
+                                    <span class='is_like' style='display: none'><%= article.IS_LIKE %></span>
                                 </div>
                                 <span class='btn_right_triangle'></span>
                             </div>
-                            <div class='like_count'><%= article.likeCount %> <span lang="likes">人喜欢</span></div>
-                            <span class='like_num' style='display:none'><%= article.likeCount %></span>
+                            <div class='like_count'><%= article.LIKE_COUNT %> <span lang="likes">人喜欢</span></div>
+                            <span class='like_num' style='display:none'><%= article.LIKE_COUNT %></span>
                         </div>
                         <div class='collection_btn_box'>
                             <div class='collection_btn add-collect-btn not_collect bd-radius-5'>
-                                <% if (article.isCollect) { %>
+                                <% if (article.IS_COLLECT) { %>
                                     <img class='collection' src='/images/collection.png' alt=''>
                                 <% } else { %>   
                                     <img class='collection_black' src='/images/collection_black.png' alt='' >
                                 <% } %>  
                                 <span lang="collect">收藏</span>
-                                <span class='is_collect' style='display: none'><%= article.isCollect %></span>
+                                <span class='is_collect' style='display: none'><%= article.IS_COLLECT %></span>
                             </div>
-                            <div class='collection_num'><%= article.collectCount %> <span lang="collects">人已收藏</span></div>
+                            <div class='collection_num'><%= article.COLLECT_COUNT %> <span lang="collects">人已收藏</span></div>
                         </div>
                         
                     </div>
@@ -234,22 +234,22 @@
                             <% if(article.headerIcon) { %>
                                 <img class='head_portrait' src='/<%= article.headerIcon %>'>
                             <% } else { %> 
-                                <span class='item-random-color' article-commentUserName='<%=article.author%>'>
-                                    <%= article.author.substring(0, 1) %>
+                                <span class='item-random-color' article-commentUserName='<%=article.AUTHOR%>'>
+                                    <%= article.AUTHOR.substring(0, 1) %>
                                 </span>  
                             <% } %>
-                            <div class='my_name'><%= article.author %></div>
+                            <div class='my_name'><%= article.AUTHOR %></div>
                             <div class='my_autograph'><%= article.personalProfile %></div>
                         </div>
                         <div class='info_down bd-top'>
                             <img class='crown_icon' src='/images/crown.png' alt=''>
                             <div class='follow down_item bd-right'>
                                 <div class='text' lang="like">喜欢</div>
-                                <div class='count'><%= article.likeCount %></div>
+                                <div class='count'><%= article.LIKE_COUNT %></div>
                             </div>
                             <div class='fans down_item'>
                                 <div class='text' lang="collect">收藏</div>
-                                <div class='count'><%= article.collectCount %></div>
+                                <div class='count'><%= article.COLLECT_COUNT %></div>
                             </div>
                         </div>
                     </div>
@@ -305,7 +305,7 @@
                 <div class="app-user-do-icon">
                     <ul class="app-user-do-icon-list">
                         <li class="app-user-do-item like_btn">
-                            <% if (article.isLike) { %>
+                            <% if (article.IS_LIKE) { %>
                                 <svg class='iconSvg' aria-hidden='true'>
                                     <use xlink:href='#icon-shoucang-copy-copy'></use>
                                 </svg>
@@ -316,7 +316,7 @@
                             <% } %>
                         </li>
                         <li class="app-user-do-item add-collect-btn">
-                            <% if (article.isCollect) { %>
+                            <% if (article.IS_COLLECT) { %>
                                 <svg class='iconSvg' aria-hidden='true'>
                                     <use xlink:href='#icon-unie601-copy'></use>
                                 </svg>

@@ -17,9 +17,9 @@
         this.renderType = function(opts) {
             var typeHtml = '';
             for (let element in opts.labelTypeArr) {
-                zh[opts.labelTypeArr[element].typeId] = opts.labelTypeArr[element].typeNameCn;
-                en[opts.labelTypeArr[element].typeId] = opts.labelTypeArr[element].typeNameEn;
-                typeHtml += `<div class="${opts.typeCls}" id="${opts.labelTypeArr[element].typeId}" lang="${opts.labelTypeArr[element].typeId}">${opts.labelTypeArr[element].typeNameCn}</div>` ;
+                zh[opts.labelTypeArr[element].TYPE_ID] = opts.labelTypeArr[element].TYPE_NAME_CN;
+                en[opts.labelTypeArr[element].TYPE_ID] = opts.labelTypeArr[element].TYPE_NAME_EN;
+                typeHtml += `<div class="${opts.typeCls}" id="${opts.labelTypeArr[element].TYPE_ID}" lang="${opts.labelTypeArr[element].TYPE_ID}">${opts.labelTypeArr[element].TYPE_NAME_CN}</div>` ;
             };
             var typeParent = `<div class="type-list">${typeHtml}</div>`
             $obj.empty().html(typeParent);
@@ -30,10 +30,12 @@
             var labelHtml = '';
             $obj.find(".label-list").remove();
             var curId = event.attr("id");
+            console.log(curId)
             for (let el in opts.labelTypeArr) { 
-                if(opts.labelTypeArr[el].typeId == curId) {
+                if(opts.labelTypeArr[el].TYPE_ID == curId) {
+                    console.log(123)
                     opts.labelTypeArr[el].labelArr.forEach(labelItem => {
-                        labelHtml += `<li class="${opts.labelCls}" id="${labelItem.labelId}">${labelItem.labelName}</li>`
+                        labelHtml += `<li class="${opts.labelCls}" id="${labelItem.LABEL_ID}">${labelItem.LABEL_NAME}</li>`
                     });
                 }
             }

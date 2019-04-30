@@ -7,10 +7,10 @@ import { MyCollectionList } from '../../entitys/myCollectionList.entity';
 import { CommentsList } from '../../entitys/commentList.entity';
 import { ChildrenComments } from '../../entitys/childrenComment.entity';
 import { PostList } from '../../entitys/postList.entity';
-import { User } from '../../entitys/user.entity';
+import { BbsUser } from '../../entitys/user.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ArticleDetail, MyCollectionList, CommentsList, ChildrenComments, PostList, User])],
+  imports: [TypeOrmModule.forFeature([ArticleDetail, MyCollectionList, CommentsList, ChildrenComments, PostList, BbsUser])],
   providers: [ArticleDetailService],
   controllers: [ArticleDetailController],
 })

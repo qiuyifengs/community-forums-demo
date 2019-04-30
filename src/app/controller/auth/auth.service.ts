@@ -5,19 +5,19 @@ import * as curUserId from '../../global';
 import * as jwt from 'jsonwebtoken';
 import { InjectRepository } from '@nestjs/typeorm';
 import { LoginService } from '../login/login.service';
-import { User } from '../../entitys/user.entity';
+import { BbsUser } from '../../entitys/user.entity';
 
 @Injectable()
 
 export class AuthService {
-    user: User;
+    user: BbsUser;
     constructor(
-        @InjectRepository(User)
-        private readonly authRepository: Repository<User>,
+        @InjectRepository(BbsUser)
+        private readonly authRepository: Repository<BbsUser>,
       ) { }
 
     public async validate(payload): Promise<boolean> {
-        const user = await this.authRepository.findOne({userId: payload});
+        const user = await this.authRepository.findOne({USER_ID: payload});
         // 有該筆資料，回傳true
         if (user) {
             return true;

@@ -12,8 +12,9 @@ export class PostsController {
     @ApiOperation({ title: 'get balance from postList'})
     public async index(@Request() req, @Response() res, @Param() data): Promise<any> {
         const myArticleList = await this.postsService.myArticleList(data);
+        console.log(myArticleList)
         myArticleList.articleList.forEach((postItem, ind) => {
-            myArticleList.articleList[ind].articleLabel = postItem.articleLabel.split(',');
+            myArticleList.articleList[ind].ARTICLE_LABEL = postItem.ARTICLE_LABEL.split(',');
         });
         res.render('account/posts', { title: '我的帖子', myArticleList });
     }

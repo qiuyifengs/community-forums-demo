@@ -48,49 +48,49 @@
                                                 <div class="ghost-list-item-main">
                                                     <div class="ghost-list-item-meta-content item-title-box">
                                                         <h4 class="ghost-list-item-meta-title article_title">
-                                                            <span class="item-title"><%= item.articleTitle %></span>
+                                                            <span class="item-title"><%= item.ARTICLE_TITLE%></span>
                                                         </h4>
                                                     </div>
                                                     <div class="item-content-flex">
-                                                        <div class="ghost-list-item-meta-article-content"><%- item.articleContent %></div>
+                                                        <div class="ghost-list-item-meta-article-content"><%- item.ARTICLE_CONTENT%></div>
                                                     </div>
                                                 </div>
                                                 <ul class="ghost-list-item-action">
                                                     <li class="list-item web-display">
                                                         <a>
-                                                            <%= item.viewCount %> 阅读
+                                                            <%= item.VIEW_COUNT%> 阅读
                                                         </a>
                                                     </li>
                                                     <li class="list-item web-display">
                                                         <span>
-                                                            <%= item.commentCount %> 评论
+                                                            <%= item.COMMENT_COUNT%> 评论
                                                         </span>
                                                     </li>
                                                     <li class="list-item web-display">
                                                         <span>
-                                                            <%= item.collectCount %> 收藏
+                                                            <%= item.COLLECT_COUNT%> 收藏
                                                         </span>
                                                     </li>
                                                     <li class="list-item web-display">
                                                         <span>
-                                                            <%= item.likeCount %> 喜欢
+                                                            <%= item.LIKE_COUNT%> 喜欢
                                                         </span>
                                                     </li>
                                                     <li class="list-item web-display">
                                                         <span class="time">
-                                                            <%= item.publishTime %>
+                                                            <%= item.PUBLISH_TIME%>
                                                         </span>
                                                     </li>
-                                                    <% if (item.articleLabel) { %>
+                                                    <% if (item.ARTICLE_LABEL) { %>
                                                     <li class="list-item source-type">
-                                                        <% item.articleLabel.forEach(function(labelItem) {%>
+                                                        <% item.ARTICLE_LABEL.forEach(function(labelItem) {%>
                                                         <span class="article-source bd-radius-3"><%= labelItem %></span>
                                                         <% }) %>
                                                     </li>
                                                     <% } %>
                                                     <li class="app-time app-display">
                                                         <span class="time">
-                                                            <%= item.publishTime %>
+                                                            <%= item.PUBLISH_TIME %>
                                                         </span>
                                                     </li>
                                                 </ul>
@@ -98,7 +98,7 @@
                                             <div class="ghost-list-item-extra web-display">
                                                 <ul class="ghost-list-item-action">
                                                     <li>
-                                                        <div class="ghost-list-item-id" style="display: none"><%= item.articleId %></div>
+                                                        <div class="ghost-list-item-id" style="display: none"><%= item.ARTICLE_ID %></div>
                                                         <button style="font-size: 12px" class="ghost-btn ghost-btn-primary">取消收藏</button>
                                                     </li>
                                                 </ul>
@@ -190,7 +190,7 @@
                 })
             });
             $(".time").each(function() {
-                let resTime = formatDateFilter($(this).text())
+                let resTime = formatDateFilter2($(this).text())
                 $(this).html(resTime)
             });
             $(".ghost-btn").each(function(event) {
@@ -213,7 +213,7 @@
             translateFun()
         })
         function filterTime(item) {
-            return  resTime = formatDateFilter(item)
+            return  resTime = formatDateFilter2(item)
         }
         function showText(content) {
             let showImg = ''

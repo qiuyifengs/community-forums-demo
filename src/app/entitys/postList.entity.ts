@@ -2,39 +2,39 @@ import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne, OneToMan
 import { ArticleDetail } from './articleDetail.entity';
 @Entity()
 export class PostList {
-    @PrimaryGeneratedColumn() serialNum: number;
+    @PrimaryGeneratedColumn() ID: number;
     // userId
-    @Column() userId: string;
+    @Column() USER_ID: string;
     // title
-    @Column() articleTitle: string;
+    @Column() ARTICLE_TITLE: string;
     // articleId
-    @Column() articleId: string;
-    // articleSource
-    @Column() articleType: string;
+    @Column() ARTICLE_ID: string;
+    // articleType
+    @Column() ARTICLE_TYPE: string;
     // articleLabel
-    @Column() articleLabel: string;
+    @Column() ARTICLE_LABEL: string;
     // content
-    @Column({ length: 12000 }) articleContent: string;
+    @Column({ length: 12000 }) ARTICLE_CONTENT: string;
     // author
-    @Column() author: string;
+    @Column() AUTHOR: string;
     // viewCount
-    @Column({ default: 0 }) viewCount: number;
+    @Column({ default: 0 }) VIEW_COUNT: number;
     // collectCount
-    @Column({ default: 0 }) collectCount: number;
+    @Column({ default: 0 }) COLLECT_COIUNT: number;
     // likeCount
-    @Column({ default: 0 }) likeCount: number;
+    @Column({ default: 0 }) LIKE_COUNT: number;
     // commentCount
-    @Column({ default: 0 }) commentCount: number;
+    @Column({ default: 0 }) COMMENT_COUNT: number;
     // isDrafts
-    @Column({ default: false }) isDrafts: boolean;
+    @Column({ default: false }) IS_DRAFTS: boolean;
     // top
-    @Column({default: false }) top: boolean;
+    @Column({default: false }) TOP: boolean;
     // publishTime
-    @Column() publishTime: string;
+    @Column() PUBLISH_TIME: string;
     // editTime
-    @Column() editTime: string;
+    @Column() EDIT_TIME: string;
     // editPerson
-    @Column() editPerson: string;
+    @Column() EDIT_PERSON: string;
 
     @OneToOne(type => ArticleDetail, acticle => acticle.post, {
         cascade: true,

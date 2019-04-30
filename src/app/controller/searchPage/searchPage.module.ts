@@ -3,10 +3,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SearchPageService } from './searchPage.service';
 import { SearchPageController } from './searchPage.controller';
 import { PostList } from '../../entitys/postList.entity';
-import { User } from '../../entitys/user.entity';
+import { BbsUser } from '../../entitys/user.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([PostList, User])],
+  imports: [TypeOrmModule.forFeature([PostList, BbsUser])],
   providers: [SearchPageService],
   controllers: [SearchPageController],
 })
