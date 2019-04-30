@@ -1,9 +1,9 @@
-export { ArticleDetail } from './articleDetail.entity';
+export { BbsArticleDetail } from './articleDetail.entity';
 export { BbsChildrenComments } from './childrenComment.entity';
 export { BbsCommentsList } from './commentList.entity';
 export { BbsLabelList } from './labelList.entity';
-export { LabelType } from './labelType.entity';
-export { Menu } from './menuList.entity';
-export { MyCollectionList } from './myCollectionList.entity';
-export { PostList } from './postList.entity';
+export { BbsLabelType } from './labelType.entity';
+export { BbsMenu } from './menuList.entity';
+export { BbsMyCollectionList } from './myCollectionList.entity';
+export { BbsPostList } from './postList.entity';
 export { BbsUser } from './user.entity';

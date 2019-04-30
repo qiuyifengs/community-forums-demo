@@ -29,6 +29,8 @@ export class BbsUser {
     @Column({ default: false }) HAD_NEWS: boolean;
     // registerdate
     @Column() DATE: string;
+    // STATE
+    @Column({ default: 1 }) STATE: number;
     // activity
     @Column({ default: false }) ACTIVITY: boolean;
 }

@@ -3,20 +3,20 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ApiException } from '../../../bing/common/enums/api.exception';
 import { ApiErrorCode } from '../../../bing/common/enums/api-error-code.enum';
 import { Repository } from 'typeorm';
-import { PostList } from '../../entitys/postList.entity';
-import { ArticleDetail } from '../../entitys/articleDetail.entity';
-import { Menu } from '../../entitys/menuList.entity';
+import { BbsPostList } from '../../entitys/postList.entity';
+import { BbsArticleDetail } from '../../entitys/articleDetail.entity';
+import { BbsMenu } from '../../entitys/menuList.entity';
 import { BbsUser } from '../../entitys/user.entity';
 
 @Injectable()
 export class IndexService {
     constructor(
-        @InjectRepository(PostList)
-        private readonly indexRepository: Repository<PostList>,
-        @InjectRepository(ArticleDetail)
-        private readonly articleRepository: Repository<ArticleDetail>,
-        @InjectRepository(Menu)
-        private readonly menuRepository: Repository<Menu>,
+        @InjectRepository(BbsPostList)
+        private readonly indexRepository: Repository<BbsPostList>,
+        @InjectRepository(BbsArticleDetail)
+        private readonly articleRepository: Repository<BbsArticleDetail>,
+        @InjectRepository(BbsMenu)
+        private readonly menuRepository: Repository<BbsMenu>,
         @InjectRepository(BbsUser)
         private readonly userRepository: Repository<BbsUser>,
     ) {}

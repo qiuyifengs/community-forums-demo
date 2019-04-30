@@ -3,15 +3,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ApiException } from '../../../bing/common/enums/api.exception';
 import { ApiErrorCode } from '../../../bing/common/enums/api-error-code.enum';
 import { Repository } from 'typeorm';
-import { PostList } from '../../entitys/postList.entity';
+import { BbsPostList } from '../../entitys/postList.entity';
 import { BbsUser } from '../../entitys/user.entity';
 import { util } from '../../../bing';
 
 @Injectable()
 export class SearchPageService {
     constructor(
-        @InjectRepository(PostList)
-        private readonly postListRepository: Repository<PostList>,
+        @InjectRepository(BbsPostList)
+        private readonly postListRepository: Repository<BbsPostList>,
         @InjectRepository(BbsUser)
         private readonly userRepository: Repository<BbsUser>,
     ) {}
@@ -24,18 +24,18 @@ export class SearchPageService {
         const page = param.page ? param.page * 1 * pageCount : 0;
         totalRes = await this.postListRepository
                     .createQueryBuilder('posts')
-                    .where('posts.author LIKE :param')
-                    .orWhere('posts.articleTitle LIKE :param')
-                    .andWhere('posts.isDrafts = :isDrafts', { isDrafts: false })
+                    .where('posts.AUTHOR LIKE :param')
+                    .orWhere('posts.ARTICLE_TITLE LIKE :param')
+                    .andWhere('posts.IS_DRAFTS = :IS_DRAFTS', { IS_DRAFTS: false })
                     .setParameters({
                         param: '%' + param.keyword + '%',
                     })
                     .getMany();
         res = await this.postListRepository
                     .createQueryBuilder('posts')
-                    .where('posts.author LIKE :param')
-                    .orWhere('posts.articleTitle LIKE :param')
-                    .andWhere('posts.isDrafts = :isDrafts', { isDrafts: false })
+                    .where('posts.AUTHOR LIKE :param')
+                    .orWhere('posts.ARTICLE_TITLE LIKE :param')
+                    .andWhere('posts.IS_DRAFTS = :IS_DRAFTS', { IS_DRAFTS: false })
                     .setParameters({
                         param: '%' + param.keyword + '%',
                     })
@@ -45,7 +45,7 @@ export class SearchPageService {
 
         if (res.length > 0) {
             for (const item of res) {
-                const user = await this.userRepository.findOne({ USER_ID: item.userId });
+                const user = await this.userRepository.findOne({ USER_ID: item.USER_ID });
                 // item.articleContent = item.articleContent.substr(2).substring(0, item.articleContent.length - 4).replace('","', '\n');
                 item.hearderIcon = user.HEADER_ICON;
                 item.author = user.NICK_NAME;

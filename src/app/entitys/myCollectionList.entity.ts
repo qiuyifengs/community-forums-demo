@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne, OneToMany, OneToOne } from 'typeorm';
 @Entity()
-export class MyCollectionList {
+export class BbsMyCollectionList {
     @PrimaryGeneratedColumn() ID: number;
     // userId
     @Column() USER_ID: string;
@@ -42,6 +42,10 @@ export class MyCollectionList {
     @Column({ default: false }) IS_LIKE: boolean;
     // isCollect
     @Column({ default: false }) IS_COLLECT: boolean;
+
+    @Column({ default: 1 }) STATE: number;
+
+    @Column() CREATED: string;
 
     // publishTime
     @Column() PUBLISH_TIME: string;

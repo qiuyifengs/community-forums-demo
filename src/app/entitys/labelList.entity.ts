@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { LabelType } from './labelType.entity';
+import { BbsLabelType } from './labelType.entity';
 
 @Entity()
 export class BbsLabelList {
@@ -11,6 +11,10 @@ export class BbsLabelList {
 
   @Column() LABEL_ID: string;
 
-  @ManyToOne(type => LabelType, parent => parent.labelArr)
-  labelList: LabelType;
+  @Column({ default: 1 }) STATE: number;
+
+  @Column() CREATED: string;
+
+  @ManyToOne(type => BbsLabelType, parent => parent.labelArr)
+  labelList: BbsLabelType;
 }

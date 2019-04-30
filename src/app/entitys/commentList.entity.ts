@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn, ManyToMany, ManyToOne } from 'typeorm';
-import { ArticleDetail } from './articleDetail.entity';
+import { BbsArticleDetail } from './articleDetail.entity';
 import { BbsChildrenComments } from './childrenComment.entity';
 @Entity()
 export class BbsCommentsList {
@@ -29,11 +29,14 @@ export class BbsCommentsList {
     // commentContent
     @Column() COMMENT_CONTENT: string;
 
-    // commentTime
+    // created
     @Column() CREATED: string;
 
-    @ManyToOne(type => ArticleDetail, post => post.comments)
-    posts: ArticleDetail;
+    // state
+    @Column({ default: 1}) STATE: number;
+
+    @ManyToOne(type => BbsArticleDetail, post => post.comments)
+    posts: BbsArticleDetail;
 
     @OneToMany(type => BbsChildrenComments, children => children.childrens)
     childrenComentList: BbsChildrenComments[];

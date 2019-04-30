@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne, OneToMany, OneToOne } from 'typeorm';
-import { ArticleDetail } from './articleDetail.entity';
+import { BbsArticleDetail } from './articleDetail.entity';
 @Entity()
-export class PostList {
+export class BbsPostList {
     @PrimaryGeneratedColumn() ID: number;
     // userId
     @Column() USER_ID: string;
@@ -35,10 +35,12 @@ export class PostList {
     @Column() EDIT_TIME: string;
     // editPerson
     @Column() EDIT_PERSON: string;
+    // STATE
+    @Column({ default: 1}) STATE: number;
 
-    @OneToOne(type => ArticleDetail, acticle => acticle.post, {
+    @OneToOne(type => BbsArticleDetail, acticle => acticle.post, {
         cascade: true,
     })
-    acticles: ArticleDetail;
+    acticles: BbsArticleDetail;
 
 }

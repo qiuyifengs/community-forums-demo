@@ -1,8 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne } from 'typeorm';
-import { PostList } from './postList.entity';
+import { BbsPostList } from './postList.entity';
 import { BbsCommentsList } from './commentList.entity';
 @Entity()
-export class ArticleDetail {
+export class BbsArticleDetail {
     @PrimaryGeneratedColumn() ID: number;
     // userId
     @Column() USER_ID: string;
@@ -36,9 +36,11 @@ export class ArticleDetail {
     @Column({ default: false }) ID_DRAFTS: boolean;
     // publishTime
     @Column() PUBLISH_TIME: string;
+    // STATE
+    @Column({ default: 1}) STATE: number;
 
-    @OneToOne(type => PostList, post => post.acticles)
-    post: PostList[];
+    @OneToOne(type => BbsPostList, post => post.acticles)
+    post: BbsPostList[];
 
     @OneToMany(type => BbsCommentsList, comment => comment.posts)
     comments: BbsCommentsList[];

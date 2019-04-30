@@ -3,14 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ApiException } from '../../../bing/common/enums/api.exception';
 import { ApiErrorCode } from '../../../bing/common/enums/api-error-code.enum';
 import { Repository } from 'typeorm';
-import { MyCollectionList } from '../../entitys/myCollectionList.entity';
+import { BbsMyCollectionList } from '../../entitys/myCollectionList.entity';
 import { BbsUser } from '../../entitys/user.entity';
 
 @Injectable()
 export class CollectService {
   constructor(
-    @InjectRepository(MyCollectionList)
-    private readonly collectRepository: Repository<MyCollectionList>,
+    @InjectRepository(BbsMyCollectionList)
+    private readonly collectRepository: Repository<BbsMyCollectionList>,
     @InjectRepository(BbsUser)
     private readonly userCommentRepository: Repository<BbsUser>,
   ) { }
@@ -24,7 +24,9 @@ export class CollectService {
     let totalRes;
     const pageCount = param.pageCount ? param.pageCount * 1 : 10;
     const page = param.page ? (param.page - 1) * 1 * pageCount : 0;
+    console.log(11, param)
     const user = await this.userCommentRepository.findOne({NICK_NAME: param.nickName});
+    console.log(user)
     totalRes = await this.collectRepository.find({USER_ID: user.USER_ID});
     res = await this.collectRepository
           .createQueryBuilder('collectList')

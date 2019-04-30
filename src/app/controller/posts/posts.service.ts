@@ -3,17 +3,17 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ApiException } from '../../../bing/common/enums/api.exception';
 import { ApiErrorCode } from '../../../bing/common/enums/api-error-code.enum';
 import { Repository } from 'typeorm';
-import { PostList } from '../../entitys/postList.entity';
-import { ArticleDetail } from '../../entitys/articleDetail.entity';
+import { BbsPostList } from '../../entitys/postList.entity';
+import { BbsArticleDetail } from '../../entitys/articleDetail.entity';
 import { BbsUser } from '../../entitys/user.entity';
 
 @Injectable()
 export class PostsService {
   constructor(
-    @InjectRepository(PostList)
-    private readonly postsRepository: Repository<PostList>,
-    @InjectRepository(ArticleDetail)
-    private readonly articleRepository: Repository<ArticleDetail>,
+    @InjectRepository(BbsPostList)
+    private readonly postsRepository: Repository<BbsPostList>,
+    @InjectRepository(BbsArticleDetail)
+    private readonly articleRepository: Repository<BbsArticleDetail>,
     @InjectRepository(BbsUser)
     private readonly usereRepository: Repository<BbsUser>,
   ) {}

@@ -3,14 +3,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AccountService } from './account.service';
 import { AccountController } from './account.controller';
 import { BbsUser } from '../../entitys/user.entity';
-import { PostList } from '../../entitys/postList.entity';
-import { ArticleDetail } from '../../entitys/articleDetail.entity';
+import { BbsPostList } from '../../entitys/postList.entity';
+import { BbsArticleDetail } from '../../entitys/articleDetail.entity';
 import { BbsCommentsList } from '../../entitys/commentList.entity';
 import { BbsChildrenComments } from '../../entitys/childrenComment.entity';
-import { MyCollectionList } from '../../entitys/myCollectionList.entity';
+import { BbsMyCollectionList } from '../../entitys/myCollectionList.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([BbsUser, PostList, ArticleDetail, BbsCommentsList, BbsChildrenComments, MyCollectionList])],
+  imports: [TypeOrmModule.forFeature([BbsUser, BbsPostList, BbsArticleDetail, BbsCommentsList, BbsChildrenComments, BbsMyCollectionList])],
   providers: [AccountService],
   controllers: [AccountController],
 })

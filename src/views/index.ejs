@@ -287,8 +287,8 @@
                                 <div class="ghost-components-menu-vertical-index app-display">
                                     <ul class="app-index-menu-list">
                                         <% postList.menuList.forEach(function(menuItem) { %>
-                                        <li class="index-menu-item app-index-menu-item">
-                                            <span class="ghost-ment-item-title"><%= menuItem.menu %></span>
+                                        <li class="index-menu-item app-index-menu-item" menu-id="<%= menuItem.MENU_ID %>" menu-en="<%= menuItem.MENU_EN %>" menu-cn="<%= menuItem.MENU_CN %>">
+                                            <span class="ghost-ment-item-title" lang="<%= menuItem.MENU_ID %>"><%= menuItem.MENU_CN %></span>
                                             <span class="app-menu-item-border"></span>
                                         </li>
                                         <% }) %>
@@ -357,8 +357,8 @@
                                                                                 <span class="ghost-tag ghost-tag-has-color ghost-tag-color-primary"><%= labelItem %></span>
                                                                                 <% }) %>
                                                                             </span>
-                                                                            <span class="showTime app-display app-time"><%= articleItem.PUBLISH_TIME %></span>
-                                                                            <span class="from-type">来自分类：<%= articleItem.ARTICLE_TYPE %></span>
+                                                                            <span class="showTime app-display app-time" ><%= articleItem.PUBLISH_TIME %></span>
+                                                                            <span class="from-type">From：<%= articleItem.ARTICLE_TYPE %></span>
                                                                         </div>
                                                                     </div>
                                                                 </div>

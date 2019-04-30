@@ -1,9 +1,8 @@
 import { Controller, Get, Param, Post, Body, Request, Response } from '@nestjs/common';
 import { ApiOperation, ApiUseTags } from '@nestjs/swagger';
 import { ArticleDetailService } from './articleDetail.service';
-import { ArticleDetail } from '../../entitys/articleDetail.entity';
 import { BbsCommentsList } from '../../entitys/commentList.entity';
-import { PostList } from '../../entitys/postList.entity';
+import { BbsPostList } from '../../entitys/postList.entity';
 import * as curUserId from '../../global';
 
 @ApiUseTags('post')
@@ -54,19 +53,19 @@ export class ArticleDetailController {
 
     @Post('addLike')
     @ApiOperation({ title: 'get balance from postList' })
-    public async addLike(@Body() param): Promise<PostList[]> {
+    public async addLike(@Body() param): Promise<BbsPostList[]> {
         return this.postsRepository.addLike(param);
     }
 
     @Post('addCollect')
     @ApiOperation({ title: 'get balance from postList' })
-    public async addCollect(@Body() param): Promise<PostList[]> {
+    public async addCollect(@Body() param): Promise<BbsPostList[]> {
         return this.postsRepository.addCollect(param);
     }
 
     @Post('addView')
     @ApiOperation({ title: 'get balance from postList' })
-    public async addView(@Body() param): Promise<PostList[]> {
+    public async addView(@Body() param): Promise<BbsPostList[]> {
         curUserId.default.userId = param.userId;
         return this.postsRepository.addView(param);
     }

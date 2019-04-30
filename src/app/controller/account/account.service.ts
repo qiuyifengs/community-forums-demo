@@ -3,11 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ApiErrorCode } from '../../../bing/common/enums/api-error-code.enum';
 import { Repository } from 'typeorm';
 import { BbsUser } from '../../entitys/user.entity';
-import { PostList } from '../../entitys/postList.entity';
-import { ArticleDetail } from '../../entitys/articleDetail.entity';
+import { BbsPostList } from '../../entitys/postList.entity';
+import { BbsArticleDetail } from '../../entitys/articleDetail.entity';
 import { BbsCommentsList } from '../../entitys/commentList.entity';
 import { BbsChildrenComments } from '../../entitys/childrenComment.entity';
-import { MyCollectionList } from '../../entitys/myCollectionList.entity';
+import { BbsMyCollectionList } from '../../entitys/myCollectionList.entity';
 import * as fs from 'fs';
 
 @Injectable()
@@ -15,16 +15,16 @@ export class AccountService {
   constructor(
     @InjectRepository(BbsUser)
     private readonly accountRepository: Repository<BbsUser>,
-    @InjectRepository(PostList)
-    private readonly postRepository: Repository<PostList>,
-    @InjectRepository(ArticleDetail)
-    private readonly articleRepository: Repository<ArticleDetail>,
+    @InjectRepository(BbsPostList)
+    private readonly postRepository: Repository<BbsPostList>,
+    @InjectRepository(BbsArticleDetail)
+    private readonly articleRepository: Repository<BbsArticleDetail>,
     @InjectRepository(BbsCommentsList)
     private readonly commentRepository: Repository<BbsCommentsList>,
     @InjectRepository(BbsChildrenComments)
     private readonly childCommentRepository: Repository<BbsChildrenComments>,
-    @InjectRepository(MyCollectionList)
-    private readonly collectRepository: Repository<MyCollectionList>,
+    @InjectRepository(BbsMyCollectionList)
+    private readonly collectRepository: Repository<BbsMyCollectionList>,
   ) {}
   async getUserInfo(param): Promise<any> {
     return await this.accountRepository.findOne({ NICK_NAME: param.nickName });

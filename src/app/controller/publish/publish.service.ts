@@ -3,26 +3,26 @@ import { InjectRepository } from '@nestjs/typeorm';
 // import { ApiException } from '../../bing/common/enums/api.exception';
 import { ApiErrorCode } from '../../../bing/common/enums/api-error-code.enum';
 import { Repository } from 'typeorm';
-import { PostList } from '../../entitys/postList.entity';
-import { ArticleDetail } from '../../entitys/articleDetail.entity';
-import { Menu } from '../../entitys/menuList.entity';
+import { BbsPostList } from '../../entitys/postList.entity';
+import { BbsArticleDetail } from '../../entitys/articleDetail.entity';
+import { BbsMenu } from '../../entitys/menuList.entity';
 import { BbsUser } from '../../entitys/user.entity';
-import { LabelType } from '../../entitys/labelType.entity';
+import { BbsLabelType } from '../../entitys/labelType.entity';
 import { BbsLabelList } from '../../entitys/labelList.entity';
 
 @Injectable()
 export class PublishService {
     constructor(
-        @InjectRepository(PostList)
-        private readonly postsRepository: Repository<PostList>,
-        @InjectRepository(ArticleDetail)
-        private readonly articleRepository: Repository<ArticleDetail>,
-        @InjectRepository(Menu)
-        private readonly menuRepository: Repository<Menu>,
+        @InjectRepository(BbsPostList)
+        private readonly postsRepository: Repository<BbsPostList>,
+        @InjectRepository(BbsArticleDetail)
+        private readonly articleRepository: Repository<BbsArticleDetail>,
+        @InjectRepository(BbsMenu)
+        private readonly menuRepository: Repository<BbsMenu>,
         @InjectRepository(BbsUser)
         private readonly userRepository: Repository<BbsUser>,
-        @InjectRepository(LabelType)
-        private readonly labelTypeRepository: Repository<LabelType>,
+        @InjectRepository(BbsLabelType)
+        private readonly labelTypeRepository: Repository<BbsLabelType>,
         @InjectRepository(BbsLabelList)
         private readonly labelListRepository: Repository<BbsLabelList>,
     ) {}
@@ -107,7 +107,7 @@ export class PublishService {
     // Store articles in articleDetail
     async addArticleDetail(data): Promise<any> {
         if (data.IS_EDIT === 'false') {
-            const articleDetail = new ArticleDetail();
+            const articleDetail = new BbsArticleDetail();
             const addObj = Object.assign(articleDetail, data);
             await this.postsRepository.manager.save(addObj);
         } else {
