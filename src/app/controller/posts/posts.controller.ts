@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Post, Body, Request, Response } from '@nestjs/common';
 import { ApiOperation, ApiUseTags } from '@nestjs/swagger';
 import { PostsService } from './posts.service';
-import { PostList } from '../../entitys/postList.entity';
+import { BbsPostList } from '../../entitys/postList.entity';
 
 @ApiUseTags('account')
 @Controller('account')
