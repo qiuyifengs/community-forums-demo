@@ -30,5 +30,4 @@ import { BbsArticleDetail, BbsChildrenComments, BbsCommentsList, BbsLabelList, B
         }), ...modules,
     ],
 })
-
 export class ApplicationModule {}
