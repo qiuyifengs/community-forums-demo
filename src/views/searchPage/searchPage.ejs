@@ -5,7 +5,6 @@
         <link rel="icon" href="/images/collection.png" type="img/x-ico" />
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
         <link rel='stylesheet' href='/style/index.css' />
-        <link rel="stylesheet" href="/style/forum/forum.css">
         <% include ../common/script %>
         <style>
             #root .ghost-components-article-list-content-index-description {
@@ -371,38 +370,6 @@
                     })
                 }
             })
-
-            // // init Google Design button click effect 
-            // Waves.attach('.float-button-light', ['waves-button', 'waves-float', 'waves-light']);
-            // // Init Waves
-            // Waves.init();
-
-            // // init pagination config
-            // $('.ghost-pagination').pagination({
-            //     total: document.getElementById('totalPages').value,
-            //     pageSize: 10,
-            //     coping: true,
-            //     callback: api => {
-            //         $('.ghost-loading-mask').css('display', 'block')
-            //         const currentPage = api.getCurrent()
-            //         const url = `post/search/'${keyword}/${currentPage}`;
-            //         myAjax('GET', url).then(res => {
-            //             if (res.code === 10000) {
-            //                 $("#artivleTemplate").empty()
-            //                 res.data.forEach(item => {
-            //                     $("#artivleTemplate").append(renderArticleHtml(item))
-            //                 })
-            //                 $(".item-random-color").each(function() {
-            //                     const authorName = $(this).attr("article-author");
-            //                     $(this).css("background",renderColor(authorName));
-            //                 })
-            //                 setTimeout(function() {
-            //                     $('.ghost-loading-mask').css('display', 'none')
-            //                 }, 500) 
-            //             }
-            //         })
-            //     }
-            // })
 
             // let total = Math.ceil(($('.total').text() * 1) / 8);
             $('.tab-nav .tab-nav-item a').on('click', function (e) {

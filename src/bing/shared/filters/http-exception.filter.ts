@@ -1,4 +1,4 @@
-import { util } from '@/bing';
+import { util } from '../../../bing';
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException } from '@nestjs/common';
 const fs = require('fs');
 const path = require('path');

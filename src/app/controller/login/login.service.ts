@@ -5,11 +5,11 @@ import { JwtPayload } from '../auth/jwt-payload.interface';
 import * as curUserId from '../../global';
 import { Repository } from 'typeorm';
 import { BbsUser } from '../../entitys/user.entity';
-import { md5 } from '@/bing/common/encrypt';
+import { md5 } from '../../../bing/common/encrypt';
 import { Verification } from '../register/e-mail/send.e-mail';
 import * as jwt from 'jsonwebtoken';
 import { from } from 'rxjs';
-const config = require('../../../util/token.config');
+import { util } from '../../../bing';
 
 @Injectable()
 export class LoginService {
@@ -25,7 +25,7 @@ export class LoginService {
 
     return jwt.sign({
       user,
-    }, config.session.secrets
+    }, util.session.secrets
       , {
         expiresIn: '3600s',
       });

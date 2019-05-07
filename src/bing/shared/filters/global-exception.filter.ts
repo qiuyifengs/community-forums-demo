@@ -1,4 +1,4 @@
-import { util } from '@/bing';
+import { util } from '../../../bing';
 import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
 
 /**
