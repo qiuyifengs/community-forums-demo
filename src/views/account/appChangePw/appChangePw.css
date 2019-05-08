@@ -1,0 +1,18 @@
+.app-change-userInfo-page {
+    position: absolute;
+    top: 44px;
+    left: 0;
+    right: 0;
+    bottom: 50px;
+    background: #f8f8f8;
+}
+.ghost-form .ghost-form-item {
+    display: block;
+    margin-bottom: 0;
+    margin-top: 10px;
+    padding: 10px 15px 5px;
+    background: #fff;
+}
+.ghost-form-explain, .ghost-form-extra {
+    text-indent: 0;
+}

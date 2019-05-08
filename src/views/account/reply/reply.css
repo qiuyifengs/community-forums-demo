@@ -1,0 +1,145 @@
+.no_data {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: var(--col-c4);
+}
+.parents_item .comment-info {
+    font-size: var(--fs-13);
+}
+.comment_bottmo {
+    display: none;
+    padding: 10px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background: var(--col-f8);
+}
+.answer_box {
+    padding: 15px;
+    width: 100%;
+    min-height: 36px;
+    border-radius: 5px;
+    font-size: var(--fs-14);
+    outline: none;
+    border: solid 1px var(--input-col);
+}
+.answer_box:empty:before {
+    content: attr(data-placeholder);
+    color: var(--col-pla);
+}
+.answer_box:not(.answer_box:empty).answer_box:focus:before {
+    content:none;
+}
+.answer_btn_box {
+    display: flex;
+    margin-top: 20px;
+    justify-content: flex-end;
+}
+.answer_btn {
+    padding: 15px 0;
+    width: 100px;
+    font-size: 14px;
+    line-height: 14px;
+    letter-spacing: 0px;
+    text-align: center;
+    cursor: pointer;
+    color: var(--white);
+    background: var(--btn-col);
+    border-radius: 5px;;
+}
+.children_comment_list {
+    display: flex;
+    padding-top: 10px;
+    background: var(--col-f8);
+}
+.reply_man {
+    cursor: pointer;
+    color: var(--btn-col);
+}
+.parents_item .commentator_name {
+    color: var(--btn-col);
+}
+.user-comment-content-mask {
+    display: none;
+}
+.ghost-btn-text-default {
+    color: var(--btn-col);
+}
+@media screen and (max-width: 420px) {
+    .ghost-pro-pages-account-settings-info-main {
+        padding: 0;
+        background-color: var(--col-f8);
+    }
+    .ghost-pro-pages-account-settings-info-main .ghost-pro-pages-account-settings-info-right {
+        padding: 0;
+    }
+    .ghost-list .ghost-comment {
+        margin-bottom: 5px;
+        padding: 15px 15px 8px;
+        background: var(--white);
+    }
+    .ghost-list .ghost-comment .ghost-comment-content-top-box {
+        align-items: unset;
+    }
+    .ghost-list .ghost-comment .ghost-comment-content-author {
+        display: block;
+    }
+    .ghost-list .ghost-comment .ghost-comment-content-author .ghost-comment-content-author-name {
+        display: block;
+    }
+    .ghost-comment-content-author>a, .ghost-comment-content-author>span {
+        font-size: var(--fs-12);
+    }
+    .ghost-list .ghost-comment-nested .ghost-comment {
+        padding: 5px 15px 0;
+        background: var(--col-f2);
+    }
+    .ghost-list .ghost-comment-nested .ghost-comment .ghost-comment-content-author-name {
+        display: unset;
+    }
+    .ghost-list .ghost-comment .reply-btn {
+        color: var(--btn-col);
+    }
+    .replyFormTemplate {
+        margin-bottom: 0!important;
+        height: 0;
+    }
+    .user-comment-content-mask {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 101;
+        background: rgba(0,0,0,.6);
+    }
+    .user-comment-content {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 10px 15px;
+        background: var(--white);
+        z-index: 1;
+    }
+    .user-comment-content .user-comment-textarea {
+        resize: none;
+        border: none;
+        outline: none;
+        width: 100%;
+        height: 60px;
+        font-size: var(--fs-14);
+        line-height: 22px;
+    }
+    .user-comment-content .app-answer-btn {
+        padding: 6px 14px;
+        width: auto;
+        font-size: var(--fs-12);
+        border-radius: 3px;
+        background: var(--btn-col);
+        color: var(--white)
+    }
+}
