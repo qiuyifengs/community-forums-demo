@@ -4,11 +4,11 @@ import { ApiException } from '../../../bing/common/enums/api.exception';
 import { ApiErrorCode } from '../../../bing/common/enums/api-error-code.enum';
 import { Repository, Code } from 'typeorm';
 import { BbsUser } from '../../entitys/user.entity';
-import { md5 } from '@/bing/common/encrypt';
+import { md5 } from '../../../bing/common/encrypt';
 import { Verification } from '../register/e-mail/send.e-mail';
 // const jwt =  require ( 'jsonwebtoken');
 import * as jwt from 'jsonwebtoken';
-const config = require('../../../util/token.config');
+import { util } from '../../../bing';
 
 @Injectable()
 export class SettingService {
@@ -45,7 +45,7 @@ export class SettingService {
         // do validate Code
 
       }
-      const authToken = jwt.sign({ userId: param.userId, exp: (Date.now() / 1000) + (60 * 2) }, config.session.secrets);
+      const authToken = jwt.sign({ userId: param.userId, exp: (Date.now() / 1000) + (60 * 2) }, util.session.secrets);
       res.PASSWORD = md5(param.passWordOne);
       res.TOKEN = authToken;
       await this.settingRepository.save(res);
@@ -102,7 +102,7 @@ export class SettingService {
     }
     const Etoken = jwt.sign({
       userId: param.userId,
-    }, config.session.secrets, {
+    }, util.session.secrets, {
         expiresIn: '2h',
       });
     Verification.verifica(param.type, param.userId, email, Etoken);

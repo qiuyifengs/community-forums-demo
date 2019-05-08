@@ -14,8 +14,8 @@
                 return string;
             }
 
-            const start = (string ? string.indexOf('{') : -1),
-                options = {};
+            const start = (string ? string.indexOf('{') : -1);
+            let options = {};
 
             if (start != -1) {
                 try {

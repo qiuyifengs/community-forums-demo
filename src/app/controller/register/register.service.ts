@@ -4,12 +4,11 @@ import { ApiException } from '../../../bing/common/enums/api.exception';
 import { ApiErrorCode } from '../../../bing/common/enums/api-error-code.enum';
 import { Repository } from 'typeorm';
 import { BbsUser } from '../../entitys/user.entity';
-import { md5 } from '@/bing/common/encrypt';
+import { md5 } from '../../../bing/common/encrypt';
 import { configure } from 'log4js';
 import { Verification } from './e-mail/send.e-mail';
 const jwt = require('jsonwebtoken');
-const config = require('../../../util/token.config');
-
+import { util } from '../../../bing';
 
 @Injectable()
 export class RegisterService {
@@ -55,14 +54,14 @@ export class RegisterService {
     // e-mail token
     const Etoken = jwt.sign({
       userId: param.userId,
-    }, config.session.secrets
+    }, util.session.secrets
       , {
         expiresIn: '10min',
       });
     // login token
     const token = jwt.sign({
       userId: param.userId,
-    }, config.session.secrets
+    }, util.session.secrets
       , {
         expiresIn: '3d',
       });

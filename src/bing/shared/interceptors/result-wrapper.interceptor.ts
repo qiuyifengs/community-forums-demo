@@ -1,6 +1,6 @@
 import { NestInterceptor, Injectable, ExecutionContext } from "@nestjs/common";
 import { Observable } from "rxjs";
-import { util, Result } from '@/bing';
+import { util, Result } from '../../../bing';
 import { map } from 'rxjs/operators';
 
 /**

@@ -33,4 +33,7 @@ export class Util {
      * 时间格式化
      */
     static dateType = DataType;
+    static session = {
+        secrets: '123',
+    }
 }

@@ -1,5 +1,5 @@
 import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
-import { CorsMiddleware } from '@/bing';
+import { CorsMiddleware } from './bing';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import modules from './app';
 import { BbsArticleDetail, BbsChildrenComments, BbsCommentsList, BbsLabelList, BbsLabelType, BbsMenu, BbsMyCollectionList, BbsPostList, BbsUser } from './app/entitys';

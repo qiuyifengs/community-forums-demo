@@ -2,7 +2,7 @@ const _ = require('lodash');
 const nodemailer = require('nodemailer');
 import * as jwt from 'jsonwebtoken';
 const moment = require('moment');
-const conf = require('../../../../util/token.config');
+import { util } from '../../../../bing';
 import { ApiException } from '../../../../bing/common/enums/api.exception';
 import { ApiErrorCode } from '../..//../../bing/common/enums/api-error-code.enum';
 import { HttpStatus } from '@nestjs/common';
@@ -56,7 +56,7 @@ export class Verification {
         };
         if (param.token) {
 
-            return await jwt.verify(param.token, conf.session.secrets, (err, decoded) => {
+            return await jwt.verify(param.token, util.session.secrets, (err, decoded) => {
                 if (err) {
                     msg.code = ApiErrorCode.VERIFICA_EMAIL_Failure;
                     msg.HttpStatus = HttpStatus.BAD_REQUEST;

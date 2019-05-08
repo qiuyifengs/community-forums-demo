@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { ApplicationModule } from './app.module';
-import { SwaggerSettings, BingStartup, util } from '@/bing';
+import { SwaggerSettings, BingStartup, util } from './bing';
 import * as express from 'express';
 const instance = express();
 
