@@ -13,7 +13,7 @@ export class IndexController {
         postList.articleList.forEach((postItem, ind) => {
             postList.articleList[ind].ARTICLE_LABEL = postItem.ARTICLE_LABEL.split(',');
         });
-        res.render('index', { title: 'index', postList });
+        res.render('index/index', { title: 'index', postList });
     }
 
     @Get('topic/:articleType')
@@ -23,7 +23,7 @@ export class IndexController {
         postList.articleList.forEach((postItem, ind) => {
             postList.articleList[ind].ARTICLE_LABEL = postItem.ARTICLE_LABEL.split(',');
         });
-        res.render('index', { title: 'index', postList });
+        res.render('index/index', { title: 'index', postList });
     }
     @Get('topic/:articleType/:page')
     @ApiOperation({ title: 'get balance from postList'})
