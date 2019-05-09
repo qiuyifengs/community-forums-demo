@@ -1,11 +1,12 @@
+
 const webpack = require('webpack');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
-const jquery = require('jquery');
 
 const glob = require('glob');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 /**
  * ejs 模块打包
@@ -33,8 +34,8 @@ const HtmlTpl = getEntry('./src/**/*.ejs')
 const appPath = {app: ['webpack/hot/poll?1000', './src/main.ts']}
 // const commonJs =  getEntry('./src/libs/js/**/*.js')
 const common = { common: [
-    './src/libs/js/jquery-3.3.1.min.js', 
-    './src/views/common/common.js',
+    './src/libs/js/jquery-3.3.1.js', 
+    './src/libs/js/common.js',
     './src/libs/js/pageTurning.js',
     './src/libs/js/ghost-ui.js',
     './src/libs/js/jquery.cookie.js',
@@ -44,9 +45,12 @@ const common = { common: [
     './src/libs/js/tagsinput.js',
     './src/libs/js/autosize.js',
     './src/libs/js/dropload/dropload.min.js',
-    './src/libs/js/dropload/zepto.min.js'
+    './src/libs/js/dropload/zepto.min.js',
+    './src/libs/js/lang/en.js',
+    './src/libs/js/lang/zh.js',
+    './src/libs/js/sensitiveWords.js'
 ]}
-const Entry = Object.assign(getEntry('./src/views/**/*.js'), appPath, common)
+const Entry = Object.assign(appPath, common, getEntry('./src/views/**/*.js'))
 const htmlConfig = () => {
     let config = []
     for (let attr in HtmlTpl) {
@@ -56,7 +60,7 @@ const htmlConfig = () => {
                 filename: `./dist/${attrPath}`,
                 template: HtmlTpl[attr],
                 inject: "head",
-                chunks: ['common', HtmlTpl[attr].split('/')[HtmlTpl[attr].split('/').length-1].replace('.ejs', '')], // 预览模块js独立打包
+                chunks: ['commonCss', 'common', HtmlTpl[attr].split('/')[HtmlTpl[attr].split('/').length-1].replace('.ejs', '')], // 预览模块js独立打包
                 chunksSortMode: 'manual',
                 minify: true
             })
@@ -65,25 +69,6 @@ const htmlConfig = () => {
     }
     return config;
 }
-// const CssTpl = getCssEntry('./src/libs/style/**/*.css')
-// function getCssEntry(globPath) {
-//     var entries = {};
-//     console.log(globPath)
-//     glob.sync(globPath).forEach(function (entry) {
-//         if (path.extname(entry).indexOf('.css') > -1) {
-//             entries[entry] = entry;
-//         }
-//     });
-//     return entries;
-// }
-// const cssConfig = () => {
-//     let config = []
-//     for (let attr in CssTpl) {
-//         const attrPath = CssTpl[attr].replace('./src/', '')
-//         config.push(new ExtractTextPlugin(`./dist/${attrPath}`))
-//     }
-//     return config;
-// }
 /**
  * 根目录
  * @param {*} subdir 子目录
@@ -126,7 +111,7 @@ module.exports = {
                 exclude: /node_modules/,
             },
             {
-                test: /\.ejs$/,
+                test: /\.(tpl|ejs)$/,
                 loader: 'underscore-template-loader',
                 query: {
                     variable: 'data',
@@ -162,7 +147,7 @@ module.exports = {
                 options: {
                   bypassOnDebug: true,
                 }
-            },
+            }
         ],
     },
     mode: "development",
@@ -175,19 +160,19 @@ module.exports = {
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new ExtractTextPlugin('dist/libs/style/[name].css'),
+        new ExtractTextPlugin('dist/libs/style/[name].[hash].css'),
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery',
-            'window.jQuery': 'jquery',
-            'window.$': 'jquery',
           }),
-          new webpack.ProvidePlugin({
-       $:"jquery"
-     }),
+        new CopyWebpackPlugin([{
+            from: __dirname + '/src/libs/images/',
+            to: './dist/libs/images/'
+        }]),
     ].concat(htmlConfig()),
     output: {
         path: path.join(__dirname, 'dist'),
-        filename: '[name].js' == 'demo.js' ? 'build.js': 'dist/js/[name].[hash].js',
+        filename: 'dist/js/[name].[hash].js',
+        publicPath: path.join(__dirname, 'dist'),
     },
 };

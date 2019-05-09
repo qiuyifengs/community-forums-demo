@@ -23,7 +23,7 @@ export class HttpExcetpionFilter implements ExceptionFilter {
         const ctx = host.switchToHttp();
         const response = ctx.getResponse();
         const request = ctx.getRequest();
-
+        console.log(11, exception)
         this.util.log.error({
             title: 'Http Request Error', request: {
                 headers: request.headers,

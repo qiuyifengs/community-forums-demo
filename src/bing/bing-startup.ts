@@ -10,7 +10,6 @@ import bodyParser = require('body-parser');
 import { connectLogger, getLogger } from 'log4js';
 import * as express from 'express';
 import * as path from 'path';
-
 /**
  * Bing 框架初始化
  */

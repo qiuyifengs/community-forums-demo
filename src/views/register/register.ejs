@@ -6,10 +6,6 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
     <link rel="stylesheet" href="/style/login/login.css">
     <% include ../common/script %>
-    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
-    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
-    <script src="https://cdn.bootcss.com/rxjs/6.4.0/rxjs.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.0.0-beta.12/Rx.min.js"></script>
     <style>
         .ghost-form-item {
             margin-bottom: 0;
@@ -100,8 +96,11 @@
         </div>
     </div>
 </body>
+<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+<script src="https://cdn.bootcss.com/rxjs/6.4.0/rxjs.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.0.0-beta.12/Rx.min.js"></script>
 <script>
-
     window.httphijack.init()
     $.validator.setDefaults({
         debug: false, // 调试模式设为true 只验证不提交form 
