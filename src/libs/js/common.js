@@ -1,4 +1,7 @@
-
+import $ from 'jquery'
+import jQuery from 'jquery';
+window.$ = $
+window.jQuery = $
 // baseUrl
 // var baseUrl = 'http://192.168.4.188:3002/';
 var baseUrl = 'http://127.0.0.1:3002/';
@@ -20,7 +23,6 @@ function checkEmail(email) {
  */
 function goPage(pathName, newWin) {
     if (newWin) {
-        console.log(pathName)
         window.open(baseUrl + pathName)
     } else {
         $(window).attr('location', baseUrl + pathName);

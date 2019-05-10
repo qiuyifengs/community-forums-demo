@@ -37,7 +37,8 @@ export class BingStartup {
         }));
 
         // ejs config
-        app.use(express.static(path.join(__dirname, '../libs')));
+        // app.use(express.static(path.join(__dirname, '../libs')));
+        app.use(express.static(path.join('/')));
         app.set('views', path.join(__dirname, '../views'));
         app.set('view engine', 'ejs');
     }
@@ -52,7 +53,7 @@ export class BingStartup {
             .setTitle(settings.title)
             .setDescription(settings.description)
             .setVersion(settings.version)
-            // .setBasePath(settings.basePath)
+            .setBasePath(settings.basePath)
             .build();
 
         const document = SwaggerModule.createDocument(app, options);

@@ -2,16 +2,16 @@
 const webpack = require('webpack');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
-
 const glob = require('glob');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
+
 /**
  * ejs 模块打包
  * @param {*} globPath 
  */
+
 function getEntry(globPath) {
     var entries = {},
         basename, tmp;
@@ -32,9 +32,9 @@ function getEntry(globPath) {
 }
 const HtmlTpl = getEntry('./src/**/*.ejs')
 const appPath = {app: ['webpack/hot/poll?1000', './src/main.ts']}
-// const commonJs =  getEntry('./src/libs/js/**/*.js')
+// const jQuery = {jQuery: ['./src/libs/js/jquery.js',]}
 const common = { common: [
-    './src/libs/js/jquery-3.3.1.js', 
+    // './src/libs/js/jquery-3.3.1.js', 
     './src/libs/js/common.js',
     './src/libs/js/pageTurning.js',
     './src/libs/js/ghost-ui.js',
@@ -50,7 +50,7 @@ const common = { common: [
     './src/libs/js/lang/zh.js',
     './src/libs/js/sensitiveWords.js'
 ]}
-const Entry = Object.assign(appPath, common, getEntry('./src/views/**/*.js'))
+const Entry = Object.assign(common, appPath, getEntry('./src/views/**/*.js'))
 const htmlConfig = () => {
     let config = []
     for (let attr in HtmlTpl) {
@@ -81,6 +81,7 @@ module.exports = {
     entry: Entry,
     watch: true,
     target: 'node',
+    node: { fs: 'empty'},
     externals: [
         nodeExternals({
             whitelist: ['webpack/hot/poll?1000'],
@@ -88,16 +89,6 @@ module.exports = {
     ],
     module: {
         rules: [
-            {
-                test: require.resolve('jquery'),
-                use: [{
-                    loader: 'expose-loader',
-                    options: 'jQuery'
-                },{
-                    loader: 'expose-loader',
-                    options: '$'
-                }]
-            },
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
@@ -164,6 +155,8 @@ module.exports = {
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery',
+            "window.jQuery": "jquery",
+            "window.jquery": "jquery"
           }),
         new CopyWebpackPlugin([{
             from: __dirname + '/src/libs/images/',
