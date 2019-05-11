@@ -67,26 +67,37 @@ export class SettingService {
   }
   // reset email
   async resetEmail(param): Promise<any> {
-    const res = await this.settingRepository.findOne({ USER_ID: param.userId });
-    const msg = {
-      code: 1,
-      message: '',
-      HttpStatus: 200,
-      data: {},
-    };
-    if (param.oldEmail !== res.EMAIL) {
-      msg.code = ApiErrorCode.USER_EMAIL_ERROR;
-      msg.HttpStatus = HttpStatus.BAD_REQUEST;
-      msg.message = '输入的旧邮箱不正确';
-      return msg;
+    const connection = getConnection();
+    const queryRunner = connection.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      const res = await this.settingRepository.findOne({ USER_ID: param.userId });
+      const msg = {
+        code: 1,
+        message: '',
+        HttpStatus: 200,
+        data: {},
+      };
+      if (param.oldEmail.toLowerCase() !== res.EMAIL) {
+        msg.code = ApiErrorCode.USER_EMAIL_ERROR;
+        msg.HttpStatus = HttpStatus.BAD_REQUEST;
+        msg.message = '输入的旧邮箱不正确';
+        return msg;
+      }
+      res.EMAIL = param.newEmail.toLowerCase();
+      await this.settingRepository.save(res);
+      const data = {
+        code: ApiErrorCode.SUCCESS,
+        message: '修改成功',
+      };
+      await queryRunner.commitTransaction();
+      return data;
+    } catch (err) {
+      await queryRunner.rollbackTransaction();
+    } finally {
+      await queryRunner.release();
     }
-    res.EMAIL = param.newEmail;
-    await this.settingRepository.save(res);
-    const data = {
-      code: ApiErrorCode.SUCCESS,
-      message: '修改成功',
-    };
-    return data;
   }
   // validate email
   async validateEmail(param): Promise<any> {
@@ -96,7 +107,7 @@ export class SettingService {
     await queryRunner.startTransaction();
     try {
       let email;
-      const res = await this.settingRepository.findOne({ EMAIL: param.email });
+      const res = await this.settingRepository.findOne({ USER_ID: param.userId });
       const msg = {
         code: 1,
         message: '',

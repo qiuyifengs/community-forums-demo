@@ -14,7 +14,7 @@ export class PostsController {
         myArticleList.articleList.forEach((postItem, ind) => {
             myArticleList.articleList[ind].ARTICLE_LABEL = postItem.ARTICLE_LABEL.split(',');
         });
-        res.render('account/posts', { title: '我的帖子', myArticleList });
+        res.render('account/posts/posts', { title: '我的帖子', myArticleList });
     }
     @Get('/posts/:nickName/:page')
     @ApiOperation({ title: 'get balance from postList'})

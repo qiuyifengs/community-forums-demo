@@ -12,7 +12,7 @@ export class ReplyController {
     @ApiOperation({ title: 'get balance from address'})
     public async index(@Request() req, @Response() res, @Param() data): Promise<any> {
         const answerList = await this.replyService.getComments(data);
-        res.render('account/reply', { title: '我的回复', answerList });
+        res.render('account/reply/reply', { title: '我的回复', answerList });
     }
 
     @Get('/reply/:nickName/:page')

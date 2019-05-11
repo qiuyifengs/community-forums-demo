@@ -24,9 +24,9 @@ export class AccountController {
             headerIcon,
             nickName,
             personalProfile,
-            activity: data.activity,
+            activity: data.ACTIVITY,
         };
-        res.render('account/account', { title: '个人中心', result });
+        res.render('account/personalCenter/account', { title: '个人中心', result });
     }
 
     @Post('upload')
@@ -85,12 +85,12 @@ export class AccountController {
     @Get('user/changePassWord')
     @ApiOperation({ title: 'get balance from user' })
     public async changePassWord(@Request() req, @Response() res, @Param() param): Promise<any> {
-        res.render('account/appChangePw', { title: '修改密码'});
+        res.render('account/appChangePw/appChangePw', { title: '修改密码'});
     }
 
     @Get('user/changeEmail')
     @ApiOperation({ title: 'get balance from user' })
     public async changeEmail(@Request() req, @Response() res, @Param() param): Promise<any> {
-        res.render('account/appChangeEmail', { title: '修改邮箱'});
+        res.render('account/appChangeEmail/appChangeEmail', { title: '修改邮箱'});
     }
 }

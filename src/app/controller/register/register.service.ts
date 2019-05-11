@@ -72,7 +72,7 @@ export class RegisterService {
             paramObj.USER_ID = param.userId;
             paramObj.CREATED = date + '';
             paramObj.TOKEN = token;
-            paramObj.EMAIL = param.userId;
+            paramObj.EMAIL = param.userId.toLowerCase();
             await this.registerRepository.save(paramObj);
             msg.code = ApiErrorCode.USER_REGISTER_SUCCESS;
             msg.message = '注册成功';

@@ -14,7 +14,7 @@ export class ReplyController {
         collectList.articleList.forEach((postItem, ind) => {
             collectList.articleList[ind].ARTICLE_LABEL = postItem.ARTICLE_LABEL.split(',');
         });
-        res.render('account/collect', { title: '我的收藏', collectList });
+        res.render('account/collect/collect', { title: '我的收藏', collectList });
     }
     @Get('/collect/:nickName/:page')
     @ApiOperation({ title: 'get balance from postList'})
