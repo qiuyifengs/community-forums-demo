@@ -2,7 +2,7 @@ import { Injectable, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 // import { ApiException } from '../../bing/common/enums/api.exception';
 import { ApiErrorCode } from '../../../bing/common/enums/api-error-code.enum';
-import { Repository } from 'typeorm';
+import { Repository, getConnection } from 'typeorm';
 import { BbsPostList } from '../../entitys/postList.entity';
 import { BbsArticleDetail } from '../../entitys/articleDetail.entity';
 import { BbsMenu } from '../../entitys/menuList.entity';
@@ -47,73 +47,95 @@ export class PublishService {
     }
     // publish
     async publish(data): Promise<any> {
-        const userInfo = await this.userRepository.findOne({ USER_ID: data.userId });
-        data.author = userInfo.NICK_NAME;
-        const msg = {
-            code: 1,
-            message: '',
-            articleId: '',
-        };
-        let isRes = await this.postsRepository.findOne({ ARTICLE_ID: data.articleId });
-        if (data.isEdit !== 'false') {
-            isRes = Object.assign(isRes, data);
-            isRes.IS_DRAFTS = data.isDrafts === 'false' ? false : true;
-            await this.postsRepository.save(isRes);
-            await this.addArticleDetail(isRes);
-            msg.code = ApiErrorCode.SUCCESS;
-            if (data.isDrafts !== 'false') {
-                msg.articleId = data.articleId;
-                msg.message = '保存成功！';
-            } else {
-                msg.message = '发表成功！';
-                msg.articleId = data.articleId;
-            }
-        } else {
-            data.editTime = data.publishTime;
-            data.editPerson = data.userId;
-            let publishData = {
-                USER_ID: data.userId,
-                IS_EDIT: data.isEdit,
-                IS_DRAFTS: data.isDrafts,
-                ARTICLE_ID: data.articleId,
-                ARTICLE_TITLE: data.articleTitle,
-                ARTICLE_CONTENT: data.articleContent,
-                ARTICLE_TYPE: data.articleType,
-                ARTICLE_LABEL: data.articleLabel,
-                CREATED: data.publishTime,
-                AUTHOR: data.author,
-                EDIT_TIME: data.editTime,
-                EDIT_PERSON: data.editPerson,
+        const connection = getConnection();
+        const queryRunner = connection.createQueryRunner();
+        await queryRunner.connect();
+        await queryRunner.startTransaction();
+        try {
+            const userInfo = await this.userRepository.findOne({ USER_ID: data.userId });
+            data.author = userInfo.NICK_NAME;
+            const msg = {
+                code: 1,
+                message: '',
+                articleId: '',
             };
-            if (isRes) {
-                publishData = Object.assign(isRes, publishData);
-            }
-            if (data.isDrafts !== 'false') {
-                publishData.IS_DRAFTS = true;
+            let isRes = await this.postsRepository.findOne({ ARTICLE_ID: data.articleId });
+            if (data.isEdit !== 'false') {
+                isRes = Object.assign(isRes, data);
+                isRes.IS_DRAFTS = data.isDrafts === 'false' ? false : true;
+                await this.postsRepository.save(isRes);
+                await this.addArticleDetail(isRes);
                 msg.code = ApiErrorCode.SUCCESS;
-                msg.articleId = data.articleId;
-                msg.message = '保存成功！';
+                if (data.isDrafts !== 'false') {
+                    msg.articleId = data.articleId;
+                    msg.message = '保存成功！';
+                } else {
+                    msg.message = '发表成功！';
+                    msg.articleId = data.articleId;
+                }
             } else {
-                publishData.IS_DRAFTS = false;
-                msg.code = ApiErrorCode.SUCCESS;
-                msg.articleId = data.articleId;
-                msg.message = '发表成功！';
+                data.editTime = data.publishTime;
+                data.editPerson = data.userId;
+                let publishData = {
+                    USER_ID: data.userId,
+                    IS_EDIT: data.isEdit,
+                    IS_DRAFTS: data.isDrafts,
+                    ARTICLE_ID: data.articleId,
+                    ARTICLE_TITLE: data.articleTitle,
+                    ARTICLE_CONTENT: data.articleContent,
+                    ARTICLE_TYPE: data.articleType,
+                    ARTICLE_LABEL: data.articleLabel,
+                    CREATED: data.publishTime,
+                    AUTHOR: data.author,
+                    EDIT_TIME: data.editTime,
+                    EDIT_PERSON: data.editPerson,
+                };
+                if (isRes) {
+                    publishData = Object.assign(isRes, publishData);
+                }
+                if (data.isDrafts !== 'false') {
+                    publishData.IS_DRAFTS = true;
+                    msg.code = ApiErrorCode.SUCCESS;
+                    msg.articleId = data.articleId;
+                    msg.message = '保存成功！';
+                } else {
+                    publishData.IS_DRAFTS = false;
+                    msg.code = ApiErrorCode.SUCCESS;
+                    msg.articleId = data.articleId;
+                    msg.message = '发表成功！';
+                }
+                await this.addArticleDetail(publishData);
+                const res = await this.postsRepository.save(publishData);
             }
-            await this.addArticleDetail(publishData);
-            const res = await this.postsRepository.save(publishData);
+            await queryRunner.commitTransaction();
+            return msg;
+        } catch (err) {
+            await queryRunner.rollbackTransaction();
+        } finally {
+            await queryRunner.release();
         }
-        return msg;
     }
     // Store articles in articleDetail
     async addArticleDetail(data): Promise<any> {
-        if (data.IS_EDIT === 'false') {
-            const articleDetail = new BbsArticleDetail();
-            const addObj = Object.assign(articleDetail, data);
-            await this.postsRepository.manager.save(addObj);
-        } else {
-            let editRes = await this.articleRepository.findOne({ ARTICLE_ID: data.ARTICLE_ID });
-            editRes = Object.assign(editRes, data);
-            await this.articleRepository.save(editRes);
+        const connection = getConnection();
+        const queryRunner = connection.createQueryRunner();
+        await queryRunner.connect();
+        await queryRunner.startTransaction();
+        try {
+            if (data.IS_EDIT === 'false') {
+                const articleDetail = new BbsArticleDetail();
+                const addObj = Object.assign(articleDetail, data);
+                await this.postsRepository.manager.save(addObj);
+            } else {
+                let editRes = await this.articleRepository.findOne({ ARTICLE_ID: data.ARTICLE_ID });
+                editRes = Object.assign(editRes, data);
+                await this.articleRepository.save(editRes);
+            }
+            await queryRunner.commitTransaction();
+        } catch (err) {
+            await queryRunner.rollbackTransaction();
+        } finally {
+            await queryRunner.release();
         }
     }
 }

@@ -15,7 +15,6 @@ import { util } from '../../../bing';
 export class LoginService {
   user: BbsUser;
   constructor(
-
     @InjectRepository(BbsUser)
     private readonly signRepository: Repository<BbsUser>,
   ) { }

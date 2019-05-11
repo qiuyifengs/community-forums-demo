@@ -2,7 +2,7 @@ import { Injectable, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ApiException } from '../../../bing/common/enums/api.exception';
 import { ApiErrorCode } from '../../../bing/common/enums/api-error-code.enum';
-import { Repository } from 'typeorm';
+import { Repository, getConnection } from 'typeorm';
 import { BbsPostList } from '../../entitys/postList.entity';
 import { BbsArticleDetail } from '../../entitys/articleDetail.entity';
 import { BbsMenu } from '../../entitys/menuList.entity';
@@ -83,11 +83,22 @@ export class IndexService {
     }
     // add viewCount
     async viewCount(data): Promise<any> {
-        const res = await this.indexRepository.findOne({ ARTICLE_ID: data.articleId});
-        const upRes = await this.articleRepository.findOne({ ARTICLE_ID: data.articleId });
-        res.VIEW_COUNT += 1;
-        upRes.VIEW_COUNT = res.VIEW_COUNT;
-        await this.indexRepository.save(res);
-        await this.articleRepository.save(upRes);
+        const connection = getConnection();
+        const queryRunner = connection.createQueryRunner();
+        await queryRunner.connect();
+        await queryRunner.startTransaction();
+        try {
+            const res = await this.indexRepository.findOne({ ARTICLE_ID: data.articleId});
+            const upRes = await this.articleRepository.findOne({ ARTICLE_ID: data.articleId });
+            res.VIEW_COUNT += 1;
+            upRes.VIEW_COUNT = res.VIEW_COUNT;
+            await this.indexRepository.save(res);
+            await this.articleRepository.save(upRes);
+            await queryRunner.commitTransaction();
+        } catch (err) {
+            await queryRunner.rollbackTransaction();
+        } finally {
+            await queryRunner.release();
+        }
     }
 }

@@ -37,8 +37,8 @@ export class BingStartup {
         }));
 
         // ejs config
-        // app.use(express.static(path.join(__dirname, '../libs')));
-        app.use(express.static(path.join('/')));
+        app.use(express.static(path.join(__dirname, '../libs')));
+        // app.use(express.static(path.join('/')));
         app.set('views', path.join(__dirname, '../views'));
         app.set('view engine', 'ejs');
     }

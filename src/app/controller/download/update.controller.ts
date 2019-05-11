@@ -6,17 +6,17 @@ import { UpdateService } from './update.service';
 @Controller()
 export class UpdateController {
     constructor(private readonly loginService: UpdateService) { }
-    @Get('/update')
+    @Get('/updata')
     @HttpCode(HttpStatus.OK)
     @ApiOperation({ title: 'update page' })
     public async index(@Request() req, @Response() res): Promise<any> {
-        res.render('download/update', { title: 'update' });
+        res.render('download/updata/updata', { title: 'updata' });
     }
 
     @Get('/appDownload')
     @ApiOperation({ title: 'download page' })
     public async download(@Request() req, @Response() res): Promise<any> {
-        res.render('download/appDownload', { title: 'download' });
+        res.render('download/appDownload/appDownload', { title: 'download' });
     }
 
 }

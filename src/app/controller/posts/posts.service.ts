@@ -2,7 +2,7 @@ import { Injectable, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ApiException } from '../../../bing/common/enums/api.exception';
 import { ApiErrorCode } from '../../../bing/common/enums/api-error-code.enum';
-import { Repository } from 'typeorm';
+import { Repository, getConnection } from 'typeorm';
 import { BbsPostList } from '../../entitys/postList.entity';
 import { BbsArticleDetail } from '../../entitys/articleDetail.entity';
 import { BbsUser } from '../../entitys/user.entity';
@@ -45,19 +45,31 @@ export class PostsService {
 
   // deleteArticle
   async deleteArticle(data): Promise<any> {
-    const res =  await this.postsRepository.find({ARTICLE_ID: data.articleId});
-    const result = await this.postsRepository.remove(res);
-    if (result.length > 0) {
-      const articlkeRes =  await this.articleRepository.find({ARTICLE_ID: data.articleId});
-      await this.articleRepository.remove(articlkeRes);
-      return {message: '删除成功！'};
-    } else {
-      const msg = {
-        code: ApiErrorCode.REMOVE_FAILT,
-        HttpStatus: HttpStatus.BAD_REQUEST,
-        message: '删除失败',
-      };
-      return msg;
+    const connection = getConnection();
+    const queryRunner = connection.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+        const res =  await this.postsRepository.find({ARTICLE_ID: data.articleId});
+        const result = await this.postsRepository.remove(res);
+        if (result.length > 0) {
+          const articlkeRes =  await this.articleRepository.find({ARTICLE_ID: data.articleId});
+          await this.articleRepository.remove(articlkeRes);
+          await queryRunner.commitTransaction();
+          return {message: '删除成功！'};
+        } else {
+          const msg = {
+            code: ApiErrorCode.REMOVE_FAILT,
+            HttpStatus: HttpStatus.BAD_REQUEST,
+            message: '删除失败',
+          };
+          await queryRunner.commitTransaction();
+          return msg;
+        }
+    } catch (err) {
+        await queryRunner.rollbackTransaction();
+    } finally {
+        await queryRunner.release();
     }
   }
 }

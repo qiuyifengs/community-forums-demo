@@ -17,7 +17,7 @@ export class ReplyService {
     @InjectRepository(BbsUser)
     private readonly userCommentRepository: Repository<BbsUser>,
   ) {}
-  // get comment li(st
+  // get comment list
   async getComments(param): Promise<any> {
     let commentRes;
     const pageCount = param.pageCount ? param.pageCount * 1 : 5;
@@ -56,6 +56,5 @@ export class ReplyService {
       total: totalRes.length,
     };
     return resData;
-    // return commentRes;
   }
 }
