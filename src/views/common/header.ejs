@@ -126,12 +126,13 @@ $(document).ready(function(){
                 activity = res.activity
                 localStorage.setItem('activity', res.activity)
                 if (res.headerIcon) {
-                    headerDom = `<img src=/${res.headerIcon}>`
+                    headerDom = `<img src=/${res.headerIcon}><span class="login-enty app-display">${nickName}</span>`
                     $(".user-headerIcon").append(headerDom)
                     localStorage.setItem('headerIcon', res.headerIcon)
                 } else {
                     headerDom = `
                         <span class="header-random-color" article-author="${$.cookie("nickName")}">${$.cookie("nickName").substring(0, 1)}</span>
+                        <span class="login-enty app-display">${nickName}</span>
                     `
                     $(".user-headerIcon").append(headerDom)
                     $(".header-random-color").each(function() {

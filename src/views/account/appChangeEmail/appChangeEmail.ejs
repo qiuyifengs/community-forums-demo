@@ -65,10 +65,12 @@
                 onfocusout: function(element) { $(element).valid() },
                 onkeyup: function(element) { $(element).valid() },
                 focusInvalid: function(element) { $(element).valid() 
-                    console.log('focusInvalid' + element.id)
                 },
                 debug: true,
                 submitHandler: function(form) {
+                    if ($('#newEmail').val() == $('#oldEmail').val()) {
+                        return layer.msg('新邮箱不能和旧邮箱一致')
+                    }
                     const params = {
                         userId: $.cookie("userId"),
                         oldEmail: $('#oldEmail').val(),
@@ -77,16 +79,21 @@
                     myAjax("POST", "account/resetEmail", params).then((res) => {
                         layer.msg(res.message)
                         if (res.code == 10000) {
-                            setTimeout(function() {
-                                history.go(-1)
-                            }, 2000)
+                            myAjax("POST", 'account/validateEmail', {userId: $.cookie("userId"), type: 1,}).then((res) => {
+                                if (res.code == 10000) {
+                                    setTimeout(function() {
+                                        history.go(-1)
+                                    }, 2000)
+                                } else {
+                                    console.log(res.message);
+                                }
+                            })
                         } 
                     })
                 },
                 errorElement: 'div',
                 errorClass:"ghost-form-explain",
                 highlight: function(element, errorClass, validClass) {
-                    console.log(element.id)
                     const elementId = $(`#${element.id}-error`)
                     // $(elementId).parents().addClass('ghost-form-item-with-help')
                     $(elementId).addClass("ghost-form-explain")

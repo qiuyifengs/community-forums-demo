@@ -546,7 +546,7 @@
             })
             // ------------------------------webApp--------------------------------------
             $('.app-index-menu-list .index-menu-item').each(function() {
-                if (articleType === $(this).find('.ghost-ment-item-title').text()) {
+                if (articleType ===  $(this).attr('menu-id')) {
                     $(this).addClass('is-active')
                     $(this).siblings().removeClass('is-active')
                     $(this).find('.app-menu-item-border').addClass('app-menu-item-border-show')

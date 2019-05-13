@@ -85,11 +85,18 @@ export class SettingService {
         msg.message = '输入的旧邮箱不正确';
         return msg;
       }
+      if (param.newEmail.toLowerCase() === res.EMAIL) {
+        msg.code = ApiErrorCode.USER_EMAIL_ERROR;
+        msg.HttpStatus = HttpStatus.BAD_REQUEST;
+        msg.message = '不能改为当前绑定邮箱';
+        return msg;
+      }
       res.EMAIL = param.newEmail.toLowerCase();
+      res.ACTIVITY = false;
       await this.settingRepository.save(res);
       const data = {
         code: ApiErrorCode.SUCCESS,
-        message: '修改成功',
+        message: '修改成功, 请前往新邮箱验证',
       };
       await queryRunner.commitTransaction();
       return data;

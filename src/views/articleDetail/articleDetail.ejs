@@ -322,7 +322,7 @@
     <script type='text/javascript'>
         let articleId, articleTitle
         function filterTime(item) {
-            return  resTime = formatDateFilter(item)
+            return  resTime = formatDateFilter2(item)
         }
         $(function(){
             let author = $('.my_name').text()
@@ -337,7 +337,7 @@
                 articleId = this.location.pathname.split('/')[3]
                 articleTitle = $('.title').text()
                 $('.time').each(function() {
-                    let resTime = formatDateFilter($(this).text())
+                    let resTime = formatDateFilter2($(this).text())
                     $(this).html(resTime)
                 })
                 $('.item-random-color').each(function() {
@@ -412,7 +412,7 @@
             //     }
             // })
             $('.showTime').each(function() {
-                let resTime = formatDateFilter($(this).text())
+                let resTime = formatDateFilter2($(this).text())
                 $(this).html(resTime)
             })
             
@@ -807,12 +807,12 @@
                 myAjax('POST', 'post/addComment', param).then((res) =>{
                     if (res.code == 10000) {
                         let commentDetail = {
-                            commentatorName: author,
+                            COMMENTATOR_NAME: author,
                             headerIcon: localStorage.getItem('headerIcon') ? localStorage.getItem('headerIcon') : '',
-                            commentUserName: $.cookie('nickName'),
-                            commentContent: commentText,
-                            commentId: res.commentId,
-                            commentTime: format('yyyy-MM-dd hh:mm:ss', new Date())
+                            COMMENT_USER_NAME: $.cookie('nickName'),
+                            COMMENT_CONTENT: commentText,
+                            COMMENT_ID: res.commentId,
+                            CREATED: format('yyyy-MM-dd hh:mm:ss', new Date())
                         }
                         $('.comment_list').append(addCommentHtml(commentDetail))
                         $('.user-comment-textarea').val('')
@@ -863,11 +863,11 @@
                 myAjax('POST', 'post/addChildrenComment', param).then((res) => {
                     if (res.code == 10000) {
                         let commentDetail = {
-                            commentatorName: commentatorName,
-                            commentUserName: $.cookie('nickName'),
-                            commentContent: commentText,
-                            commentId: res.commentId,
-                            commentTime: format('yyyy-MM-dd hh:mm:ss', new Date())
+                            COMMENTATOR_NAME: commentatorName,
+                            COMMENT_USER_NAME: $.cookie('nickName'),
+                            COMMENT_CONTENT: commentText,
+                            COMMENT_ID: res.commentId,
+                            CREATED: format('yyyy-MM-dd hh:mm:ss', new Date())
                         }
                         $('.user-comment-textarea').val('')
                         $self.parents('.parent_comment').append(childrenRenderComment(commentDetail))
@@ -942,7 +942,7 @@
                     `
         }
         function filterTime(item) {
-            return  resTime = formatDateFilter(item)
+            return  resTime = formatDateFilter2(item)
         }
         function showHeaderIcon(item) {
             if (item.headerIcon != '' && item.headerIcon != null) {
