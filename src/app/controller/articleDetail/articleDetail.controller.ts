@@ -29,10 +29,8 @@ export class ArticleDetailController {
     public async preview(@Request() req, @Response() res, @Param() param): Promise<any> {
         const article = await this.postsRepository.getArticle(param);
         article.ARTICLE_LABEL = article.ARTICLE_LABEL.split(',');
-        console.log(article)
-        res.render('publish/preview', { title: 'preview', article });
+        res.render('preview/preview', { title: 'preview', article });
     }
-
 
     @Post('addComment')
     @ApiOperation({ title: 'get balance from commentList' })

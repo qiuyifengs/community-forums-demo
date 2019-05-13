@@ -12,7 +12,7 @@ export class CollectService {
     @InjectRepository(BbsMyCollectionList)
     private readonly collectRepository: Repository<BbsMyCollectionList>,
     @InjectRepository(BbsUser)
-    private readonly userCommentRepository: Repository<BbsUser>,
+    private readonly userRepository: Repository<BbsUser>,
   ) { }
 
   async account(data): Promise<any> {
@@ -24,7 +24,7 @@ export class CollectService {
     let totalRes;
     const pageCount = param.pageCount ? param.pageCount * 1 : 10;
     const page = param.page ? (param.page - 1) * 1 * pageCount : 0;
-    const user = await this.userCommentRepository.findOne({NICK_NAME: param.nickName});
+    const user = await this.userRepository.findOne({NICK_NAME: param.nickName});
     totalRes = await this.collectRepository.find({USER_ID: user.USER_ID});
     res = await this.collectRepository
           .createQueryBuilder('collectList')
@@ -33,9 +33,6 @@ export class CollectService {
           .skip(page)
           .take(pageCount)
           .getMany();
-    // res.forEach((item, ind) => {
-    //     // res[ind].articleContent = item.articleContent.substr(2).substring(0, item.articleContent.length - 4).replace('","', '\n');
-    // });
     const articleData = {
       articleList: res,
       total: totalRes.length,

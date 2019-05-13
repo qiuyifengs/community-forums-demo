@@ -7,6 +7,7 @@ import { BbsArticleDetail } from '../../entitys/articleDetail.entity';
 import { BbsCommentsList } from '../../entitys/commentList.entity';
 import { BbsChildrenComments } from '../../entitys/childrenComment.entity';
 import { BbsMyCollectionList } from '../../entitys/myCollectionList.entity';
+import { BbsMyLikeList } from '../../entitys/myLikeList.entity';
 import { BbsPostList } from '../../entitys/postList.entity';
 import { BbsUser } from '../../entitys/user.entity';
 import { util } from '../../../bing';
@@ -21,6 +22,8 @@ export class ArticleDetailService {
         private readonly articleRepository: Repository<BbsArticleDetail>,
         @InjectRepository(BbsMyCollectionList)
         private readonly myCollectRepository: Repository<BbsMyCollectionList>,
+        @InjectRepository(BbsMyLikeList)
+        private readonly myLikeRepository: Repository<BbsMyLikeList>,
         @InjectRepository(BbsCommentsList)
         private readonly commentRepository: Repository<BbsCommentsList>,
         @InjectRepository(BbsChildrenComments)
@@ -55,14 +58,15 @@ export class ArticleDetailService {
                 commentNum += childrenComRes.length * 1;
             }
         }
+        const likeRes = await this.myLikeRepository.findOne({ARTICLE_ID: param.articleId, USER_ID: curUserId.default.userId});
         articleRes.comments = commentRes;
-        articleRes.IS_LIKE = collectRes ? collectRes.IS_LIKE : false;
-        articleRes.IS_COLLECT = collectRes ? collectRes.IS_COLLECT : false;
+        articleRes.IS_COLLECT = collectRes ? true : false;
         const resObj = Object.assign(articleRes);
         resObj.personalProfile = userInfoRes.PERSONAL_PROFILE;
         resObj.total = totalRes.length;
         resObj.headerIcon = userInfoRes.HEADER_ICON;
         resObj.commentTotal = commentNum + commentRes.length;
+        resObj.IS_LIKE = likeRes ? true : false;
         delete resObj.userId;
         return resObj;
     }
@@ -89,10 +93,18 @@ export class ArticleDetailService {
             comment.CREATED = await util.dateType.getTime() + '';
             comment.COMMENT_ID = dateNum + util.ramdom.random(6);
             comment.COMMENT_USER_NAME = param.nickName;
-            const updateArticle = await this.articleRepository.findOne({ ARTICLE_ID: param.articleId });
-            updateArticle.COMMENT_ID = comment.COMMENT_ID;
-            updateArticle.COMMENT_COUNT += 1;
-            await this.articleRepository.save(updateArticle);
+            const updataPosts = await this.postListRepository.findOne({ ARTICLE_ID: param.articleId });
+            const updataArticle = await this.articleRepository.findOne({ ARTICLE_ID: param.articleId });
+            const updataCollectRes = await this.myCollectRepository.findOne({ARTICLE_ID: param.articleId, USER_ID: param.userId});
+            updataArticle.COMMENT_ID = comment.COMMENT_ID;
+            updataArticle.COMMENT_COUNT += 1;
+            updataPosts.COMMENT_COUNT = updataArticle.COMMENT_COUNT;
+            if (updataCollectRes) {
+                updataCollectRes.COMMENT_COUNT = updataArticle.COMMENT_COUNT;
+                await this.myCollectRepository.save(updataCollectRes);
+            }
+            await this.postListRepository.save(updataPosts);
+            await this.articleRepository.save(updataArticle);
             await this.articleRepository.manager.save(comment);
             const msg = {
                 code: ApiErrorCode.SUCCESS,
@@ -133,9 +145,17 @@ export class ArticleDetailService {
             childrenCom.CREATED = await util.dateType.getTime() + '';
             childrenCom.CHILD_COMMENT_ID = dateNum + util.ramdom.random(6);
             childrenCom.COMMENT_ID = param.commentId;
-            const updateArticle = await this.articleRepository.findOne({ ARTICLE_ID: param.articleId });
-            updateArticle.COMMENT_COUNT += 1;
-            await this.articleRepository.save(updateArticle);
+            const updataPosts = await this.postListRepository.findOne({ ARTICLE_ID: param.articleId });
+            const updataArticle = await this.articleRepository.findOne({ ARTICLE_ID: param.articleId });
+            const updataCollectRes = await this.myCollectRepository.findOne({ARTICLE_ID: param.articleId, USER_ID: param.userId});
+            updataArticle.COMMENT_COUNT += 1;
+            updataPosts.COMMENT_COUNT = updataArticle.COMMENT_COUNT;
+            if (updataCollectRes) {
+                updataCollectRes.COMMENT_COUNT = updataArticle.COMMENT_COUNT;
+                await this.myCollectRepository.save(updataCollectRes);
+            }
+            await this.postListRepository.save(updataPosts);
+            await this.articleRepository.save(updataArticle);
             await this.articleRepository.manager.save(childrenCom);
             const msg = {
                 code: ApiErrorCode.SUCCESS,
@@ -190,6 +210,25 @@ export class ArticleDetailService {
                     msg.message = '删除失败！';
                 }
             }
+            let commentNum = 0;
+            const commentRes = await this.commentRepository.find({ ARTICLE_ID: param.articleId });
+            if (commentRes.length > 0) {
+                for (const item of commentRes) {
+                    const childrenComRes = await this.childrenCommentRepository.find({ ARTICLE_ID: param.articleId, COMMENT_ID: item.COMMENT_ID });
+                    commentNum += childrenComRes.length * 1;
+                }
+            }
+            const updataPosts = await this.postListRepository.findOne({ ARTICLE_ID: param.articleId });
+            const updataArticle = await this.articleRepository.findOne({ ARTICLE_ID: param.articleId });
+            const updataCollectRes = await this.myCollectRepository.findOne({ARTICLE_ID: param.articleId, USER_ID: param.userId});
+            updataArticle.COMMENT_COUNT = commentRes.length + commentNum;
+            updataPosts.COMMENT_COUNT = updataArticle.COMMENT_COUNT;
+            if (updataCollectRes) {
+                updataCollectRes.COMMENT_COUNT = updataArticle.COMMENT_COUNT;
+                await this.myCollectRepository.save(updataCollectRes);
+            }
+            await this.postListRepository.save(updataPosts);
+            await this.articleRepository.save(updataArticle);
             await queryRunner.commitTransaction();
             return msg;
         } catch (err) {
@@ -206,54 +245,41 @@ export class ArticleDetailService {
         await queryRunner.connect();
         await queryRunner.startTransaction();
         try {
-            const likeRes =  await this.articleRepository.findOne({ARTICLE_ID: param.articleId});
+            const articleRes =  await this.articleRepository.findOne({ARTICLE_ID: param.articleId});
             const postRes =  await this.articleRepository.findOne({ARTICLE_ID: param.articleId});
             const collectRes = await this.myCollectRepository.findOne({ARTICLE_ID: param.articleId, USER_ID: param.userId});
+            const likeRes = await this.myLikeRepository.findOne({ARTICLE_ID: param.articleId, USER_ID: param.userId});
             const user = await this.userRepository.findOne({NICK_NAME: param.author});
-            if (!collectRes) {
-                const myCollection = new BbsMyCollectionList();
-                likeRes.LIKE_COUNT = likeRes.LIKE_COUNT + 1;
-                postRes.LIKE_COUNT = likeRes.LIKE_COUNT;
-                likeRes.IS_LIKE = true;
-                await this.articleRepository.save(likeRes);
+            if (!likeRes) {
+                articleRes.LIKE_COUNT = articleRes.LIKE_COUNT + 1;
+                postRes.LIKE_COUNT = articleRes.LIKE_COUNT;
+                await this.articleRepository.save(articleRes);
                 await this.postListRepository.save(postRes);
-                const paramObj = Object.assign(myCollection, likeRes);
-                delete paramObj.ID;
-                paramObj.USER_ID = param.userId;
-                paramObj.AUTHOR_ID = user.USER_ID;
-                paramObj.ARTICLE_CONTENT = postRes.ARTICLE_CONTENT;
-                paramObj.IS_LIKE = true;
-                await this.myCollectRepository.manager.save(paramObj);
-                await queryRunner.commitTransaction();
-                return { code: ApiErrorCode.SUCCESS, isLike: likeRes.IS_LIKE, message: '已标记为喜欢！' };
-            } else {
-                if (!collectRes.IS_LIKE) {
-                    likeRes.LIKE_COUNT = likeRes.LIKE_COUNT + 1;
-                    postRes.LIKE_COUNT = likeRes.LIKE_COUNT;
-                    likeRes.IS_LIKE = true;
-                    await this.articleRepository.save(likeRes);
-                    await this.postListRepository.save(postRes);
-                    collectRes.IS_LIKE = true;
+                const myLike = new BbsMyLikeList();
+                myLike.USER_ID = param.userId;
+                myLike.ARTICLE_ID = param.articleId;
+                myLike.LIKE_COUNT = articleRes.LIKE_COUNT;
+                myLike.IS_LIKE = true;
+                myLike.CREATED = await util.dateType.getTime() + '';
+                await this.myLikeRepository.save(myLike);
+                if (collectRes) {
+                    collectRes.LIKE_COUNT = articleRes.LIKE_COUNT;
                     await this.myCollectRepository.save(collectRes);
-                    await queryRunner.commitTransaction();
-                    return { code: ApiErrorCode.SUCCESS, isLike: likeRes.IS_LIKE, message: '已标记为喜欢！' };
-                } else {
-                    likeRes.LIKE_COUNT = (likeRes.LIKE_COUNT - 1) > 0 ? likeRes.LIKE_COUNT - 1 : 0;
-                    postRes.LIKE_COUNT = likeRes.LIKE_COUNT;
-                    likeRes.IS_COLLECT = false;
-                    if (!collectRes.IS_COLLECT) {
-                        await queryRunner.commitTransaction();
-                        await this.myCollectRepository.delete({ARTICLE_ID: param.articleId, USER_ID: param.userId});
-                    } else {
-                        collectRes.IS_LIKE = false;
-                        await queryRunner.commitTransaction();
-                        await this.myCollectRepository.save(collectRes);
-                    }
-                    await this.articleRepository.save(likeRes);
-                    await this.postListRepository.save(postRes);
-                    await queryRunner.commitTransaction();
-                    return { code: ApiErrorCode.SUCCESS, isLike: likeRes.IS_LIKE, message: '已移出喜欢！' };
                 }
+                await queryRunner.commitTransaction();
+                return { code: ApiErrorCode.SUCCESS, isLike: myLike.IS_LIKE, message: '已标记为喜欢！' };
+            } else {
+                articleRes.LIKE_COUNT = (articleRes.LIKE_COUNT - 1) > 0 ? articleRes.LIKE_COUNT - 1 : 0;
+                postRes.LIKE_COUNT = articleRes.LIKE_COUNT;
+                if (collectRes) {
+                    collectRes.LIKE_COUNT = articleRes.LIKE_COUNT;
+                    await this.myCollectRepository.save(collectRes);
+                }
+                await this.myLikeRepository.delete({ARTICLE_ID: param.articleId, USER_ID: param.userId});
+                await this.articleRepository.save(articleRes);
+                await this.postListRepository.save(postRes);
+                await queryRunner.commitTransaction();
+                return { code: ApiErrorCode.SUCCESS, isLike: false, message: '已移出喜欢！' };
             }
         } catch (err) {
             await queryRunner.rollbackTransaction();
@@ -276,8 +302,7 @@ export class ArticleDetailService {
             if (!collectRes) {
                 const myCollection = new BbsMyCollectionList();
                 articleRes.COLLECT_COUNT = articleRes.COLLECT_COUNT + 1;
-                postRes.COLLECT_COUNT = articleRes.COLLECT_COUNT;
-                articleRes.IS_LIKE = true;
+                postRes.COLLECT_COUNT = postRes.COLLECT_COUNT + 1;
                 await this.articleRepository.save(articleRes);
                 await this.postListRepository.save(postRes);
                 const paramObj = Object.assign(myCollection, articleRes);
@@ -289,35 +314,15 @@ export class ArticleDetailService {
                 delete paramObj.ID;
                 await this.myCollectRepository.save(paramObj);
                 await queryRunner.commitTransaction();
-                return { code: ApiErrorCode.SUCCESS, isCollect: paramObj.IS_COLLECT,  message: '收藏成功！' };
+                return { code: ApiErrorCode.SUCCESS, isCollect: true,  message: '收藏成功！' };
             } else {
-                if (!collectRes.IS_COLLECT) {
-                    articleRes.COLLECT_COUNT = articleRes.COLLECT_COUNT + 1;
-                    postRes.COLLECT_COUNT = articleRes.COLLECT_COUNT;
-                    collectRes.CREATED = await util.dateType.getTime() + '';
-                    articleRes.IS_LIKE = true;
-                    await this.articleRepository.save(articleRes);
-                    await this.postListRepository.save(postRes);
-                    collectRes.IS_COLLECT = true;
-                    await this.myCollectRepository.save(collectRes);
-                    await queryRunner.commitTransaction();
-                    return { code: ApiErrorCode.SUCCESS, isCollect: collectRes.IS_COLLECT,  message: '收藏成功！' };
-                } else {
-                    articleRes.COLLECT_COUNT = (articleRes.COLLECT_COUNT - 1) > 0 ? articleRes.COLLECT_COUNT - 1 : 0;
-                    postRes.COLLECT_COUNT = articleRes.COLLECT_COUNT;
-                    articleRes.IS_LIKE = false;
-                    if (!collectRes.IS_LIKE) {
-                        await queryRunner.commitTransaction();
-                        await this.myCollectRepository.delete({ARTICLE_ID: param.articleId, USER_ID: param.userId});
-                    } else {
-                        collectRes.IS_COLLECT = false;
-                        await this.myCollectRepository.save(collectRes);
-                    }
-                    await this.articleRepository.save(articleRes);
-                    await this.postListRepository.save(postRes);
-                    await queryRunner.commitTransaction();
-                    return { code: ApiErrorCode.SUCCESS, isCollect: collectRes.IS_COLLECT,  message: '取消成功！' };
-                }
+                articleRes.COLLECT_COUNT = (articleRes.COLLECT_COUNT - 1) > 0 ? articleRes.COLLECT_COUNT - 1 : 0;
+                postRes.COLLECT_COUNT = articleRes.COLLECT_COUNT;
+                await this.myCollectRepository.delete({ARTICLE_ID: param.articleId, USER_ID: param.userId});
+                await this.articleRepository.save(articleRes);
+                await this.postListRepository.save(postRes);
+                await queryRunner.commitTransaction();
+                return { code: ApiErrorCode.SUCCESS, isCollect: false,  message: '取消成功！' };
             }
         } catch (err) {
             await queryRunner.rollbackTransaction();

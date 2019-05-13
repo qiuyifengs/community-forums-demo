@@ -36,10 +36,11 @@ export class BbsMyCollectionList {
     @Column({ default: 0 }) LIKE_COUNT: number;
 
     // commentCoun
-    @Column({ default: 0 }) COMMENT_COIUNT: number;
+    @Column({ default: 0 }) COMMENT_COUNT: number;
 
     // isLike
-    @Column({ default: false }) IS_LIKE: boolean;
+    // @Column({ default: false }) IS_LIKE: boolean;
+
     // isCollect
     @Column({ default: false }) IS_COLLECT: boolean;
 

@@ -20,7 +20,7 @@ export class BbsPostList {
     // viewCount
     @Column({ default: 0 }) VIEW_COUNT: number;
     // collectCount
-    @Column({ default: 0 }) COLLECT_COIUNT: number;
+    @Column({ default: 0 }) COLLECT_COUNT: number;
     // likeCount
     @Column({ default: 0 }) LIKE_COUNT: number;
     // commentCount

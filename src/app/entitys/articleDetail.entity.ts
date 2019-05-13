@@ -29,7 +29,7 @@ export class BbsArticleDetail {
     // commentCount
     @Column({ default: 0 }) COMMENT_COUNT: number;
      // isLike
-     @Column({ default: false }) IS_LIKE: boolean;
+    //  @Column({ default: false }) IS_LIKE: boolean;
      // isCollect
      @Column({ default: false }) IS_COLLECT: boolean;
      // isDrafts

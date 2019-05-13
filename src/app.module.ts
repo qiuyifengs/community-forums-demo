@@ -2,7 +2,7 @@ import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/c
 import { CorsMiddleware } from './bing';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import modules from './app';
-import { BbsArticleDetail, BbsChildrenComments, BbsCommentsList, BbsLabelList, BbsLabelType, BbsMenu, BbsMyCollectionList, BbsPostList, BbsUser } from './app/entitys';
+import { BbsArticleDetail, BbsChildrenComments, BbsCommentsList, BbsLabelList, BbsLabelType, BbsMenu, BbsMyCollectionList, BbsMyLikeList, BbsPostList, BbsUser } from './app/entitys';
 // const ormconfig = require('../ormconfig.json');
 
 @Module({
@@ -22,6 +22,7 @@ import { BbsArticleDetail, BbsChildrenComments, BbsCommentsList, BbsLabelList, B
                 BbsLabelType,
                 BbsMenu,
                 BbsMyCollectionList,
+                BbsMyLikeList,
                 BbsPostList,
                 BbsUser,
             ],

@@ -36,6 +36,7 @@ export class PostsService {
     // res.forEach((item, ind) => {
     //     // res[ind].articleContent = item.articleContent.substr(2).substring(0, item.articleContent.length - 4).replace('","', '\n');
     // });
+    console.log(111, res)
     const articleData = {
         articleList: res,
         total: totalRes.length,

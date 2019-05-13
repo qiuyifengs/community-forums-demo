@@ -350,13 +350,13 @@
                                                                             <a href="javascript:" class="articleAuthor web-display" style="color: var(--btn-col)">
                                                                                 <span class="author-name"><%=articleItem.author%></span>
                                                                             </a>
-                                                                            <em class="showTime web-display"><%= articleItem.CREATED %></em>
+                                                                            <em class="showTime web-display"><%= articleItem.CREATED.substring(0, 10)  %></em>
                                                                             <span class="ghost-tag-list">
                                                                                 <% articleItem.ARTICLE_LABEL.forEach(function(labelItem) {%>
                                                                                 <span class="ghost-tag ghost-tag-has-color ghost-tag-color-primary"><%= labelItem %></span>
                                                                                 <% }) %>
                                                                             </span>
-                                                                            <span class="showTime app-display app-time" ><%= articleItem.CREATED %></span>
+                                                                            <span class="showTime app-display app-time" ><%= articleItem.CREATED.substring(0, 10) %></span>
                                                                             <span class="from-type">From：<%= articleItem.ARTICLE_TYPE %></span>
                                                                         </div>
                                                                     </div>
@@ -630,11 +630,11 @@
                                                 <a href="javascript:" class="articleAuthor web-display" style="color: var(--btn-col)">
                                                     <span class="author-name">${ item.author }</span>
                                                 </a>
-                                                <em class="showTime web-display">${ filterTime(item.CREATED) }</em>
+                                                <em class="showTime web-display">${ filterTime(item.CREATED.substring(0, 10)) }</em>
                                                 <span class="ghost-tag-list">
                                                     <span class="ghost-tag ghost-tag-has-color ghost-tag-color-primary">${ item.ARTICLE_TYPE }</span>
                                                 </span>
-                                                <span class="showTime app-display app-time">${ filterTime(item.CREATED) }</span>
+                                                <span class="showTime app-display app-time">${ filterTime(item.CREATED.substring(0, 10)) }</span>
                                                 <span class="from-type">来自分类：${ item.ARTICLE_TYPE }</span>
                                             </div>
                                         </div>

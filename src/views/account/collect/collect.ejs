@@ -48,27 +48,31 @@
                                                 <ul class="ghost-list-item-action">
                                                     <li class="list-item web-display">
                                                         <a>
-                                                            <%= item.VIEW_COUNT%> 阅读
+                                                            <%= item.VIEW_COUNT%>
+                                                            <span lang="view">次阅读</span>
                                                         </a>
                                                     </li>
                                                     <li class="list-item web-display">
                                                         <span>
-                                                            <%= item.COMMENT_COUNT%> 评论
+                                                            <%= item.COMMENT_COUNT%>
+                                                            <span lang="comments">评论</span>
                                                         </span>
                                                     </li>
                                                     <li class="list-item web-display">
                                                         <span>
-                                                            <%= item.COLLECT_COUNT%> 收藏
+                                                            <%= item.COLLECT_COUNT%>
+                                                            <span lang="collect">收藏</span>
                                                         </span>
                                                     </li>
                                                     <li class="list-item web-display">
                                                         <span>
-                                                            <%= item.LIKE_COUNT%> 喜欢
+                                                            <%= item.LIKE_COUNT%>
+                                                            <span lang="like">喜欢</span>
                                                         </span>
                                                     </li>
                                                     <li class="list-item web-display">
                                                         <span class="time">
-                                                            <%= item.CREATED%>
+                                                            <%= item.CREATED.substring(0, 10)%>
                                                         </span>
                                                     </li>
                                                     <% if (item.ARTICLE_LABEL) { %>
@@ -80,7 +84,7 @@
                                                     <% } %>
                                                     <li class="app-time app-display">
                                                         <span class="time">
-                                                            <%= item.CREATED %>
+                                                            <%= item.CREATED.substring(0, 10) %>
                                                         </span>
                                                     </li>
                                                 </ul>
@@ -145,7 +149,6 @@
                     myAjax('GET', url).then(res => {
                         if (res.code === 1) {
                             $("#myArticleTemplate").empty()
-                            console.log(res)
                             res.articleList.forEach(item => {
                                 $("#myArticleTemplate").append(renderCollectHtml(item))
                             })
@@ -225,48 +228,52 @@
                             <div class="ghost-list-item-main">
                                 <div class="ghost-list-item-meta-content item-title-box">
                                     <h4 class="ghost-list-item-meta-title">
-                                        <span class="item-title">${ item.articleTitle }</span>
+                                        <span class="item-title">${ item.ARTICLE_TITLE }</span>
                                     </h4>
                                 </div>
-                                <div class="item-content-flex">${ showText(item.articleContent) }</div>
+                                <div class="item-content-flex">${ showText(item.ARTICLE_CONTENT) }</div>
                             </div>
                             <ul class="ghost-list-item-action">
                                 <li class="list-item web-display">
                                     <a>
-                                        ${ item.viewCount } 阅读
+                                        ${ item.VIEW_COUNT } 
+                                        <span lang="view">次阅读</span>
                                     </a>
                                 </li>
                                 <li class="list-item web-display">
                                     <span>
-                                        ${ item.commentCount } 评论
+                                        ${ item.COMMENT_COUNT }
+                                        <span lang="comments">评论</span>
                                     </span>
                                 </li>
                                 <li class="list-item web-display">
                                     <span>
-                                        ${ item.collectCount } 收藏
+                                        ${ item.COLLECT_COUNT }
+                                        <span lang="collect">收藏</span>
                                     </span>
                                 </li>
                                 <li class="list-item web-display">
                                     <span>
-                                        ${ item.likeCount } 喜欢
+                                        ${ item.LIKE_COUNT }
+                                        <span lang="like">喜欢</span>
                                     </span>
                                 </li>
                                 <li class="list-item">
                                     <span class="time">
-                                        ${ filterTime(item.publishTime) }
+                                        ${ filterTime(item.CREATED.substring(0, 10)) }
                                     </span>
                                 </li>
-                                ${ renderArticleLabel(item.articleLabel) }
+                                ${ renderArticleLabel(item.ARTICLE_LABEL) }
                                 <li class="app-time app-display">
                                     <span class="time">
-                                        ${ item.publishTime }
+                                        ${ item.CREATED.substring(0, 10) }
                                     </span>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div class="ghost-list-item-extra">
-                        <div class="ghost-list-item-id" style="display: none">${ item.articleId }</div>
+                        <div class="ghost-list-item-id" style="display: none">${ item.ARTICLE_ID }</div>
                         <button style="width: 80px; font-size: 12px" class="ghost-btn ghost-btn-primary">取消收藏</button>
                     </div>
                 </div>
