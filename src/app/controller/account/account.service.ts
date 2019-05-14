@@ -51,40 +51,42 @@ export class AccountService {
       if (res) {
         res.NICK_NAME = param.nickName ? param.nickName : res.NICK_NAME;
         res.PERSONAL_PROFILE = param.personalProfile ? param.personalProfile : res.PERSONAL_PROFILE;
-        if (param.headerIcon) {
-          if (res.HEADER_ICON) {
-            fs.unlinkSync(`./src/libs/${res.HEADER_ICON}`);
-          }
-          res.HEADER_ICON = param.headerIcon.replace('src/libs/', '');
-        }
+        // if (param.headerIcon) {
+        //   if (res.HEADER_ICON) {
+        //     fs.unlinkSync(`./src/libs/${res.HEADER_ICON}`);
+        //   }
+        //   res.HEADER_ICON = param.headerIcon.replace('src/libs/', '');
+        // }
+        res.HEADER_ICON = param.headerIcon;
         // update dataBase
         await this.accountRepository.save(res);
+
         await this.postRepository // post db
         .createQueryBuilder()
         .update()
         .set({AUTHOR: res.NICK_NAME})
-        .where('userId = :userId', {userId: res.USER_ID})
+        .where('USER_ID = :USER_ID', {USER_ID: res.USER_ID})
         .execute();
 
         await this.articleRepository // articleDetail db
         .createQueryBuilder()
         .update()
         .set({AUTHOR: res.NICK_NAME})
-        .where('userId = :userId', {userId: res.USER_ID})
+        .where('USER_ID = :USER_ID', {USER_ID: res.USER_ID})
         .execute();
 
         await this.commentRepository // comment db --- commentatorName
         .createQueryBuilder()
         .update()
         .set({COMMENTATOR_NAME: res.NICK_NAME})
-        .where('commentatorId = :commentatorId', {commentatorId: res.USER_ID})
+        .where('COMMENTATOR_ID = :COMMENTATOR_ID', {COMMENTATOR_ID: res.USER_ID})
         .execute();
 
         await this.commentRepository // comment db --- commentUserName
         .createQueryBuilder()
         .update()
         .set({COMMENTATOR_NAME: res.NICK_NAME})
-        .where('userId = :userId', {userId: res.USER_ID})
+        .where('USER_ID = :USER_ID', {USER_ID: res.USER_ID})
         .execute();
 
         await this.childCommentRepository // childComment db --- commentatorName
@@ -93,30 +95,29 @@ export class AccountService {
         .set({
           COMMENTATOR_NAME: res.NICK_NAME,
         })
-        .where('commentatorId = :commentatorId', {commentatorId: res.USER_ID})
+        .where('COMMENTATOR_ID = :COMMENTATOR_ID', {COMMENTATOR_ID: res.USER_ID})
         .execute();
 
         await this.childCommentRepository // childComment db --- commentUserName
         .createQueryBuilder()
         .update()
         .set({COMMENTATOR_NAME: res.NICK_NAME})
-        .where('userId = :userId', {userId: res.USER_ID})
+        .where('USER_ID = :USER_ID', {USER_ID: res.USER_ID})
         .execute();
 
         await this.childCommentRepository // childComment db --- author
         .createQueryBuilder()
         .update()
         .set({AUTHOR: res.NICK_NAME})
-        .where('authorId = :authorId', {authorId: res.USER_ID})
+        .where('AUTHOR_ID = :AUTHOR_ID', {AUTHOR_ID: res.USER_ID})
         .execute();
 
         await this.collectRepository // collect db
         .createQueryBuilder()
         .update()
         .set({AUTHOR: res.NICK_NAME})
-        .where('authorId = :authorId', {authorId: res.USER_ID})
+        .where('AUTHOR_ID = :AUTHOR_ID', {AUTHOR_ID: res.USER_ID})
         .execute();
-
         msg.code = ApiErrorCode.SUCCESS;
         msg.message = '修改成功！';
       } else {

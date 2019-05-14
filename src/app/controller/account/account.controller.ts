@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Post, Body, Request, Response, FileInterceptor, Res, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { ApiOperation, ApiUseTags } from '@nestjs/swagger';
 import { AccountService } from './account.service';
-// import { FileInterceptor } from '@nestjs/platform-express';
+import { util } from '../../../bing';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 
@@ -33,7 +33,8 @@ export class AccountController {
     @UseInterceptors(FileInterceptor('file',
         {
             storage: diskStorage({
-                destination: './src/libs/images/headerIconFile',
+                // destination: './src/libs/images/headerIconFile',
+                // destination: '/Users/helloworld/Documents/ghost/work/file',
                 filename: (req, file, cb) => {
                     const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
                     return cb(null, `${randomName}${extname(file.originalname)}`);
@@ -48,10 +49,17 @@ export class AccountController {
             personalProfile: data.personalProfile,
             headerIcon: '',
         };
-        if (file) {
-            params.headerIcon = file.path;
+        try {
+            if (file) {
+                return util.client.write(file.path)
+                .then(async (fileInfo) => {
+                    params.headerIcon = 'http://' + fileInfo.url + '/' + fileInfo.fid;
+                    return await this.accountService.changeUserInfo(params);
+                });
+            }
+        } catch (e) {
+            console.log(e);
         }
-        return await this.accountService.changeUserInfo(params);
     }
 
     @Post('getUserInfo')

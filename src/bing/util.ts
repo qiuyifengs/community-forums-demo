@@ -4,6 +4,7 @@ import { Log } from './common/log';
 import moment = require('moment');
 import * as random from './common/random';
 import { DataType } from './common/dateType';
+import * as SeaweedFS from 'seaweedfs';
 
 /**
  * 操作库
@@ -33,7 +34,26 @@ export class Util {
      * 时间格式化
      */
     static dateType = DataType;
+    /**
+     * token config
+     */
     static session = {
         secrets: '123',
-    }
+    };
+
+    /**
+     * SeaweedFS
+     */
+    static client = new SeaweedFS({
+        masters: [{
+          host: '192.168.4.200',
+          port: 9333,
+        },
+      ],
+      scheme: 'http',
+      retry_count: 60,
+      retry_timeout: 20000,
+      log_name: 'SeaweedFS',
+      log_level: 'info',
+    });
 }

@@ -45,7 +45,7 @@ export class PublishController {
     @UseInterceptors(FileInterceptor('file',
         {
             storage: diskStorage({
-                destination: './src/libs/images/articleFile',
+                // destination: './src/libs/images/articleFile',
                 filename: (req, file, cb) => {
                     const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
                     return cb(null, `${randomName}${extname(file.originalname)}`);
@@ -54,21 +54,27 @@ export class PublishController {
         },
     ))
     async uploadFile(@UploadedFile() file, @Body() data) {
-        console.log(file)
-        const msg = {
-            code: 10000,
-            message: '上传成功！',
-            path: file.path.replace('src/libs', ''),
-            filename: file.filename,
-        };
-        return msg;
+        try {
+            return util.client.write(file.path)
+            .then((fileInfo) => {
+                const msg = {
+                    code: 10000,
+                    message: '上传成功！',
+                    path: 'http://' + fileInfo.url + '/' + fileInfo.fid,
+                    filename: fileInfo.fid,
+                };
+                return msg;
+            });
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     @Post('articleVideo')
     @UseInterceptors(FileInterceptor('file',
         {
             storage: diskStorage({
-                destination: './src/libs/images/articleVideo',
+                // destination: './src/libs/images/articleVideo',
                 filename: (req, file, cb) => {
                     const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
                     return cb(null, `${randomName}${extname(file.originalname)}`);
@@ -81,7 +87,7 @@ export class PublishController {
         let msg = {
             code: 10000,
             message: '上传成功！',
-            path: file.path.replace('src/libs', ''),
+            path: '',
             filename: '',
         };
         if (file.size > limitSize) {
@@ -92,28 +98,51 @@ export class PublishController {
                 filename: '',
             };
             delete msg.path;
-            fs.unlinkSync(`./src/libs/images/articleVideo/${file.filename}`);
+            // fs.unlinkSync(`./src/libs/images/articleVideo/${file.filename}`);
         } else {
-            msg = {
-                code: 10000,
-                message: '上传成功！',
-                path: file.path.replace('src/libs', ''),
-                filename: file.filename,
-            };
+            try {
+                return util.client.write(file.path)
+                    .then(async (fileInfo) => {
+                        return msg = {
+                            code: 10000,
+                            message: '上传成功！',
+                            path: 'http://' + fileInfo.url + '/' + fileInfo.fid,
+                            filename: fileInfo.fid,
+                        };
+                    });
+            } catch (e) {
+                console.log(e);
+            }
+            // msg = {
+            //     code: 10000,
+            //     message: '上传成功！',
+            //     path: file.path.replace('src/libs', ''),
+            //     filename: file.filename,
+            // };
         }
         return msg;
     }
     @Post('deleteUrl')
     @ApiOperation({ title: 'get balance from data'})
     public async deleteUrl(@Body() params): Promise<any> {
-        const delUrl = JSON.parse(params.urlArr);
-        delUrl.forEach(itemUrl => {
-            fs.unlinkSync(`./src/libs${itemUrl}`);
-        });
-        const msg = {
-            code: 10000,
-            message: '删除成功！',
-        };
-        return msg;
+        // const delUrl = JSON.parse(params.urlArr);
+        // delUrl.forEach(itemUrl => {
+        //     fs.unlinkSync(`./src/libs${itemUrl}`);
+        // });
+        console.log(params)
+        try {
+            const msg = {
+                code: 10000,
+                message: '删除成功！',
+            };
+            return util.client.remove(params.fid)
+            .then((body) => {
+                return msg;
+            });
+        } catch (e) {
+            console.log(e)
+            return e
+        }
+        
     }
 }

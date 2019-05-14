@@ -6,7 +6,7 @@ const instance = express();
 
 async function bootstrap() {
     util.log.replaceConsole();
-
+    util.client.connect();
     const app = await NestFactory.create(ApplicationModule, instance);
 
     // 配置Swagger文档

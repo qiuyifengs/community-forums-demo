@@ -17,7 +17,7 @@
                 <div class='app-author-info app-display'>
                     <div class='app-author-headerIcon'>
                         <% if(article.headerIcon) { %>
-                            <img class='head_portrait' src='/<%= article.headerIcon %>'>
+                            <img class='head_portrait' src='<%= article.headerIcon %>'>
                         <% } else { %> 
                             <span class='item-random-color' article-commentUserName='<%=article.AUTHOR%>'>
                                 <%= article.AUTHOR.substring(0, 1) %>
@@ -148,7 +148,7 @@
                                 <div class='comment_top'>
                                     <!-- <img class='commentator_img' src='/images/man1.png' alt=''> -->
                                     <% if(commentItem.hearderIcon) { %>
-                                        <img class='commentator_img' src='/<%= commentItem.hearderIcon %>'>
+                                        <img class='commentator_img' src='<%= commentItem.hearderIcon %>'>
                                     <% } else { %> 
                                         <span class='item-random-color commentator_user_name' article-commentUserName='<%=commentItem.COMMENT_USER_NAME%>'>
                                             <%= commentItem.COMMENT_USER_NAME.substring(0, 1) %>
@@ -213,7 +213,7 @@
                     <div class='personal_box'>
                         <div class='info_top'>
                             <% if(article.headerIcon) { %>
-                                <img class='head_portrait' src='/<%= article.headerIcon %>'>
+                                <img class='head_portrait' src='<%= article.headerIcon %>'>
                             <% } else { %> 
                                 <span class='item-random-color' article-commentUserName='<%=article.AUTHOR%>'>
                                     <%= article.AUTHOR.substring(0, 1) %>
@@ -947,7 +947,7 @@
         function showHeaderIcon(item) {
             if (item.headerIcon != '' && item.headerIcon != null) {
                 return `
-                    <img class='commentator_img' src='/${ item.headerIcon }'>
+                    <img class='commentator_img' src='${ item.headerIcon }'>
                 `
             } else {
                 console.log(item)

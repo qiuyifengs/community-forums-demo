@@ -80,7 +80,8 @@ function Editor(opt) {
 				}
 				if (delUrl.length > 0) {
 					let data = {
-						urlArr: JSON.stringify(delUrl)
+						urlArr: JSON.stringify(delUrl),
+						fid: $(this).attr('data-id'),
 					}
 					$(this).parents('.J_text').remove();
 					$.ajax({
@@ -122,7 +123,7 @@ function Editor(opt) {
                                 <div class="pic_box">\
                                     <div class="pic" data-src="'+opt.url+'" style="background-image: url('+opt.url+'); background-size:cover;"></div>\
                                     <textarea placeholder="添加描述" spellcheck="false" class="form-control add-describe" oninput="keyup(value)" onchange="change()">' + (opt.value ? opt.value : '') + '</textarea>\
-									<div class="J_bottom editor_btns"><span class="J_del del" data-name="' + opt.url + '"><span class="J_delete" lang="delete">删除</span></span></div>\
+									<div class="J_bottom editor_btns"><span class="J_del del" data-name="' + opt.url + '" data-id="' + opt.filename +'" ><span class="J_delete" lang="delete">删除</span></span></div>\
                                 </div>\
                             </div>';
 		} else if (opt.type == 'video') {
@@ -131,7 +132,7 @@ function Editor(opt) {
                                 <div class="pic_box">\
                                     <div class="video"><iframe src="' + opt.url + '" frameborder="0" width="100%" height="100% scrolling="no" marginheight="0" marginwidth="0""></iframe></div>\
                                     <textarea placeholder="添加描述" spellcheck="false" class="form-control add-describe" oninput="keyup(value)" onchange="change()">' + (opt.value ? opt.value : '') + '</textarea>\
-									<div class="J_bottom"><span class="J_del del" data-name="' + opt.url + '"><span class="J_delete" lang="delete">删除</span></span></div>\
+									<div class="J_bottom"><span class="J_del del" data-name="' + opt.url + '" data-id="' + opt.filename +'" ><span class="J_delete" lang="delete">删除</span></span></div>\
                                 </div>\
                             </div>';
 		}else if(opt.type == 'link'){
@@ -205,14 +206,13 @@ let oldVal = null
 let time
 function keyup(val) {
 	if (oldVal != val) {
-		console.log(oldVal, val)
 		oldVal = val
 		clearInterval(time)
 	}
 	Editor.prototype.autoSave(global)
 }
 function change() {
-	console.log(Editor.prototype)
+	// console.log(Editor.prototype)
 }
 function translate() {
 	if (localStorage.getItem('langData') && JSON.parse(localStorage.getItem('langData')).lang == 'en') {
