@@ -66,6 +66,7 @@
         overflow: hidden;
     }
     .ghost-pro-pages-account-settings-info-main, .ghost-pro-pages-account-settings-info-main .ghost-pro-pages-account-settings-info-right {
+        overflow-x: hidden;
         display: block;
         padding: 0;
         background: var(--col-f8);
@@ -76,6 +77,7 @@
         
     }
     .ghost-list .ghost-list-item {
+        position: relative;
         display: block;
         padding: 0 15px;
         border: none;
@@ -129,6 +131,28 @@
         padding: 0;
         font-size: var(--fs-11);
         transform: scale(.8) translateX(12%);
+    }
+    .item_btn_del {
+        position: absolute;
+        top:0;
+        right:-120px;
+        height:100%;
+        width:60px;
+        line-height:128px;
+        background-color:red;
+        color:#fff;
+        text-align:center;
+    }
+    .item_btn_cancel {
+        position: absolute;
+        top:0;
+        right:-61px;
+        height:100%;
+        width:60px;
+        line-height:128px;
+        background-color: #666666;
+        color:#fff;
+        text-align:center;
     }
 }
 

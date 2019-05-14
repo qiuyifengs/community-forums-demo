@@ -246,7 +246,7 @@ export class ArticleDetailService {
         await queryRunner.startTransaction();
         try {
             const articleRes =  await this.articleRepository.findOne({ARTICLE_ID: param.articleId});
-            const postRes =  await this.articleRepository.findOne({ARTICLE_ID: param.articleId});
+            const postRes =  await this.postListRepository.findOne({ARTICLE_ID: param.articleId});
             const collectRes = await this.myCollectRepository.findOne({ARTICLE_ID: param.articleId, USER_ID: param.userId});
             const likeRes = await this.myLikeRepository.findOne({ARTICLE_ID: param.articleId, USER_ID: param.userId});
             const user = await this.userRepository.findOne({NICK_NAME: param.author});
@@ -296,22 +296,27 @@ export class ArticleDetailService {
         await queryRunner.startTransaction();
         try {
             const articleRes =  await this.articleRepository.findOne({ARTICLE_ID: param.articleId});
-            const postRes =  await this.articleRepository.findOne({ARTICLE_ID: param.articleId});
+            const postRes =  await this.postListRepository.findOne({ARTICLE_ID: param.articleId});
             const collectRes = await this.myCollectRepository.findOne({ARTICLE_ID: param.articleId, USER_ID: param.userId});
             const user = await this.userRepository.findOne({NICK_NAME: param.author});
+            console.log(111, collectRes, articleRes)
             if (!collectRes) {
                 const myCollection = new BbsMyCollectionList();
                 articleRes.COLLECT_COUNT = articleRes.COLLECT_COUNT + 1;
                 postRes.COLLECT_COUNT = postRes.COLLECT_COUNT + 1;
                 await this.articleRepository.save(articleRes);
+                console.log(444, myCollection)
                 await this.postListRepository.save(postRes);
+                
                 const paramObj = Object.assign(myCollection, articleRes);
+                console.log(333, paramObj)
                 paramObj.USER_ID = param.userId;
                 paramObj.AUTHOR_ID = user.USER_ID;
                 paramObj.IS_COLLECT = true;
                 paramObj.ARTICLE_CONTENT = postRes.ARTICLE_CONTENT;
                 paramObj.CREATED = await util.dateType.getTime() + '';
                 delete paramObj.ID;
+                console.log(222)
                 await this.myCollectRepository.save(paramObj);
                 await queryRunner.commitTransaction();
                 return { code: ApiErrorCode.SUCCESS, isCollect: true,  message: '收藏成功！' };
@@ -340,10 +345,13 @@ export class ArticleDetailService {
         try {
             const res =  await this.articleRepository.findOne({ARTICLE_ID: param.articleId});
             const postRes =  await this.articleRepository.findOne({ARTICLE_ID: param.articleId});
+            const myCollectRes = await this.myCollectRepository.findOne({ ARTICLE_ID: param.articleId });
             res.VIEW_COUNT = res.VIEW_COUNT + 1;
             postRes.VIEW_COUNT = res.VIEW_COUNT;
+            myCollectRes.VIEW_COUNT = res.VIEW_COUNT;
             await this.articleRepository.save(res);
             await this.postListRepository.save(postRes);
+            await this.myCollectRepository.save(myCollectRes);
             await queryRunner.commitTransaction();
             return res;
         } catch (err) {

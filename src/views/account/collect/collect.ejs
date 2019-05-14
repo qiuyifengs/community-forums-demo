@@ -2,7 +2,6 @@
 <html>
     <head>
         <title><%= title %></title>
-        <link rel="stylesheet" href="/style/account/collect.css">
         <!-- set `maximum-scale` for some compatibility issues -->
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
         <!-- Delete the default Apple toolbar and menu bar -->
@@ -11,6 +10,7 @@
         <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
         <!-- Will not recognize the mailbox, tell the device to ignore the number in the page as a phone number -->
         <meta content="telephone=no" name="format-detection"/>
+        <link rel="stylesheet" href="/style/account/collect.css">
         <script src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script>
         <% include ../../common/script %>
     </head>
@@ -33,7 +33,7 @@
                                 <div class="ghost-list ghost-list-vertical ghost-list-split">
                                     <div class="ghost-spin-nested-loading">
                                         <% collectList.articleList.forEach(function(item) {%>
-                                        <div class="ghost-list-item collect-item bd-bottom">
+                                        <div class="ghost-list-item collect-item bd-bottom" item-id="<%= item.ARTICLE_ID %>">
                                             <div class="ghost-list-item-main list-box">
                                                 <div class="ghost-list-item-main">
                                                     <div class="ghost-list-item-meta-content item-title-box">
@@ -125,8 +125,9 @@
             </div>
         </div>
     </body>
+    <script src="/js/slideLeftAction.js"></script>
     <script type="text/javascript">
-
+        
         $(function() {
             // app title
             if (localStorage.getItem('langData') && JSON.parse(localStorage.getItem('langData')).lang == 'en') {
@@ -134,6 +135,39 @@
             } else {
                 $('.app-page-title').text('我的收藏')
             }
+            var sla = new slideLeftAction({
+            container: '.collect-item',
+            moveCount: 120, //和按钮的宽度总和相等
+            buttons: [{
+                text: '删除',
+                class: 'item_btn_del',
+                click: function (e) {
+                    var el = e.target.parentNode;
+                    let itemId = $(this).parents(".ghost-list-item").attr('item-id');
+                    let param = {
+                        userId: $.cookie("userId"),
+                        articleId: itemId
+                    }
+                    myAjax("POST", 'account/removeCollect', param).then((res) => {
+                        if (res.code == 10000) {
+                            el.remove();
+                        } else {
+                            console.log(res.message)
+                        }
+                    })
+                }
+            },
+            {
+                text: '取消',
+                class: 'item_btn_cancel',
+                click: function (e) {
+                    var el = e.target.parentNode;
+                    el.classList.remove('move-out-click');
+                    sla._transform(el, 'TransitionDuration', '125ms');
+                    sla._transform(el, 'Transform', 'translateX(0px)');
+                }
+            }]
+        });
             // init pagination config
             $('.ghost-pagination').pagination({
                 total: document.getElementById('totalPages').value,
@@ -195,7 +229,7 @@
                         articleId: itemId
                     }
                     myAjax("POST", 'account/removeCollect', param).then((res) => {
-                        if (res.code == 1) {
+                        if (res.code == 10000) {
                             $(this).parents(".ghost-list-item").remove()
                         } else {
                             console.log(res.message)

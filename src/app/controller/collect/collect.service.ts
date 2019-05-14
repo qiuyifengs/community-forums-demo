@@ -44,7 +44,7 @@ export class CollectService {
     const res = await this.collectRepository.find({ ARTICLE_ID: data.articleId });
     const result = await this.collectRepository.remove(res);
     if (result.length > 0) {
-      return {message: '取消成功！'};
+      return {code: 10000, message: '取消成功！'};
     } else {
       throw new ApiException('取消失败', ApiErrorCode.REMOVE_FAILT, HttpStatus.BAD_REQUEST);
     }
