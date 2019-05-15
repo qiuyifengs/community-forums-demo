@@ -89,8 +89,9 @@
                         console.log(111, res)
                         if (res.data && res.data.downloadPath) {
                             console.log(222, res.data)
-                            window.open(res.data.downloadPath)
+                            // window.open(res.data.downloadPath)
                             console.log(333, res.data.downloadPath)
+                            window.locetion.href = res.data.downloadPath
                         }
                     },
                     error: (err) => {
