@@ -29,6 +29,7 @@
         </div>
     </body>
     <script src="/js/jquery-3.3.1.js"></script>
+    <script src="/js/vconsole.min.js"></script>
     <script src="/js/layer.js"></script>
     <script type="text/javascript">
         function GetRequest() {  
@@ -48,7 +49,7 @@
             var appendDom = $(".app-version")
             var u = navigator.userAgent
             $(".update-btn").remove()
-            $('.app-version-val').text(paramObj.versionNumber)
+            $('.app-version-val').text(paramObj.versionNumber.split('').join('.'))
             $('.app-size-val').text(paramObj.volume)
             if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
                 paramObj.type = 0
@@ -85,8 +86,11 @@
                     },
                     data: JSON.stringify(param),
                     success: (res) => {
+                        console.log(111, res)
                         if (res.data && res.data.downloadPath) {
+                            console.log(222, res.data)
                             window.open(res.data.downloadPath)
+                            console.log(333, res.data.downloadPath)
                         }
                     },
                     error: (err) => {
