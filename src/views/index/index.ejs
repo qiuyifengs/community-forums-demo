@@ -357,7 +357,7 @@
                                                                                 <% }) %>
                                                                             </span>
                                                                             <span class="showTime app-display app-time" ><%= articleItem.CREATED.substring(0, 10) %></span>
-                                                                            <span class="from-type">From：<%= articleItem.ARTICLE_TYPE %></span>
+                                                                            <span class="from-type"><span lang="from">From: </span><%= articleItem.ARTICLE_TYPE %></span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -435,7 +435,7 @@
             $('.ghost-components-article-list-content-index-description').each(function() {
                 let showContent = ''
                 let showImg = ''
-                dealPostList(JSON.parse($(this).text())).forEach(item => {
+                dealPostList(JSON.parse($(this).text().replace(/[\n\r]/g, ''))).forEach(item => {
                     showContent += item.value
                     if (item.type == 'pic' && item.url) {
                         showImg = `<img class="post-pic" src="${item.url}" />`
@@ -596,7 +596,7 @@
         function showText(content) {
             let showImg = ''
             let showContent = ''
-            dealPostList(JSON.parse(content)).forEach(item => {
+            dealPostList(JSON.parse(content.replace(/[\n\r]/g, ''))).forEach(item => {
                 showContent += item.value
                 if (item.type == 'pic' && item.url) {
                     showImg = `<img class="post-pic" src="${item.url}" />`
@@ -635,7 +635,7 @@
                                                     <span class="ghost-tag ghost-tag-has-color ghost-tag-color-primary">${ item.ARTICLE_TYPE }</span>
                                                 </span>
                                                 <span class="showTime app-display app-time">${ filterTime(item.CREATED.substring(0, 10)) }</span>
-                                                <span class="from-type">来自分类：${ item.ARTICLE_TYPE }</span>
+                                                <span class="from-type"><span lang="from">From: </span>${ item.ARTICLE_TYPE }</span>
                                             </div>
                                         </div>
                                     </div>

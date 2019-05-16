@@ -62,4 +62,5 @@ let zh = {
     videoFile: '选择文件',
     writeSomething: '请输入内容',
     add: '添加',
+    from: '来自: '
 }

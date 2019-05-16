@@ -197,7 +197,7 @@
             $('.ghost-list-item-meta-article-content').each(function() {
                 let showContent = ''
                 let showImg = ''
-                dealPostList(JSON.parse($(this).text())).forEach(item => {
+                dealPostList(JSON.parse($(this).text().replace(/[\n\r]/g, ''))).forEach(item => {
                     showContent += item.value
                     if (item.type == 'pic' && item.url) {
                         showImg = `<img class="post-pic" src="${item.url}" />`
@@ -245,7 +245,7 @@
         function showText(content) {
             let showImg = ''
             let showContent = ''
-            dealPostList(JSON.parse(content)).forEach(item => {
+            dealPostList(JSON.parse(content.replace(/[\n\r]/g, ''))).forEach(item => {
                 showContent += item.value
                 if (item.type == 'pic' && item.url) {
                     showImg = `<img class="post-pic" src="${item.url}" />`

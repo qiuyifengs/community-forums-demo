@@ -62,4 +62,5 @@ let en = {
     videoFile: 'File',
     writeSomething: 'Please write something in here',
     add: 'Add',
+    from: 'From: ',
 }
