@@ -9,6 +9,7 @@ import { Verification } from '../register/e-mail/send.e-mail';
 // const jwt =  require ( 'jsonwebtoken');
 import * as jwt from 'jsonwebtoken';
 import { util } from '../../../bing';
+import * as code from '../../code';
 
 @Injectable()
 export class SettingService {
@@ -45,7 +46,13 @@ export class SettingService {
             msg.message = '输入的旧密码不正确！';
             return msg;
           } else {
+            console.log(param);
+            
+            let b = code.default.code
+            console.log(1111111,b);
+            
             // do validate Code
+       
 
           }
           const authToken = jwt.sign({ userId: param.userId, exp: (Date.now() / 1000) + (60 * 2) }, util.session.secrets);

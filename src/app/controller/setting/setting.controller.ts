@@ -44,7 +44,7 @@ export class SettingController {
     @Post('validateEmail')
     @ApiOperation({ title: 'get balance from User'})
     async validateEmail(@Body() params): Promise<Account[]> {
-        console.log(111, params)
+        console.log(111111112323, params)
         return await this.settingService.validateEmail(params);
     }
 
