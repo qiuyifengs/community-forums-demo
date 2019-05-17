@@ -1,1 +1,0 @@
-require('../../libs/style/index.css')
