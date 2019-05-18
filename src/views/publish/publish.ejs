@@ -75,6 +75,11 @@
                     </div>
                 </div>
             </div>
+            <div class='ghost-loading-mask'>
+                <div class='ghost-loading-spinner'>
+                    <svg viewBox='25 25 50 50' class='circular'><circle cx='50' cy='50' r='20' fill='none' class='path'></circle></svg>
+                </div>
+            </div>
         </div>
     </body>
     <script src="/js/editor/jquery-ui.min.js"></script>
@@ -264,6 +269,7 @@
 
             $(".comment_btn").on("click", function() {
                 if (!isSubmitting) return false; 
+                $('.ghost-loading-mask').css('display', 'block')
                 isSubmitting = false;
                 if ($(this).hasClass('app-btn')) {
                     let saveTextObj = {
@@ -271,6 +277,32 @@
                         value: $('.app-content-text').val()
                     }
                     content = [saveTextObj];
+                } else {
+                    let curVal = []
+                    clearInterval(time)
+                    $('.ui-sortable-handle').each(function(){
+                        let submitObj = new Object()
+                        submitObj.type = $(this).attr('data-type')
+                        if ($(this).attr('data-type') == 'text') {
+                            submitObj.value = $(this).find('.form-control').val()
+                        } else if ($(this).attr('data-type') == 'link') {
+                            submitObj.url = []
+                            $(this).find('li').each(function(e) {
+                                let linkObj = new Object()
+                                linkObj.title = $(this).find('.link-label').val()
+                                linkObj.link = $(this).find('.link-url').val()
+                                submitObj.url.push(linkObj)
+                            })
+                        } else if ($(this).attr('data-type') == 'pic') {
+                            submitObj.value = $(this).find('.form-control').val()
+                            submitObj.url = $(this).find('.pic').attr('data-src')
+                        } else if ($(this).attr('data-type') == 'video') {
+                            submitObj.value = $(this).find('.form-control').val()
+                            submitObj.url = $(this).find('iframe').attr('src')
+                        }
+                        curVal.push(submitObj)
+                    })
+                    content = curVal;
                 }
                 let keySpans = document.getElementsByClassName('highlight');
                 if (keySpans.length) return false;
@@ -316,13 +348,15 @@
                     articleLabel: labelArr
                 };
                 myAjax("POST", 'post/publish', param).then((res) => {
-                    layer.msg(res.message);
                     if (res.code == 10000) {
                         sessionStorage.removeItem('jStorage')
                         setTimeout(function() {
-                            goPage(`post/articleDetail/${res.articleId}`);
+                            $('.ghost-loading-mask').css('display', 'none')
+                            goPage(`post/articleDetail/${res.articleId}`)
                         }, 2000);
                     } else {
+                        $('.ghost-loading-mask').css('display', 'none')
+                        layer.msg(res.message);
                         console.log(res.message);
                     }
                     isSubmitting = true;
