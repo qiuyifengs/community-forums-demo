@@ -4,9 +4,7 @@
         <title><%= title %></title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
         <link rel='stylesheet' href='/style/articleDetail/articleDetail.css'>
-        <!-- <link rel='stylesheet' href='/style/index.css'> -->
         <% include ../common/script %>
-        <!-- <link href='http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet'> -->
         
     </head>
     <body>
@@ -332,7 +330,7 @@
             } else {
                 $('.app-page-title').text('文章详情')
             }
-            // Get article from the URL
+
             (function () {
                 articleId = this.location.pathname.split('/')[3]
                 articleTitle = $('.title').text()
@@ -346,7 +344,7 @@
 
                 })
             })()
-            // init pagination config
+
             let isLoading = false;
             let pageSize = 1;
             
@@ -383,51 +381,23 @@
             $('.dropload-up').remove()
             $('.dropload-down').remove()
             $('.dropload-refresh').remove()
-            // $('.ghost-pagination').pagination({
-            //     total: document.getElementById('totalPages').value,
-            //     pageSize: 10,
-            //     current: 1,
-            //     coping: true,
-            //     isHide: true,
-            //     callback: api => {
-            //         $('.ghost-loading-mask').css('display', 'block')
-            //         const currentPage = api.getCurrent()
-            //         const url = `post/articleDetail/${articleId}/${currentPage}`
-            //         myAjax('GET', url).then(res => {
-            //             if (res.code === 1) {
-            //                 $('#commentTemplate').empty()
-            //                 res.comments.forEach(item => {
-            //                     $('#commentTemplate').append(renderCommentsHtml(item))
-            //                 })
-            //                 $(".item-random-color").each(function() {
-            //                     const authorName = $(this).attr("article-commentUserName");
-            //                     $(this).css("background",renderColor(authorName));
-
-            //                 })
-            //                 setTimeout(function() {
-            //                     $('.ghost-loading-mask').css('display', 'none')
-            //                 }, 500) 
-            //             }
-            //         })
-            //     }
-            // })
+           
             $('.showTime').each(function() {
                 let resTime = formatDateFilter2($(this).text())
                 $(this).html(resTime)
             })
             
-            // share article
             var _title = articleTitle,_source,_sourceUrl,_pic,_showcount,_desc,_summary,_site,
                 _width = 600,
                 _height = 600,
                 _top = (screen.height-_height)/2,
                 _left = (screen.width-_width)/2
-            // show share box
-            $('.shared_div').on('click', function(event) {
+
+                $('.shared_div').on('click', function(event) {
                 event.stopPropagation()
                 $('.shared_icon_box').css('display', 'block')
             })
-            // shareToWeChart
+
             $('.shared_wechart').on('click', function(event) {
                 event.stopPropagation()
                 $('canvas').remove()
@@ -437,7 +407,7 @@
                 $('.modal_body').append(qrcode.find('canvas'))
                 $('.qrcode_body').css('display', 'block')
             })
-            // shareToErweima
+
             $('.shared_erweima').on('click', function(event) {
                 event.stopPropagation()
                 $('canvas').remove()
@@ -451,28 +421,28 @@
                 event.stopPropagation()
                 $('.qrcode_body').css('display', 'none')
             })
-            // shareToWB
+
             $('.shared_weibo').on('click', function(event) {
                 event.stopPropagation()
-                var _shareUrl = 'http://v.t.sina.com.cn/share/share.php?&appkey=895033136'     //真实的appkey，必选参数 
-                _shareUrl += '&url='+ encodeURIComponent(location.href)     //参数url设置分享的内容链接|默认当前页location，可选参数
-                _shareUrl += '&title=' + encodeURIComponent(_title)    //参数title设置分享的标题|默认当前页标题，可选参数
+                var _shareUrl = 'http://v.t.sina.com.cn/share/share.php?&appkey=895033136'  
+                _shareUrl += '&url='+ encodeURIComponent(location.href)   
+                _shareUrl += '&title=' + encodeURIComponent(_title)   
                 _shareUrl += '&source=' + encodeURIComponent(_source||'')
                 _shareUrl += '&sourceUrl=' + encodeURIComponent(_sourceUrl||'')
-                _shareUrl += '&content=' + 'utf-8'   //参数content设置页面编码gb2312|utf-8，可选参数
-                _shareUrl += '&pic=' + encodeURIComponent(_pic||'')  //参数pic设置图片链接|默认为空，可选参数
+                _shareUrl += '&content=' + 'utf-8' 
+                _shareUrl += '&pic=' + encodeURIComponent(_pic||'') 
                 window.open(_shareUrl,'_blank','width='+_width+',height='+_height+',top='+_top+',left='+_left+',toolbar=no,menubar=no,scrollbars=no, resizable=1,location=no,status=0')
             })
-            // shareToDouBan
+
             $('.shared_douban').on('click', function(event) {
                 event.stopPropagation()
                 var _shareUrl = 'http://shuo.douban.com/!service/share?'
-                _shareUrl += 'href=' + encodeURIComponent(location.href)    //分享的链接
-                _shareUrl += '&name=' + encodeURIComponent(_title)    //分享的标题
-                _shareUrl += '&image=' + encodeURIComponent(_pic||'')    //分享的图片
+                _shareUrl += 'href=' + encodeURIComponent(location.href)  
+                _shareUrl += '&name=' + encodeURIComponent(_title)  
+                _shareUrl += '&image=' + encodeURIComponent(_pic||'')  
                 window.open(_shareUrl,'_blank','width='+_width+',height='+_height+',left='+_left+',top='+_top+',toolbar=no,menubar=no,scrollbars=no,resizable=1,location=no,status=0')
             })
-            // shareToTieBa
+
             $('.shared_tieba').on('click', function(event) {
                 event.stopPropagation()
                 var _shareUrl = 'http://tieba.baidu.com/f/commit/share/openShareApi?'
@@ -481,16 +451,15 @@
                 _shareUrl += '&pic=' + encodeURIComponent(_pic||'')
                 window.open(_shareUrl,'_blank','width='+_width+',height='+_height+',left='+_left+',top='+_top+',toolbar=no,menubar=no,scrollbars=no,resizable=1,location=no,status=0')
             })
-            // shareToFacebook
+
             $('.shared_facebook').on('click', function(event) {
                 event.stopPropagation()
-                console.log(_title)
                 var _shareUrl = 'http://www.facebook.com/sharer/sharer.php?'
                 _shareUrl += 'u=' + encodeURIComponent(location.href)
                 _shareUrl += '&t=' + encodeURIComponent(_title)
                 window.open(_shareUrl,'_blank','width='+_width+',height='+_height+',left='+_left+',top='+_top+',toolbar=no,menubar=no,scrollbars=no,resizable=1,location=no,status=0')
             })
-            // shareToTwitter
+
             $('.shared_twitter').on('click', function(event) {
                 event.stopPropagation()
                 var _shareUrl = 'http://twitter.com/intent/tweet?'
@@ -502,14 +471,11 @@
 
             //---------------------------------------------------------------
             let showContent = JSON.parse($('.content').text())
-            // console.log(dealArticleContent(showContent))
             dealArticleContent(showContent).forEach(item => {
                 $('.code-html').append(item.value)
             })
             //---------------------------------------------------------------
 
-       
-            // loading mask
             let setTime = setInterval(() => {
                 let editorH = document.getElementsByClassName('code-html')[0].offsetHeight
                 if (editorH > 0) {
@@ -517,7 +483,7 @@
                     clearInterval(setTime);
                 }
             }, 500);
-            // create answer box
+
             let commentatorName
             $('.comment_list').on('click', '.answer', function(event) {    
                 event.stopPropagation()
@@ -530,7 +496,7 @@
                 $(this).parents('.parent_comment').find('.comment_bottmo').css({display: 'block'})
                 $(this).parents('.parent_comment').siblings().find('.comment_bottmo').css({display: 'none'})
             })
-            // submit comment
+
             $('.comment_btn_box').on('click', function() {
                 if (!userId) {
                     goPage('user/login')
@@ -567,7 +533,7 @@
                     }
                 })
             })
-            // submit children comment
+
             $('.comment_list').on('click', '.answer_btn', function(event) {
                 if (!userId) {
                     goPage('user/login')
@@ -605,7 +571,7 @@
                     }
                 })
             })
-            // add collect
+
             $('.add-collect-btn').on('click', function() {
                 if (!userId) {
                     goPage('user/login')
@@ -654,7 +620,7 @@
                     }
                 })
             })
-            // like
+
             $('.like_btn').on('click', function() {
                 if (!userId) {
                     goPage('user/login')
@@ -705,13 +671,13 @@
                     }
                 })
             })
-            // add delete dom
+
             $('.comment_item').each(function() {
                 if ($(this).children('.comment_userId').text() == $.cookie('userId')) {
                     $(this).children('.eidt_answer').append(`<div class='delete' lang="delete">删除</div>`)
                 }
             })
-            // delete myself comment
+
             let delCommentId = ''
             let commentType = ''
             let delDom
@@ -722,7 +688,7 @@
                 commentType = $(this).prev().text()
                 $('.confirm_box').css('display', 'block')
             })
-            // sure delete
+
             $('.sure').on('click', function() {
                 let param = {
                     userId: userId,
@@ -747,11 +713,11 @@
                     }
                 })
             })
-            // cancel delete
+
             $('.cancel').on('click', function() {
                 $('.confirm_box').css('display', 'none')
             })
-            // go to top
+
             $('.to_top').hide()
             $(window).scroll(function(){
                 if($(this).scrollTop() > 100){
@@ -765,7 +731,6 @@
                 return false
             })
             // --------------------------------------------app-------------------------------
-            // show user-comment-content-mask
             $('.response-text-box').on('click', function(e) {
                 e.stopPropagation()
                 $('.app-answer-btn').addClass('app-submit-comment')
@@ -773,21 +738,21 @@
                 $('.user-comment-content-mask').css('display', 'block')
                 $('.user-comment-textarea').focus();
             })
-            // no touchmove
+
             $('.user-comment-content-mask').on("touchmove",function(e) {
                 e.preventDefault()
                 e.stopPropagation()
             })
-            // hide user-comment-content-mask
+
             $('.user-comment-content-mask').on('click', function(e) {
                 e.stopPropagation()
                 $('.user-comment-content-mask').css('display', 'none')
             })
-            // don't stopPropagation
+
             $('.user-comment-content').on('click', function(e) {
                 e.stopPropagation()
             })
-            // submit one class comment
+
             $('.user-comment-content').on('click', '.app-submit-comment', function(e) {
                 e.stopPropagation()
                 if (!userId) {
@@ -822,11 +787,10 @@
                         $('.user-comment-content-mask').css('display', 'none')
                     } else {
                         layer.msg(res.message)
-                        console.log(res.message)
                     }
                 })
             })
-            // submit child comment
+
             let appCommentId = ''
             let $self = '';
             $('.comment_list').on('click', '.app-answer', function(e) {
@@ -950,7 +914,6 @@
                     <img class='commentator_img' src='${ item.headerIcon }'>
                 `
             } else {
-                console.log(item)
                 return `<span class='item-random-color commentator_user_name' article-commentUserName='${item.COMMENT_USER_NAME}' style='background: rgb(97, 99, 103);'>${item.COMMENT_USER_NAME.substring(0, 1)}</span>`;
             }
         }
@@ -963,7 +926,6 @@
             return childComment
         }
         function isNewComment(item) {
-            console.log(item)
             return `
                 <div class='child_comment_id del_comment_id' style='display:none'>${ item.COMMENT_ID }</div>
                 <div class='comment_userId' style='display:none'>${ $.cookie('userId') }</div>

@@ -33,7 +33,7 @@
     <script src="/js/layer.js"></script>
     <script type="text/javascript">
         function GetRequest() {  
-            var url = location.search; //获取url中"?"符后的字串  
+            var url = location.search; 
             var theRequest = new Object();  
             if (url.indexOf("?") != -1) {  
                 var str = url.substr(1);  
@@ -51,7 +51,7 @@
             $(".update-btn").remove()
             $('.app-version-val').text(paramObj.versionNumber.split('').join('.'))
             $('.app-size-val').text(paramObj.volume)
-            if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
+            if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {
                 paramObj.type = 0
                 var btnDom = `
                     <button class="update-btn android-update" type="button">
@@ -60,7 +60,7 @@
                     </button>
                 `
                 appendDom.before(btnDom)
-            } else if (u.indexOf('iPhone') > -1) {//苹果手机
+            } else if (u.indexOf('iPhone') > -1) {
                 paramObj.type = 1
                 var btnDom = `
                     <button class="update-btn ios-update" type="button">

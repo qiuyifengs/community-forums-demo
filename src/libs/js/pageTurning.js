@@ -1,91 +1,3 @@
-// (function ($) {
-// 	function init (dom,args) {
-// 		if(args.current <= args.pageCount) {
-// 			fillHtml(dom,args);
-// 			bindEvent(dom,args);
-// 		}else{
-// 			// alert('请输入正确页码')
-// 		}
-// 	};
-// 	// render html
-// 	function fillHtml (dom,args) {
-// 		//pre page
-// 		if(args.current > 1) {
-// 			dom.html('<span class="prevPage"><img class="page_img" src="/images/left.png" alt=""></span>');
-// 		}else{
-// 			dom.remove('.prevPage');
-// 			dom.html('<span class="disabled"><img class="page_img" src="/images/left.png" alt=""></span>');
-// 		}
-		
-// 		// add "..."		
-// 		if(args.current !== 1 && args.current >=4 && args.pageCount !==4) {
-// 			dom.append('<span class="num">1</span>');
-// 		}
-		
-// 		if(args.current - 2 > 2 && args.pageCount > 5) {
-// 			dom.append('<span>...</span>');
-// 		}
-		
-// 		// Number of consecutive pages in the middle
-// 		var start = args.current - 2;
-// 		var end = args.current + 2;
-// 		for(; start <= end; start++) {
-// 			if(start <= args.pageCount && start >= 1) {
-// 				if(start == args.current) {
-// 					dom.append('<span class="current">'+ start+'</span>');
-// 				}else {
-// 					dom.append('<span class="num">'+start+'</span>');
-// 				}
-// 			}
-// 		}
-// 		if(args.current + 2 < args.pageCount-2 && args.pageCount > 5) {
-// 			dom.append('<span>...</span>');
-// 		}
-// 		if(args.current !== args.pageCount && args.current < args.pageCount - 2 && args.pageCount !==4) {
-// 			dom.append('<span class="num">'+args.pageCount+'</span>');
-// 		}
-// 		//next page
-// 		if(args.current < args.pageCount) {
-// 			dom.append('<span class="nextPage"><img class="page_img" src="/images/right.png" alt=""></span>');
-// 		}else{
-// 			dom.remove('.nextPage');
-// 			dom.append('<span class="disabled"><img class="page_img" src="/images/right.png" alt=""></span>');
-// 		}
-// 	}
-// 	// click event
-// 	function bindEvent (dom,args) {
-// 		dom.on('click','.num',function () {
-// 			var cur = parseInt($(this).text())
-// 			changePage (dom,args,cur);
-// 		})
-// 		dom.on('click','.prevPage',function () {
-// 			var cur = parseInt(dom.find('.current').text())
-// 			changePage (dom,args,cur - 1);
-// 		})
-// 		dom.on('click','.nextPage',function () {
-// 			var cur = parseInt(dom.find('.current').text())
-// 			changePage (dom,args,cur + 1);
-// 		})
-		
-// 	}
-// 	//reset render
-// 	function changePage (dom,args,page) {
-// 		fillHtml(dom,{current:page,pageCount:args.pageCount});
-// 		args.backFn(page);
-// 	}
-	
-// 	// Extension plug-in
-// 	$.fn.extend({//如果options传值了就用options的值，没传就是默认值
-// 		createPage:function (options) {
-// 			var args =$.extend({
-// 				pageCount:5,
-// 				current:1,
-// 				backFn:function () {}
-// 			},options);
-// 			init(this,args);
-// 		}
-// 	})
-// })(jQuery)
 
 /**
  * pagination.js 1.5.1
@@ -132,103 +44,57 @@
     }
 }(function ($) {
 
-    //配置参数
     var defaults = {
-        total: 0, //数据总条数
-        pageSize: 0, // 每页条数
-        pageCount: 10, //总页数,默认为9
-        current: 1, //当前第几页
-        prevCls: 'ghost-pagination-prev', //上一页class
-        nextCls: 'ghost-pagination-next', //下一页class
-        prevIcon: 'icon-left', //上一页内容
-        nextIcon: 'icon-right', //下一页内容
-        activeCls: 'ghost-pagination-item-active', //当前页选中状态
-        coping: false, //首页和尾页
-        isHide: false, //当前页数为0页或者1页时不显示分页
-        homePage: '', //首页节点内容
-        endPage: '', //尾页节点内容
-        keepShowPN: false, //是否一直显示上一页下一页
-        mode: 'unfixed', //分页模式，unfixed：不固定页码数量，fixed：固定页码数量
-        count: 4, //mode为unfixed时显示当前选中页前后页数，mode为fixed显示页码总数
-        jump: false, //跳转到指定页数
-        jumpInputCls: 'ghost-jump-input', //文本框内容
-        jumpBtnCls: 'ghost-jump-btn', //跳转按钮
-        jumpBtn: '跳转', //跳转按钮文本
-        callback: function () {} //回调
+        total: 0,
+        pageSize: 0, 
+        pageCount: 10,
+        current: 1, 
+        prevCls: 'ghost-pagination-prev', 
+        nextCls: 'ghost-pagination-next',
+        prevIcon: 'icon-left',
+        nextIcon: 'icon-right',
+        activeCls: 'ghost-pagination-item-active', 
+        coping: false, 
+        isHide: false, 
+        homePage: '',
+        endPage: '',
+        keepShowPN: false, 
+        mode: 'unfixed', 
+        count: 4,
+        jump: false,
+        jumpInputCls: 'ghost-jump-input',
+        jumpBtnCls: 'ghost-jump-btn', 
+        jumpBtn: '跳转',
+        callback: function () {} 
     };
 
     var Pagination = function (element, options) {
-        //全局变量
-        var opts = options, //配置
-            current, //当前页
+        var opts = options, 
+            current,
             $document = $(document),
-            $obj = $(element); //容器
+            $obj = $(element); 
 
         /**
-         * 设置总页数
-         * @param {int} page 页码
-         * @return opts.pageCount 总页数配置
+         * @param {int} page 
+         * @return opts.pageCount
          */
         this.setPageCount = function (page) {
             return opts.pageCount = page;
         };
 
         /**
-         * 获取总页数
-         * 如果配置了总条数和每页显示条数，将会自动计算总页数并略过总页数配置，反之
-         * @return {int} 总页数
+         * @return {int} 
          */
         this.getPageCount = function () {
             return opts.total && opts.pageSize ? Math.ceil(parseInt(opts.total) / opts.pageSize) : opts.pageCount;
         };
 
         /**
-         * 获取当前页
-         * @return {int} 当前页码
+         * @return {int} 
          */
         this.getCurrent = function () {
             return current;
         };
-
-        /**
-         * 填充数据
-         * @param {int} 页码
-         */
-
-
-		// const previousTemplate = `<li title="上一页" class="ghost-pagination-prev">
-		// 										<a class="ghost-pagination-item-link">
-		// 											<svg class="iconSvg" aria-hidden="true"><use xlink:href="#icon-left"></use></svg>
-		// 										</a>
-		// 									</li>`
-		
-		// 				const nextPageTemplate = `<li title="下一页" class="ghost-pagination-next">
-		// 										<a class="ghost-pagination-item-link">
-		// 											<svg class="iconSvg" aria-hidden="true"><use xlink:href="#icon-right"></use></svg>
-		// 										</a>
-		// 									</li>`
-		
-		// 				const jumpPrevTemplate = `<li title="向前5页" class="ghost-pagination-jump-prev ghost-pagination-jump-prev-custom-icon">
-		// 											<a class="ghost-pagination-item-link">
-		// 												<div class="ghost-pagination-item-container">
-		// 													<i class="anticon anticon-double-left ghost-pagination-item-link-icon">
-		// 														<svg class="iconSvg" aria-hidden="true"><use xlink:href="#icon-double-left"></use>
-		// 													</i>
-		// 													<span class="ghost-pagination-item-ellipsis">•••</span>
-		// 												</div>
-		// 											</a>
-		// 										</li>`
-		// 				const jumpNextTemplate = `<li title="向后5页" class="ghost-pagination-jump-next ghost-pagination-jump-next-custom-icon">
-		// 											<a class="ghost-pagination-item-link">
-		// 												<div class="ghost-pagination-item-container">
-		// 													<i class="anticon anticon-double-right ghost-pagination-item-link-icon">
-		// 														<svg class="iconSvg" aria-hidden="true"><use xlink:href="#icon-doubleright"></use>
-		// 													</i>
-		// 													<span class="ghost-pagination-item-ellipsis">•••</span>
-		// 												</div>
-		// 											</a>
-		// 										</li>`
-
 
         this.filling = function (index) {
 			var html = '';
@@ -242,10 +108,10 @@
 									<svg class="iconSvg" aria-hidden="true"><use xlink:href="#${opts.nextIcon}"></use></svg>
 								</a>
 							</li>`
-            current = parseInt(index) || parseInt(opts.current) //当前页码
-            const pageCount = this.getPageCount() // 获取的总页数
-            switch (opts.mode) { // 配置模式
-				case 'fixed': // 固定按钮模式
+            current = parseInt(index) || parseInt(opts.current)
+            const pageCount = this.getPageCount()
+            switch (opts.mode) { 
+				case 'fixed':
 					html += prevHtml
                     if (opts.coping) {
                         const home = opts.coping && opts.homePage ? opts.homePage : '1'
@@ -266,8 +132,8 @@
                     }
 					html += nextHtml
                     break;
-                case 'unfixed': //不固定按钮模式
-                    if (opts.keepShowPN || current > 1) { //上一页
+                case 'unfixed':
+                    if (opts.keepShowPN || current > 1) { 
 						html += prevHtml
                     } else {
                         if (opts.keepShowPN == false) {
@@ -311,7 +177,7 @@
 													</a>
 												</li>` : ''
                     }
-                    if (opts.keepShowPN || current < pageCount) { //下一页
+                    if (opts.keepShowPN || current < pageCount) {
                         html += nextHtml
                     } else {
                         if (opts.keepShowPN == false) {
@@ -319,23 +185,16 @@
                         }
                     }
                     break;
-                case 'easy': //简单模式
+                case 'easy': 
                     break;
                 default:
             }
-            // html += opts.jump ? '<input type="text" class="' + opts.jumpInputCls + '"><a href="javascript:;" class="' + opts.jumpBtnCls + '">' + opts.jumpBtn + '</a>' : '';
-			// html += opts.jump ? `<li class="ghost-pagination-options">
-			// 			<div class="ghost-pagination-options-quick-jumper">
-			// 				<input type="text" class="${opts.jumpInputCls}">
-			// 			</div>
-			// 		</li>` : ''
 			$obj.empty().html(html);
         };
 
-        //绑定事件
         this.eventBind = function () {
             var that = this;
-            var pageCount = that.getPageCount(); //总页数
+            var pageCount = that.getPageCount();
             var index = 1;
             $obj.off().on('click', 'li', function () {
                 if ($(this).hasClass(opts.nextCls)) {
@@ -364,16 +223,14 @@
                 that.filling(index);
                 typeof opts.callback === 'function' && opts.callback(that);
             });
-            //输入跳转的页码
             $obj.on('input propertychange', '.' + opts.jumpInputCls, function () {
                 var $this = $(this);
                 var val = $this.val();
                 var reg = /[^\d]/g;
                 if (reg.test(val)) $this.val(val.replace(reg, ''));
                 (parseInt(val) > pageCount) && $this.val(pageCount);
-                if (parseInt(val) === 0) $this.val(1); //最小值为1
+                if (parseInt(val) === 0) $this.val(1);
             });
-            //回车跳转指定页码
             $document.keydown(function (e) {
                 if (e.keyCode == 13 && $obj.find('.' + opts.jumpInputCls).val()) {
                     var index = parseInt($obj.find('.' + opts.jumpInputCls).val());
@@ -383,7 +240,6 @@
             });
         };
 
-        //初始化
         this.init = function () {
             this.filling(opts.current);
             this.eventBind();
@@ -397,7 +253,7 @@
     };
 
     $.fn.pagination = function (parameter, callback) {
-        if (typeof parameter == 'function') { //重载
+        if (typeof parameter == 'function') { 
             callback = parameter;
             parameter = {};
         } else {

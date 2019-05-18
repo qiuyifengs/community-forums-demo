@@ -39,7 +39,7 @@
                                                                 <% } else { %>
                                                                     <img class="ghost-header-icon header-icon" src="/images/header_icon.png" alt="avatar">
                                                                 <% } %>
-                                                                <input id="upload" type="file" name="file" onchange="uploadImg(this)"/> 
+                                                                <input id="upload" type="file" name="file" onchange="uploadImg(this)" accept="image/gif,image/jpeg,image/jpg,image/png"/> 
                                                                 <div class="hover-show web-display">点击上传</div>
                                                                 <div class="app-tackPhoto app-diplay">
                                                                     <svg class="iconSvg" aria-hidden="true">
@@ -269,9 +269,7 @@
     <script src="https://cdn.bootcss.com/rxjs/6.4.0/rxjs.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.0.0-beta.12/Rx.min.js"></script>
     <script type="text/javascript">
-        // init Google Design button click effect 
         Waves.attach('.float-button-light', ['waves-button', 'waves-float', 'waves-light']);
-        // Init Waves
         Waves.init();
         function closeDialog() {
             const $overlay = $('.ghost-model-overlay')
@@ -279,21 +277,18 @@
             $('#openUpdatePasswordModel').removeClass('show')
         }
         $(function() {
-            // app title
             if (localStorage.getItem('langData') && JSON.parse(localStorage.getItem('langData')).lang == 'en') {
                 $('.app-page-title').text('Personal Center')
             } else {
                 $('.app-page-title').text('个人中心')
             }
-            // save
             $('.submit-info').click(function(){
                 let nickName = document.querySelector('.nick-name').value;
                 let personalProfile = document.querySelector('.personal-profile').value;
-                // if ($.cookie("nickName") == nickName) return layer.msg("新昵称不能与旧昵称相同！");
                 let myForm = new FormData(document.getElementById("myForm"));
                 myForm.append("userId", $.cookie("userId"));
-                myForm.append("nickName", document.querySelector('.nick-name').value);       // append()方法添加字段
-                myForm.append("personalProfile", document.querySelector('.personal-profile').value);   // 数字123456立即被转换成字符串“123456”
+                myForm.append("nickName", document.querySelector('.nick-name').value); 
+                myForm.append("personalProfile", document.querySelector('.personal-profile').value);
                 let files = document.querySelector('[type=file]').files;
                 for(let i = 0; i < files.length; i++){
                     myForm.append("file", files[i]);                
@@ -318,12 +313,12 @@
                     }
                 })
             });
-            // open update password model
+
             $('#openUpdatePasswordModel').ghostModel({
                 skinClassName: 'demo',
 	            animationType: 'fade-in'
             })
-            // open update email model
+
             $("#openUpdateEmailModel").ghostModel({
                 skinClassName: 'demo',
 	            animationType: 'fade-in'
@@ -400,7 +395,7 @@
                     }
                 }
             }) 
-            // send email
+
             $(".validate-user-email").on("click", function() {
                 myAjax("POST", 'account/validateEmail', {userId: $.cookie("userId"), type: 1,}).then((res) => {
                     if (res.code == 10000) {
@@ -416,7 +411,6 @@
                 onfocusout: function(element) { $(element).valid() },
                 onkeyup: function(element) { $(element).valid() },
                 focusInvalid: function(element) { $(element).valid() 
-                    console.log('focusInvalid' + element.id)
                 },
                 debug: true,
                 submitHandler: function(form) {
@@ -444,9 +438,7 @@
                 errorElement: 'div',
                 errorClass:"ghost-form-explain",
                 highlight: function(element, errorClass, validClass) {
-                    console.log(element.id)
                     const elementId = $(`#${element.id}-error`)
-                    // $(elementId).parents().addClass('ghost-form-item-with-help')
                     $(elementId).addClass("ghost-form-explain")
                     $(elementId).parent().addClass('has-error')
                 },
@@ -472,18 +464,17 @@
             });
         })
         function uploadImg(file) {
-            // Get a reference to the fileList
+
             var files = !!file.files ? file.files : [];
-            // If no files were selected, or no FileReader support, return
+
             if (!files.length || !window.FileReader) return;
-            // Create a new instance of the FileReader
+
             var reader = new FileReader();
-            // Read the local file as a DataURL
+
             reader.readAsDataURL(files[0]);
-            // When loaded, set image data as background of div
+
             reader.onloadend = function(){
                 $(".ghost-header-icon").attr("src",this.result);
-                // myAjax("POST", 'account/upload', this.result)
             }
         }
     </script>

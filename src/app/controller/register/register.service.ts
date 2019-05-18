@@ -83,7 +83,7 @@ export class RegisterService {
                 token,
             };
             msg.data = data;
-            Verification.verifica(1, param.userId, param.email, Etoken);
+            Verification.verifica(1, param.userId, param.userId, Etoken);
             // commit transaction now:
             await queryRunner.commitTransaction();
             return msg;

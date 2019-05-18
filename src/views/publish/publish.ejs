@@ -60,11 +60,11 @@
                 <div class="app-article-btn app-display">
                     <button type="button" class="app-btn ghost-btn-primary comment_btn" lang="report">发表文章</button>
                 </div>
-                <% if (obj.renderData && obj.renderData.articleContent) { %>
-                    <div class="edit_article_id" style="display: none"><%= obj.renderData.articleId %></div>
-                    <div class="edit_article_type" style="display:none"><%= obj.renderData.articleType %></div>
-                    <div class="edit_article_title"><%= obj.renderData.articleTitle %></div>
-                    <div class="edit_content"><%= obj.renderData.articleContent %></div>
+                <% if (obj.renderData && obj.renderData.ARTICLE_CONTENT) { %>
+                    <div class="edit_article_id" style="display: none"><%= obj.renderData.ARTICLE_ID %></div>
+                    <div class="edit_article_type" style="display:none"><%= obj.renderData.ARTICLE_TYPE %></div>
+                    <div class="edit_article_title"><%= obj.renderData.ARTICLE_TITLE %></div>
+                    <div class="edit_content"><%= obj.renderData.ARTICLE_CONTENT %></div>
                 <% } %>
                 <div class="button_box web-display">
                     <div class="comment_btn_box">
@@ -73,7 +73,6 @@
                     <div class="save_btn_box">
                         <div class="save_btn" lang="preview">预览</div>
                     </div>
-                    <!-- <div class="saving mg-l10">保存中...</div> -->
                 </div>
             </div>
         </div>
@@ -83,16 +82,13 @@
     <script src="/js/editor/jquery.emoji.min.js"></script>
     <script src="/js/editor/jquery.mCustomScrollbar.min.js"></script>
     <script src="/js/editor/jquery.editor.js"></script>
-    <!-- <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
     <script src="/js/sensitiveWords.js"></script>
     <script type="text/javascript">
-        // let userId = $.cookie("userId");
         let editType = $(".edit_article_type").text();
         let isSubmitting = true;
         let isEdit = false;
         let isDrafts = $(".is_drafts").text();
         let articleId = '';
-        // let content = [].join('\n');
         let content = null
         let editContent = $(".edit_content").text();
         let articleSource = $(".type_list").children(":first").text();
@@ -133,20 +129,13 @@
             } else {
                 $(".type_item").eq(0).addClass("actived");
             }
-
-            // if (editContent) {
-            //     content = JSON.parse($('.edit_content').text()).join('\n');
-            //     $(".title_input").val($(".edit_article_title").text());
-            //     articleId = $(".edit_article_id").text();
-            //     isEdit = true;
-            // };
             if (editContent) {
                 content = JSON.parse($('.edit_content').text());
                 $(".title_input").val($(".edit_article_title").text());
                 articleId = $(".edit_article_id").text();
                 isEdit = true;
             };
-            // init editor
+
             var editor = new Editor();
             editor.init({
                 box:'#Editor',
@@ -162,11 +151,10 @@
             $(".typle_input").focus(function() {
                 $("#tags-input").css("display", "block");
             });
-            // label plugin config
+
             $("#tags-input").tagsinput({
                 labelTypeArr: labelData,
                 callback: label => {
-                    console.log(label)
                      let labelDiv = `<div class="show-label bd-radius-3">
                                         <span>${label.label}</span> 
                                         <svg class="iconSvg" aria-hidden="true">
@@ -203,7 +191,7 @@
                 event.stopPropagation();
                 $("#tags-input").css("display", "block");
             })
-            // select label
+
             $(".typle_input").keydown(function(event){
                 if (event.keyCode == 13) {
                     $(this).blur();
@@ -263,7 +251,7 @@
                 event.stopPropagation();
                 $("#tags-input").css("display", "none");
             });
-            // change classification
+
             $(".type_list").find(".type_item").each(function() {
                 zh[$(this).attr('menu-id')] = $(this).attr('menu-cn')
                 en[$(this).attr('menu-id')] = $(this).attr('menu-en')
@@ -273,7 +261,7 @@
                     $(this).siblings().removeClass("actived");
                 })
             });
-            // filter sensitive words and comment article
+
             $(".comment_btn").on("click", function() {
                 if (!isSubmitting) return false; 
                 isSubmitting = false;
@@ -285,9 +273,9 @@
                     content = [saveTextObj];
                 }
                 let keySpans = document.getElementsByClassName('highlight');
-                if (keySpans.length) return false; // if had sensitive words return
-                let reg = new RegExp(wordsList.join('|'), 'gi'); // check sensitive words
-                let articleTitle = $(".title_input").val(); // title
+                if (keySpans.length) return false;
+                let reg = new RegExp(wordsList.join('|'), 'gi');
+                let articleTitle = $(".title_input").val();
                 articleTitle = articleTitle.replace(reg, (word) => `<span class="highlight">${word}</span>`);
                 $('.title_input').empty().append(articleTitle);
                 let contentArr = [];
@@ -305,19 +293,16 @@
                 if (articleTitle.indexOf('highlight') > 0) {
                     alert("文章标题中不能含有敏感词汇！");
                     isSubmitting = true;
-                    // autoSave();
                     return false;
                 }
                 if (!articleTitle ||  contentArr.length < 1) {
                     alert("文章标题或文章内容中不能为空！");
                     isSubmitting = true;
-                    // autoSave();
                     return false;
                 }
                 if (labelArr.length < 1) {
                     layer.msg("文章标签不能为空！");
                     isSubmitting = true;
-                    // autoSave();
                     return false;
                 }
                 let param = {
@@ -344,16 +329,13 @@
                 })
             });
 
-            // preview article
             $('.save_btn').on('click', function() {
                 goPage(`post/preview/${articleId}`, true)
             })
 
-            // title remove highlight style
             $(".title_input").focus(() => {
                 $('.title_input .highlight').removeClass('highlight');
             })
-            // content remove highlight style
             $(".article_content").focus(() => {
                 $('.article_content .highlight').removeClass('highlight');
             });
@@ -377,7 +359,7 @@
             translateFun()
         })
         function saveArticle(content) {
-            let articleTitle = $(".title_input").val(); // title
+            let articleTitle = $(".title_input").val();
             let param = {
                 userId: $.cookie("userId"),
                 isEdit: isEdit,

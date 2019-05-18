@@ -61,15 +61,10 @@
     </body>
     <script type='text/javascript'>
         let articleId, articleTitle
-        // function filterTime(item) {
-        //     console.log(1, item)
-        //     return  resTime = formatDateFilter2(item)
-        // }
         $(function(){
             let author = $('.my_name').text()
             $('.showTime').each(function() {
                 let resTime = formatDateFilter2($(this).text())
-                console.log(resTime)
                 $(this).html(resTime)
             })
             $('.item-random-color').each(function() {
@@ -78,7 +73,6 @@
 
             })
             let showContent = JSON.parse($('.content').text())
-            // console.log(dealArticleContent(showContent))
             dealArticleContent(showContent).forEach(item => {
                 $('.code-html').append(item.value)
             })

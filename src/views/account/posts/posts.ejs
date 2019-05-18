@@ -147,16 +147,14 @@
     <script type="text/javascript">
         $(function() {
             let deleteTitel, articleId, curDom;
-            // app title
             if (localStorage.getItem('langData') && JSON.parse(localStorage.getItem('langData')).lang == 'en') {
                 $('.app-page-title').text('My Posts')
             } else {
                 $('.app-page-title').text('我的帖子')
             }
-            // init pagination config
+
             $('.ghost-pagination').pagination({
                 total: document.getElementById('totalPages').value,
-                // total: 100,
                 pageSize: 10,
                 current: 1,
                 coping: true,
@@ -168,7 +166,6 @@
                     myAjax('GET', url).then(res => {
                         if (res.code === 1) {
                             $("#myArticleTemplate").empty()
-                            console.log(res)
                             res.articleList.forEach(item => {
                                 $("#myArticleTemplate").append(renderArticleHtml(item))
                             })
@@ -197,7 +194,7 @@
                 let resTime = formatDateFilter2($(this).text())
                 $(this).html(resTime)
             });
-            // go to article detail
+
             $("#myArticleTemplate").on("click", ".ghost-list-item-main", function(event) {
                 event.stopPropagation();
                 articleId = $(this).next(".ghost-list-item-extra").find(".ghost-list-item-id").text();
@@ -210,7 +207,7 @@
                     goPage(url);
                 }
             })
-            // show confirm dom
+
             $("#myArticleTemplate").on("click", ".delete_icon", function(event) {
                 event.stopPropagation();
                 curDom = $(this).parents(".ghost-list-item");
@@ -220,7 +217,7 @@
                 $(".confirm_box").css("display", "block");
                 $(".delete_tip").before(`<div class="cur_title">${deleteTitel}</div>`)
             })
-            // sure delete
+
             $(".sure").on("click", function() {
                 let param = {
                     userId: $.cookie("userId"),
@@ -236,11 +233,11 @@
                     }
                 })
             })
-            // cancel delete
+
             $(".cancel").on("click", function() {
                 $(".confirm_box").css("display", "none");
             })
-            // edit article
+
             $("#myArticleTemplate").on("click", ".edit_icon", function(event) {
                 articleId = $(this).parents(".ghost-list-item-extra").find(".ghost-list-item-id").text();
                 let url = 'post/publish/' + articleId;

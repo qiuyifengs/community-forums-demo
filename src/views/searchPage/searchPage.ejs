@@ -302,7 +302,7 @@
                     goPage(url)
                 }
             })
-            // random color
+
             $(".item-random-color").each(function() {
                 const authorName = $(this).attr("article-author");
                 $(this).css("background",renderColor(authorName));
@@ -340,9 +340,6 @@
                             let result = ''
                             res.data.forEach((item, ind) => {
                                 result += renderArticleHtml(item)
-                                // if(ind == res.articleList.length - 1) {
-                                //     dropload.noData()
-                                // }
                             });
                             
                             $(".item-random-color").each(function() {
@@ -351,7 +348,6 @@
                                 
                             })
                             setTimeout(function() {
-                                // 每次数据加载完，必须重置
                                 dropload.resetload()
                                 isLoading = false
                                 $('.ghost-loading-mask').css('display', 'none')
@@ -360,8 +356,6 @@
                                 goPAGE();
                             }, 1000) 
                         } else {
-                            // 即使加载出错，也得重置
-                            // dropload.noData();
                             dropload.resetload()
                             setTimeout(function() {
                                 isLoading = false
@@ -371,7 +365,6 @@
                 }
             })
 
-            // let total = Math.ceil(($('.total').text() * 1) / 8);
             $('.tab-nav .tab-nav-item a').on('click', function (e) {
                 e.preventDefault()
                 if (articleType === $(this).text()) {
@@ -379,7 +372,6 @@
                 }
             })
             
-            // Click on the list item to enter the article details
             $('#artivleTemplate').on('click', '.ghost-list-item', function(event) {
                 event.stopPropagation()
                 const articleId = $(this).parents(".gohst-index-page").attr("article-id")

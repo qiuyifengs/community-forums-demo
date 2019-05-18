@@ -30,10 +30,8 @@
             var labelHtml = '';
             $obj.find(".label-list").remove();
             var curId = event.attr("id");
-            console.log(curId)
             for (let el in opts.labelTypeArr) { 
                 if(opts.labelTypeArr[el].TYPE_ID == curId) {
-                    console.log(123)
                     opts.labelTypeArr[el].labelArr.forEach(labelItem => {
                         labelHtml += `<li class="${opts.labelCls}" id="${labelItem.LABEL_ID}">${labelItem.LABEL_NAME}</li>`
                     });
@@ -59,13 +57,6 @@
                 $(this).siblings().removeClass("label-actived");
                 selLabel.id = $(this).attr("id");
                 selLabel.label = $(this).text();
-                // for(var i = 0, len = opts.resArr.length - 1; i < len; i++) {
-                //     if (opts.resArr[i].id == selLabel.id) {
-                //         hadLabel = true;
-                //         return;
-                //     } 
-                // }
-                // if (!hadLabel) opts.resArr.push(selLabel);
                 typeof opts.callback === 'function' && opts.callback(selLabel);
             })
         }

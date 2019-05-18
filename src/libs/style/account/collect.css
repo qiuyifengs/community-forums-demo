@@ -58,6 +58,12 @@
     height: 60px;
     object-fit: contain;
 }
+.item_btn_del {
+    display: none;
+}
+.item_btn_cancel {
+    display: none;
+}
 @media screen and (max-width: 420px) {
     .ghost-pro-components-page-header-wrapper-grid-content-wide {
         margin: 0;
@@ -133,6 +139,7 @@
         transform: scale(.8) translateX(12%);
     }
     .item_btn_del {
+        display: block;
         position: absolute;
         top:0;
         right:-120px;
@@ -144,6 +151,7 @@
         text-align:center;
     }
     .item_btn_cancel {
+        display: block;
         position: absolute;
         top:0;
         right:-61px;

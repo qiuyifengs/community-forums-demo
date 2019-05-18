@@ -19,7 +19,6 @@ Compile.prototype = {
         var fragment = document.createDocumentFragment();
         var child = el.firstChild;
         while (child) {
-            // 将Dom元素移入fragment中
             fragment.appendChild(child);
             child = el.firstChild
         }
@@ -51,9 +50,9 @@ Compile.prototype = {
             if (self.isDirective(attrName)) {
                 var exp = attr.value;
                 var dir = attrName.substring(2);
-                if (self.isEventDirective(dir)) {  // 事件指令
+                if (self.isEventDirective(dir)) { 
                     self.compileEvent(node, self.vm, exp, dir);
-                } else {  // v-model 指令
+                } else { 
                     self.compileModel(node, self.vm, exp, dir);
                 }
                 node.removeAttribute(attrName);

@@ -25,6 +25,7 @@ export class PublishController {
         if (param['0'] !== '') {
             obj.renderData = await this.postsRepository.editArticle(param['0']);
         }
+        console.log(111, obj)
         res.render('publish/publish', { title: 'publish',  obj});
     }
     // @UseGuards(AuthGuard('jwt'))
@@ -140,9 +141,7 @@ export class PublishController {
                 return msg;
             });
         } catch (e) {
-            console.log(e)
-            return e
+            return e;
         }
-        
     }
 }
