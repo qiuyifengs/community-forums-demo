@@ -4,7 +4,6 @@ import { AccountService } from './account.service';
 import { util } from '../../../bing';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
-console.log(util.client.config.masters[0].host)
 @Controller('account')
 export class AccountController {
     constructor(private readonly accountService: AccountService) { }
