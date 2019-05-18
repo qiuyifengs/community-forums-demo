@@ -4,7 +4,7 @@ import { AccountService } from './account.service';
 import { util } from '../../../bing';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
-
+console.log(util.client.config.masters[0].host)
 @Controller('account')
 export class AccountController {
     constructor(private readonly accountService: AccountService) { }
@@ -53,7 +53,7 @@ export class AccountController {
             if (file) {
                 return util.client.write(file.path)
                 .then(async (fileInfo) => {
-                    params.headerIcon = 'http://' + fileInfo.url + '/' + fileInfo.fid;
+                    params.headerIcon = 'http://' + util.client.config.masters[0].host + '/' + fileInfo.fid;
                     return await this.accountService.changeUserInfo(params);
                 });
             }
