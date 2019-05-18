@@ -390,7 +390,7 @@ Editor.prototype = {
 						if(data.code=='10000'){
 							_self.template({
 								type: 'pic',
-								url: data.path,
+								url: baseUrlTwo + '/' + data.path,
 								filename: data.filename
 							});
 						}else{
@@ -456,7 +456,7 @@ Editor.prototype = {
 						if(data.code=='10000'){
 							_self.template({
 								type: 'video',
-								url: data.path,
+								url: baseUrlTwo + '/' + data.path,
 								filename: data.filename
 							});
 							_self.autoSave(opt)

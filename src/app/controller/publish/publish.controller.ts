@@ -61,7 +61,8 @@ export class PublishController {
                 const msg = {
                     code: 10000,
                     message: '上传成功！',
-                    path: 'http://' + util.client.config.masters[0].host + '/' + fileInfo.fid,
+                    // path: 'http://' + util.client.config.masters[0].host + '/' + fileInfo.fid,
+                    path: fileInfo.fid,
                     filename: fileInfo.fid,
                 };
                 return msg;
@@ -107,7 +108,7 @@ export class PublishController {
                         return msg = {
                             code: 10000,
                             message: '上传成功！',
-                            path: 'http://' + fileInfo.url + '/' + fileInfo.fid,
+                            path: fileInfo.fid,
                             filename: fileInfo.fid,
                         };
                     });

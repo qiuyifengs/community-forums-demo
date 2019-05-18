@@ -35,7 +35,7 @@
                                                         <div class="ghost-form-item-children icon-from-item-children">
                                                             <div class="header-box">
                                                                 <% if (result.headerIcon) { %>
-                                                                    <img class="ghost-header-icon header-icon" src="<%= result.headerIcon %>" alt="头像">
+                                                                    <img class="ghost-header-icon header-icon new-header-icon" src="<%= result.headerIcon %>" alt="头像">
                                                                 <% } else { %>
                                                                     <img class="ghost-header-icon header-icon" src="/images/header_icon.png" alt="avatar">
                                                                 <% } %>
@@ -277,6 +277,8 @@
             $('#openUpdatePasswordModel').removeClass('show')
         }
         $(function() {
+            const newHeaderIcon = $('.new-header-icon').attr('src');
+            $('.new-header-icon').attr('src', `${baseUrlTwo}/${newHeaderIcon}`)
             if (localStorage.getItem('langData') && JSON.parse(localStorage.getItem('langData')).lang == 'en') {
                 $('.app-page-title').text('Personal Center')
             } else {
