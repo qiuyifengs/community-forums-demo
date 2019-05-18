@@ -32,5 +32,5 @@ export class BbsUser {
     // STATE
     @Column({ default: 1 }) STATE: number;
     // activity
-    @Column({ default: false }) ACTIVITY: boolean;
+    @Column({ default: true }) ACTIVITY: boolean;
 }
