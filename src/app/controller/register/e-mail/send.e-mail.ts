@@ -6,7 +6,7 @@ import { util } from '../../../../bing';
 import { ApiException } from '../../../../bing/common/enums/api.exception';
 import { ApiErrorCode } from '../..//../../bing/common/enums/api-error-code.enum';
 import { HttpStatus } from '@nestjs/common';
-
+import * as code from '../../../code';
 
 const config = {
     host: 'smtp.163.com',
@@ -111,11 +111,13 @@ export class Verification {
             
             info.time = new Date();
             const No = Math.random().toString().slice(-6);
+            code.default.code = No
+
             return '<p>您好：' + email + '</p>' +
                 '<p>我们收到您在' + name + '社区的找寻密码信息，请将验证码填入：</p>' +
                 '<p>验证码：' + No + '</p>' +
                 '<p>若您没有在' + name + '社区填写过注册信息，说明有人滥用了您的电子邮箱，请删除此邮件，我们对给您造成的打扰感到抱歉。</p>' +
-                '<p>' + name + '社区 谨上,　验证码有效期为10min!!!</p>';
+                '<p>' + name + '社区 谨上</p>';
              
         }
 
