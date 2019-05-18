@@ -5,21 +5,9 @@
         <link rel="icon" href="/images/collection.png" type="img/x-ico" />
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" charset="UTF-8">
         <meta name="viewport" content="initial-scale=1, user-scalable=0, minimal-ui" charset="UTF-8">
-
-        <!-- 页面关键词-->
         <meta name="keywords" content="your tags" />
-        <!-- 页面描述-->
         <meta name="description" content="150 words" />
-        <!-- 搜索引擎索引方式：robotterms是一组使用逗号(,)分割的值，通常有如下几种取值：none，noindex，nofollow，all，index和follow。确保正确使用nofollow和noindex属性值。-->
         <meta name="robots" content="index,follow" />
-        <!--
-            all：文件将被检索，且页面上的链接可以被查询；
-            none：文件将不被检索，且页面上的链接不可以被查询；
-            index：文件将被检索；
-            follow：页面上的链接可以被查询；
-            noindex：文件将不被检索；
-            nofollow：页面上的链接不可以被查询。
-        -->
         
         <link rel='stylesheet' href='/style/index.css' />
         <link rel="stylesheet" href="/style/common/swiper.min.css">
@@ -445,7 +433,6 @@
                 $(this).append(showImg)
             })
 
-            // random color
             $(".item-random-color").each(function() {
                 const authorName = $(this).attr("article-author")
                 $(this).css("background",renderColor(authorName))
@@ -480,7 +467,6 @@
                 }
             })
 
-            // init dropload config
             let isLoading = false;
             
             let dropload = $('.ghost-layout').dropload({
@@ -498,9 +484,6 @@
                             let result = ''
                             res.articleList.forEach((item, ind) => {
                                 result += renderArticleHtml(item)
-                                // if(ind == res.articleList.length - 1) {
-                                //     dropload.noData()
-                                // }
                             });
                             
                             $(".item-random-color").each(function() {
@@ -509,7 +492,6 @@
                                 
                             })
                             setTimeout(function() {
-                                // 每次数据加载完，必须重置
                                 dropload.resetload()
                                 isLoading = false
                                 $('.ghost-loading-mask').css('display', 'none')
@@ -518,8 +500,6 @@
                                 goPAGE();
                             }, 1000) 
                         } else {
-                            // 即使加载出错，也得重置
-                            // dropload.noData();
                             dropload.resetload()
                             setTimeout(function() {
                                 isLoading = false
@@ -538,7 +518,6 @@
                 goPage(`topic/${$(this).find(".menu-item-val").text()}`)
             })
 
-            // Click on the list item to enter the article details
             $('#artivleTemplate').on('click', '.ghost-list-item', function(event) {
                 event.stopPropagation()
                 const articleId = $(this).parents(".gohst-index-page").attr("article-id")
