@@ -55,10 +55,10 @@ export class PublishController {
         },
     ))
     async uploadFile(@UploadedFile() file, @Body() data) {
-        const user = await this.postsRepository.getUser(data);
-        if (!user) {
-            return {message: '非正常用户！'};
-        }
+        // const user = await this.postsRepository.getUser(data);
+        // if (user.USER_ID !== data.userId) {
+        //     return {message: '非正常用户！'};
+        // }
         if (file) {
             try {
                 return util.client.write(file.path)
@@ -96,10 +96,10 @@ export class PublishController {
         },
     ))
     async uploadVideo(@UploadedFile() file, @Body() data) {
-        const user = await this.postsRepository.getUser(data);
-        if (!user) {
-            return {message: '非正常用户！'};
-        }
+        // const user = await this.postsRepository.getUser(data);
+        // if (user.USER_ID !== data.userId) {
+        //     return {message: '非正常用户！'};
+        // }
         const limitSize = 150 * 1024 * 1024;
         let msg = {
             code: 10000,
