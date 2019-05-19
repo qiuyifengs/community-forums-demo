@@ -36,7 +36,7 @@
                                                     <div class="ghost-comment-avatar">
                                                         <span class="ghost-avatar ghost-avatar-circle ghost-avatar-image">
                                                             <% if(item.hearderIcon) { %>
-                                                                <img src="/<%= item.hearderIcon %>">
+                                                                <img class="author-headerIcon" src="/<%= item.hearderIcon %>">
                                                             <% } else { %> 
                                                                 <span class="item-random-color" comment-user-name="<%= item.COMMENT_USER_NAME %>">
                                                                     <%= item.COMMENT_USER_NAME.substring(0, 1) %>
@@ -188,6 +188,11 @@
                 $(this).parents().parents('.ghost-comment-content').find('.replyFormTemplate textarea').focus()
             })
 
+            $('.author-headerIcon').each(function() {
+                const imgSrc = $(this).attr('src')
+                $(this).attr('src', `${readFileBaseUrl}/${imgSrc}`)
+            })
+
             $(".item-random-color").each(function() {
                 const authorName = $(this).attr("comment-user-name");
                 $(this).css("background",renderColor(authorName));
@@ -301,7 +306,7 @@
         function showHeaderIcon(item) {
             if (item.hearderIcon != '' && item.hearderIcon != null) {
                 return `
-                    <img src="/${ item.hearderIcon }">
+                    <img src="${readFileBaseUrl}/${ item.hearderIcon }">
                 `
             } else {
                 return `<span class="item-random-color" comment-user-name="${item.commentUserName}">${item.commentUserName.substring(0, 1)}</span>`;

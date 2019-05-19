@@ -328,7 +328,7 @@
                                                                         <div class="ghost-components-article-list-content-index-extra">
                                                                             <span class="ghost-avatar ghost-pro-components-global-header-index-avatar ghost-avatar-mini ghost-avatar-circle ghost-avatar-image langue-show web-display">
                                                                                 <% if(articleItem.hearderIcon) { %>
-                                                                                    <img src="<%= articleItem.hearderIcon %>">
+                                                                                    <img class="author-headerIcon" src="<%= articleItem.hearderIcon %>">
                                                                                 <% } else { %> 
                                                                                     <span class="item-random-color" article-author="<%=articleItem.author%>">
                                                                                         <%= articleItem.author.substring(0, 1) %>
@@ -432,7 +432,10 @@
                 $(this).html(`<div class="ghost-components-article-list-show-content">${showContent}</div>`)
                 $(this).append(showImg)
             })
-
+            $('.author-headerIcon').each(function() {
+                const imgSrc = $(this).attr('src')
+                $(this).attr('src', `${readFileBaseUrl}/${imgSrc}`)
+            })
             $(".item-random-color").each(function() {
                 const authorName = $(this).attr("article-author")
                 $(this).css("background",renderColor(authorName))
@@ -566,7 +569,7 @@
         function showHeaderIcon(item) {
             if (item.hearderIcon != '' && item.hearderIcon != null) {
                 return `
-                    <img src="${ item.hearderIcon }">
+                    <img src="${readFileBaseUrl}/${ item.hearderIcon }">
                 `
             } else {
                 return `<span class="item-random-color" article-author="${item.author}">${item.author.substring(0, 1)}</span>`
@@ -623,6 +626,5 @@
                         </div>
                     </a>`
             }
-            
     </script>
 </html>

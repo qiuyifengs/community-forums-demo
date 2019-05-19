@@ -5,6 +5,8 @@ import moment = require('moment');
 import * as random from './common/random';
 import { DataType } from './common/dateType';
 import * as SeaweedFS from 'seaweedfs';
+import * as Base from '../libs/js/common.js';
+console.log(111, Base)
 
 /**
  * 操作库

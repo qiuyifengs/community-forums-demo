@@ -126,7 +126,7 @@ $(document).ready(function(){
                 activity = res.activity
                 localStorage.setItem('activity', res.activity)
                 if (res.headerIcon) {
-                    headerDom = `<img src=${baseUrlTwo}/${res.headerIcon}><span class="login-enty app-display">${nickName}</span>`
+                    headerDom = `<img src=${readFileBaseUrl}/${res.headerIcon}><span class="login-enty app-display">${nickName}</span>`
                     $(".user-headerIcon").append(headerDom)
                     localStorage.setItem('headerIcon', res.headerIcon)
                 } else {

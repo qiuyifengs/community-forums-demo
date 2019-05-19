@@ -2,7 +2,8 @@
 // baseUrl
 // var baseUrl = 'http://192.168.4.188:3002/';
 var baseUrl = 'http://127.0.0.1:3002/';
-var baseUrlTwo = 'http://192.168.4.200:8081';
+var writeFileBaseUrl = '192.168.4.200';
+var readFileBaseUrl = 'http://192.168.4.200:8081';
 /**
  * checkEmail
  * @param {*} email 
@@ -233,5 +234,3 @@ function translateFun(lang) {
         }
     })
 }
-
-    

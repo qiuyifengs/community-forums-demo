@@ -53,7 +53,6 @@ export class AccountController {
                 return util.client.write(file.path)
                 .then(async (fileInfo) => {
                     params.headerIcon = fileInfo.fid;
-                    console.log(fileInfo)
                     return await this.accountService.changeUserInfo(params);
                 });
             }
