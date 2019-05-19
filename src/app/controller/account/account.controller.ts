@@ -41,6 +41,10 @@ export class AccountController {
         },
     )) // file对应HTML表单的name属性
     async uploadFile(@UploadedFile() file, @Body() data) {
+        const user = await this.accountService.getUserInfo(data);
+        if (!user) {
+            return {message: '非正常用户！'};
+        }
         const params = {
             userId: data.userId,
             nickName: data.nickName,
