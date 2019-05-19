@@ -18,7 +18,7 @@
                 <div class="publish web-display" lang="post">发布</div>
                 <div class="article_type">
                     <% if (obj && obj.renderData) { %>
-                    <div class="cur_type_item" style="display: none"><%= obj.renderData.articleType %></div>
+                    <div class="cur_type_item" style="display: none"><%= obj.renderData.ARTICLE_TYPE %></div>
                     <% } %>
                     <div class="type_label app-label" lang="category">分类:</div>
                     <ul class="type_list">
@@ -29,8 +29,8 @@
                 </div>
                 <div class="article_title">
                     <% if (obj && obj.renderData) { %>
-                    <div class="is_drafts" style="display:none"><%= obj.renderData.isDrafts %></div> 
-                    <div class="cur_article_label" style="display:none"><%= obj.renderData.articleLabel %></div>
+                    <div class="is_drafts" style="display:none"><%= obj.renderData.ID_DRAFTS %></div> 
+                    <div class="cur_article_label" style="display:none"><%= obj.renderData.ARTICLE_LABEL %></div>
                     <% } %>
                     <div class="title-box">
                         <div class="title-text app-label app-display" lang="theme">标题</div>
@@ -269,7 +269,6 @@
 
             $(".comment_btn").on("click", function() {
                 if (!isSubmitting) return false; 
-                $('.ghost-loading-mask').css('display', 'block')
                 isSubmitting = false;
                 if ($(this).hasClass('app-btn')) {
                     let saveTextObj = {
@@ -347,6 +346,7 @@
                     articleType: articleSource,
                     articleLabel: labelArr
                 };
+                $('.ghost-loading-mask').css('display', 'block')
                 myAjax("POST", 'post/publish', param).then((res) => {
                     if (res.code == 10000) {
                         sessionStorage.removeItem('jStorage')
