@@ -30,6 +30,9 @@ export class PublishService {
     async getMenu(): Promise<any> {
         return await this.menuRepository.find({IS_TYPE: true});
     }
+    async getUser(param): Promise<any> {
+        return await this.userRepository.findOne({ NICK_NAME: param.nickName });
+    }
     async getLabel(): Promise<any> {
         const labelType = await this.labelTypeRepository.find();
         for (const type of labelType) {

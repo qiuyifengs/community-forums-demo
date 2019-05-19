@@ -1,9 +1,8 @@
 
 // baseUrl
 // var baseUrl = 'http://192.168.4.188:3002/';
-var baseUrl = 'http://127.0.0.1:3002/';
-var writeFileBaseUrl = '192.168.4.200';
-var readFileBaseUrl = 'http://192.168.4.200:8081';
+var baseUrl = 'http://13.56.103.57/';
+var readFileBaseUrl = 'http://13.56.103.57/';
 /**
  * checkEmail
  * @param {*} email 

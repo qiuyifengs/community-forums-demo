@@ -55,19 +55,31 @@ export class PublishController {
         },
     ))
     async uploadFile(@UploadedFile() file, @Body() data) {
-        try {
-            return util.client.write(file.path)
-            .then((fileInfo) => {
-                const msg = {
-                    code: 10000,
-                    message: '上传成功！',
-                    path: fileInfo.fid,
-                    filename: fileInfo.fid,
-                };
-                return msg;
-            });
-        } catch (e) {
-            console.log(e);
+        const user = await this.postsRepository.getUser(data);
+        if (!user) {
+            return {message: '非正常用户！'};
+        }
+        if (file) {
+            try {
+                return util.client.write(file.path)
+                .then((fileInfo) => {
+                    const msg = {
+                        code: 10000,
+                        message: '上传成功！',
+                        path: fileInfo.fid,
+                        filename: fileInfo.fid,
+                    };
+                    return msg;
+                });
+            } catch (e) {
+                console.log(e);
+            }
+        } else {
+            const msg = {
+                code: -1,
+                message: '上传失败！',
+            };
+            return msg;
         }
     }
 
@@ -84,6 +96,10 @@ export class PublishController {
         },
     ))
     async uploadVideo(@UploadedFile() file, @Body() data) {
+        const user = await this.postsRepository.getUser(data);
+        if (!user) {
+            return {message: '非正常用户！'};
+        }
         const limitSize = 150 * 1024 * 1024;
         let msg = {
             code: 10000,
@@ -91,45 +107,42 @@ export class PublishController {
             path: '',
             filename: '',
         };
-        if (file.size > limitSize) {
-            msg = {
-                code: 10000,
-                message: '请上传150M以内的文件',
-                path: '',
-                filename: '',
-            };
-            delete msg.path;
-        } else {
-            try {
-                return util.client.write(file.path)
-                    .then(async (fileInfo) => {
-                        return msg = {
-                            code: 10000,
-                            message: '上传成功！',
-                            path: fileInfo.fid,
-                            filename: fileInfo.fid,
-                        };
-                    });
-            } catch (e) {
-                console.log(e);
+        if (file) {
+            if (file.size > limitSize) {
+                msg = {
+                    code: 10000,
+                    message: '请上传150M以内的文件',
+                    path: '',
+                    filename: '',
+                };
+                delete msg.path;
+            } else {
+                try {
+                    return util.client.write(file.path)
+                        .then(async (fileInfo) => {
+                            return msg = {
+                                code: 10000,
+                                message: '上传成功！',
+                                path: fileInfo.fid,
+                                filename: fileInfo.fid,
+                            };
+                        });
+                } catch (e) {
+                    console.log(e);
+                }
             }
-            // msg = {
-            //     code: 10000,
-            //     message: '上传成功！',
-            //     path: file.path.replace('src/libs', ''),
-            //     filename: file.filename,
-            // };
+            return msg;
+        } else {
+            const resmsg = {
+                code: -1,
+                message: '上传失败！',
+            };
+            return resmsg;
         }
-        return msg;
     }
     @Post('deleteUrl')
     @ApiOperation({ title: 'get balance from data'})
     public async deleteUrl(@Body() params): Promise<any> {
-        // const delUrl = JSON.parse(params.urlArr);
-        // delUrl.forEach(itemUrl => {
-        //     fs.unlinkSync(`./src/libs${itemUrl}`);
-        // });
-        console.log(params)
         try {
             const msg = {
                 code: 10000,

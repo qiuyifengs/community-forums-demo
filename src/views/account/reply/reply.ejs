@@ -190,7 +190,7 @@
 
             $('.author-headerIcon').each(function() {
                 const imgSrc = $(this).attr('src')
-                $(this).attr('src', `${readFileBaseUrl}/${imgSrc}`)
+                $(this).attr('src', `${readFileBaseUrl}${imgSrc}`)
             })
 
             $(".item-random-color").each(function() {
@@ -306,7 +306,7 @@
         function showHeaderIcon(item) {
             if (item.hearderIcon != '' && item.hearderIcon != null) {
                 return `
-                    <img src="${readFileBaseUrl}/${ item.hearderIcon }">
+                    <img src="${readFileBaseUrl}${ item.hearderIcon }">
                 `
             } else {
                 return `<span class="item-random-color" comment-user-name="${item.commentUserName}">${item.commentUserName.substring(0, 1)}</span>`;

@@ -340,7 +340,7 @@
                 })
                 $('.personal-headerIcon').each(function() {
                     const imgSrc = $(this).attr('src')
-                    $(this).attr('src', `${readFileBaseUrl}/${imgSrc}`)
+                    $(this).attr('src', `${readFileBaseUrl}${imgSrc}`)
                 })
                 $('.item-random-color').each(function() {
                     const authorName = $(this).attr('article-commentUserName')
@@ -915,7 +915,7 @@
         function showHeaderIcon(item) {
             if (item.headerIcon != '' && item.headerIcon != null) {
                 return `
-                    <img class='commentator_img' src='${readFileBaseUrl}/${ item.headerIcon }'>
+                    <img class='commentator_img' src='${readFileBaseUrl}${ item.headerIcon }'>
                 `
             } else {
                 return `<span class='item-random-color commentator_user_name' article-commentUserName='${item.COMMENT_USER_NAME}' style='background: rgb(97, 99, 103);'>${item.COMMENT_USER_NAME.substring(0, 1)}</span>`;

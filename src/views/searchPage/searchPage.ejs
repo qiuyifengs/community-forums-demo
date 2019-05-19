@@ -305,7 +305,7 @@
 
             $('.author-headerIcon').each(function() {
                 const imgSrc = $(this).attr('src')
-                $(this).attr('src', `${readFileBaseUrl}/${imgSrc}`)
+                $(this).attr('src', `${readFileBaseUrl}${imgSrc}`)
             })
             $(".item-random-color").each(function() {
                 const authorName = $(this).attr("article-author");

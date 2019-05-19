@@ -375,6 +375,7 @@ Editor.prototype = {
 			}
 			$form.find(':file').unbind('change').one('change', function(ev) {
 				let myForm = new FormData();
+				myForm.append("nickName", $.cookie('nickName'))
 				let files = $form[0][0].files;
                 for(let i = 0; i < files.length; i++){
                     myForm.append("file", files[i]);                
@@ -390,7 +391,7 @@ Editor.prototype = {
 						if(data.code=='10000'){
 							_self.template({
 								type: 'pic',
-								url: readFileBaseUrl + '/' + data.path,
+								url: readFileBaseUrl  + data.path,
 								filename: data.filename
 							});
 						}else{
@@ -441,8 +442,9 @@ Editor.prototype = {
 				$('.modal_mask').remove()
 				translate()
 			} else {
-				let videoFrom = new FormData("videoFrom");
-				let files = $('.file_inp')[0].files;
+				let videoFrom = new FormData("videoFrom")
+				myForm.append("nickName", $.cookie('nickName'))
+				let files = $('.file_inp')[0].files
 				for(let i = 0; i < files.length; i++){
                     videoFrom.append("file", files[i]);                
 				}
@@ -456,7 +458,7 @@ Editor.prototype = {
 						if(data.code=='10000'){
 							_self.template({
 								type: 'video',
-								url: readFileBaseUrl + '/' + data.path,
+								url: readFileBaseUrl + data.path,
 								filename: data.filename
 							});
 							_self.autoSave(opt)

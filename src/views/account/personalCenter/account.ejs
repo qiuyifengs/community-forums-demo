@@ -278,7 +278,7 @@
         }
         $(function() {
             const newHeaderIcon = $('.new-header-icon').attr('src');
-            $('.new-header-icon').attr('src', `${readFileBaseUrl}/${newHeaderIcon}`)
+            $('.new-header-icon').attr('src', `${readFileBaseUrl}${newHeaderIcon}`)
             if (localStorage.getItem('langData') && JSON.parse(localStorage.getItem('langData')).lang == 'en') {
                 $('.app-page-title').text('Personal Center')
             } else {
