@@ -352,12 +352,13 @@
                         sessionStorage.removeItem('jStorage')
                         setTimeout(function() {
                             $('.ghost-loading-mask').css('display', 'none')
+                            layer.msg(res.message)
                             goPage(`post/articleDetail/${res.articleId}`)
                         }, 2000);
                     } else {
                         $('.ghost-loading-mask').css('display', 'none')
-                        layer.msg(res.message);
-                        console.log(res.message);
+                        layer.msg(res.message)
+                        console.log(res.message)
                     }
                     isSubmitting = true;
                 })
