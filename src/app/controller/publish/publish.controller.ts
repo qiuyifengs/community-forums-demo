@@ -61,7 +61,6 @@ export class PublishController {
                 const msg = {
                     code: 10000,
                     message: '上传成功！',
-                    // path: 'http://' + util.client.config.masters[0].host + '/' + fileInfo.fid,
                     path: fileInfo.fid,
                     filename: fileInfo.fid,
                 };
@@ -100,7 +99,6 @@ export class PublishController {
                 filename: '',
             };
             delete msg.path;
-            // fs.unlinkSync(`./src/libs/images/articleVideo/${file.filename}`);
         } else {
             try {
                 return util.client.write(file.path)
