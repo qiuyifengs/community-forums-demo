@@ -7,6 +7,7 @@ import { util } from '../../../bing';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import * as fs from 'fs';
+import { uploadConfig } from '../../../bing/common/uploadConfig'
 
 @ApiUseTags('post')
 @Controller('post')
@@ -43,102 +44,87 @@ export class PublishController {
     }
 
     @Post('articleImg')
-    @UseInterceptors(FileInterceptor('file',
-        {
-            storage: diskStorage({
-                // destination: './src/libs/images/articleFile',
-                filename: (req, file, cb) => {
-                    const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
-                    return cb(null, `${randomName}${extname(file.originalname)}`);
-                },
-            }),
-        },
-    ))
+    @UseInterceptors(FileInterceptor('file', uploadConfig))
     async uploadFile(@UploadedFile() file, @Body() data) {
-        // const user = await this.postsRepository.getUser(data);
-        // if (user.USER_ID !== data.userId) {
-        //     return {message: '非正常用户！'};
+        return {
+            code: 10000,
+            message: '上传成功！',
+            path: file.originalname,
+            filename: file.originalname,
+        }        
+        // if (file) {
+
+            // try {
+            //     return util.client.write(file.path)
+            //     .then((fileInfo) => {
+            //         const msg = {
+            //             code: 10000,
+            //             message: '上传成功！',
+            //             path: fileInfo.fid,
+            //             filename: fileInfo.fid,
+            //         };
+            //         return msg;
+            //     });
+            // } catch (e) {
+            //     console.log(e);
+            // }
+        // } else {
+        //     const msg = {
+        //         code: -1,
+        //         message: '上传失败！',
+        //     };
+        //     return msg;
         // }
-        if (file) {
-            try {
-                return util.client.write(file.path)
-                .then((fileInfo) => {
-                    const msg = {
-                        code: 10000,
-                        message: '上传成功！',
-                        path: fileInfo.fid,
-                        filename: fileInfo.fid,
-                    };
-                    return msg;
-                });
-            } catch (e) {
-                console.log(e);
-            }
-        } else {
-            const msg = {
-                code: -1,
-                message: '上传失败！',
-            };
-            return msg;
-        }
     }
 
     @Post('articleVideo')
-    @UseInterceptors(FileInterceptor('file',
-        {
-            storage: diskStorage({
-                // destination: './src/libs/images/articleVideo',
-                filename: (req, file, cb) => {
-                    const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
-                    return cb(null, `${randomName}${extname(file.originalname)}`);
-                },
-            }),
-        },
-    ))
+    @UseInterceptors(FileInterceptor('file', uploadConfig))
     async uploadVideo(@UploadedFile() file, @Body() data) {
-        // const user = await this.postsRepository.getUser(data);
-        // if (user.USER_ID !== data.userId) {
-        //     return {message: '非正常用户！'};
-        // }
-        const limitSize = 150 * 1024 * 1024;
-        let msg = {
+        return {
             code: 10000,
             message: '上传成功！',
-            path: '',
-            filename: '',
-        };
-        if (file) {
-            if (file.size > limitSize) {
-                msg = {
-                    code: 10000,
-                    message: '请上传150M以内的文件',
-                    path: '',
-                    filename: '',
-                };
-                delete msg.path;
-            } else {
-                try {
-                    return util.client.write(file.path)
-                        .then(async (fileInfo) => {
-                            return msg = {
-                                code: 10000,
-                                message: '上传成功！',
-                                path: fileInfo.fid,
-                                filename: fileInfo.fid,
-                            };
-                        });
-                } catch (e) {
-                    console.log(e);
-                }
-            }
-            return msg;
-        } else {
-            const resmsg = {
-                code: -1,
-                message: '上传失败！',
-            };
-            return resmsg;
+            path: file.originalname,
+            filename: file.originalname,
         }
+        // const limitSize = 150 * 1024 * 1024;
+        // let msg = {
+        //     code: 10000,
+        //     message: '上传成功！',
+        //     path: '',
+        //     filename: '',
+        // };
+        // if (file) {
+        //     if (file.size > limitSize) {
+        //         msg = {
+        //             code: 10000,
+        //             message: '请上传150M以内的文件',
+        //             path: '',
+        //             filename: '',
+        //         };
+        //         delete msg.path;
+        //     } else {
+        //         try {
+        //             return util.client.write(file.path)
+        //                 .then(async (fileInfo) => {
+        //                     return msg = {
+        //                         code: 10000,
+        //                         message: '上传成功！',
+        //                         path: fileInfo.fid,
+        //                         filename: fileInfo.fid,
+        //                     };
+        //                 });
+        //         } catch (e) {
+        //             console.log(e);
+        //         }
+        //     }
+        //     return msg;
+        // } else {
+        //     const resmsg = {
+        //         code: -1,
+        //         message: '上传失败！',
+        //     };
+        //     return resmsg;
+        // }
     }
     @Post('deleteUrl')
     @ApiOperation({ title: 'get balance from data'})
