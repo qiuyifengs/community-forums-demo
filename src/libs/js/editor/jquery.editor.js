@@ -443,7 +443,7 @@ Editor.prototype = {
 				translate()
 			} else {
 				let videoFrom = new FormData("videoFrom")
-				myForm.append("nickName", $.cookie('nickName'))
+				videoFrom.append("nickName", $.cookie('nickName'))
 				let files = $('.file_inp')[0].files
 				for(let i = 0; i < files.length; i++){
                     videoFrom.append("file", files[i]);                
