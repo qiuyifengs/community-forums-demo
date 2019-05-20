@@ -1,6 +1,6 @@
 
 // baseUrl
-// var baseUrl = 'http://192.168.4.188:3002/';
+// var baseUrl = 'http://127.0.0.1:3002/';
 var baseUrl = 'http://13.56.103.57/';
 var readFileBaseUrl = 'http://13.56.103.57/';
 /**
@@ -37,7 +37,6 @@ function myAjax(method, url, params) {
         try {
             $.ajax({
                 type: method,
-
                 url: baseUrl + url,
                 data: params,
                 // headers: {
@@ -174,7 +173,7 @@ function dealArticleContent(valArr) {
             if (item.value.indexOf('[qq_') > -1) {
                 let emojiDom = `<img class="emoji-pic" src="http://s.jiajuol.com/haopinjia/pc/0100/dist/lib/jquery-emoji/dist/img/qq/`
                 let value = item.value.replace(/\[qq_/g, emojiDom)
-                item.value = `<p class="img-box" data-type="${item.type}"><img src="${item.url}" /><br />${value.replace(/\]/g, '.gif">')}</p>`
+                item.value = `<p class="img-box" data-type="${item.type}"><img src="${item.url}" /><br /><p class="value_box">${value.replace(/\]/g, '.gif">')}</p></p>`
             } else {
                 item.value = `<p class="img-box" data-type="${item.type}"><img src="${item.url}" /><br />${item.value}</p>`
             }
@@ -184,7 +183,7 @@ function dealArticleContent(valArr) {
                 let value = item.value.replace(/\[qq_/g, emojiDom)
                 item.value = `<p class="video-box" data-type="${item.type}"><video controls="" autoplay="" name="media"><source src="${item.url}" type="video/mp4"></video><br />${value.replace(/\]/g, '.gif">')}</p>`
             } else {
-                item.value = `<p class="video-box" data-type="${item.type}"><video controls="" autoplay="" name="media"><source src="${item.url}" type="video/mp4"></video><br />${item.value}</p>`
+                item.value = `<p class="video-box" data-type="${item.type}"><video controls="" autoplay="" name="media"><source src="${item.url}" type="video/mp4"></video><br /><p class="value_box">${item.value}</p></p>`
             }
             
         }

@@ -35,7 +35,7 @@
                 <div class='personal_box'>
                     <div class='info_top'>
                         <% if(article.headerIcon) { %>
-                            <img class='head_portrait personal-headerIcon' src='<%= article.headerIcon %>'>
+                            <img class='head_portrait personal-headerIcon' src='/<%= article.headerIcon %>'>
                         <% } else { %> 
                             <span class='item-random-color' article-commentUserName='<%=article.AUTHOR%>'>
                                 <%= article.AUTHOR.substring(0, 1) %>
@@ -67,10 +67,10 @@
                 let resTime = formatDateFilter2($(this).text())
                 $(this).html(resTime)
             })
-            $('.personal-headerIcon').each(function() {
-                const imgSrc = $(this).attr('src')
-                $(this).attr('src', `${readFileBaseUrl}${imgSrc}`)
-            })
+            // $('.personal-headerIcon').each(function() {
+            //     const imgSrc = $(this).attr('src')
+            //     $(this).attr('src', `${readFileBaseUrl}${imgSrc}`)
+            // })
             $('.item-random-color').each(function() {
                 const authorName = $(this).attr('article-commentUserName')
                 $(this).css('background',renderColor(authorName))

@@ -119,14 +119,14 @@ $(document).ready(function(){
     if (userId) {
         renderHtml = `${accountModule}${noticeModule}`
         $('.user-sign').remove()
-
-        myAjax("POST", 'account/getUserInfo', {nickName: nickName}, ).then((res) => {
+        myAjax("POST", 'account/getUserInfo', {nickName: nickName}).then((res) => {
             let headerDom
             if (res.code == 10000) {
                 activity = res.activity
                 localStorage.setItem('activity', res.activity)
                 if (res.headerIcon) {
-                    headerDom = `<img src=${readFileBaseUrl}${res.headerIcon}><span class="login-enty app-display">${nickName}</span>`
+                    headerDom = `<img src=/${res.headerIcon}><span class="login-enty app-display">${nickName}</span>`
+                    // headerDom = `<img src=${readFileBaseUrl}${res.headerIcon}><span class="login-enty app-display">${nickName}</span>`
                     $(".user-headerIcon").append(headerDom)
                     localStorage.setItem('headerIcon', res.headerIcon)
                 } else {

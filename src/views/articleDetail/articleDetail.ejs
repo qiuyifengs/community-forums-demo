@@ -211,7 +211,7 @@
                     <div class='personal_box'>
                         <div class='info_top'>
                             <% if(article.headerIcon) { %>
-                                <img class='head_portrait personal-headerIcon' src='<%= article.headerIcon %>'>
+                                <img class='head_portrait personal-headerIcon' src='/<%= article.headerIcon %>'>
                             <% } else { %> 
                                 <span class='item-random-color' article-commentUserName='<%=article.AUTHOR%>'>
                                     <%= article.AUTHOR.substring(0, 1) %>
@@ -338,10 +338,10 @@
                     let resTime = formatDateFilter2($(this).text())
                     $(this).html(resTime)
                 })
-                $('.personal-headerIcon').each(function() {
-                    const imgSrc = $(this).attr('src')
-                    $(this).attr('src', `${readFileBaseUrl}${imgSrc}`)
-                })
+                // $('.personal-headerIcon').each(function() {
+                //     const imgSrc = $(this).attr('src')
+                //     $(this).attr('src', `${readFileBaseUrl}${imgSrc}`)
+                // })
                 $('.item-random-color').each(function() {
                     const authorName = $(this).attr('article-commentUserName')
                     $(this).css('background',renderColor(authorName))
@@ -915,7 +915,7 @@
         function showHeaderIcon(item) {
             if (item.headerIcon != '' && item.headerIcon != null) {
                 return `
-                    <img class='commentator_img' src='${readFileBaseUrl}${ item.headerIcon }'>
+                    <img class='commentator_img' src='/${ item.headerIcon }'>
                 `
             } else {
                 return `<span class='item-random-color commentator_user_name' article-commentUserName='${item.COMMENT_USER_NAME}' style='background: rgb(97, 99, 103);'>${item.COMMENT_USER_NAME.substring(0, 1)}</span>`;

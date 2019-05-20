@@ -391,7 +391,8 @@ Editor.prototype = {
 						if(data.code=='10000'){
 							_self.template({
 								type: 'pic',
-								url: readFileBaseUrl  + data.path,
+								// url: readFileBaseUrl  + data.path,
+								url: '/' + data.path,
 								filename: data.filename
 							});
 						}else{
@@ -458,7 +459,8 @@ Editor.prototype = {
 						if(data.code=='10000'){
 							_self.template({
 								type: 'video',
-								url: readFileBaseUrl + data.path,
+								// url: readFileBaseUrl + data.path,
+								url: '/' + data.path,
 								filename: data.filename
 							});
 							_self.autoSave(opt)

@@ -7,7 +7,7 @@ import { util } from '../../../bing';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import * as fs from 'fs';
-import { uploadConfig } from '../../../bing/common/uploadConfig'
+import { uploadConfig } from '../../../bing/common/uploadConfig';
 
 @ApiUseTags('post')
 @Controller('post')
@@ -51,7 +51,7 @@ export class PublishController {
             message: '上传成功！',
             path: file.originalname,
             filename: file.originalname,
-        }        
+        };
         // if (file) {
 
             // try {
@@ -85,7 +85,7 @@ export class PublishController {
             message: '上传成功！',
             path: file.originalname,
             filename: file.originalname,
-        }
+        };
         // const limitSize = 150 * 1024 * 1024;
         // let msg = {
         //     code: 10000,
@@ -129,17 +129,27 @@ export class PublishController {
     @Post('deleteUrl')
     @ApiOperation({ title: 'get balance from data'})
     public async deleteUrl(@Body() params): Promise<any> {
-        try {
-            const msg = {
-                code: 10000,
-                message: '删除成功！',
-            };
-            return util.client.remove(params.fid)
-            .then((body) => {
-                return msg;
-            });
-        } catch (e) {
-            return e;
-        }
+        const delUrl = JSON.parse(params.urlArr);
+        delUrl.forEach(itemUrl => {
+            fs.unlinkSync(`./static_files/${itemUrl}`);
+        });
+        const msg = {
+            code: 10000,
+            message: '删除成功！',
+        };
+        return msg;
+
+        // try {
+        //     const msg = {
+        //         code: 10000,
+        //         message: '删除成功！',
+        //     };
+        //     return util.client.remove(params.fid)
+        //     .then((body) => {
+        //         return msg;
+        //     });
+        // } catch (e) {
+        //     return e;
+        // }
     }
 }
