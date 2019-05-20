@@ -2,13 +2,9 @@
 <html>
     <head>
         <title><%= title %></title>
-        <!-- set `maximum-scale` for some compatibility issues -->
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-        <!-- Delete the default Apple toolbar and menu bar -->
         <meta content="yes" name="apple-mobile-web-app-capable"/>
-        <!-- Control status bar display style -->
         <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
-        <!-- Will not recognize the mailbox, tell the device to ignore the number in the page as a phone number -->
         <meta content="telephone=no" name="format-detection"/>
         <link rel="stylesheet" href="/style/account/reply.css">
         <% include ../../common/script %>
@@ -40,7 +36,7 @@
                                                     <div class="ghost-comment-avatar">
                                                         <span class="ghost-avatar ghost-avatar-circle ghost-avatar-image">
                                                             <% if(item.hearderIcon) { %>
-                                                                <img src="/<%= item.hearderIcon %>">
+                                                                <img class="author-headerIcon" src="/<%= item.hearderIcon %>">
                                                             <% } else { %> 
                                                                 <span class="item-random-color" comment-user-name="<%= item.COMMENT_USER_NAME %>">
                                                                     <%= item.COMMENT_USER_NAME.substring(0, 1) %>
@@ -84,11 +80,6 @@
                                                     <% item.childrenComentList.forEach(function(nested) { %>
                                                     <div class="ghost-comment">
                                                         <div class="ghost-comment-inner">
-                                                            <!-- <div class="ghost-comment-avatar">
-                                                                <span class="ghost-avatar ghost-avatar-circle ghost-avatar-image">
-                                                                    <img src="/images/header_icon.png">
-                                                                </span>
-                                                            </div> -->
                                                             <div class="ghost-comment-content" data-comment-id="<%= nested.CHILD_COMMENT_ID %>">
                                                                 <div class="ghost-comment-content-top-box">
                                                                     <div class="ghost-comment-content-author">
@@ -117,19 +108,15 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <!-- end childrenComentList rendering -->
                                                     <% }) %>
                                                 </div>
-                                                <!-- end if childrenCommentList -->
                                                 <% } %>
                                             </article>
-                                            <!-- end rendering -->
                                             <% }) %>
                                         </div>
                                     </div>
                                 </div>
                             </article>
-                                <!-- comment components end -->
                             <% if (answerList.commentRes.length > 0) { %>
                                 <ul class="ghost-pagination article_page" style="margin: 24px 0; text-align: center"></ul>
                             <% } %>
@@ -181,15 +168,13 @@
                                     </div>
                                 </form>`
         $(function() {
-            // app title
             if (localStorage.getItem('langData') && JSON.parse(localStorage.getItem('langData')).lang == 'en') {
                 $('.app-page-title').text('My Replies')
             } else {
                 $('.app-page-title').text('我的回复')
             }
-            // init Google Design button click effect 
             Waves.attach('.float-button-light', ['waves-button', 'waves-float', 'waves-light'])
-            // Init Waves
+
             Waves.init()
             let commentatorName;
             $('.ghost-spin-container').on('click', '.reply-btn', function() {
@@ -202,14 +187,19 @@
                 autosize(document.querySelectorAll('textarea'))
                 $(this).parents().parents('.ghost-comment-content').find('.replyFormTemplate textarea').focus()
             })
-            // random color
+
+            // $('.author-headerIcon').each(function() {
+            //     const imgSrc = $(this).attr('src')
+            //     $(this).attr('src', `${readFileBaseUrl}${imgSrc}`)
+            // })
+
             $(".item-random-color").each(function() {
                 const authorName = $(this).attr("comment-user-name");
                 $(this).css("background",renderColor(authorName));
 
             })
             let userId = $.cookie("userId");
-            // init pagination config
+
             $('.ghost-pagination').pagination({
                 total: document.getElementById('totalPages').value,
                 pageSize: 5,
@@ -242,13 +232,12 @@
                 let resTime = formatDateFilter2($(this).text())
                 $(this).html(resTime)
             });
-            // reply comment
+
             $("#replyTemplate").on("click", ".submit-reply", function(event) {
                 event.stopPropagation();
                 let commentText = $(this).parent(".submit-reply-parent").prev(".ghsot-col").find(".ghost-input").val();
                 let commentId = $(this).parents(".ghost-comment").find(".ghost-comment-parent").attr("data-comment-id");
                 let articleId = $(this).parents(".ghost-comment").find(".ghost-comment-parent").attr("data-article-id");
-                console.log($(this).parents(".ghost-comment").find(".ghost-comment-parent").attr("data-article-id"))
                 if (!commentText) return;
                 let param = {
                     author: $.cookie("nickName"),
@@ -267,17 +256,17 @@
                 })
             });
             //--------------------------------------webapp-------------------------------
-            // no touchmove
+
             $('.user-comment-content-mask').on("touchmove",function(e) {
                 e.preventDefault()
                 e.stopPropagation()
             })
-            // hide user-comment-content-mask
+
             $('.user-comment-content-mask').on('click', function(e) {
                 e.stopPropagation()
                 $('.user-comment-content-mask').css('display', 'none')
             })
-            // don't stopPropagation
+
             $('.user-comment-content').on('click', function(e) {
                 e.stopPropagation()
             })
@@ -317,7 +306,7 @@
         function showHeaderIcon(item) {
             if (item.hearderIcon != '' && item.hearderIcon != null) {
                 return `
-                    <img src="/${ item.hearderIcon }">
+                    <img src="${ item.hearderIcon }">
                 `
             } else {
                 return `<span class="item-random-color" comment-user-name="${item.commentUserName}">${item.commentUserName.substring(0, 1)}</span>`;

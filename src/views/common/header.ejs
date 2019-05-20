@@ -115,18 +115,18 @@ let clearDropDownActive = () => {
 }
 $(document).ready(function(){
     let renderHtml, activity
-    // init mudule
+
     if (userId) {
         renderHtml = `${accountModule}${noticeModule}`
         $('.user-sign').remove()
-        // get user headerIcon
-        myAjax("POST", 'account/getUserInfo', {nickName: nickName}, ).then((res) => {
+        myAjax("POST", 'account/getUserInfo', {nickName: nickName}).then((res) => {
             let headerDom
             if (res.code == 10000) {
                 activity = res.activity
                 localStorage.setItem('activity', res.activity)
                 if (res.headerIcon) {
-                    headerDom = `<img src=${res.headerIcon}><span class="login-enty app-display">${nickName}</span>`
+                    headerDom = `<img src=/${res.headerIcon}><span class="login-enty app-display">${nickName}</span>`
+                    // headerDom = `<img src=${readFileBaseUrl}${res.headerIcon}><span class="login-enty app-display">${nickName}</span>`
                     $(".user-headerIcon").append(headerDom)
                     localStorage.setItem('headerIcon', res.headerIcon)
                 } else {
@@ -166,12 +166,6 @@ $(document).ready(function(){
         $('.app-lang-dropdown-list').removeClass('active')
     })
 
-    // $(document).on('click', function(e) {
-    //     $('.lang-dropdown, #langMenu').removeClass('active') 
-    // })
-
-    
-    // open account menu dropDown
     $('.account-dropdown .ghost-current-value').on('click', function(e) {
         clearDropDownActive()
         e.stopPropagation()
@@ -181,7 +175,6 @@ $(document).ready(function(){
         }, 5)
     })
     
-    // open lang dropDown
     $('.lang-dropdown .ghost-current-value').on('click', function(e){
         clearDropDownActive()   
         e.stopPropagation()
@@ -202,7 +195,6 @@ $(document).ready(function(){
             return `account/${ address[value] }/${ nickName }`
         }
 
-    // select account menu page
     $('#accountMenu .account-dropdown-item').on('click', function(e) {
         e.stopPropagation()
         if (!userId) {
@@ -224,7 +216,6 @@ $(document).ready(function(){
         }
     })
 
-    // select lang
     $('#langMenu .lang-item').on('click', function(){
         $(this).addClass('selected').siblings().removeClass('selected')
         $('#langMenu').removeClass('active')
@@ -253,7 +244,6 @@ $(document).ready(function(){
         goPage('user/register')
     })
 
-    // enter notice page
     $('#enterNotice').on('click', function(e) {
         e.stopPropagation()
         let url
@@ -265,7 +255,6 @@ $(document).ready(function(){
         goPage(url)
     })
 
-    // enter publish page
     $('#enterPublish').on('click', function(event) {
         event.stopPropagation()
         if ($.cookie("userId")) {
@@ -283,13 +272,11 @@ $(document).ready(function(){
         }
     })
 
-    // refresh index page 
     $('.ghost-index').on("click", function(e) {
         e.stopPropagation()
         goPage('')
     })
 
-    // search keyword 
     $("#search").keydown(function(event){
         if (event.keyCode == 13) {
             let keyword = $(this).val()
@@ -311,7 +298,6 @@ $(document).ready(function(){
         $('.app-lang-dropdown-list').before(`<img src="https://image.flaticon.com/icons/svg/299/299914.svg" data-value="cn">`)
     }
     // ------------------------webApp------------------------
-    // show left menu
     $('.app-gohost-hearder-left').on('click', function() {
         $(".app-ghost-drop-down").css("display", "block")
     })
@@ -341,12 +327,12 @@ $(document).ready(function(){
         event.stopPropagation()
         $(".app-ghost-drop-down").css("display", "none")
     })
-    // user sign
+
     $('.user-sign').on('click', function(event) {
         event.stopPropagation()
         goPage('user/login')
     })
-    // app select lang
+
     $('.app-lang-dropdown').on('click', function(e) {
         event.stopPropagation()
         $('.app-lang-dropdown-list').toggleClass('active')

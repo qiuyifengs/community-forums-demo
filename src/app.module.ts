@@ -9,10 +9,10 @@ import { BbsArticleDetail, BbsChildrenComments, BbsCommentsList, BbsLabelList, B
     imports: [
         TypeOrmModule.forRoot({
             type: 'mysql',
-            host: '192.168.4.251',
+            host: '7.7.2.11',
             port: 3306,
             username: 'root',
-            password: '12345678',
+            password: 'p82Jser2Sb32F2sl4Gsir02Fe',
             database: 'example',
             entities: [
                 BbsArticleDetail,

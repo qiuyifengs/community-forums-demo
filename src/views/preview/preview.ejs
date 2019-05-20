@@ -35,7 +35,7 @@
                 <div class='personal_box'>
                     <div class='info_top'>
                         <% if(article.headerIcon) { %>
-                            <img class='head_portrait' src='<%= article.headerIcon %>'>
+                            <img class='head_portrait personal-headerIcon' src='/<%= article.headerIcon %>'>
                         <% } else { %> 
                             <span class='item-random-color' article-commentUserName='<%=article.AUTHOR%>'>
                                 <%= article.AUTHOR.substring(0, 1) %>
@@ -61,24 +61,22 @@
     </body>
     <script type='text/javascript'>
         let articleId, articleTitle
-        // function filterTime(item) {
-        //     console.log(1, item)
-        //     return  resTime = formatDateFilter2(item)
-        // }
         $(function(){
             let author = $('.my_name').text()
             $('.showTime').each(function() {
                 let resTime = formatDateFilter2($(this).text())
-                console.log(resTime)
                 $(this).html(resTime)
             })
+            // $('.personal-headerIcon').each(function() {
+            //     const imgSrc = $(this).attr('src')
+            //     $(this).attr('src', `${readFileBaseUrl}${imgSrc}`)
+            // })
             $('.item-random-color').each(function() {
                 const authorName = $(this).attr('article-commentUserName')
                 $(this).css('background',renderColor(authorName))
 
             })
             let showContent = JSON.parse($('.content').text())
-            // console.log(dealArticleContent(showContent))
             dealArticleContent(showContent).forEach(item => {
                 $('.code-html').append(item.value)
             })

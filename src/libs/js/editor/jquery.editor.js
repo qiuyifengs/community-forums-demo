@@ -1,7 +1,6 @@
 
 let global;
 function Editor(opt) {
-	//功能按钮配置
 	this.btns = {
 		text: `<span class="J_txtbtn"><svg class="iconSvg iconfont" aria-hidden="true">
 				<use xlink:href="#icon-wenzi"></use>
@@ -33,7 +32,6 @@ function Editor(opt) {
 				</span>`
 	}
 
-	// 默认配置
 	this.config = {
 		fn: ['text', 'pic', 'video', 'link', 'emoji', 'clear'],
 		debugger: false,
@@ -42,7 +40,6 @@ function Editor(opt) {
 		callback: function() {}
 	}
 
-	//功能模版
 	this.templateInit = function(obj) {
 		var _self = this;
 		var htm = '<div class="Editor">\
@@ -67,11 +64,9 @@ function Editor(opt) {
                             </div>\
                         </div>';
 		$(obj).html(htm);
-		// 拖动排序
 		$(".J_editor_body").sortable({
 			axis: "y"
 		});
-		// 模块删除
 		$(".J_editor_body").on('click', '.J_del', function() {
 			if ($('.J_text').length > 1) {
 				let delUrl = []
@@ -231,18 +226,14 @@ Editor.prototype = {
 	init: function(opt, callback) {
 		var _self = this;
 		global = opt;
-		//debugger配置
 		_self.config.debugger = opt && opt.debugger;
 
-		// 传图url地址
 		_self.config.uploadUrl = opt && opt.uploadUrl;
 
-		//功能配置
 		if (opt.fn) {
 			_self.config.fn = opt.fn
 		}
 
-		// 初始化编辑器
 		_self.templateInit(opt.box);
 		if(opt.data){
 			$('.J_text').remove();
@@ -297,7 +288,6 @@ Editor.prototype = {
 					}
 				}
 				if (autoSave) {
-					// layer.msg('5秒自动保存成功');
 					$('.J_tip').fadeIn('400', function(e) {
 						var d = this;
 						setTimeout(function() {
@@ -340,14 +330,14 @@ Editor.prototype = {
 		});
 	},
 	addEmoji: function(obj) {
-		//定位输入框
-		$(obj).on('click', 'textarea', function() {
+		$(obj).on('click', 'textarea', function(e) {
 			$('.editor_focus').removeClass('editor_focus');
 			$(this).addClass('editor_focus');
 		});
 		$('.code-html').on("click", '.J_emoji', function() {
-			$(this).parents(".ui-sortable-handle").find(".form-control").focus();
-			$(".emoji_container").css("display", "block")
+			$(this).parents(".ui-sortable-handle").siblings().find(".form-control").removeClass('editor_focus');
+			$(this).parents(".ui-sortable-handle").find(".form-control").addClass('editor_focus').focus();
+			$(".emoji_container").show();
 		})
 		$(document).emoji({
 			showTab: true,
@@ -385,6 +375,7 @@ Editor.prototype = {
 			}
 			$form.find(':file').unbind('change').one('change', function(ev) {
 				let myForm = new FormData();
+				myForm.append("nickName", $.cookie('nickName'))
 				let files = $form[0][0].files;
                 for(let i = 0; i < files.length; i++){
                     myForm.append("file", files[i]);                
@@ -400,7 +391,8 @@ Editor.prototype = {
 						if(data.code=='10000'){
 							_self.template({
 								type: 'pic',
-								url: data.path,
+								// url: readFileBaseUrl  + data.path,
+								url: '/' + data.path,
 								filename: data.filename
 							});
 						}else{
@@ -451,8 +443,9 @@ Editor.prototype = {
 				$('.modal_mask').remove()
 				translate()
 			} else {
-				let videoFrom = new FormData("videoFrom");
-				let files = $('.file_inp')[0].files;
+				let videoFrom = new FormData("videoFrom")
+				videoFrom.append("nickName", $.cookie('nickName'))
+				let files = $('.file_inp')[0].files
 				for(let i = 0; i < files.length; i++){
                     videoFrom.append("file", files[i]);                
 				}
@@ -466,7 +459,8 @@ Editor.prototype = {
 						if(data.code=='10000'){
 							_self.template({
 								type: 'video',
-								url: data.path,
+								// url: readFileBaseUrl + data.path,
+								url: '/' + data.path,
 								filename: data.filename
 							});
 							_self.autoSave(opt)

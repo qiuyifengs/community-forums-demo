@@ -4,6 +4,7 @@ import { AccountService } from './account.service';
 import { util } from '../../../bing';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import { uploadConfig } from '../../../bing/common/uploadConfig';
 
 @Controller('account')
 export class AccountController {
@@ -30,36 +31,26 @@ export class AccountController {
     }
 
     @Post('upload')
-    @UseInterceptors(FileInterceptor('file',
-        {
-            storage: diskStorage({
-                // destination: './src/libs/images/headerIconFile',
-                // destination: '/Users/helloworld/Documents/ghost/work/file',
-                filename: (req, file, cb) => {
-                    const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
-                    return cb(null, `${randomName}${extname(file.originalname)}`);
-                },
-            }),
-        },
-    )) // file对应HTML表单的name属性
+    @UseInterceptors(FileInterceptor('file', uploadConfig))
     async uploadFile(@UploadedFile() file, @Body() data) {
         const params = {
             userId: data.userId,
             nickName: data.nickName,
             personalProfile: data.personalProfile,
-            headerIcon: '',
+            headerIcon: file.originalname,
         };
-        try {
-            if (file) {
-                return util.client.write(file.path)
-                .then(async (fileInfo) => {
-                    params.headerIcon = 'http://' + fileInfo.url + '/' + fileInfo.fid;
-                    return await this.accountService.changeUserInfo(params);
-                });
-            }
-        } catch (e) {
-            console.log(e);
-        }
+        return await this.accountService.changeUserInfo(params);
+        // try {
+        //     if (file) {
+        //         return util.client.write(file.path)
+        //         .then(async (fileInfo) => {
+        //             params.headerIcon = fileInfo.fid;
+        //             return await this.accountService.changeUserInfo(params);
+        //         });
+        //     }
+        // } catch (e) {
+        //     console.log(e);
+        // }
     }
 
     @Post('getUserInfo')

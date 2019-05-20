@@ -138,17 +138,15 @@ new SelfVue({
                     el: '.swiper-scrollbar',
                 },
                 on:{
-                    //下拉释放刷新
                     touchEnd: function(){
                         swiper = this
                         refreshText = swiper.$el.find('.gm-push-to-refresh-indicator')
                         if(this.translate > 50){
                             swiper.setTransition(this.params.speed);
                             swiper.setTranslate(50);
-                            swiper.touchEventsData.isTouched=false; //跳过touchEnd事件后面的跳转(4.0.5)
+                            swiper.touchEventsData.isTouched=false;
                             refreshText.html(vm.refreshText)
 
-                            // requestAnimationFrame 与浏览器刷新频率一致 执行DOM html操作 
                             
                             swiper.allowTouchMove = false;
                             swiper.removeAllSlides()
@@ -184,8 +182,7 @@ new SelfVue({
                         }
                     },
                     
-                    //加载更多
-                    momentumBounce: function(){//非正式反弹回调函数，上拉释放加载更多可参考上例
+                    momentumBounce: function(){
                         swiper=this
                         //slidesheight=0;
                         //for(h=0;h<swiper.slides.length;h++){
@@ -195,9 +192,9 @@ new SelfVue({
                         //if(this.translate < endTranslate){}
                         if(swiper.translate <- 100){
                 
-                            swiper.allowTouchMove = false; //禁止触摸
-                            swiper.params.virtualTranslate = true; //定住不给回弹
-                            // setTimeout(function(){//模仿AJAX
+                            swiper.allowTouchMove = false;
+                            swiper.params.virtualTranslate = true;
+                            // setTimeout(function(){
                             //     for(m=0;m<20;m++){
                             //         swiper.appendSlide('<div class="swiper-slide">moreSlide'+(times*20+m+1)+'</div>');	
                             //     }
@@ -294,7 +291,6 @@ new SelfVue({
             })
             return navList
         },
-        // tab 被点击的回调
         onTabClick: function() {
             console.log(111)
             // $('.tablist li').on('click', function (e) {
@@ -322,7 +318,6 @@ new SelfVue({
                 return `<span class="item-random-color" article-author="${item.author}">${item.author.substring(0, 1)}</span>`
             }
         },
-        // 文章置顶
         isTop: function(item) {
             if (item) {
                 return `<span class="ghost-tag ghost-tag-has-color" style="background-color: var(--col-top)">置顶</span>`
@@ -330,7 +325,6 @@ new SelfVue({
                 return ''
             }
         },
-        // 发表文章
         publishAnArticle: function() {
             $('.app-btn').on('click', function(e) {
                 e.stopPropagation()
@@ -378,7 +372,6 @@ new SelfVue({
               });
         },
 
-        // 初始化 图片轮播
         initCarouselMap: function() {
             new Swiper('.carouselMap', {
                 spaceBetween: 30,

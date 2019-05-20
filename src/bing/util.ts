@@ -46,7 +46,7 @@ export class Util {
      */
     static client = new SeaweedFS({
         masters: [{
-          host: '192.168.4.200',
+          host: '7.7.3.12',
           port: 9333,
         },
       ],
