@@ -40,13 +40,15 @@ export class SettingService {
             HttpStatus: 200,
             data: {},
           };
+          console.log(54325432,param);
+          
           if (!param.code && md5(param.oldPassword) !== res.PASSWORD) {
             msg.code = ApiErrorCode.USER_PASSWORD_ERROR;
             msg.HttpStatus = HttpStatus.BAD_REQUEST;
             msg.message = '输入的旧密码不正确！';
             return msg;
           } else {
-            console.log(param);
+            console.log(56565656,param);
             
             let b = code.default.code
             console.log(1111111,b);
