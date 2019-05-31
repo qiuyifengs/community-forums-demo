@@ -13,7 +13,6 @@ import { PagerList } from '../core/pager-list';
  */
 @Injectable()
 export class CrudServiceBase<T> extends ServiceBase {
-
     /**
      * 初始化增删改查服务基类
      * @param repository 仓储

@@ -73,7 +73,7 @@ export let toNumber = (value, precision?, isTruncate?: boolean) => {
  * 转换为整数，四舍五入
  * @param value 输入值
  */
-export let toInt = (value,) => {
+export let toInt = (value) => {
     if (!isNumber(value)) {
         return 0;
     }
@@ -84,12 +84,12 @@ export let toInt = (value,) => {
  * 转换为整数，向下保留
  * @param value 输入值
  */
-export let floor=(value,)=>{
-    if(!isNumber(value)){
+export let floor = (value) => {
+    if (!isNumber(value)) {
         return 0;
     }
     return _.floor(value);
-}
+};
 
 /**
  * 转换为字符串
@@ -501,4 +501,4 @@ export let getRangeDateUtc = (range: number, type?: string): string | Array<stri
         changeDate = formatDate(moment().utc().valueOf() + (1000 * 3600 * 24 * range));
         return changeDate;
     }
-}
+};

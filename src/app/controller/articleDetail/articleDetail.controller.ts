@@ -33,7 +33,6 @@ export class ArticleDetailController {
         res.render('publish/preview', { title: 'preview', article });
     }
 
-
     @Post('addComment')
     @ApiOperation({ title: 'get balance from commentList' })
     public async addComment(@Body() param): Promise<CommentsList[]> {

@@ -40,46 +40,51 @@
 /* .gm-push-to-refresh-down .gm-push-to-refresh-indicator {
 	
 } */
-
+.ellipsis {
+	width: auto;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: norwap
+}
 
 .gm-wingblank {
-	margin-left: 8px;
-	margin-right: 8px
+	margin-left: var(--h-spacing-md);
+	margin-right: var(--h-spacing-md)
 }
 
 .gm-wingblank.gm-wingblank-sm {
-	margin-left: 5px;
-	margin-right: 5px
+	margin-left: var(--h-spacing-sm);
+	margin-right: var(--h-spacing-sm)
 }
 
 .gm-wingblank.gm-wingblank-md {
-	margin-left: 8px;
-	margin-right: 8px
+	margin-left: var(--h-spacing-md);
+	margin-right: var(--h-spacing-md)
 }
 
 .gm-wingblank.gm-wingblank-lg {
-	margin-left: 15px;
-	margin-right: 15px
+	margin-left: var(--h-spacing-lg);
+	margin-right: var(--h-spacing-lg)
 }
 
 .gm-whitespace.gm-whitespace-xs {
-	height: 3px
+	height: var(--v-spacing-xs)
 }
 
 .gm-whitespace.gm-whitespace-sm {
-	height: 6px
+	height: var(--v-spacing-sm)
 }
 
 .gm-whitespace.gm-whitespace-md {
-	height: 9px
+	height: var(--v-spacing-md)
 }
 
 .gm-whitespace.gm-whitespace-lg {
-	height: 15px
+	height: var(--v-spacing-lg)
 }
 
 .gm-whitespace.gm-whitespace-xl {
-	height: 21px
+	height: var(--v-spacing-xl)
 }
 
 svg:not(:root) {

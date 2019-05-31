@@ -5,7 +5,7 @@ export class HttpClient {
 /**
  * Http请求操作
  */
-export class HttpRequest<T>{
+export class HttpRequest<T> {
     /**
      * Http请求头集合
      */
@@ -41,7 +41,7 @@ export class HttpHeaders {
 /**
  * Http响应处理器
  */
-export class HttpHandleOptions<T>{
+export class HttpHandleOptions<T> {
     /**
      * 发送前处理函数，返回false则取消发送
      */
@@ -67,7 +67,7 @@ export enum HttpMethod {
     Get,
     Post,
     Put,
-    Delete
+    Delete,
 }
 
 /**
@@ -81,5 +81,5 @@ export enum HttpContentType {
     /**
      * application/json
      */
-    Json
+    Json,
 }

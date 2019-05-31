@@ -1,8 +1,12 @@
+:root {
+    --navbar-height: 45PX;
+}
+
 .gm-navbar {
     -ms-flex-align: center;
-    height: 45px;
-    background-color: var(--btn-col);
-    color: #fff
+    height: var(--navbar-height);
+    background-color: var(--brand-primary);
+    color: var(--fill-base)
 }
 .gm-navbar, .gm-navbar-left, .gm-navbar-right, .gm-navbar-title {
     display: -webkit-box;
@@ -12,32 +16,37 @@
     -webkit-box-align: center;
     -webkit-align-items: center;
     align-items: center;
-}
-.gm-navbar-light {
-    color: var(--btn-col);
-    background-color: #fff;
-}
-.gm-navbar-left, .gm-navbar-right, .gm-navbar-title {
     -webkit-box-flex: 1;
     -webkit-flex: 1;
     -ms-flex: 1;
     flex: 1;
-    height: 100%;
-    -ms-flex-align: center;
 }
+
 .gm-navbar-left {
-    padding-left: 15px;
-    font-size: 16px;
-    cursor: pointer;
+    padding-left: var(--h-spacing-lg);
+    font-size: var(--link-button-font-size);
+    cursor: pointer
 }
+
+.gm-navbar-left .gm-navbar-left-icon {
+    margin-right: var(--h-spacing-lg);
+    display: inherit;
+}
+
 .gm-navbar-right {
     -webkit-box-pack: end;
     -webkit-justify-content: flex-end;
     -ms-flex-pack: end;
     justify-content: flex-end;
-    font-size: 16px;
-    margin-right: 15px;
+    font-size: var(--link-button-font-size);
+    margin-right: var(--h-spacing-lg)
 }
+
+.gm-navbar-light {
+    background-color: var(--fill-base);
+    color: var(--brand-primary)
+}
+
 .gm-navbar-title {
     -webkit-box-pack: center;
     -webkit-justify-content: center;
@@ -47,7 +56,6 @@
     white-space: nowrap;
 }
 
-.gm-navbar-left-icon {
-    margin-right: 5px;
-    display: inherit;
+.gm-navbar-light .gm-navbar-title {
+    color: var(--color-text-base)
 }

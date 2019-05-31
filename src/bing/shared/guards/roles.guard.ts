@@ -1,5 +1,5 @@
-import { CanActivate, Injectable, ExecutionContext } from "@nestjs/common";
-import { Reflector } from "@nestjs/core";
+import { CanActivate, Injectable, ExecutionContext } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 
 /**
  * 角色守卫。基于角色的守卫

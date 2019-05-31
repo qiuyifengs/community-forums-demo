@@ -5,7 +5,14 @@
     <title><%= title %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
     <link rel="stylesheet" href="/style/login/login.css">
-    <% include ../common/script %>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection"content="telephone=no, email=no" />
+    <link rel="stylesheet" href="/style/login/mobile-login.css">
+    <link rel='stylesheet' href='/style/mobile.css'/>
+    <!-- <% include ../common/script %> -->
+    <% include ../common/gm-script %>
     <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
     <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
     <style>
@@ -18,67 +25,91 @@
 </head>
 
 <body>
-    <div id="root">
-        <div class="ghost-pro-layouts-user-layout-container">
-            <section class="ghost-pro-layouts-user-layout-lang"></section>
-            <section class="ghost-pro-layouts-user-layout-content">
-                <div class="ghost-pro-layouts-user-layout-top">
-                    <div class="ghost-pro-layouts-user-layout-header">
+<body>
+    <div id="app">
+        <!-- <header class="gm-navbar gm-navbar-light">
+            <div class="gm-navbar-left">
+                <svg class="gm-icon gm-icon-drawer-handle gm-icon-md" aria-hidden="true">
+                    <use x-link:href="#icon-fenlei"></use>
+                </svg>
+            </div>
+            <div class="gm-navbar-title">FORUM</div>
+            <div class="gm-navbar-right">
+                <svg class="gm-icon gm-icon-search gm-icon-md" aria-hidden="true" v-on:click="enterRegisterPage">
+                    <use x-link:href="#icon-sousuo1"></use>
+                </svg>
+            </div>
+        </header> -->
+
+        <div class="app-user-container">
+            <section class="app-user-lang">
+                <a role="button" class="forums-link forums-link-default is-underline" style="margin-right: 24px">
+                    <span class="forums-link-inner">注册</span>
+                </a>
+            </section>
+            <section class="app-user-content">
+                <div class="app-user-top">
+                    <div class="app-user-header">
                         <a href="/">
-                            <img class="ghost-pro-layouts-user-layout-logo" />
-                            <span class="ghost-pro-layouts-user-layout-title">LOGO</span>
+                            <img class="app-user-logo " />
+                            <span class="app-user-title">LOGO</span>
                         </a>
                     </div>
-                    <div class="ghost-pro-layouts-user-layout-desc"></div>
+                    <div class="app-user-desc">
+
+
+                        <!-- <div class="gm-modal-mask"></div>
+                        <div class="gm-modal-wrap" role="dialog">
+                            <div role="document" class="gm-model gm-modal-transparent">
+                                <div class="gm-modal-content">
+                                    <div class="gm-modal-header">
+                                        <div class="gm-modal-title">Delete</div>
+                                    </div>
+                                    <div class="gm-modal-body">
+                                        <div class="gm-modal-alert-content">Are you sure</div>
+                                    </div>
+                                    <div class="gm-modal-footer">
+                                        <div class="gm-modal-button-group-h gm-modal-button-group-normal" role="group">
+                                            <div class="gm-modal-button" role="button">Cancel</div>
+                                            <div class="gm-modal-button" role="button">Ok</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
                 </div>
-                <main class="ghost-pro-pages-user-login-main">
-                    <section class="ghost-pro-components-login-index-login">
-                        <form class="ghost-form" id="loginForm">
-                            <div class="ghost-tabs-nav-wrap">
-                                <div class="ghost-tabs-nav nav_text_algin">
-                                    <div class="ghost-tabs-tab ghost-tabs-tab-active">SIGN IN</div>
-
-                                    <div class="ghost-tabs-tab" id="enterRegisterPage">REGISTER</div>
-
+                <main class="app-user-login-main">
+                    <section class="app-user-login-index">
+                        <div class="gm-wingblank gm-wingblank-lg">
+                            <div class="gm-list">
+                                <div class="gm-list-header" style="margin-bottom: 24px">
+                                    <span style="font-size: 28px; color: #000">邮箱登录</span>
                                 </div>
-                            </div>
-                            <div class="ghost-row ghost-form-item">
-                                <div class="ghost-form-item-control-wrapper">
-                                    <div class="ghost-form-item-control">
-                                        <input type="email" placeholder="Your Emial" id="email" name="email" required
-                                            class="ghost-input ghost-input-round ghost-input-lg">
+                                <div class="gm-list-body" style="background-color: transparent">
+                                    <div class="gm-list-item gm-input-item gm-list-item-middle loginHeight" style="background-color: transparent">
+                                        <div class="gm-list-line">
+                                            <div class="gm-input-label gm-input-label-5">账号</div>
+                                            <div class="gm-input-control">
+                                                <input type=“text” placeholder="邮箱" value>
+                                            </div>
+                                            <div class="gm-input-clear"></div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="ghost-row ghost-form-item">
-                                <div class="ghost-form-item-control-wrapper">
-                                    <div class="ghost-form-item-control">
-                                        <input type="password" placeholder="Your Password" id="password" name="password"
-                                            required class="ghost-input ghost-input-round ghost-input-lg">
+                                    <div class="gm-list-item gm-input-item gm-list-item-middle loginHeight" style="background-color: transparent">
+                                        <div class="gm-list-line">
+                                            <div class="gm-input-label gm-input-label-5">密码</div>
+                                            <div class="gm-input-control">
+                                                <input type="password" placeholder="请填写密码" id="password" name="password" value>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <a role="button" v-on:click="loginSubmit" class="gm-button gm-button-primary" style="margin-top: 48px">
+                                        登录
+                                    </a>
                                 </div>
                             </div>
-                            <div class="ghost-row ghost-form-item">
-                                <div class="ghost-form-item-control-wrapper">
-                                    <div class="ghost-form-item-control">
-                                        <button style="width:150px"
-                                            class="ghost-btn ghost-btn-primary ghost-btn-lg ghost-btn-round">
-                                            <span>SIGN IN</span>
-                                        </button>
-                                        <a href="javascript:;" class="ghost-pro-pages-user-login-password">
-                                            <span class="lose-password">Lost your password?</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <!-- <div class="ghost-divider ghost-divider-horizontal ghost-divider-with-text">
-                            <span class="ghost-divider-inner-text">or</span>
                         </div>
-                        <button style="width: 100%" class="ghost-btn ghost-btn-primary ghost-btn-lg ghost-btn-round">
-                            <span>Log in with Phone</span>
-                        </button> -->
                     </section>
                 </main>
             </section>
@@ -86,9 +117,81 @@
                 <div class="ghost-pro-components-global-footer-index-copyright"></div>
             </footer>
         </div>
+
+        
+        <footer>
+
+        </footer>
     </div>
+    <!-- <div id="root">
+            <div class="ghost-pro-layouts-user-layout-container">
+                    <section class="ghost-pro-layouts-user-layout-lang"></section>
+                    <section class="ghost-pro-layouts-user-layout-content">
+                        <div class="ghost-pro-layouts-user-layout-top">
+                            <div class="ghost-pro-layouts-user-layout-header">
+                                <a href="/">
+                                    <img class="ghost-pro-layouts-user-layout-logo" />
+                                    <span class="ghost-pro-layouts-user-layout-title">LOGO</span>
+                                </a>
+                            </div>
+                            <div class="ghost-pro-layouts-user-layout-desc"></div>
+                        </div>
+                        <main class="ghost-pro-pages-user-login-main">
+                            <section class="ghost-pro-components-login-index-login">
+                                <form class="ghost-form" id="loginForm">
+                                    <div class="ghost-tabs-nav-wrap">
+                                        <div class="ghost-tabs-nav nav_text_algin">
+                                            <div class="ghost-tabs-tab ghost-tabs-tab-active">SIGN IN</div>
+        
+                                            <div class="ghost-tabs-tab" id="enterRegisterPage">REGISTER</div>
+        
+                                        </div>
+                                    </div>
+                                    <div class="ghost-row ghost-form-item">
+                                        <div class="ghost-form-item-control-wrapper">
+                                            <div class="ghost-form-item-control">
+                                                <input type="email" placeholder="Your Email" id="email" name="email" required
+                                                    class="ghost-input ghost-input-round ghost-input-lg">
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                    <div class="ghost-row ghost-form-item">
+                                        <div class="ghost-form-item-control-wrapper">
+                                            <div class="ghost-form-item-control">
+                                                <input type="password" placeholder="Your Password" id="password" name="password"
+                                                    required class="ghost-input ghost-input-round ghost-input-lg">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ghost-row ghost-form-item">
+                                        <div class="ghost-form-item-control-wrapper">
+                                            <div class="ghost-form-item-control">
+                                                <button style="width:150px"
+                                                    class="ghost-btn ghost-btn-primary ghost-btn-lg ghost-btn-round">
+                                                    <span>SIGN IN</span>
+                                                </button>
+                                                <a href="javascript:;" class="ghost-pro-pages-user-login-password">
+                                                    <span class="lose-password">Lost your password?</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </section>
+                        </main>
+                    </section>
+                    <footer class="ghost-pro-components-global-footer-index-globalFooter">
+                        <div class="ghost-pro-components-global-footer-index-copyright"></div>
+                    </footer>
+                </div>
+    </div> -->
 </body>
-<script type="text/javascript">
+
+<% include ../common/gm-script %>
+<script src="/js/mobile/login.js"></script>
+
+<!-- <script type="text/javascript">
     $.validator.setDefaults({
         debug: true, // 调试模式设为true 只验证不提交form 
         submitHandler: function (form) {
@@ -165,6 +268,5 @@
             goPage("account/losePassword");
         })
     });
-</script>
-
+</script> -->
 </html>

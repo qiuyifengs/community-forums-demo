@@ -1,5 +1,5 @@
-import { PassiveException } from "./passive.exception";
-import { HttpStatus } from "@nestjs/common";
+import { PassiveException } from './passive.exception';
+import { HttpStatus } from '@nestjs/common';
 
 /**
  * 找不到页面异常

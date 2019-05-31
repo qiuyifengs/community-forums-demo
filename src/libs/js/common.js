@@ -1,7 +1,7 @@
 
 // baseUrl
-var baseUrl = 'http://192.168.4.188:3002/';
-// var baseUrl = 'http://127.0.0.1:3002/';
+// var baseUrl = 'http://192.168.4.188:3002/';
+var baseUrl = 'http://127.0.0.1:3002/';
 /**
  * checkEmail
  * @param {*} email 

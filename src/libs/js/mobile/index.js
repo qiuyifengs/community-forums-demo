@@ -1,5 +1,7 @@
 
-const articleType = this.location.pathname.split('/')[2] ? decodeURI(this.location.pathname.split('/')[2]) : 'ALL'
+const articleType = GetRequest()
+    const userInfo = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : ''
+
 const refreshLoading = `<div class="ghost-loading-spinner">
                                 <svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg>
                             </div>`
@@ -95,9 +97,9 @@ new SelfVue({
                 resistanceRatio: 0,
                 on: {
                     touchMove: function() {
-                        const progress = this.progress
-                        vm.config.bar.transition(0)
-                        vm.config.bar.transform('translateX(' + vm.config.navSum * progress + 'px)')
+                        // const progress = this.progress
+                        // vm.config.bar.transition(0)
+                        // vm.config.bar.transform('translateX(' + vm.config.navSum * progress + 'px)')
                     },
                     transitionStart: function() {
                         self.onTabClick()

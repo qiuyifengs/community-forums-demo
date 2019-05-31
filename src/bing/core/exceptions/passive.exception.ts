@@ -1,4 +1,4 @@
-import { ExceptionBase } from "./exception.base";
+import { ExceptionBase } from './exception.base';
 
 /**
  * 被动异常

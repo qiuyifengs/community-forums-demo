@@ -44,7 +44,6 @@ export class ViewModel implements IKey {
  * 查询参数
  */
 export class QueryParameter {
-
     /**
      * 页索引，即第几页
      */

@@ -1,6 +1,6 @@
 @import './reset.css';
 @import './common/common.css';
-@import './variable.css';
+@import './themes/default.css';
 @import './common/header.css';
 @import './common/swiper.min.css';
 
@@ -13,12 +13,39 @@
 @import './common/mobile/flexbox.css';
 @import './common/mobile/index.css';
 @import './common/mobile/list.css';
-@import './common/mobile/model.css';
+@import './common/mobile/modal.css';
 @import './common/mobile/navbar.css';
 @import './common/mobile/search.css';
 @import './common/mobile/tab.css';
 @import './common/mobile/tag.css';
 @import './common/mobile/toast.css';
+@import './common/mobile/input-item.css';
+@import './common/mobile/link.css';
 
 @import './common/avatar.css';
 @import './common/loading.css';
+
+*,
+*:before,
+*:after {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+}
+
+body {
+    background-color: var(--fill-body);
+    font-size: var(--font-size-base)
+}
+
+*[contenteditable] {
+    -webkit-user-select: auto !important;
+}
+
+*:focus {
+    outline: none;
+}
+
+a {
+    background: transparent;
+    text-decoration: none;
+    outline: none;
+}

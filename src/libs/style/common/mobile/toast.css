@@ -1,8 +1,8 @@
 .gm-toast {
 	position: fixed;
 	width: 100%;
-	z-index: 1999;
-	font-size: 14px;
+	z-index: var(--toast-zindex);
+	font-size: var(--font-size-base);
 	text-align: center
 }
 
@@ -49,18 +49,18 @@
 
 .gm-toast-notice-content .gm-toast-text {
 	min-width: 60px;
-	border-radius: 3px;
-	color: #fff;
-	background-color: rgba(58,58,58,.9);
-	line-height: 1.5;
+	border-radius: var(--radius-sm);
+	color: var(--color-text-base-inverse);
+	background-color: var(--toast-fill);
+	line-height: var(--line-height-paragraph);
 	padding: 9px 15px
 }
 
 .gm-toast-notice-content .gm-toast-text.gm-toast-text-icon {
-	border-radius: 5px;
-	padding: 15px
+	border-radius: var(--radius-md);
+	padding: 9px 15px
 }
 
 .gm-toast-notice-content .gm-toast-text.gm-toast-text-icon .gm-toast-text-info {
-	margin-top: 6px
+	margin-top: var(--v-spacing-sm)
 }

@@ -1,0 +1,93 @@
+.forums-link {
+    display: initial;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    position: relative;
+    text-decoration: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: var(--font-size-heading);
+    font-weight: 500
+}
+
+.forums-link.forums-link-default {
+    color: var(--link-default)
+}
+
+.forums-link.forums-link-primary {
+    color: var(--link-primary)
+}
+
+.forums-link.forums-link-success {
+    color: var(--link-success)
+}
+
+.forums-link.forums-link-warning {
+    color: var(--link-warning)
+}
+
+.forums-link.forums-link-error {
+    color: var(--link-error)
+}
+
+.forums-link.forums-link-info {
+    color: var(--link-info)
+}
+ 
+.forums-link.forums-link-default:active {
+    color: var(--link-primary)
+}
+
+.forums-link.forums-link-primary:active {
+    color: var(--link-primary-tap)
+}
+
+.forums-link.forums-link-success:active {
+    color: var(--link-success-tap)
+}
+
+.forums-link.forums-link-warning:active {
+    color: var(--link-warning-tap)
+}
+
+.forums-link.forums-link-error:active {
+    color: var(--link-error-tap)
+}
+
+.forums-link.forums-link-info:active {
+    color: var(--link-info-tap)
+}
+
+
+.forums-link.is-underline:active:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-bottom: 1px solid var(--link-primary)
+}
+
+.forums-link.forums-link-primary.is-underline:active:after {
+    border-bottom: 1px solid var(--link-primary)
+}
+
+.forums-link.forums-link-success.is-underline:active:after {
+    border-bottom: 1px solid var(--link-success)
+}
+
+.forums-link.forums-link-warning.is-underline:active:after {
+    border-bottom: 1px solid var(--link-warning)
+}
+
+.forums-link.forums-link-error.is-underline:active:after {
+    border-bottom: 1px solid var(--link-error)
+}
+
+.forums-link.forums-link-info.is-underline:active:after {
+    border-bottom: 1px solid var(--link-info)
+}

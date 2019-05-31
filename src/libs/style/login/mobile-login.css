@@ -1,0 +1,70 @@
+@import '../themes.css';
+@import '../common/avatar.css';
+@import '../common/loading.css';
+
+.login-content {
+    background-image: url('../../images/Background.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100%;
+    height: 225px;
+}
+
+.app-user-container {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	overflow: auto;
+	background: #f0f2f5
+}
+
+.app-user-content {
+	flex: 1 1;
+	padding: 5em 0 3em
+}
+
+.app-user-lang {
+	width: 100%;
+	height: 40px;
+	line-height: 44px;
+    text-align: right;
+    margin-top: 18px
+}
+
+.app-user-top {
+	text-align: center
+}
+
+.app-user-header {
+	height: 44px;
+	line-height: 44px
+}
+
+.app-user-header a {
+	text-decoration: none
+}
+
+.app-user-logo {
+	height: 44px;
+	margin-right: 16px;
+	vertical-align: top
+}
+
+.app-user-title {
+	position: relative;
+	top: 2px;
+	color: rgba(0,0,0,.85);
+	font-weight: 600;
+	font-size: 33px;
+}
+
+.app-user-desc {
+	margin-top: 12px;
+	margin-bottom: 40px;
+	color: rgba(0,0,0,.45);
+	font-size: 14px
+}
+
+.app-user-login-main {
+    margin: 0 auto;
+}

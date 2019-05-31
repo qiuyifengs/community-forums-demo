@@ -10,7 +10,7 @@ import { QueryParameter } from '../core/model';
 /**
  * 仓储基类
  */
-export abstract class RepositoryBase<T>{
+export abstract class RepositoryBase<T> {
 
     // constructor(protected readonly repository: Model<T>){}
 
@@ -19,7 +19,7 @@ export abstract class RepositoryBase<T>{
      */
     // protected util = util;
 
-    public async getAll(): Promise<any>{
+    public async getAll(): Promise<any> {
         // this.findOne().exec();
         return '1';
         // return await this.repository.find().exec();
