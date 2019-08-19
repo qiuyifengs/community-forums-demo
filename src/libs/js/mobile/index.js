@@ -51,7 +51,7 @@ new SelfVue({
             vm.pageSwiper.slideTo(3, 0)
         },
 
-        initNavSwiper: function(vm, self) {
+        initNavSwiper() {
 
             vm.navSwiper = new Swiper('#secondary-nav', {
                 slidesPerView: 'auto',
@@ -130,7 +130,7 @@ new SelfVue({
 
         getArticleByType: function(articleType, vm, method) {
             let refreshEnd = false
-            let swiper = new Swiper('.scroll',{
+            let swiper = new Swiper('.scroll', {
                 speed: 300,
                 slidesPerView: 'auto',
                 freeMode: true,
