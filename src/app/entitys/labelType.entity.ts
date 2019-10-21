@@ -1,18 +1,22 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { LabelList } from './labelList.entity';
+import { BbsLabelList } from './labelList.entity';
 
 @Entity()
-export class LabelType {
-  @PrimaryGeneratedColumn() serialNum: number;
+export class BbsLabelType {
+  @PrimaryGeneratedColumn() ID: number;
 
-  @Column({ length: 20 }) typeNameEn: string;
+  @Column({ length: 20 }) TYPE_NAME_EN: string;
 
-  @Column({ length: 20 }) typeNameCn: string;
+  @Column({ length: 20 }) TYPE_NAME_CN: string;
 
-  @Column() typeId: string;
+  @Column() TYPE_ID: string;
 
-  @Column({ default: 'cn' }) langue: string;
+  @Column({ default: 'zh_CN' }) LANGUE: string;
 
-  @OneToMany(type => LabelList, children => children.labelList)
-    labelArr: LabelList[];
+  @Column({ default: 1 }) STATE: number;
+
+  @Column() CREATED: string;
+
+  @OneToMany(type => BbsLabelList, children => children.labelList)
+    labelArr: BbsLabelList[];
 }

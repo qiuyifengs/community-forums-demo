@@ -1,5 +1,5 @@
-import { util } from '@/bing';
-import { Warning } from '@/bing/core/warning';
+import { util } from '../../../bing';
+import { Warning } from '../../../bing/core/warning';
 import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
 
 /**

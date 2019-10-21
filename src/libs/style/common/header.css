@@ -371,7 +371,7 @@
         font-size: var(--fs-18);
         color: var(--col-24);
     }
-    .user-sign .login-enty {
+    .login-enty {
         margin-left: 20px;
     }
     .menu-tab {

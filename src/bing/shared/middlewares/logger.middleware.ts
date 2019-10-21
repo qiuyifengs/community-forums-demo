@@ -1,6 +1,6 @@
 import { Injectable, MiddlewareFunction, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
-import { util } from '@/bing';
+import { util } from '../../../bing';
 
 /**
  * 日志 中间件

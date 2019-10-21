@@ -46,28 +46,4 @@ $(document).ready(function () {
 
     let tabItems = $('.ghost-tabs-nav .ghost-tabs-tab')
     let tabCurrentItem = tabItems.filter('.ghost-tabs-tab-active')
-    /*$('#next').on('click', function (e) {
-        e.preventDefault()
-        let nextItem = tabCurrentItem.next()
-        tabCurrentItem.removeClass('ghost-tabs-tab-active')
-        if (nextItem.length) {
-            tabCurrentItem = nextItem.addClass('ghost-tabs-tab-active')
-        } else {
-            tabCurrentItem = tabItems.first().addClass('ghost-tabs-tab-active')
-        }
-        changePos()
-        changeTab()
-    })
-    $('#prev').on('click', function (e) {
-        e.preventDefault()
-        let prevItem = tabCurrentItem.prev()
-        tabCurrentItem.removeClass('ghost-tabs-tab-active')
-        if (prevItem.length) {
-            tabCurrentItem = prevItem.addClass('ghost-tabs-tab-active')
-        } else {
-            tabCurrentItem = tabItems.last().addClass('ghost-tabs-tab-active')
-        }
-        changePos()
-        changeTab()
-    });*/
 })

@@ -4,42 +4,37 @@ import { ApiErrorCode } from '../../../bing/common/enums/api-error-code.enum';
 import { JwtPayload } from '../auth/jwt-payload.interface';
 import * as curUserId from '../../global';
 import { Repository } from 'typeorm';
-import { User } from '../../entitys/user.entity';
-import { md5 } from '@/bing/common/encrypt';
+import { BbsUser } from '../../entitys/user.entity';
+import { md5 } from '../../../bing/common/encrypt';
 import { Verification } from '../register/e-mail/send.e-mail';
 import * as jwt from 'jsonwebtoken';
 import { from } from 'rxjs';
-const config = require('../../../util/token.config');
+import { util } from '../../../bing';
 
 @Injectable()
 export class LoginService {
-  user: User;
+  user: BbsUser;
   constructor(
-
-    @InjectRepository(User)
-    private readonly signRepository: Repository<User>,
+    @InjectRepository(BbsUser)
+    private readonly signRepository: Repository<BbsUser>,
   ) { }
   // createToken
   public async createToken(userId: any): Promise<any> {
     const user: JwtPayload = {userId};
-    console.log(1111,user.userId);
-    
 
     return jwt.sign({
       user,
-    }, config.session.secrets
+    }, util.session.secrets
       , {
         expiresIn: '3600s',
       });
   }
 
-  
-  
   // login
   async login(data): Promise<any> {
 
     const user: JwtPayload = { userId: data.userId };
-    const res = await this.signRepository.findOne({ userId: data.userId });
+    const res = await this.signRepository.findOne({ USER_ID: data.userId });
     const msg = {
       code: 1,
       message: '',
@@ -48,15 +43,15 @@ export class LoginService {
 
     };
     if (res) {
-      if (md5(data.passWord) === res.passWord) {
+      if (md5(data.passWord) === res.PASSWORD) {
         // 登入成功返回ｔｏｋｅｎ
         const token = await this.createToken(data.userId);
         console.log(token);
         msg.code = ApiErrorCode.USER_LOGIN_SUCCESS;
         msg.message = '登入成功';
         const data1 = {
-          userId: res.userId,
-          nickName: res.nickName,
+          userId: res.USER_ID,
+          nickName: res.NICK_NAME,
           token,
         };
         msg.data = data1;
@@ -64,7 +59,7 @@ export class LoginService {
         return msg;
 
       }
-      if (md5(data.passWord) !== res.passWord) {
+      if (md5(data.passWord) !== res.PASSWORD) {
         msg.code = ApiErrorCode.USER_PASSWORD_ERROR;
         msg.HttpStatus = HttpStatus.BAD_REQUEST;
         msg.message = '用户密码不正确！';
@@ -83,13 +78,13 @@ export class LoginService {
   }
 
   async Emailverifica(param): Promise<any> {
-    const date = await this.signRepository.findOne({ userId: param.userId });
+    const date = await this.signRepository.findOne({ USER_ID: param.userId });
     if (date) {
       const result = await Verification.Everifica(param.userId, param);
       console.log(result.code);
 
       if (result.code === 10008) {
-        date.activity = true;
+        date.ACTIVITY = true;
         await this.signRepository.save(date);
       }
       return result;

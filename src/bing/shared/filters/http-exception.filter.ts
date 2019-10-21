@@ -1,4 +1,4 @@
-import { util } from '@/bing';
+import { util } from '../../../bing';
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException } from '@nestjs/common';
 const fs = require('fs');
 const path = require('path');
@@ -23,7 +23,6 @@ export class HttpExcetpionFilter implements ExceptionFilter {
         const ctx = host.switchToHttp();
         const response = ctx.getResponse();
         const request = ctx.getRequest();
-
         this.util.log.error({
             title: 'Http Request Error', request: {
                 headers: request.headers,

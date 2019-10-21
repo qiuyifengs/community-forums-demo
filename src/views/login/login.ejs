@@ -5,6 +5,7 @@
     <title><%= title %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
     <link rel="stylesheet" href="/style/login/login.css">
+<<<<<<< HEAD
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" charset="UTF-8">
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
@@ -15,6 +16,9 @@
     <% include ../common/gm-script %>
     <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
     <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+=======
+    <% include ../common/script %>
+>>>>>>> 4c82d23bad7d5f8de5d0d2a46b948bbfc1e9445f
     <style>
         .ghost-form-item {
             margin-bottom: 0;
@@ -109,7 +113,11 @@
                                     </a>
                                 </div>
                             </div>
+<<<<<<< HEAD
                         </div>
+=======
+                        </form>
+>>>>>>> 4c82d23bad7d5f8de5d0d2a46b948bbfc1e9445f
                     </section>
                 </main>
             </section>
@@ -187,19 +195,24 @@
                 </div>
     </div> -->
 </body>
+<<<<<<< HEAD
 
 <% include ../common/gm-script %>
 <script src="/js/mobile/login.js"></script>
 
 <!-- <script type="text/javascript">
+=======
+<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+<script type="text/javascript">
+>>>>>>> 4c82d23bad7d5f8de5d0d2a46b948bbfc1e9445f
     $.validator.setDefaults({
-        debug: true, // 调试模式设为true 只验证不提交form 
+        debug: true,
         submitHandler: function (form) {
             loginFormSubmitHandler()
         }
     })
     async function loginFormSubmitHandler() {
-        // const token = $.cookie("token") ? $.cookie("token") : '';
         const param = {
             userId: $('#email').val(),
             passWord: $('#password').val(),
@@ -234,7 +247,6 @@
             errorClass: "ghost-form-explain",
             highlight: function (element, errorClass, validClass) {
                 const elementId = $(`#${element.id}-error`)
-                // $(elementId).parents().addClass('ghost-form-item-with-help')
                 $(elementId).addClass("ghost-form-explain")
                 $(elementId).parent().addClass('has-error')
             },

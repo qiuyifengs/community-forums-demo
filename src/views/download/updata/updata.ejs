@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="/style/download/updata.css">
+    </head>
+    <body>
+        <div id="update">
+            <header class="app-update-header">
+                <div class="app-update-header-box">
+                    <div class="app-update-header-left">
+                        <!-- <img src="/images/back.png" alt=""> -->
+                    </div>
+                    <div class="app-update-header-mid"></div>
+                    <div class="app-update-header-right"></div>
+                </div>
+            </header>
+            <section class="app-update-comment">
+                <div class="app-logo-icon">
+                    <img src="/images/update_logo.png" alt="">
+                    <p class="content-text">IM即时通讯</p>
+                </div>
+                <div class="app-update-btn-box">
+                    <p class="app-version app-tip-text">版本：<span class="app-version-val">2.0.0</span></p>
+                    <p class="app-size app-tip-text">大小：<span class="app-size-val">24.0M</span></p>
+                </div>
+            </section>
+        </div>
+    </body>
+    <script src="/js/jquery-3.3.1.js"></script>
+    <!-- <script src="/js/vconsole.min.js"></script> -->
+    <script src="/js/layer.js"></script>
+    <script type="text/javascript">
+        function GetRequest() {  
+            var url = location.search; 
+            var theRequest = new Object();  
+            if (url.indexOf("?") != -1) {  
+                var str = url.substr(1);  
+                strs = str.split("&");  
+                for(var i = 0; i < strs.length; i ++) {  
+                    theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);  
+                }  
+            }  
+            return theRequest;  
+        } 
+        window.onload = function() {
+            var paramObj = GetRequest()       
+            var appendDom = $(".app-version")
+            var u = navigator.userAgent
+            $(".update-btn").remove()
+            $('.app-version-val').text(paramObj.versionNumber.split('').join('.'))
+            $('.app-size-val').text(paramObj.volume)
+            if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {
+                paramObj.type = 0
+                var btnDom = `
+                    <button class="update-btn android-update" type="button">
+                        <img src="/images/Android_logo.png" alt="">
+                        <span>Android 版下载</span>
+                    </button>
+                `
+                appendDom.before(btnDom)
+            } else if (u.indexOf('iPhone') > -1) {
+                paramObj.type = 1
+                var btnDom = `
+                    <button class="update-btn ios-update" type="button">
+                        <img src="/images/ios_logo.png" alt="">
+                        <span>iOS 版下载</span>
+                    </button>
+                `
+                appendDom.before(btnDom)
+            }
+            $('.app-update-btn-box').on('click', '.update-btn', function(e) {
+                e.preventDefault(); 
+                var param = {
+                    type: paramObj.type,
+                    versionNumber: paramObj.versionNumber,
+                    lang: paramObj.lang
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://192.168.4.16:4000/api/version/selectVersion',
+                    dataType:'json',
+                    headers: {
+                        "Content-Type": "application/json;charset=utf-8"
+                    },
+                    data: JSON.stringify(param),
+                    success: (res) => {
+                        if (res.data && res.data.downloadPath) {
+                            let open = window.open(res.data.downloadPath)
+                            if (open === null || typeof(open) === 'undefined') {
+                                window.location.href = res.data.downloadPath
+                                return
+                            }
+                            setTimeout(() => {
+                                open.location = res.data.downloadPath
+                            }, 300)
+                        }
+                    },
+                    error: (err) => {
+                        console.log(err)
+                    }
+                })
+            })
+        }
+    </script>
+</html>

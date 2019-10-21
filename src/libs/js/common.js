@@ -1,7 +1,13 @@
 
 // baseUrl
+<<<<<<< HEAD
 // var baseUrl = 'http://192.168.4.188:3002/';
 var baseUrl = 'http://127.0.0.1:3002/';
+=======
+// var baseUrl = 'http://127.0.0.1:3002/';
+var baseUrl = 'http://13.56.103.57/';
+var readFileBaseUrl = 'http://13.56.103.57/';
+>>>>>>> 4c82d23bad7d5f8de5d0d2a46b948bbfc1e9445f
 /**
  * checkEmail
  * @param {*} email 
@@ -20,7 +26,6 @@ function checkEmail(email) {
  */
 function goPage(pathName, newWin) {
     if (newWin) {
-        console.log(pathName)
         window.open(baseUrl + pathName)
     } else {
         $(window).attr('location', baseUrl + pathName);
@@ -37,7 +42,6 @@ function myAjax(method, url, params) {
         try {
             $.ajax({
                 type: method,
-
                 url: baseUrl + url,
                 data: params,
                 // headers: {
@@ -92,13 +96,12 @@ function formatDateFilter2(value) {
     var mistiming = Math.round(new Date() / 1000) - value;
     var postfix = mistiming > 0 ? '前' : '后'
     mistiming = Math.abs(mistiming)
-    var arrr = ['年', '个月', '星期', '天', '小时', '分钟', '秒']
+    var arrr = ['<span lang="years"> 年前</span>', '<span lang="months"> 月前</span>', '星期前', '<span lang="days"> 天前</span>', '<span lang="hours"> 小时前</span>', '<span lang="minutes"> 分钟前</span>', '<span lang="seconds"> 秒前</span>', '<span lang="just"> 刚刚</span>']
     var arrn = [31536000, 2592000, 604800, 86400, 3600, 60, 1]
-
     for (var i = 0; i < 7; i++) {
         var inm = Math.floor(mistiming / arrn[i])
         if (inm != 0) {
-            return inm + arrr[i] + postfix
+            return inm + arrr[i]
         }
     }
 }
@@ -172,9 +175,22 @@ function dealArticleContent(valArr) {
             }
             item.value = linkVal.join('')
         } else if (item.type === 'pic') {
-            item.value = `<p class="img-box" data-type="${item.type}"><img src="${item.url}" /><br />${item.value}</p>`
+            if (item.value.indexOf('[qq_') > -1) {
+                let emojiDom = `<img class="emoji-pic" src="http://s.jiajuol.com/haopinjia/pc/0100/dist/lib/jquery-emoji/dist/img/qq/`
+                let value = item.value.replace(/\[qq_/g, emojiDom)
+                item.value = `<p class="img-box" data-type="${item.type}"><img src="${item.url}" /><br /><p class="value_box">${value.replace(/\]/g, '.gif">')}</p></p>`
+            } else {
+                item.value = `<p class="img-box" data-type="${item.type}"><img src="${item.url}" /><br />${item.value}</p>`
+            }
         } else if (item.type === 'video') {
-            item.value = `<p class="video-box" data-type="${item.type}"><video controls="" autoplay="" name="media"><source src="${item.url}" type="video/mp4"></video><br />${item.value}</p>`
+            if (item.value.indexOf('[qq_') > -1) {
+                let emojiDom = `<img class="emoji-pic" src="http://s.jiajuol.com/haopinjia/pc/0100/dist/lib/jquery-emoji/dist/img/qq/`
+                let value = item.value.replace(/\[qq_/g, emojiDom)
+                item.value = `<p class="video-box" data-type="${item.type}"><video controls="" autoplay="" name="media"><source src="${item.url}" type="video/mp4"></video><br />${value.replace(/\]/g, '.gif">')}</p>`
+            } else {
+                item.value = `<p class="video-box" data-type="${item.type}"><video controls="" autoplay="" name="media"><source src="${item.url}" type="video/mp4"></video><br /><p class="value_box">${item.value}</p></p>`
+            }
+            
         }
     })
     return valArr;
@@ -212,10 +228,8 @@ function dealPostList(valArr) {
 // translate
 function translateFun(lang) {
     let lan = lang ? lang : localStorage.getItem('langData') ? JSON.parse(localStorage.getItem('langData')).lang : 'cn'
-    console.log(lan)
     $('[lang]').each(function(e){
         let key = $(this).attr('lang')
-        
         if (lan == 'cn') {
             $(this).text(zh[key])
         } else {
@@ -223,5 +237,3 @@ function translateFun(lang) {
         }
     })
 }
-
-    

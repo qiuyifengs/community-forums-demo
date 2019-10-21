@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Post, Body, Request, Response, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiUseTags } from '@nestjs/swagger';
 import { SettingService } from './setting.service';
-import { User } from '../../entitys/user.entity';
+import { BbsUser } from '../../entitys/user.entity';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('account')
@@ -44,6 +44,7 @@ export class SettingController {
     @Post('validateEmail')
     @ApiOperation({ title: 'get balance from User'})
     async validateEmail(@Body() params): Promise<Account[]> {
+        console.log(111111112323, params)
         return await this.settingService.validateEmail(params);
     }
 

@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SettingService } from './setting.service';
 import { SettingController } from './setting.controller';
-import { User } from '../../entitys/user.entity';
+import { BbsUser } from '../../entitys/user.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [TypeOrmModule.forFeature([BbsUser])],
   providers: [SettingService],
   controllers: [SettingController],
 })

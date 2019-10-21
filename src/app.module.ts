@@ -1,36 +1,45 @@
-import { Module } from '@nestjs/common';
-import { CorsMiddleware } from '@/bing';
+import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
+import { CorsMiddleware } from './bing';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import modules from './app';
-import { ArticleDetail, ChildrenComments, CommentsList, Focus, Forum, LabelList, LabelType, Menu, MyCollectionList, PostList, User } from './app/entitys';
+import { BbsArticleDetail, BbsChildrenComments, BbsCommentsList, BbsLabelList, BbsLabelType, BbsMenu, BbsMyCollectionList, BbsMyLikeList, BbsPostList, BbsUser } from './app/entitys';
 // const ormconfig = require('../ormconfig.json');
 
 @Module({
     imports: [
         TypeOrmModule.forRoot({
             type: 'mysql',
-            host: 'localhost',
+            host: '7.7.2.11',
             port: 3306,
             username: 'root',
-            password: '123456',
-            database: 'db_data',
+            password: 'p82Jser2Sb32F2sl4Gsir02Fe',
+            database: 'example',
             entities: [
-                ArticleDetail,
-                ChildrenComments,
-                CommentsList,
-                Focus,
-                Forum,
-                LabelList,
-                LabelType,
-                Menu,
-                MyCollectionList,
-                PostList,
-                User
+                BbsArticleDetail,
+                BbsChildrenComments,
+                BbsCommentsList,
+                BbsLabelList,
+                BbsLabelType,
+                BbsMenu,
+                BbsMyCollectionList,
+                BbsMyLikeList,
+                BbsPostList,
+                BbsUser,
             ],
             synchronize: true,
 
         }), ...modules,
     ],
 })
-
-export class ApplicationModule {}
+export class ApplicationModule implements NestModule {
+    /**
+	 * 配置中间件
+	 * @param consumer 中间件
+	*/
+  	configure(consumer: MiddlewareConsumer): void {
+        consumer.apply(CorsMiddleware).forRoutes({
+          path: '*',
+          method: RequestMethod.ALL,
+        });
+    }
+}

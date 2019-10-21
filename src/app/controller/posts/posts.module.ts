@@ -2,12 +2,12 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostsService } from './posts.service';
 import { PostsController } from './posts.controller';
-import { PostList } from '../../entitys/postList.entity';
-import { ArticleDetail } from '../../entitys/articleDetail.entity';
-import { User } from '../../entitys/user.entity';
+import { BbsPostList } from '../../entitys/postList.entity';
+import { BbsArticleDetail } from '../../entitys/articleDetail.entity';
+import { BbsUser } from '../../entitys/user.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([PostList, ArticleDetail, User])],
+  imports: [TypeOrmModule.forFeature([BbsPostList, BbsArticleDetail, BbsUser])],
   providers: [PostsService],
   controllers: [PostsController],
 })

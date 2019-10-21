@@ -20,7 +20,6 @@ console.log(result)
 
     const util = ghostUi.util = {
         /**
-         * 格式化参数
          * @param string
          */
         parseOptions: function (string) {
@@ -28,8 +27,8 @@ console.log(result)
                 return string;
             }
 
-            const start = (string ? string.indexOf('{') : -1),
-                options = {};
+            const start = (string ? string.indexOf('{') : -1);
+            let options = {};
 
             if (start != -1) {
                 try {
@@ -39,6 +38,7 @@ console.log(result)
             }
             return options;
         },
+<<<<<<< HEAD
         /**
          * 页面滚动方法
          * @type {{ lock, unlock }}
@@ -66,17 +66,15 @@ console.log(result)
         /**
          * 本地存储
          */
+=======
+>>>>>>> 4c82d23bad7d5f8de5d0d2a46b948bbfc1e9445f
         localStorage: function () {
             return storage(window.localStorage);
         }(),
-        /**
-         * Session存储
-         */
         sessionStorage: function () {
             return storage(window.sessionStorage);
         }(),
         /**
-         * 序列化
          * @param value
          * @returns {string}
          */
@@ -85,7 +83,6 @@ console.log(result)
             return JSON.stringify(value);
         },
         /**
-         * 反序列化
          * @param value
          * @returns {*}
          */
@@ -98,10 +95,6 @@ console.log(result)
             }
         }
     };
-
-    /**
-     * HTML5存储
-     */
     function storage (ls) {
         return {
             set: function (key, value) {
@@ -120,7 +113,6 @@ console.log(result)
     }
 
     /**
-     * 判断css3动画是否执行完毕
      * @git http://blog.alexmaccaw.com/css-transitions
      * @param duration
      */
@@ -170,7 +162,6 @@ console.log(result)
         this.transitioning = false;
     }
 
-    // 150ms 为切换动画执行时间
     Tab.TRANSITION_DURATION = 150;
 
     Tab.DEFAULTS = {
@@ -187,9 +178,6 @@ console.log(result)
         _this.$panel = $element.find(_this.options.panel);
     };
 
-    /**
-     * 給选项卡导航绑定点击事件
-     */
     Tab.prototype.bindEvent = function () {
         var _this = this;
         _this.$nav.each(function (e) {
@@ -200,8 +188,7 @@ console.log(result)
     };
 
     /**
-     * 打开选项卡
-     * @param index 当前导航索引
+     * @param index 
      */
     Tab.prototype.open = function (index) {
         var _this = this;
@@ -210,22 +197,22 @@ console.log(result)
 
         var $curNav = _this.$nav.eq(index);
 
-        // 如果切换动画进行时或者当前二次点击 禁止重复操作
         if (_this.transitioning || $curNav.hasClass(_this.options.activeClass))return;
 
         _this.transitioning = true;
 
+<<<<<<< HEAD
         // 打开选项卡时绑定自定义事件
         $curNav.trigger($.Event('open.ghostUi.tab', {
+=======
+        $curNav.trigger($.Event('open.ghostui.tab', {
+>>>>>>> 4c82d23bad7d5f8de5d0d2a46b948bbfc1e9445f
             index: index
         }));
 
-        // 给tab导航添加选中样式
         _this.active($curNav, _this.$nav);
 
-        // 给tab内容添加选中样式
         _this.active(_this.$panel.eq(index), _this.$panel, function () {
-            // 打开选项卡后绑定自定义事件
             $curNav.trigger({
                 type: 'opened.ghostUi.tab',
                 index: index
@@ -235,10 +222,9 @@ console.log(result)
     };
 
     /**
-     * 添加选中样式
-     * @param $element 当前需要添加选中样式的对象
-     * @param $container 当前对象的同级所有对象
-     * @param callback 回调
+     * @param $element 
+     * @param $container 
+     * @param callback 
      */
     Tab.prototype.active = function ($element, $container, callback) {
         var _this = this,
@@ -250,7 +236,6 @@ console.log(result)
             typeof callback == 'function' && callback();
         }
 
-        // 动画执行完毕后回调
         $element.one('webkitTransitionEnd', next).emulateTransitionEnd(Tab.TRANSITION_DURATION);
 
         $avtive.removeClass(activeClass);
@@ -295,19 +280,15 @@ console.log(result)
     let dialog = ghostUi.dialog = ghostUi.dialog || {},
         $body = $(window.document.body);
 
-    /**
-     * 加载中提示框
-     */
     dialog.loading = function () {
 
         const ID = 'GHOST_LOADING';
 
         return {
             /**
-             * 加载中 - 显示
-             * @param text 显示加载文案 【可选】
-             * @param spinner 自定义加载图标类名
-             * @param background 遮罩背景色
+             * @param text
+             * @param spinner
+             * @param background
              */
             open: function () {
                 $(`#${ID}`).remove();
@@ -331,9 +312,6 @@ console.log(result)
                 //                 </div>`)
                 $body.append($dom1)
             },
-            /**
-             * 加载中 - 隐藏
-             */
             close: function () {
                 $(`#${ID}`).remove();
             }
@@ -522,10 +500,6 @@ console.log(result)
 
 
 (function ($) {
-    // 配置参数如下
-    // @params: skinClassName：对话框的自定义class名称。
-    // @params: allowOverlay：是否显示遮罩层。
-    // @params: animationType：显示对话框时的动画，可以是：'fade-in', 'sticky-up', 'slide-in' 和 'flip'。
     $.fn.ghostModel = function (options) {
         return this.each(function () {
 
@@ -567,12 +541,6 @@ console.log(result)
 
 (function ($) {
     'use strict'
-    // 配置参数如下
-    // @params: autohide	boolean	    返回顶部按钮是否自动隐藏。可以设置true或false。默认为true
-    // @params: offset	   Integer (px)	页面滚动到距离顶部多少距离时隐藏返回顶部按钮。默认值为420
-    // @params: speed	Integer (ms)	滚动和渐隐的持续时间，默认值为500
-    // @params: right	Integer (px)	返回顶部按钮距离屏幕右边的距离，默认值为15
-    // @params: bottom	Integer (px)	返回顶部按钮距离屏幕顶部的距离，默认值为30
     $.fn.backtop = function(opt){
         
         //variables

@@ -1,45 +1,47 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne } from 'typeorm';
-import { PostList } from './postList.entity';
-import { CommentsList } from './commentList.entity';
+import { BbsPostList } from './postList.entity';
+import { BbsCommentsList } from './commentList.entity';
 @Entity()
-export class ArticleDetail {
-    @PrimaryGeneratedColumn() serialNum: number;
+export class BbsArticleDetail {
+    @PrimaryGeneratedColumn() ID: number;
     // userId
-    @Column() userId: string;
+    @Column() USER_ID: string;
     // title
-    @Column() articleTitle: string;
+    @Column() ARTICLE_TITLE: string;
     // articleId
-    @Column() articleId: string;
+    @Column() ARTICLE_ID: string;
     // articleContent
-    @Column({length: 12000}) articleContent: string;
-    // articleSource
-    @Column() articleType: string;
+    @Column({length: 12000}) ARTICLE_CONTENT: string;
+    // articleType
+    @Column() ARTICLE_TYPE: string;
     // articleLabel
-    @Column() articleLabel: string;
+    @Column() ARTICLE_LABEL: string;
     // author
-    @Column() author: string;
+    @Column() AUTHOR: string;
     // commentId
-    @Column({ default: null }) commentId: string;
+    @Column({ default: null }) COMMENT_ID: string;
     // viewCount
-    @Column({ default: 0 }) viewCount: number;
+    @Column({ default: 0 }) VIEW_COUNT: number;
     // collectCount
-    @Column({ default: 0 }) collectCount: number;
+    @Column({ default: 0 }) COLLECT_COUNT: number;
     // likeCount
-    @Column({ default: 0 }) likeCount: number;
+    @Column({ default: 0 }) LIKE_COUNT: number;
     // commentCount
-    @Column({ default: 0 }) commentCount: number;
+    @Column({ default: 0 }) COMMENT_COUNT: number;
      // isLike
-     @Column({ default: false }) isLike: boolean;
+    //  @Column({ default: false }) IS_LIKE: boolean;
      // isCollect
-     @Column({ default: false }) isCollect: boolean;
+     @Column({ default: false }) IS_COLLECT: boolean;
      // isDrafts
-    @Column({ default: false }) isDrafts: boolean;
+    @Column({ default: false }) ID_DRAFTS: boolean;
     // publishTime
-    @Column() publishTime: string;
+    @Column() CREATED: string;
+    // STATE
+    @Column({ default: 1}) STATE: number;
 
-    @OneToOne(type => PostList, post => post.acticles)
-    post: PostList[];
+    @OneToOne(type => BbsPostList, post => post.acticles)
+    post: BbsPostList[];
 
-    @OneToMany(type => CommentsList, comment => comment.posts)
-    comments: CommentsList[];
+    @OneToMany(type => BbsCommentsList, comment => comment.posts)
+    comments: BbsCommentsList[];
 }

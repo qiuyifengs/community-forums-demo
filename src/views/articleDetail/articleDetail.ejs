@@ -4,20 +4,8 @@
         <title><%= title %></title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
         <link rel='stylesheet' href='/style/articleDetail/articleDetail.css'>
-        <!-- <link rel='stylesheet' href='/style/index.css'> -->
         <% include ../common/script %>
-        <!-- <link href='http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet'> -->
         
-        <!-- <script src='/richText/markdown-it/dist/markdown-it.js'></script>
-        <script src='/richText/toMark/dist/toMark.js'></script>
-        <script src='/richText/tui-code-snippet/dist/tui-code-snippet.js'></script>
-        <script src='/richText/tui-color-picker/dist/tui-color-picker.js'></script>
-        <script src='/richText/codemirror/lib/codemirror.js'></script>
-        <script src='/richText/highlightjs/highlight.pack.js'></script>
-        <script src='/richText/squire-rte/build/squire-raw.js'></script>
-        <link rel='stylesheet' href='/richText/codemirror/lib/codemirror.css'> -->
-        <script type='text/javascript' src='/js/sensitiveWords.js'></script>
-        <script type='text/javascript' src='/js/jquery.qrcode.min.js'></script>
     </head>
     <body>
         <div id="articlePage">
@@ -27,56 +15,47 @@
                 <div class='app-author-info app-display'>
                     <div class='app-author-headerIcon'>
                         <% if(article.headerIcon) { %>
-                            <img class='head_portrait' src='/<%= article.headerIcon %>'>
+                            <img class='head_portrait' src='<%= article.headerIcon %>'>
                         <% } else { %> 
-                            <span class='item-random-color' article-commentUserName='<%=article.author%>'>
-                                <%= article.author.substring(0, 1) %>
+                            <span class='item-random-color' article-commentUserName='<%=article.AUTHOR%>'>
+                                <%= article.AUTHOR.substring(0, 1) %>
                             </span>  
                         <% } %>
                     </div>
                     <div class='app-author-userIfo'>
-                        <div class='author_name'><%= article.author %></div>
+                        <div class='author_name'><%= article.AUTHOR %></div>
                         <div class='author_autograph'><%= article.personalProfile %></div>
                     </div>
                 </div>
                 <div class='article_left box-shadow bd-radius-5'>
                     <div class='title_box pd-rl30'>
-                        <div class='title'><%= article.articleTitle %></div>
+                        <div class='title'><%= article.ARTICLE_TITLE %></div>
                         <ul class='icon_data'>
                             <li class='data_item'>
-                                source：<a target='_blank' href='/topic/<%= article.articleType %>'><span class='eth'><%= article.articleType %></span></a>
+                                source：<a target='_blank' href='/topic/<%= article.ARTICLE_TYPE %>'><span class='eth'><%= article.ARTICLE_TYPE %></span></a>
                             </li>
                             <li class='data_item web-display'>
-                                <%= article.viewCount %> <span lang="view">次阅读</span>
+                                <%= article.VIEW_COUNT %> <span lang="view">次阅读</span>
                             </li>
-                            <li class='data_item showTime web-display'><%= article.publishTime.substring(0, 10) %></li>
+                            <li class='data_item showTime web-display'><%= article.CREATED.substring(0, 10) %></li>
                             <li class='data_item source-type'>
-                                <%  article.articleLabel.forEach(function(item) { %>
+                                <%  article.ARTICLE_LABEL.forEach(function(item) { %>
                                 <span class='article-source bd-radius-3'><%= item %></span>
                                 <% }) %>
                             </li>
                         </ul>
                     </div>
                     <div class='content'>
-                        <%= article.articleContent %>
+                        <%= article.ARTICLE_CONTENT %>
                     </div>
                     <div class='code-html pd-rl30'>
-                        <!-- <script src='/richText/plantuml-encoder/dist/plantuml-encoder.js'></script>
-                        <script src='/richText/raphael/raphael.js'></script>
-                        <script src='/richText/tui-chart/dist/tui-chart.js'></script>
-                        <script src='/richText/tui-editor-Editor-all.js'></script>
-                        <link rel='stylesheet' href='/richText/tui-editor.css'>
-                        <link rel='stylesheet' href='/richText/tui-editor-contents.css'>
-                        <link rel='stylesheet' href='/richText/tui-color-picker/dist/tui-color-picker.css'>
-                        <link rel='stylesheet' href='/richText/tui-chart/dist/tui-chart.css'>
-                        <div id='editSection'></div> -->
                     </div>
                     <div class="app-text-data app-display">
                         <ul class="app-data-list">
-                            <li class="app-data-item"><%= article.viewCount %> <span lang="view">次阅读</span></li>
-                            <li class="app-data-item"><%= article.collectCount %> <span lang="collects">人收藏</span></li>
-                            <li class="app-data-item"><%= article.likeCount %>  <span lang="likes">人喜欢</span></li>
-                            <li class="app-data-item showTime app-showTime"><%= article.publishTime.substring(0, 10) %></li>
+                            <li class="app-data-item"><%= article.VIEW_COIUNT %> <span lang="view">次阅读</span></li>
+                            <li class="app-data-item"><%= article.COLLECT_COUNT %> <span lang="collects">人收藏</span></li>
+                            <li class="app-data-item"><%= article.LIKE_COUNT %>  <span lang="likes">人喜欢</span></li>
+                            <li class="app-data-item showTime app-showTime"><%= article.CREATED.substring(0, 10) %></li>
                         </ul>
                     </div>
                     <div class='btn_box web-display'>
@@ -124,30 +103,30 @@
                             <div class='like_btn'>
                                 <span class='btn_left_triangle'></span>
                                 <div class='center_btn'>
-                                    <% if (article.isLike) { %>
+                                    <% if (article.IS_LIKE) { %>
                                         <img class='like' src='/images/like.png' alt=''>
                                     <% } else { %>   
                                         <img class='no_like' src='/images/no_like.png' alt=''>
                                     <% } %>
                                     <span lang="like">喜欢</span>
-                                    <span class='is_like' style='display: none'><%= article.isLike %></span>
+                                    <span class='is_like' style='display: none'><%= article.IS_LIKE %></span>
                                 </div>
                                 <span class='btn_right_triangle'></span>
                             </div>
-                            <div class='like_count'><%= article.likeCount %> <span lang="likes">人喜欢</span></div>
-                            <span class='like_num' style='display:none'><%= article.likeCount %></span>
+                            <div class='like_count'><%= article.LIKE_COUNT %> <span lang="likes">人喜欢</span></div>
+                            <span class='like_num' style='display:none'><%= article.LIKE_COUNT %></span>
                         </div>
                         <div class='collection_btn_box'>
                             <div class='collection_btn add-collect-btn not_collect bd-radius-5'>
-                                <% if (article.isCollect) { %>
+                                <% if (article.IS_COLLECT) { %>
                                     <img class='collection' src='/images/collection.png' alt=''>
                                 <% } else { %>   
                                     <img class='collection_black' src='/images/collection_black.png' alt='' >
                                 <% } %>  
                                 <span lang="collect">收藏</span>
-                                <span class='is_collect' style='display: none'><%= article.isCollect %></span>
+                                <span class='is_collect' style='display: none'><%= article.IS_COLLECT %></span>
                             </div>
-                            <div class='collection_num'><%= article.collectCount %> <span lang="collects">人已收藏</span></div>
+                            <div class='collection_num'><%= article.COLLECT_COUNT %> <span lang="collects">人已收藏</span></div>
                         </div>
                         
                     </div>
@@ -167,22 +146,22 @@
                                 <div class='comment_top'>
                                     <!-- <img class='commentator_img' src='/images/man1.png' alt=''> -->
                                     <% if(commentItem.hearderIcon) { %>
-                                        <img class='commentator_img' src='/<%= commentItem.hearderIcon %>'>
+                                        <img class='commentator_img personal-headerIcon' src='<%= commentItem.hearderIcon %>'>
                                     <% } else { %> 
-                                        <span class='item-random-color commentator_user_name' article-commentUserName='<%=commentItem.commentUserName%>'>
-                                            <%= commentItem.commentUserName.substring(0, 1) %>
+                                        <span class='item-random-color commentator_user_name' article-commentUserName='<%=commentItem.COMMENT_USER_NAME%>'>
+                                            <%= commentItem.COMMENT_USER_NAME.substring(0, 1) %>
                                         </span>  
                                     <% } %>
                                     <div class="commentator-name-box">
-                                        <div class='commentator_name one_level'><%= commentItem.commentUserName %></div>
-                                        <div class='comment_time time app-comment-time'><%= commentItem.commentTime %></div>
+                                        <div class='commentator_name one_level'><%= commentItem.COMMENT_USER_NAME %></div>
+                                        <div class='comment_time time app-comment-time'><%= commentItem.CREATED %></div>
                                     </div>
                                 </div>
                                 <div class='coment_mid'>
-                                    <%= commentItem.commentContent %>
+                                    <%= commentItem.COMMENT_CONTENT %>
                                 </div>
-                                <div class='comment_id del_comment_id' style='display:none'><%= commentItem.commentId %></div>
-                                <div class='comment_userId' style='display:none'><%= commentItem.userId %></div>
+                                <div class='comment_id del_comment_id' style='display:none'><%= commentItem.COMMENT_ID %></div>
+                                <div class='comment_userId' style='display:none'><%= commentItem.USER_ID %></div>
                                 <div class='eidt_answer'>
                                         <div class='answer web-display' lang="answer">回复</div>
                                         <div class='app-answer app-display' lang="answer">回复</div>
@@ -194,16 +173,16 @@
                                             <div class='comment_item childer_item'>
                                                 <div class='comment_top'>
                                                     <!-- <img class='commentator_img' src='/images/man1.png' alt=''> -->
-                                                    <!-- <span class='geren-bg bd-radius-round dom-random-color'><%= childrenItem.commentUserName.substring(0, 1) %></span> -->
-                                                    <div class='commentator_name children_commentator_name'><%= childrenItem.commentUserName %></div>
-                                                    <div class='comment_time time'><%= childrenItem.commentTime %></div>
+                                                    <!-- <span class='geren-bg bd-radius-round dom-random-color'><%= childrenItem.COMMENT_USER_NAME.substring(0, 1) %></span> -->
+                                                    <div class='commentator_name children_commentator_name'><%= childrenItem.COMMENT_USER_NAME %></div>
+                                                    <div class='comment_time time'><%= childrenItem.CREATED %></div>
                                                 </div>
                                                 <div class='coment_mid'>
-                                                    @<span class='reply_man'><%= childrenItem.commentatorName %></span>
-                                                    <%= childrenItem.commentContent %>
+                                                    @<span class='reply_man'><%= childrenItem.COMMENTATOR_NAME %></span>
+                                                    <%= childrenItem.COMMENT_CONTENT %>
                                                 </div>
-                                                <div class='child_comment_id del_comment_id' style='display:none'><%= childrenItem.childCommentId %></div>
-                                                <div class='comment_userId' style='display:none'><%= childrenItem.userId %></div>
+                                                <div class='child_comment_id del_comment_id' style='display:none'><%= childrenItem.CHILD_COMMENT_ID %></div>
+                                                <div class='comment_userId' style='display:none'><%= childrenItem.USER_ID %></div>
                                                 <div class='eidt_answer'>
                                                     <div class='answer web-display' lang="answer">回复</div>
                                                     <div class='app-answer app-display' lang="answer">回复</div>
@@ -232,24 +211,24 @@
                     <div class='personal_box'>
                         <div class='info_top'>
                             <% if(article.headerIcon) { %>
-                                <img class='head_portrait' src='/<%= article.headerIcon %>'>
+                                <img class='head_portrait personal-headerIcon' src='/<%= article.headerIcon %>'>
                             <% } else { %> 
-                                <span class='item-random-color' article-commentUserName='<%=article.author%>'>
-                                    <%= article.author.substring(0, 1) %>
+                                <span class='item-random-color' article-commentUserName='<%=article.AUTHOR%>'>
+                                    <%= article.AUTHOR.substring(0, 1) %>
                                 </span>  
                             <% } %>
-                            <div class='my_name'><%= article.author %></div>
+                            <div class='my_name'><%= article.AUTHOR %></div>
                             <div class='my_autograph'><%= article.personalProfile %></div>
                         </div>
                         <div class='info_down bd-top'>
                             <img class='crown_icon' src='/images/crown.png' alt=''>
                             <div class='follow down_item bd-right'>
                                 <div class='text' lang="like">喜欢</div>
-                                <div class='count'><%= article.likeCount %></div>
+                                <div class='count'><%= article.LIKE_COUNT %></div>
                             </div>
                             <div class='fans down_item'>
                                 <div class='text' lang="collect">收藏</div>
-                                <div class='count'><%= article.collectCount %></div>
+                                <div class='count'><%= article.COLLECT_COUNT %></div>
                             </div>
                         </div>
                     </div>
@@ -305,7 +284,7 @@
                 <div class="app-user-do-icon">
                     <ul class="app-user-do-icon-list">
                         <li class="app-user-do-item like_btn">
-                            <% if (article.isLike) { %>
+                            <% if (article.IS_LIKE) { %>
                                 <svg class='iconSvg' aria-hidden='true'>
                                     <use xlink:href='#icon-shoucang-copy-copy'></use>
                                 </svg>
@@ -316,7 +295,7 @@
                             <% } %>
                         </li>
                         <li class="app-user-do-item add-collect-btn">
-                            <% if (article.isCollect) { %>
+                            <% if (article.IS_COLLECT) { %>
                                 <svg class='iconSvg' aria-hidden='true'>
                                     <use xlink:href='#icon-unie601-copy'></use>
                                 </svg>
@@ -336,10 +315,12 @@
             </footer>
         </div>
     </body>
+    <script type='text/javascript' src='/js/sensitiveWords.js'></script>
+    <script type='text/javascript' src='/js/jquery.qrcode.min.js'></script>
     <script type='text/javascript'>
         let articleId, articleTitle
         function filterTime(item) {
-            return  resTime = formatDateFilter(item)
+            return  resTime = formatDateFilter2(item)
         }
         $(function(){
             let author = $('.my_name').text()
@@ -349,21 +330,25 @@
             } else {
                 $('.app-page-title').text('文章详情')
             }
-            // Get article from the URL
+
             (function () {
                 articleId = this.location.pathname.split('/')[3]
                 articleTitle = $('.title').text()
                 $('.time').each(function() {
-                    let resTime = formatDateFilter($(this).text())
+                    let resTime = formatDateFilter2($(this).text())
                     $(this).html(resTime)
                 })
+                // $('.personal-headerIcon').each(function() {
+                //     const imgSrc = $(this).attr('src')
+                //     $(this).attr('src', `${readFileBaseUrl}${imgSrc}`)
+                // })
                 $('.item-random-color').each(function() {
                     const authorName = $(this).attr('article-commentUserName')
                     $(this).css('background',renderColor(authorName))
 
                 })
             })()
-            // init pagination config
+
             let isLoading = false;
             let pageSize = 1;
             
@@ -400,51 +385,23 @@
             $('.dropload-up').remove()
             $('.dropload-down').remove()
             $('.dropload-refresh').remove()
-            // $('.ghost-pagination').pagination({
-            //     total: document.getElementById('totalPages').value,
-            //     pageSize: 10,
-            //     current: 1,
-            //     coping: true,
-            //     isHide: true,
-            //     callback: api => {
-            //         $('.ghost-loading-mask').css('display', 'block')
-            //         const currentPage = api.getCurrent()
-            //         const url = `post/articleDetail/${articleId}/${currentPage}`
-            //         myAjax('GET', url).then(res => {
-            //             if (res.code === 1) {
-            //                 $('#commentTemplate').empty()
-            //                 res.comments.forEach(item => {
-            //                     $('#commentTemplate').append(renderCommentsHtml(item))
-            //                 })
-            //                 $(".item-random-color").each(function() {
-            //                     const authorName = $(this).attr("article-commentUserName");
-            //                     $(this).css("background",renderColor(authorName));
-
-            //                 })
-            //                 setTimeout(function() {
-            //                     $('.ghost-loading-mask').css('display', 'none')
-            //                 }, 500) 
-            //             }
-            //         })
-            //     }
-            // })
+           
             $('.showTime').each(function() {
-                let resTime = formatDateFilter($(this).text())
+                let resTime = formatDateFilter2($(this).text())
                 $(this).html(resTime)
             })
             
-            // share article
             var _title = articleTitle,_source,_sourceUrl,_pic,_showcount,_desc,_summary,_site,
                 _width = 600,
                 _height = 600,
                 _top = (screen.height-_height)/2,
                 _left = (screen.width-_width)/2
-            // show share box
-            $('.shared_div').on('click', function(event) {
+
+                $('.shared_div').on('click', function(event) {
                 event.stopPropagation()
                 $('.shared_icon_box').css('display', 'block')
             })
-            // shareToWeChart
+
             $('.shared_wechart').on('click', function(event) {
                 event.stopPropagation()
                 $('canvas').remove()
@@ -454,7 +411,7 @@
                 $('.modal_body').append(qrcode.find('canvas'))
                 $('.qrcode_body').css('display', 'block')
             })
-            // shareToErweima
+
             $('.shared_erweima').on('click', function(event) {
                 event.stopPropagation()
                 $('canvas').remove()
@@ -468,28 +425,28 @@
                 event.stopPropagation()
                 $('.qrcode_body').css('display', 'none')
             })
-            // shareToWB
+
             $('.shared_weibo').on('click', function(event) {
                 event.stopPropagation()
-                var _shareUrl = 'http://v.t.sina.com.cn/share/share.php?&appkey=895033136'     //真实的appkey，必选参数 
-                _shareUrl += '&url='+ encodeURIComponent(location.href)     //参数url设置分享的内容链接|默认当前页location，可选参数
-                _shareUrl += '&title=' + encodeURIComponent(_title)    //参数title设置分享的标题|默认当前页标题，可选参数
+                var _shareUrl = 'http://v.t.sina.com.cn/share/share.php?&appkey=895033136'  
+                _shareUrl += '&url='+ encodeURIComponent(location.href)   
+                _shareUrl += '&title=' + encodeURIComponent(_title)   
                 _shareUrl += '&source=' + encodeURIComponent(_source||'')
                 _shareUrl += '&sourceUrl=' + encodeURIComponent(_sourceUrl||'')
-                _shareUrl += '&content=' + 'utf-8'   //参数content设置页面编码gb2312|utf-8，可选参数
-                _shareUrl += '&pic=' + encodeURIComponent(_pic||'')  //参数pic设置图片链接|默认为空，可选参数
+                _shareUrl += '&content=' + 'utf-8' 
+                _shareUrl += '&pic=' + encodeURIComponent(_pic||'') 
                 window.open(_shareUrl,'_blank','width='+_width+',height='+_height+',top='+_top+',left='+_left+',toolbar=no,menubar=no,scrollbars=no, resizable=1,location=no,status=0')
             })
-            // shareToDouBan
+
             $('.shared_douban').on('click', function(event) {
                 event.stopPropagation()
                 var _shareUrl = 'http://shuo.douban.com/!service/share?'
-                _shareUrl += 'href=' + encodeURIComponent(location.href)    //分享的链接
-                _shareUrl += '&name=' + encodeURIComponent(_title)    //分享的标题
-                _shareUrl += '&image=' + encodeURIComponent(_pic||'')    //分享的图片
+                _shareUrl += 'href=' + encodeURIComponent(location.href)  
+                _shareUrl += '&name=' + encodeURIComponent(_title)  
+                _shareUrl += '&image=' + encodeURIComponent(_pic||'')  
                 window.open(_shareUrl,'_blank','width='+_width+',height='+_height+',left='+_left+',top='+_top+',toolbar=no,menubar=no,scrollbars=no,resizable=1,location=no,status=0')
             })
-            // shareToTieBa
+
             $('.shared_tieba').on('click', function(event) {
                 event.stopPropagation()
                 var _shareUrl = 'http://tieba.baidu.com/f/commit/share/openShareApi?'
@@ -498,16 +455,15 @@
                 _shareUrl += '&pic=' + encodeURIComponent(_pic||'')
                 window.open(_shareUrl,'_blank','width='+_width+',height='+_height+',left='+_left+',top='+_top+',toolbar=no,menubar=no,scrollbars=no,resizable=1,location=no,status=0')
             })
-            // shareToFacebook
+
             $('.shared_facebook').on('click', function(event) {
                 event.stopPropagation()
-                console.log(_title)
                 var _shareUrl = 'http://www.facebook.com/sharer/sharer.php?'
                 _shareUrl += 'u=' + encodeURIComponent(location.href)
                 _shareUrl += '&t=' + encodeURIComponent(_title)
                 window.open(_shareUrl,'_blank','width='+_width+',height='+_height+',left='+_left+',top='+_top+',toolbar=no,menubar=no,scrollbars=no,resizable=1,location=no,status=0')
             })
-            // shareToTwitter
+
             $('.shared_twitter').on('click', function(event) {
                 event.stopPropagation()
                 var _shareUrl = 'http://twitter.com/intent/tweet?'
@@ -519,26 +475,11 @@
 
             //---------------------------------------------------------------
             let showContent = JSON.parse($('.content').text())
-            // console.log(dealArticleContent(showContent))
             dealArticleContent(showContent).forEach(item => {
                 $('.code-html').append(item.value)
             })
-            // $('.code-html').html()
             //---------------------------------------------------------------
 
-
-            // render content
-            // let content = JSON.parse($('.content').text()).join('\n')
-            // let editor = new tui.Editor({
-            //     el: document.querySelector('#editSection'),
-            //     previewStyle: 'vertical',
-            //     height: 'auto',
-            //     initialEditType: 'markdown',
-            //     useCommandShortcut: true,
-            //     initialValue: content,
-            //     exts: ['scrollSync', 'colorSyntax', 'uml', 'chart', 'mark', 'table', 'taskCounter'],
-            // })
-            // loading mask
             let setTime = setInterval(() => {
                 let editorH = document.getElementsByClassName('code-html')[0].offsetHeight
                 if (editorH > 0) {
@@ -546,7 +487,7 @@
                     clearInterval(setTime);
                 }
             }, 500);
-            // create answer box
+
             let commentatorName
             $('.comment_list').on('click', '.answer', function(event) {    
                 event.stopPropagation()
@@ -559,7 +500,7 @@
                 $(this).parents('.parent_comment').find('.comment_bottmo').css({display: 'block'})
                 $(this).parents('.parent_comment').siblings().find('.comment_bottmo').css({display: 'none'})
             })
-            // submit comment
+
             $('.comment_btn_box').on('click', function() {
                 if (!userId) {
                     goPage('user/login')
@@ -578,12 +519,12 @@
                 myAjax('POST', 'post/addComment', param).then((res) =>{
                     if (res.code == 10000) {
                         let commentDetail = {
-                            commentatorName: author,
+                            COMMENTATOR_NAME: author,
                             headerIcon: localStorage.getItem('headerIcon') ? localStorage.getItem('headerIcon') : '',
-                            commentUserName: $.cookie('nickName'),
-                            commentContent: commentText,
-                            commentId: res.commentId,
-                            commentTime: format('yyyy-MM-dd hh:mm:ss', new Date())
+                            COMMENT_USER_NAME: $.cookie('nickName'),
+                            COMMENT_CONTENT: commentText,
+                            COMMENT_ID: res.commentId,
+                            CREATED: format('yyyy-MM-dd hh:mm:ss', new Date())
                         }
                         $('.comment_list').append(addCommentHtml(commentDetail))
                         $('.write_comment').val('')
@@ -596,7 +537,7 @@
                     }
                 })
             })
-            // submit children comment
+
             $('.comment_list').on('click', '.answer_btn', function(event) {
                 if (!userId) {
                     goPage('user/login')
@@ -618,11 +559,11 @@
                 myAjax('POST', 'post/addChildrenComment', param).then((res) => {
                     if (res.code == 10000) {
                         let commentDetail = {
-                            commentatorName: commentatorName,
-                            commentUserName: $.cookie('nickName'),
-                            commentContent: commentText,
-                            commentId: res.commentId,
-                            commentTime: format('yyyy-MM-dd hh:mm:ss', new Date())
+                            COMMENTATOR_NAME: commentatorName,
+                            COMMENT_USER_NAME: $.cookie('nickName'),
+                            COMMENT_CONTENT: commentText,
+                            COMMENT_ID: res.commentId,
+                            CREATED: format('yyyy-MM-dd hh:mm:ss', new Date())
                         }
                         $('.answer_box').text('')
                         $(this).parents('.comment_bottmo').before(childrenRenderComment(commentDetail))
@@ -634,7 +575,7 @@
                     }
                 })
             })
-            // add collect
+
             $('.add-collect-btn').on('click', function() {
                 if (!userId) {
                     goPage('user/login')
@@ -683,7 +624,7 @@
                     }
                 })
             })
-            // like
+
             $('.like_btn').on('click', function() {
                 if (!userId) {
                     goPage('user/login')
@@ -734,13 +675,13 @@
                     }
                 })
             })
-            // add delete dom
+
             $('.comment_item').each(function() {
                 if ($(this).children('.comment_userId').text() == $.cookie('userId')) {
                     $(this).children('.eidt_answer').append(`<div class='delete' lang="delete">删除</div>`)
                 }
             })
-            // delete myself comment
+
             let delCommentId = ''
             let commentType = ''
             let delDom
@@ -751,7 +692,7 @@
                 commentType = $(this).prev().text()
                 $('.confirm_box').css('display', 'block')
             })
-            // sure delete
+
             $('.sure').on('click', function() {
                 let param = {
                     userId: userId,
@@ -776,11 +717,11 @@
                     }
                 })
             })
-            // cancel delete
+
             $('.cancel').on('click', function() {
                 $('.confirm_box').css('display', 'none')
             })
-            // go to top
+
             $('.to_top').hide()
             $(window).scroll(function(){
                 if($(this).scrollTop() > 100){
@@ -794,7 +735,6 @@
                 return false
             })
             // --------------------------------------------app-------------------------------
-            // show user-comment-content-mask
             $('.response-text-box').on('click', function(e) {
                 e.stopPropagation()
                 $('.app-answer-btn').addClass('app-submit-comment')
@@ -802,21 +742,21 @@
                 $('.user-comment-content-mask').css('display', 'block')
                 $('.user-comment-textarea').focus();
             })
-            // no touchmove
+
             $('.user-comment-content-mask').on("touchmove",function(e) {
                 e.preventDefault()
                 e.stopPropagation()
             })
-            // hide user-comment-content-mask
+
             $('.user-comment-content-mask').on('click', function(e) {
                 e.stopPropagation()
                 $('.user-comment-content-mask').css('display', 'none')
             })
-            // don't stopPropagation
+
             $('.user-comment-content').on('click', function(e) {
                 e.stopPropagation()
             })
-            // submit one class comment
+
             $('.user-comment-content').on('click', '.app-submit-comment', function(e) {
                 e.stopPropagation()
                 if (!userId) {
@@ -836,12 +776,12 @@
                 myAjax('POST', 'post/addComment', param).then((res) =>{
                     if (res.code == 10000) {
                         let commentDetail = {
-                            commentatorName: author,
+                            COMMENTATOR_NAME: author,
                             headerIcon: localStorage.getItem('headerIcon') ? localStorage.getItem('headerIcon') : '',
-                            commentUserName: $.cookie('nickName'),
-                            commentContent: commentText,
-                            commentId: res.commentId,
-                            commentTime: format('yyyy-MM-dd hh:mm:ss', new Date())
+                            COMMENT_USER_NAME: $.cookie('nickName'),
+                            COMMENT_CONTENT: commentText,
+                            COMMENT_ID: res.commentId,
+                            CREATED: format('yyyy-MM-dd hh:mm:ss', new Date())
                         }
                         $('.comment_list').append(addCommentHtml(commentDetail))
                         $('.user-comment-textarea').val('')
@@ -851,11 +791,10 @@
                         $('.user-comment-content-mask').css('display', 'none')
                     } else {
                         layer.msg(res.message)
-                        console.log(res.message)
                     }
                 })
             })
-            // submit child comment
+
             let appCommentId = ''
             let $self = '';
             $('.comment_list').on('click', '.app-answer', function(e) {
@@ -892,11 +831,11 @@
                 myAjax('POST', 'post/addChildrenComment', param).then((res) => {
                     if (res.code == 10000) {
                         let commentDetail = {
-                            commentatorName: commentatorName,
-                            commentUserName: $.cookie('nickName'),
-                            commentContent: commentText,
-                            commentId: res.commentId,
-                            commentTime: format('yyyy-MM-dd hh:mm:ss', new Date())
+                            COMMENTATOR_NAME: commentatorName,
+                            COMMENT_USER_NAME: $.cookie('nickName'),
+                            COMMENT_CONTENT: commentText,
+                            COMMENT_ID: res.commentId,
+                            CREATED: format('yyyy-MM-dd hh:mm:ss', new Date())
                         }
                         $('.user-comment-textarea').val('')
                         $self.parents('.parent_comment').append(childrenRenderComment(commentDetail))
@@ -917,15 +856,15 @@
                     <div class='comment_top'>
                         ${ showHeaderIcon(item) }
                         <div class="commentator-name-box">
-                            <div class='commentator_name'>${ item.commentUserName }</div>
-                            <div class='comment_time time'>${ filterTime(item.commentTime) }</div>
+                            <div class='commentator_name'>${ item.COMMENT_USER_NAME }</div>
+                            <div class='comment_time time'>${ filterTime(item.CREATED) }</div>
                         </div>
                     </div>
                     <div class='coment_mid'>
-                        ${ item.commentContent }
+                        ${ item.COMMENT_CONTENT }
                     </div>
-                    <div class='comment_id del_comment_id' style='display:none'>${ item.commentId }</div>
-                    <div class='comment_userId' style='display:none'>${ item.userId }</div>
+                    <div class='comment_id del_comment_id' style='display:none'>${ item.COMMENT_ID }</div>
+                    <div class='comment_userId' style='display:none'>${ item.USER_ID }</div>
                     <div class='eidt_answer'>
                             <div class='answer web-display' lang="answer">回复</div>
                             <div class='app-answer app-display' lang="answer">回复</div>
@@ -946,14 +885,14 @@
                         <div class='comment_top'>
                             ${ showHeaderIcon(item) }
                             <div class="commentator-name-box">
-                                <div class='commentator_name'>${ item.commentUserName }</div>
-                                <div class='comment_time time'>${ filterTime(item.commentTime) }</div>
+                                <div class='commentator_name'>${ item.COMMENT_USER_NAME }</div>
+                                <div class='comment_time time'>${ filterTime(item.CREATED) }</div>
                             </div>
                         </div>
                         <div class='coment_mid'>
-                            ${ item.commentContent }
+                            ${ item.COMMENT_CONTENT }
                         </div>
-                        <div class='comment_id del_comment_id' style='display:none'>${ item.commentId }</div>
+                        <div class='comment_id del_comment_id' style='display:none'>${ item.COMMENT_ID }</div>
                         <div class='comment_userId' style='display:none'>${ $.cookie('userId') }</div>
                         <div class='eidt_answer'>
                             <div class='answer web-display' lang="answer">回复</div>
@@ -971,7 +910,7 @@
                     `
         }
         function filterTime(item) {
-            return  resTime = formatDateFilter(item)
+            return  resTime = formatDateFilter2(item)
         }
         function showHeaderIcon(item) {
             if (item.headerIcon != '' && item.headerIcon != null) {
@@ -979,8 +918,7 @@
                     <img class='commentator_img' src='/${ item.headerIcon }'>
                 `
             } else {
-                console.log(item)
-                return `<span class='item-random-color commentator_user_name' article-commentUserName='${item.commentUserName}' style='background: rgb(97, 99, 103);'>${item.commentUserName.substring(0, 1)}</span>`;
+                return `<span class='item-random-color commentator_user_name' article-commentUserName='${item.COMMENT_USER_NAME}' style='background: rgb(97, 99, 103);'>${item.COMMENT_USER_NAME.substring(0, 1)}</span>`;
             }
         }
         function forChileComment(item) {
@@ -992,9 +930,8 @@
             return childComment
         }
         function isNewComment(item) {
-            console.log(item)
             return `
-                <div class='child_comment_id del_comment_id' style='display:none'>${ item.commentId }</div>
+                <div class='child_comment_id del_comment_id' style='display:none'>${ item.COMMENT_ID }</div>
                 <div class='comment_userId' style='display:none'>${ $.cookie('userId') }</div>
             `
         }
@@ -1003,13 +940,13 @@
                 <div class='children_commentator_box'>
                     <div class='comment_item childer_item'>
                         <div class='comment_top'>
-                            <div class='commentator_name children_commentator_name'>${ item.commentUserName }</div>
-                            <div class='comment_time time''>${ filterTime(item.commentTime) }</div>
+                            <div class='commentator_name children_commentator_name'>${ item.COMMENT_USER_NAME }</div>
+                            <div class='comment_time time''>${ filterTime(item.CREATED) }</div>
                         </div>
                         ${ isNewComment(item) }
                         <div class='coment_mid'>
-                            @<span class='reply_man'>${ item.commentatorName }</span>
-                            ${ item.commentContent }
+                            @<span class='reply_man'>${ item.COMMENTATOR_NAME }</span>
+                            ${ item.COMMENT_CONTENT }
                         </div>
                         <div class='eidt_answer'>
                             <div class='answer web-display' lang="answer">回复</div>

@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Post, Body, UseGuards, Request, Response, HttpStatus, HttpCode } from '@nestjs/common';
 import { ApiOperation, ApiUseTags } from '@nestjs/swagger';
 import { LoginService } from './login.service';
-import { User } from '../../entitys/user.entity';
+import { BbsUser } from '../../entitys/user.entity';
 import { AuthGuard } from '@nestjs/passport';
 import { async } from 'rxjs/internal/scheduler/async';
 
@@ -20,7 +20,7 @@ export class LoginController {
     @Post('login')
     @HttpCode(HttpStatus.OK)
     @ApiOperation({ title: 'user login' })
-    async login(@Body() params): Promise<User[]> {
+    async login(@Body() params): Promise<BbsUser[]> {
 
         return this.loginService.login(params);
     }

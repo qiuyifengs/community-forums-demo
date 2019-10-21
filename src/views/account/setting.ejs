@@ -56,22 +56,6 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                        <!-- <div class="ghost-list-item">
-                                            <div class="ghost-list-item-meta">
-                                                <div class="ghost-list-item-meta-content">
-                                                    <div class="ghost-list-item-meta-description">
-                                                        手机验证：<%= result.tel %>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <ul class="ghost-list-item-action">
-                                                <li>
-                                                    <button class="ghost-btn ghost-btn-primary">
-                                                        <span>修改</span>
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </div> -->
                                         <div class="ghost-list-item">
                                             <div class="ghost-list-item-meta">
                                                 <div class="ghost-list-item-meta-content">
@@ -214,32 +198,7 @@
     </body>
     <script type="text/javascript">
 
-        // $.validator.setDefaults({
-        //     debug: false, // 调试模式设为true 只验证不提交form 
-        //     submitHandler: function(form) {
-        //         // submitResetPasswordHandler()
-        //         closeDialog()
-        //     }
-        // })
-
-        // function submitResetPasswordHandler() {
-        //     const params = {
-        //         userId: $.cookie("userId"),
-        //         oldPassword: $('#oldPassword').val(),
-        //         passWordOne: $('#newPassword').val(),
-        //         passWordTwo: $('#confirmPassword').val()
-        //     }
-        //     myAjax("POST", "account/resetPassword", params).then((res) => {
-        //         if (res.code == 1) {
-        //             let token = res.token
-        //             $.cookie('token', token, { expires: 7, path: '/' })
-        //         }
-        //     })
-        // }
-
-        // init Google Design button click effect 
         Waves.attach('.float-button-light', ['waves-button', 'waves-float', 'waves-light']);
-        // Init Waves
         Waves.init();
 
         function closeDialog() {
@@ -249,13 +208,12 @@
         }
 
         $(function() {
-            // open update password model
+
             $('#openUpdatePasswordModel').ghostModel({
                 skinClassName: 'demo',
 	            animationType: 'fade-in'
             })
 
-            // open update email model
             $("#openUpdateEmailModel").ghostModel({
                 skinClassName: 'demo',
 	            animationType: 'fade-in'
@@ -333,7 +291,7 @@
                     }
                 }
             }) 
-            // send email
+
             $(".validate-user-email").on("click", function() {
                 myAjax("POST", 'account/validateEmail', {userId: $.cookie("userId"), type: 1,}).then((res) => {
                     if (res.code == 1) {
@@ -349,7 +307,6 @@
                 onfocusout: function(element) { $(element).valid() },
                 onkeyup: function(element) { $(element).valid() },
                 focusInvalid: function(element) { $(element).valid() 
-                    console.log('focusInvalid' + element.id)
                 },
                 debug: true,
                 submitHandler: function(form) {
@@ -377,9 +334,7 @@
                 errorElement: 'div',
                 errorClass:"ghost-form-explain",
                 highlight: function(element, errorClass, validClass) {
-                    console.log(element.id)
                     const elementId = $(`#${element.id}-error`)
-                    // $(elementId).parents().addClass('ghost-form-item-with-help')
                     $(elementId).addClass("ghost-form-explain")
                     $(elementId).parent().addClass('has-error')
                 },

@@ -1,5 +1,5 @@
 import { QueryParameter } from './model';
-import { util } from '@/bing';
+import { util } from '../../bing';
 /**
  * 分页集合
  */

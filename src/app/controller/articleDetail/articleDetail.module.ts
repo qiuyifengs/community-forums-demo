@@ -2,15 +2,17 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ArticleDetailService } from './articleDetail.service';
 import { ArticleDetailController } from './articleDetail.controller';
-import { ArticleDetail } from '../../entitys/articleDetail.entity';
-import { MyCollectionList } from '../../entitys/myCollectionList.entity';
-import { CommentsList } from '../../entitys/commentList.entity';
-import { ChildrenComments } from '../../entitys/childrenComment.entity';
-import { PostList } from '../../entitys/postList.entity';
-import { User } from '../../entitys/user.entity';
+import { BbsArticleDetail } from '../../entitys/articleDetail.entity';
+import { BbsMyCollectionList } from '../../entitys/myCollectionList.entity';
+import { BbsCommentsList } from '../../entitys/commentList.entity';
+import { BbsChildrenComments } from '../../entitys/childrenComment.entity';
+import { BbsMyLikeList } from '../../entitys/myLikeList.entity';
+import { BbsPostList } from '../../entitys/postList.entity';
+import { BbsUser } from '../../entitys/user.entity';
+import { from } from 'rxjs';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ArticleDetail, MyCollectionList, CommentsList, ChildrenComments, PostList, User])],
+  imports: [TypeOrmModule.forFeature([BbsArticleDetail, BbsMyCollectionList, BbsMyLikeList, BbsCommentsList, BbsChildrenComments, BbsPostList, BbsUser])],
   providers: [ArticleDetailService],
   controllers: [ArticleDetailController],
 })

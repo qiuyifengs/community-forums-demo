@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel="stylesheet" href="/style/account/posts.css">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+        <% include ../../common/script %>
+    </head>
+    <body>
+        <div class="ghost-layout">
+            <% include ../../common/header %>
+            <% include ../../common/appHeader %>
+            <div class="ghost-pro-layouts-basic-layout-content ghost-layout-content">
+                <div class="ghost-pro-components-page-header-wrapper-grid-content-main ghost-pro-components-page-header-wrapper-grid-content-wide">
+                    <main class="ghost-pro-pages-account-settings-info-main">
+                        <aside class="ghost-pro-pages-account-settings-info-leftmenu web-display">
+                            <% include ../list %>
+                        </aside>
+                        <div class="ghost-pro-pages-account-settings-info-right">
+                            <div class="ghost-pro-pages-account-settings-info-title web-display">
+                                <span lang="posts">我的帖子</span>
+                            </div>
+                            <div class="ghost-card-body">
+                                <div class="ghost-list ghost-list-vertical ghost-list-split">
+                                    <div class="ghost-spin-nested-loading">
+                                        <div class="ghost-spin-container" id="myArticleTemplate">
+                                            <% myArticleList.articleList.forEach(function(item) {%>
+                                                <div class="ghost-list-item bd-bottom">
+                                                    <div class="ghost-list-item-main">
+                                                        <div class="ghost-list-item-meta-content">
+                                                            <div class="ghost-list-item-meta-content item-title-box">
+                                                                <h4 class="ghost-list-item-meta-title article_title">
+                                                                    <% if(item.IS_DRAFTS) { %>
+                                                                        <span style="margin-right: 4px" class="ghost-tag ghost-tag-has-color ghost-tag-color-warning app-isDrafts">草稿</span>
+                                                                        <span class="isDrafts" style="display:none"><%= item.IS_DRAFTS %></span>
+                                                                    <% } %>
+                                                                    <span class="item-title"><%= item.ARTICLE_TITLE %></span>
+                                                                </h4>
+                                                            </div>
+                                                            <div class="item-content-flex">
+                                                                <div class="ghost-list-item-meta-article-content"><%= item.ARTICLE_CONTENT %></div>
+                                                            </div>
+                                                        </div>
+
+                                                        <ul class="ghost-list-item-action">
+                                                            <li class="list-item web-display">
+                                                                <a>
+                                                                    <%= item.VIEW_COUNT %>
+                                                                    <span lang="view">次阅读</span>
+                                                                </a>
+                                                            </li>
+                                                            <li class="list-item web-display">
+                                                                <span>
+                                                                    <%= item.COMMENT_COUNT %>
+                                                                    <span lang="comments">评论</span>
+                                                                </span>
+                                                            </li>
+                                                            <li class="list-item web-display">
+                                                                <span>
+                                                                    <%= item.COLLECT_COUNT %>
+                                                                    <span lang="collect">收藏</span>
+                                                                </span>
+                                                            </li>
+                                                            <li class="list-item web-display">
+                                                                <span>
+                                                                    <%= item.LIKE_COUNT %>
+                                                                    <span lang="like">喜欢</span>
+                                                                </span>
+                                                            </li>
+                                                            <li class="list-item web-display">
+                                                                <span class="time">
+                                                                    <%= item.CREATED.substring(0, 10)%>
+                                                                </span>
+                                                            </li>
+                                                            <% if (item.ARTICLE_LABEL && item.ARTICLE_LABEL != '' ) { %>
+                                                            <li class="list-item">
+                                                                <% item.ARTICLE_LABEL.forEach(function(labelItem) {%>
+                                                                    <span class="ghost-tag ghost-tag-has-color" style="background-color: var(--col-type)"><%= labelItem %></span>
+                                                                <% }) %>
+                                                            </li>
+                                                            <% } %>
+                                                            <li class="app-time app-display">
+                                                                <span class="time">
+                                                                    <%= item.CREATED.substring(0, 10) %>
+                                                                </span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="ghost-list-item-extra">
+                                                        <div class="ghost-list-item-id" style="display: none"><%= item.ARTICLE_ID %></div>
+                                                        <ul class="ghost-list-item-action">
+                                                            <li class="edit_icon web-display">
+                                                                <a>
+                                                                    <svg class="iconSvg" aria-hidden="true" style="color: #554df5; font-size: 20px">
+                                                                        <use xlink:href="#icon-iconfontedit"></use>
+                                                                    </svg>
+                                                                </a>
+                                                                <em class="ghost-list-item-ghostion-split"></em>
+                                                            </li>
+                                                            <li class="delete_icon">
+                                                                <a>
+                                                                    <svg class="iconSvg" aria-hidden="true" style="color: #f81c23; font-size: 18px">
+                                                                        <use xlink:href="#icon-shanchu"></use>
+                                                                    </svg>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            <% }) %>  
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <% if (myArticleList.articleList.length > 0) { %>
+                                <ul class="ghost-pagination article_page" style="margin: 24px 0; text-align: center"></ul>
+                            <% } %>
+                            <input type="hidden" id="totalPages" value="<%= myArticleList.total %>" style="display: none" />
+                            <% if (myArticleList.articleList.length < 1) { %>
+                                <div class="ghost-empty">
+                                    <dvi class="ghost-empty-image">
+                                        <img src="/images/no_data.png" alt="">
+                                    </dvi>
+                                    <p class="ghost-empty-description">暂无相关文章</p>
+                                </div>
+                            <% } %>
+                            <div class="ghost-loading-mask" style="display: none">
+                                <div class="ghost-loading-spinner">
+                                    <svg viewBox="25 25 50 50" class="circular"><circle cx="50" cy="50" r="20" fill="none" class="path"></circle></svg>
+                                </div>
+                            </div>
+                            <div class="confirm_box">
+                                <div class="content_box">
+                                    <div class="delete_tip">确定删除文章？</div>
+                                    <div class="confirm_btn_box">
+                                        <div class="btn_item sure">确定</div>
+                                        <div class="btn_item cancel">取消</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        $(function() {
+            let deleteTitel, articleId, curDom;
+            if (localStorage.getItem('langData') && JSON.parse(localStorage.getItem('langData')).lang == 'en') {
+                $('.app-page-title').text('My Posts')
+            } else {
+                $('.app-page-title').text('我的帖子')
+            }
+
+            $('.ghost-pagination').pagination({
+                total: document.getElementById('totalPages').value,
+                pageSize: 10,
+                current: 1,
+                coping: true,
+                isHide: true,
+                callback: api => {
+                    $('.ghost-loading-mask').css('display', 'block')
+                    const currentPage = api.getCurrent()
+                    const url = `account/posts/${$.cookie("nickName")}/${currentPage}`;
+                    myAjax('GET', url).then(res => {
+                        if (res.code === 1) {
+                            $("#myArticleTemplate").empty()
+                            res.articleList.forEach(item => {
+                                $("#myArticleTemplate").append(renderArticleHtml(item))
+                            })
+                            setTimeout(function() {
+                                $('.ghost-loading-mask').css('display', 'none')
+                                translateFun()
+                            }, 500) 
+                        }
+                    })
+                }
+            })
+
+            $('.ghost-list-item-meta-article-content').each(function() {
+                let showContent = ''
+                let showImg = ''
+                dealPostList(JSON.parse($(this).text().replace(/[\n\r]/g, ''))).forEach(item => {
+                    showContent += item.value
+                    if (item.type == 'pic' && item.url) {
+                        showImg = `<img class="post-pic" src="${item.url}" />`
+                    }
+                })
+                $(this).html(showContent)
+                $(this).after(showImg)
+            })
+            $(".time").each(function() {
+                let resTime = formatDateFilter2($(this).text())
+                $(this).html(resTime)
+            });
+
+            $("#myArticleTemplate").on("click", ".ghost-list-item-main", function(event) {
+                event.stopPropagation();
+                articleId = $(this).next(".ghost-list-item-extra").find(".ghost-list-item-id").text();
+                if ($(this).find(".isDrafts").text()) {
+                    let url = 'post/publish/' + articleId;
+                    goPage(url);
+                } else {
+                    let url = 'post/articleDetail/' + articleId;
+                    myAjax("POST", "post/addView", { articleId: articleId, userId: $.cookie("userId") })
+                    goPage(url);
+                }
+            })
+
+            $("#myArticleTemplate").on("click", ".delete_icon", function(event) {
+                event.stopPropagation();
+                curDom = $(this).parents(".ghost-list-item");
+                articleId = $(this).parents(".ghost-list-item-extra").find(".ghost-list-item-id").text();
+                $(".cur_title").remove();
+                deleteTitel = $(this).parents(".ghost-list-item").find(".ghost-list-item-meta-title .item-title").text();
+                $(".confirm_box").css("display", "block");
+                $(".delete_tip").before(`<div class="cur_title">${deleteTitel}</div>`)
+            })
+
+            $(".sure").on("click", function() {
+                let param = {
+                    userId: $.cookie("userId"),
+                    articleId: articleId,
+                }
+                myAjax("POST", "account/deleteArticle", param).then((res) => {
+                    if (res.code == 1) {
+                        curDom.remove();
+                        $(".confirm_box").css("display", "none");
+
+                    } else {
+                        console.log(res.message)
+                    }
+                })
+            })
+
+            $(".cancel").on("click", function() {
+                $(".confirm_box").css("display", "none");
+            })
+
+            $("#myArticleTemplate").on("click", ".edit_icon", function(event) {
+                articleId = $(this).parents(".ghost-list-item-extra").find(".ghost-list-item-id").text();
+                let url = 'post/publish/' + articleId;
+                goPage(url);
+            })
+            translateFun()
+        })
+        function isDrafts(item) {
+            if (item.IS_DRAFTS) {
+                return `
+                    <span style="margin-right: 4px" class="ghost-tag ghost-tag-has-color ghost-tag-color-warning app-isDrafts">草稿</span>
+                    <span class="isDrafts" style="display:none">${ item.IS_DRAFTS }</span>
+                `
+            } else {
+                return '';
+            }
+        }
+        function filterTime(item) {
+            return  resTime = formatDateFilter2(item)
+        }
+        function showText(content) {
+            let showImg = ''
+            let showContent = ''
+            dealPostList(JSON.parse(content.replace(/[\n\r]/g, ''))).forEach(item => {
+                showContent += item.value
+                if (item.type == 'pic' && item.url) {
+                    showImg = `<img class="post-pic" src="${item.url}" />`
+                }
+            })
+            let result =`<div class="ghost-list-item-meta-article-content">${showContent}</div>${showImg}`
+            return result
+        }
+        function renderArticleHtml(item) {
+            return `<div class="ghost-list-item bd-bottom">
+                        <div class="ghost-list-item-main">
+                            <div class="ghost-list-item-meta-content">
+                                <div class="ghost-list-item-meta-content item-title-box">
+                                    <h4 class="ghost-list-item-meta-title">
+                                        ${isDrafts(item)}
+                                        <span class="item-title">${ item.ARTICLE_TITLE }</span>
+                                    </h4>
+                                </div>
+                                <div class="item-content-flex">${ showText(item.ARTICLE_CONTENT) }</div>
+                            </div>
+                            <ul class="ghost-list-item-action">
+                                <li class="list-item web-display">
+                                    <a>
+                                        ${ item.VIEW_COUNT } 
+                                        <span lang="view">次阅读</span>
+                                    </a>
+                                </li>
+                                <li class="list-item web-display">
+                                    <span>
+                                        ${ item.COMMENT_COUNT }
+                                        <span lang="comments">评论</span>
+                                    </span>
+                                </li>
+                                <li class="list-item web-display">
+                                    <span>
+                                        ${ item.COLLECT_COUNT }
+                                        <span lang="collect">收藏</span>
+                                    </span>
+                                </li>
+                                <li class="list-item web-display">
+                                    <span>
+                                        ${ item.LIKE_COUNT }
+                                        <span lang="like">喜欢</span>
+                                    </span>
+                                </li>
+                                <li class="list-item web-display">
+                                    <span class="time">
+                                        ${ filterTime(item.CREATED.substring(0, 10)) }
+                                    </span>
+                                </li>
+                                ${ renderArticleLabel(item.ARTICLE_LABEL) }
+                                <li class="app-time app-display">
+                                    <span class="time">
+                                        ${ filterTime(item.CREATED.substring(0, 10)) }
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="ghost-list-item-extra">
+                            <div class="ghost-list-item-id" style="display: none">${ item.ARTICLE_ID }</div>
+                            <ul class="ghost-list-item-action">
+                                <li class="edit_icon web-display">
+                                    <a>
+                                        <svg class="iconSvg" aria-hidden="true" style="color: #554df5; font-size: 20px">
+                                            <use xlink:href="#icon-iconfontedit"></use>
+                                        </svg>
+                                    </a>
+                                    <em class="ghost-list-item-ghostion-split"></em>
+                                </li>
+                                <li class="delete_icon">
+                                    <a>
+                                        <svg class="iconSvg" aria-hidden="true" style="color: #f81c23; font-size: 18px">
+                                            <use xlink:href="#icon-shanchu"></use>
+                                        </svg>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>`
+            }
+            function renderArticleLabel(item) {
+                if (item && item.length > 0) { 
+                    let labelDom = '';
+                    item.split(',').forEach(labelItem => {
+                        labelDom += `<span class="article-source bd-radius-3">${ labelItem }</span>`
+                    })
+                    return `<li class="list-item source-type">
+                        ${ labelDom }
+                    </li>`
+                } else {
+                    return '';
+                }
+            }
+    </script>
+</html>
+
+
+

@@ -256,6 +256,9 @@
     font-size: 20px;
     line-height: 28px;
 }
+.ghost-loading-mask {
+    display: none;
+}
 @media screen and (max-width: 420px) {
     .publish_page {
         position: absolute;
